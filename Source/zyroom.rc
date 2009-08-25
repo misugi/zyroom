@@ -1,0 +1,5 @@
+mainicon ICON "treasure.ico"
+open RCDATA "open.png"
+closed RCDATA "closed.png"
+restricted RCDATA "restricted.png"
+noicon RCDATA "noicon.png"

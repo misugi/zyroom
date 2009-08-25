@@ -1,0 +1,3 @@
+French=1036
+English=2057
+German=1031
