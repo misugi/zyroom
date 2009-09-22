@@ -1,0 +1,7 @@
+zyRoom - History of changes
+===========================
+
+# version 0.0.2 (2009-09-22)
+You can manage characters now !
+The color for the filter windows is resolved.
+The state of the "Room" button is resolved.
