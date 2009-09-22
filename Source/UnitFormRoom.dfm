@@ -14,6 +14,9 @@ object FormRoom: TFormRoom
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  DesignSize = (
+    700
+    405)
   PixelsPerInch = 96
   TextHeight = 13
   object LbGuildName: TLabel
@@ -22,6 +25,7 @@ object FormRoom: TFormRoom
     Width = 345
     Height = 13
     Alignment = taRightJustify
+    Anchors = [akLeft, akTop, akRight]
     AutoSize = False
     Caption = '-'
     Font.Charset = DEFAULT_CHARSET
@@ -59,9 +63,10 @@ object FormRoom: TFormRoom
     Left = 3
     Top = 28
     Width = 694
-    Height = 375
-    HorzScrollBar.Visible = False
+    Height = 374
+    HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
+    Anchors = [akLeft, akTop, akRight, akBottom]
     ParentShowHint = False
     ShowHint = False
     TabOrder = 0

@@ -32,6 +32,7 @@ uses
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
   RS_PROGRESS_ROOM = 'Affichage du coffre, veuillez patienter...';
+  RS_CONNEXION_ERROR = 'Trop d''erreurs API, arrêt de la synchronisation';
 
 const
   _TASK_SYNCHRONIZE = 0;
@@ -121,7 +122,7 @@ Get items and save image files
 procedure TFormProgress.GetItem(ANodeList: TXpNodeList;
   AStoragePath: String);
 var
-  i: Integer;
+  i, j: Integer;
   wItemName: String;
   wItemColor: TItemColor;
   wItemQuality: Integer;
@@ -131,7 +132,7 @@ var
   wItemFileName: String;
   wPngCheck: Boolean;
   wPng: TPNGObject;
-  wIconFile: TFileStream;
+  wIconFile: TMemoryStream;
 begin
   wPng := TPNGObject.Create;
   try
@@ -141,14 +142,16 @@ begin
       GRyzomApi.GetItemInfoFromXML(ANodeList.Item(i), wItemName, wItemColor,
         wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName);
       if not FileExists(AStoragePath + wItemFileName) then begin
+        j := 1;
         wPngCheck := False;
-        while not wPngCheck do begin
+        while (not wPngCheck) and (j < 10) do begin
           if ModalResult = mrCancel then Exit;
-          wIconFile := TFileStream.Create(AStoragePath + wItemFileName, fmCreate);
+          wIconFile := TMemoryStream.Create;
           try
             GRyzomApi.ApiItemIcon(wItemName, wIconFile, wItemColor, wItemQuality, wItemSize, wItemSap, wItemDestroyed);
             try
               wPng.LoadFromStream(wIconFile);
+              wPng.SaveToFile(AStoragePath + wItemFileName);
               wPngCheck := True;
             except
               Sleep(100);
@@ -157,7 +160,11 @@ begin
           finally
             wIconFile.Free;
           end;
+          Inc(j);
         end;
+
+        if not wPngCheck then
+          raise Exception.Create(RS_CONNEXION_ERROR);
       end;
       ProgressBar.Position := Trunc( ((i+1) / ANodeList.Length) * 100);
       Application.ProcessMessages;
@@ -351,6 +358,9 @@ var
 begin
   wItemList := TStringList.Create;
   try
+    // Adjust the width of the room
+    FRoom.ColCount := (FRoom.Width - 22) div (FRoom.ControlWidth + FRoom.Spacing);
+
     for i := 0 to ANodeList.Length - 1 do begin
       if ModalResult = mrCancel then Exit;
 
@@ -432,6 +442,7 @@ begin
   wXmlFile := TFileStream.Create(GConfig.GetCharPath(ACharID) + _INFO_FILENAME, fmOpenRead);
   try
     wXmlDoc.LoadStream(wXmlFile);
+    wNodeList := nil;
     case FInventPart of
       0: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item');
       1: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/bag/item');
@@ -442,7 +453,8 @@ begin
     end;
 
     try
-      ShowItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      if wNodeList <> nil then
+        ShowItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
     finally
       wNodeList.Free;
     end;

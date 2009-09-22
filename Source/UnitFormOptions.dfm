@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 284
+  ClientHeight = 263
   ClientWidth = 389
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     389
-    284)
+    263)
   PixelsPerInch = 96
   TextHeight = 13
   object LbLanguage: TLabel
@@ -32,7 +32,6 @@ object FormOptions: TFormOptions
     Top = 33
     Width = 255
     Height = 13
-    Anchors = [akBottom]
     Caption = 'Fichier des cha'#238'nes de ressource (string_client.pack) :'
   end
   object Label1: TLabel
@@ -40,7 +39,6 @@ object FormOptions: TFormOptions
     Top = 79
     Width = 105
     Height = 13
-    Anchors = [akBottom]
     Caption = 'Couleur de l'#39'interface :'
   end
   object CmbLanguage: TComboBox
@@ -52,22 +50,22 @@ object FormOptions: TFormOptions
     ItemHeight = 13
     Sorted = True
     TabOrder = 0
+    OnChange = CmbLanguageChange
   end
   object EdPackFile: TEdit
     Left = 8
     Top = 49
     Width = 297
     Height = 21
-    Anchors = [akBottom]
     ReadOnly = True
     TabOrder = 1
+    OnChange = CmbLanguageChange
   end
   object CbProxyEnabled: TCheckBox
     Left = 8
     Top = 101
-    Width = 229
+    Width = 281
     Height = 17
-    Anchors = [akBottom]
     Caption = 'Utiliser un serveur proxy'
     TabOrder = 2
     OnClick = CbProxyEnabledClick
@@ -77,14 +75,13 @@ object FormOptions: TFormOptions
     Top = 48
     Width = 75
     Height = 23
-    Anchors = [akBottom]
     Caption = 'Parcourir...'
     TabOrder = 3
     OnClick = BtBrowsePackFileClick
   end
   object BtOK: TButton
-    Left = 224
-    Top = 257
+    Left = 143
+    Top = 236
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -95,8 +92,8 @@ object FormOptions: TFormOptions
     OnClick = BtOKClick
   end
   object BtCancel: TButton
-    Left = 306
-    Top = 257
+    Left = 224
+    Top = 236
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -109,8 +106,7 @@ object FormOptions: TFormOptions
     Left = 8
     Top = 119
     Width = 373
-    Height = 133
-    Anchors = [akBottom]
+    Height = 110
     BevelInner = bvRaised
     BevelOuter = bvLowered
     ParentColor = True
@@ -143,21 +139,14 @@ object FormOptions: TFormOptions
       Height = 13
       Caption = 'Nom d'#39'utilisateur :'
     end
-    object CbProxyBasicAuth: TCheckBox
-      Left = 8
-      Top = 108
-      Width = 361
-      Height = 17
-      Caption = 'Utiliser la m'#233'thode d'#39'identification HTTP Basic'
-      TabOrder = 0
-    end
     object EdProxyUsername: TEdit
       Left = 108
       Top = 56
       Width = 253
       Height = 21
-      TabOrder = 1
+      TabOrder = 0
       Text = 'EdProxyUsername'
+      OnChange = CmbLanguageChange
     end
     object EdProxyPassword: TEdit
       Left = 108
@@ -165,16 +154,18 @@ object FormOptions: TFormOptions
       Width = 253
       Height = 21
       PasswordChar = '*'
-      TabOrder = 2
+      TabOrder = 1
       Text = 'Edit1'
+      OnChange = CmbLanguageChange
     end
     object EdProxyAddress: TEdit
       Left = 108
       Top = 8
       Width = 253
       Height = 21
-      TabOrder = 3
+      TabOrder = 2
       Text = '127.0.0.1'
+      OnChange = CmbLanguageChange
     end
     object EdProxyPort: TSpinEdit
       Left = 108
@@ -183,8 +174,9 @@ object FormOptions: TFormOptions
       Height = 22
       MaxValue = 0
       MinValue = 0
-      TabOrder = 4
+      TabOrder = 3
       Value = 8080
+      OnChange = CmbLanguageChange
     end
   end
   object PnColor: TPanel
@@ -194,7 +186,6 @@ object FormOptions: TFormOptions
     Height = 20
     Cursor = crHandPoint
     Hint = 'S'#233'lectionner une couleur'
-    Anchors = [akBottom]
     BevelOuter = bvNone
     BorderWidth = 1
     BorderStyle = bsSingle
@@ -205,6 +196,17 @@ object FormOptions: TFormOptions
     ShowHint = True
     TabOrder = 7
     OnClick = PnColorClick
+  end
+  object BtApply: TButton
+    Left = 305
+    Top = 236
+    Width = 75
+    Height = 23
+    Anchors = [akBottom]
+    Caption = 'Appliquer'
+    Enabled = False
+    TabOrder = 8
+    OnClick = BtApplyClick
   end
   object OdBrowsePackFile: TOpenDialog
     Filter = 'Fichiers pack (*.pack)|*.pack|Tous les fichiers (*.*)|*.*'

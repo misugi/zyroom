@@ -64,6 +64,8 @@ type
     procedure BtDeleteClick(Sender: TObject);
     procedure BtSynchronizeClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure GridCharDblClick(Sender: TObject);
   private
     procedure LoadGrid;
   public
@@ -295,7 +297,11 @@ Selects a guild in the grid
 procedure TFormCharacter.GridCharSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
-  if ARow = 0 then CanSelect := False;
+  if ARow = 0 then begin
+    CanSelect := False;
+    Exit;
+  end;
+
   BtRoom.Enabled := GridChar.Cells[3, ARow] <> '-';
 end;
 
@@ -327,6 +333,7 @@ begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
         BtSynchronize.Enabled := False;
+        BtRoom.Enabled := False;
       end;
     finally
       SendMessage(GridChar.Handle, WM_SETREDRAW, 1, 0);
@@ -372,10 +379,28 @@ procedure TFormCharacter.BtRoomClick(Sender: TObject);
 var
   wCharID: String;
 begin
+  FormInvent.TabInvent.TabIndex := _INVENT_BAG;
   FormMain.ShowMenuForm(FormInvent);
   wCharID := Self.GridChar.Cells[2, Self.GridChar.Row];
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
+  FormInvent.LbCharName.Caption := Format('%s (%d)', [GridChar.Cells[1, GridChar.Row], FormInvent.CharInvent.ControlCount]);
+end;
+
+{*******************************************************************************
+Resize the window
+*******************************************************************************}
+procedure TFormCharacter.FormResize(Sender: TObject);
+begin
+  GridChar.ColWidths[1] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[2] - GridChar.ColWidths[3] - 7;
+end;
+
+{*******************************************************************************
+Double clic on the grid
+*******************************************************************************}
+procedure TFormCharacter.GridCharDblClick(Sender: TObject);
+begin
+  if BtRoom.Enabled then BtRoomClick(BtRoom);
 end;
 
 end.

@@ -44,7 +44,6 @@ type
     LbProxyAddress: TLabel;
     LbPortAddress: TLabel;
     LbProxyUsername: TLabel;
-    CbProxyBasicAuth: TCheckBox;
     EdProxyUsername: TEdit;
     EdProxyPassword: TEdit;
     EdProxyAddress: TEdit;
@@ -52,12 +51,15 @@ type
     OdColor: TColorDialog;
     PnColor: TPanel;
     Label1: TLabel;
+    BtApply: TButton;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure PnColorClick(Sender: TObject);
+    procedure BtApplyClick(Sender: TObject);
+    procedure CmbLanguageChange(Sender: TObject);
   private
     procedure LoadConfig;
     procedure SaveConfig;
@@ -92,6 +94,7 @@ Displays the form
 procedure TFormOptions.FormShow(Sender: TObject);
 begin
   BtOK.SetFocus;
+  BtApply.Enabled := False;
 end;
 
 {*******************************************************************************
@@ -117,6 +120,7 @@ begin
   for i := 0 to PnProxy.ControlCount - 1 do begin
      PnProxy.Controls[i].Enabled := AEnabled;
   end;
+  BtApply.Enabled := True;
 end;
 
 {*******************************************************************************
@@ -159,7 +163,6 @@ begin
   EdProxyPort.Value := GConfig.ProxyPort;
   EdProxyUsername.Text := GConfig.ProxyUsername;
   EdProxyPassword.Text := GConfig.ProxyPassword;
-  CbProxyBasicAuth.Checked := GConfig.ProxyBasicAuth;
 end;
 
 {*******************************************************************************
@@ -178,7 +181,6 @@ begin
 
   // Options of the proxy server
   GConfig.ProxyEnabled := CbProxyEnabled.Checked;
-  GConfig.ProxyBasicAuth := CbProxyBasicAuth.Checked;
   GConfig.ProxyAddress := EdProxyAddress.Text;
   GConfig.ProxyPort := EdProxyPort.Value;
   GConfig.ProxyUsername := EdProxyUsername.Text;
@@ -199,8 +201,10 @@ Selects the color of the interface
 *******************************************************************************}
 procedure TFormOptions.PnColorClick(Sender: TObject);
 begin
-  if OdColor.Execute then
+  if OdColor.Execute then begin
     PnColor.Color := OdColor.Color;
+    BtApply.Enabled := True;
+  end;
 end;
 
 {*******************************************************************************
@@ -240,12 +244,33 @@ begin
     GRyzomStringPack.LoadFromFile(GConfig.PackFile);
 
   // Proxy parameters
-  if GConfig.ProxyEnabled then
+  if GConfig.ProxyEnabled then begin
     GRyzomApi.SetProxyParameters(
       EdProxyAddress.Text,
       EdProxyPort.Value,
       EdProxyUsername.Text,
       EdProxyPassword.Text);
+  end else begin
+    GRyzomApi.SetProxyParameters('', 0, '', '');
+  end;
+end;
+
+{*******************************************************************************
+Confirms changes without close the windows
+*******************************************************************************}
+procedure TFormOptions.BtApplyClick(Sender: TObject);
+begin
+  SaveConfig;
+  ApplyConfig;
+  BtApply.Enabled := False;
+end;
+
+{*******************************************************************************
+Enables the apply button
+*******************************************************************************}
+procedure TFormOptions.CmbLanguageChange(Sender: TObject);
+begin
+  BtApply.Enabled := True;
 end;
 
 end.

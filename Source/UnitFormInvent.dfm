@@ -14,6 +14,9 @@ object FormInvent: TFormInvent
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
+  DesignSize = (
+    700
+    405)
   PixelsPerInch = 96
   TextHeight = 13
   object LbCharName: TLabel
@@ -22,6 +25,7 @@ object FormInvent: TFormInvent
     Width = 345
     Height = 13
     Alignment = taRightJustify
+    Anchors = [akLeft, akTop, akRight]
     AutoSize = False
     Caption = '-'
     Font.Charset = DEFAULT_CHARSET
@@ -57,9 +61,10 @@ object FormInvent: TFormInvent
   end
   object TabInvent: TTabControl
     Left = 0
-    Top = 28
+    Top = 29
     Width = 700
-    Height = 377
+    Height = 376
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     Tabs.Strings = (
       'Appartement'
@@ -70,13 +75,17 @@ object FormInvent: TFormInvent
       'Monture')
     TabIndex = 0
     OnChange = TabInventChange
+    DesignSize = (
+      700
+      376)
     object CharInvent: TScrollRoom
-      Left = 2
-      Top = 24
-      Width = 694
-      Height = 349
-      HorzScrollBar.Visible = False
+      Left = 5
+      Top = 25
+      Width = 690
+      Height = 346
+      HorzScrollBar.Tracking = True
       VertScrollBar.Tracking = True
+      Anchors = [akLeft, akTop, akRight, akBottom]
       ParentShowHint = False
       ShowHint = False
       TabOrder = 0

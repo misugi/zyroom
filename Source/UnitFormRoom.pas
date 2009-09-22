@@ -72,7 +72,6 @@ Display the form
 *******************************************************************************}
 procedure TFormRoom.FormShow(Sender: TObject);
 begin
-  LbGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
 end;
 
 {*******************************************************************************

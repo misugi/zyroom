@@ -74,7 +74,6 @@ Display the form
 *******************************************************************************}
 procedure TFormInvent.FormShow(Sender: TObject);
 begin
-  LbCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
 end;
 
 {*******************************************************************************
@@ -145,6 +144,7 @@ var
 begin
   wCharID := FormCharacter.GridChar.Cells[2, FormCharacter.GridChar.Row];
   FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
+  LbCharName.Caption := Format('%s (%d)', [FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row], CharInvent.ControlCount]);
 end;
 
 end.

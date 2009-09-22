@@ -130,6 +130,7 @@ begin
   FHttpCompressor := TIdCompressorZLib.Create;
   FHttpRequest := TIdHTTP.Create;
   FHttpRequest.Compressor := FHttpCompressor;
+  FHttpRequest.ProxyParams.BasicAuthentication := True;
 end;
 
 {*******************************************************************************

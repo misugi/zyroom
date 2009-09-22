@@ -35,6 +35,7 @@ const
   _URL_CONTEST_SITE = 'http://dev.ryzom.com/projects/ryzom-api/wiki/Contest';
   _URL_PROJECT_SITE = 'http://zyroom.misulud.fr';
   _URL_RYZOM_SITE = 'http://www.ryzom.com';
+  _URL_AGPL = 'http://www.gnu.org/licenses/agpl-3.0.html';
   
 type
   TFormHome = class(TForm)
@@ -48,10 +49,12 @@ type
     ImgRyzom: TImage;
     LbVersion: TLabel;
     LbVersionNum: TLabel;
+    ImgAgpl: TImage;
     procedure FormCreate(Sender: TObject);
     procedure LbContestClick(Sender: TObject);
     procedure LbProjectWebsiteClick(Sender: TObject);
     procedure ImgRyzomClick(Sender: TObject);
+    procedure ImgAgplClick(Sender: TObject);
   private
   public
   end;
@@ -73,6 +76,7 @@ var
 begin
   wReg := TRegExpr.Create;
   ImgRyzom.Hint := _URL_RYZOM_SITE;
+  ImgAgpl.Hint := _URL_AGPL;
   LbProjectWebsite.Hint := _URL_PROJECT_SITE;
   LbContest.Hint := _URL_CONTEST_SITE;
   wVersion := MdkFileVersionInfo(Application.ExeName, fviFileVersion);
@@ -105,6 +109,14 @@ Link to the Ryzom site
 procedure TFormHome.ImgRyzomClick(Sender: TObject);
 begin
   ShellExecute(0, 'open', _URL_RYZOM_SITE, nil, nil, SW_SHOW);
+end;
+
+{*******************************************************************************
+Link to the AGPL license page
+*******************************************************************************}
+procedure TFormHome.ImgAgplClick(Sender: TObject);
+begin
+  ShellExecute(0, 'open', _URL_AGPL, nil, nil, SW_SHOW);
 end;
 
 end.

@@ -180,7 +180,11 @@ Auto-timer to update status and time
 *******************************************************************************}
 procedure TFormMain.TimerStatusTimer(Sender: TObject);
 begin
-  UpdateStatusAndTime(False);
+  try
+    UpdateStatusAndTime(False);
+  except
+    LbTime.Caption := '-';
+  end;
 end;
 
 {*******************************************************************************

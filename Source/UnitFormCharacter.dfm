@@ -13,16 +13,19 @@ object FormCharacter: TFormCharacter
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnResize = FormResize
+  DesignSize = (
+    700
+    405)
   PixelsPerInch = 96
   TextHeight = 13
   object GridChar: TStringGrid
     Left = 3
     Top = 28
     Width = 694
-    Height = 375
+    Height = 374
+    Anchors = [akLeft, akTop, akRight, akBottom]
     ColCount = 3
-    Constraints.MaxHeight = 375
-    Constraints.MinHeight = 375
     DefaultColWidth = 36
     DefaultRowHeight = 38
     DefaultDrawing = False
@@ -30,6 +33,7 @@ object FormCharacter: TFormCharacter
     RowCount = 2
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
     TabOrder = 0
+    OnDblClick = GridCharDblClick
     OnDrawCell = GridCharDrawCell
     OnMouseWheelDown = GridCharMouseWheelDown
     OnMouseWheelUp = GridCharMouseWheelUp

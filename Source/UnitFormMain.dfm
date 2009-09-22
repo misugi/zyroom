@@ -1,11 +1,12 @@
 object FormMain: TFormMain
   Left = 382
   Top = 270
-  BorderStyle = bsDialog
+  Width = 708
+  Height = 484
   Caption = 'zyRoom'
-  ClientHeight = 457
-  ClientWidth = 700
   Color = 12631988
+  Constraints.MinHeight = 484
+  Constraints.MinWidth = 708
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -16,6 +17,9 @@ object FormMain: TFormMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  DesignSize = (
+    700
+    457)
   PixelsPerInch = 96
   TextHeight = 13
   object ImgLogo: TImage
@@ -181,6 +185,7 @@ object FormMain: TFormMain
     Top = 9
     Width = 16
     Height = 16
+    Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
   end
@@ -190,6 +195,7 @@ object FormMain: TFormMain
     Width = 24
     Height = 13
     Cursor = crHandPoint
+    Anchors = [akTop, akRight]
     Caption = 'Aniro'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -205,23 +211,26 @@ object FormMain: TFormMain
     Width = 232
     Height = 13
     Alignment = taCenter
+    Anchors = [akTop, akRight]
     AutoSize = False
     Caption = '-'
   end
   object ImgLeanon: TImage
-    Left = 537
+    Left = 539
     Top = 9
     Width = 16
     Height = 16
+    Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
   end
   object LbLeanon: TLabel
-    Left = 558
+    Left = 560
     Top = 11
     Width = 36
     Height = 13
     Cursor = crHandPoint
+    Anchors = [akTop, akRight]
     Caption = 'Leanon'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -236,6 +245,7 @@ object FormMain: TFormMain
     Top = 9
     Width = 16
     Height = 16
+    Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
   end
@@ -245,6 +255,7 @@ object FormMain: TFormMain
     Width = 40
     Height = 13
     Cursor = crHandPoint
+    Anchors = [akTop, akRight]
     Caption = 'Arispotle'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -259,22 +270,23 @@ object FormMain: TFormMain
     Top = 52
     Width = 700
     Height = 405
-    Align = alBottom
+    Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
   end
   object BtOptions: TButton
-    Left = 378
+    Left = 362
     Top = 15
     Width = 77
     Height = 23
+    Anchors = [akTop, akRight]
     Caption = 'Options'
     TabOrder = 1
     OnClick = BtOptionsClick
   end
   object BtGuild: TButton
-    Left = 67
+    Left = 72
     Top = 15
     Width = 75
     Height = 23
@@ -283,7 +295,7 @@ object FormMain: TFormMain
     OnClick = BtGuildClick
   end
   object BtCharacter: TButton
-    Left = 154
+    Left = 155
     Top = 15
     Width = 75
     Height = 23

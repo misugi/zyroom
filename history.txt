@@ -1,6 +1,17 @@
 zyRoom - History of changes
 ===========================
 
+# version 0.0.3 (2009-09-22)
+New: main window can be minimized and maximized !
+New: button "Apply" on the options window.
+New: number of items is displayed above the room.
+New: AGPLv3 logo on the home page.
+New: you can double-clic on the list to open room directly.
+Change: option "Basic authentication" for proxy connexion is removed.
+Bug fixed: the state of the "Room" button is resolved for character inventory.
+Bug fixed: default selection of the tab for character inventory is resolved !
+Bug fixed: proxy activation is resolved.
+
 # version 0.0.2 (2009-09-22)
 You can manage characters now !
 The color for the filter windows is resolved.

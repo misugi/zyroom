@@ -64,6 +64,8 @@ type
     procedure BtDeleteClick(Sender: TObject);
     procedure BtSynchronizeClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure GridGuildDblClick(Sender: TObject);
   private
     FIconList: TObjectList;
     procedure LoadGrid;
@@ -77,7 +79,7 @@ implementation
 
 uses UnitConfig, UnitFormGuildEdit, UnitRyzom, MisuDevKit,
   UnitFormConfirmation, UnitFormProgress, UnitFormMain, UnitFormRoom,
-  UnitFormRoomFilter;
+  UnitFormRoomFilter, ScrollRoom;
 
 {$R *.dfm}
 
@@ -257,7 +259,7 @@ begin
         wIconFile := GConfig.GetGuildPath(wGuildList[i]) + _ICON_FILENAME;
         wInfoFile := GConfig.GetGuildPath(wGuildList[i]) + _INFO_FILENAME;
         wPng := TPNGObject.Create;
-        wPng.LoadFromFile(wIconFile);
+        if FileExists(wIconFile) then wPng.LoadFromFile(wIconFile);
         FIconList.Add(wPng);
         GridGuild.RowCount := GridGuild.RowCount + 1;
         GridGuild.Cells[1, GridGuild.RowCount-1] := GGuild.GetGuildName(wGuildList[i]);
@@ -348,6 +350,7 @@ begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
         BtSynchronize.Enabled := False;
+        BtRoom.Enabled := False;
       end;
     finally
       SendMessage(GridGuild.Handle, WM_SETREDRAW, 1, 0);
@@ -411,6 +414,23 @@ begin
   wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  FormRoom.LbGuildName.Caption := Format('%s (%d)', [GridGuild.Cells[1, GridGuild.Row], FormRoom.GuildRoom.ControlCount]);
+end;
+
+{*******************************************************************************
+Resize the window
+*******************************************************************************}
+procedure TFormGuild.FormResize(Sender: TObject);
+begin
+  GridGuild.ColWidths[1] := GridGuild.Width - GridGuild.ColWidths[0] - GridGuild.ColWidths[2] - GridGuild.ColWidths[3] - 7;
+end;
+
+{*******************************************************************************
+Double clic on the grid
+*******************************************************************************}
+procedure TFormGuild.GridGuildDblClick(Sender: TObject);
+begin
+  if BtRoom.Enabled then BtRoomClick(BtRoom);
 end;
 
 end.
