@@ -41,7 +41,7 @@ type
     BtOptions: TButton;
     BtGuild: TButton;
     TimerStatus: TTimer;
-    Button1: TButton;
+    BtCharacter: TButton;
     ImgAniro: TImage;
     LbAniro: TLabel;
     LbTime: TLabel;
@@ -57,6 +57,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure LbServerClick(Sender: TObject);
     procedure ImgLogoClick(Sender: TObject);
+    procedure BtCharacterClick(Sender: TObject);
   private
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
@@ -74,7 +75,8 @@ var
 
 implementation
 
-uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome;
+uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
+  UnitFormCharacter, UnitFormInvent;
 
 {$R *.dfm}
 
@@ -86,6 +88,7 @@ begin
   GConfig := TConfig.Create;
   GRyzomApi := TRyzom.Create;
   GGuild := TGuild.Create;
+  GCharacter := TCharacter.Create;
   GRyzomStringPack := TStringClient.Create;
   GRegExpr := TRegExpr.Create;
 
@@ -128,9 +131,17 @@ begin
   FormGuild.Parent := PnContainer;
   FormGuild.Align := alClient;
 
+  FormCharacter.BorderStyle := bsNone;
+  FormCharacter.Parent := PnContainer;
+  FormCharacter.Align := alClient;
+
   FormRoom.BorderStyle := bsNone;
   FormRoom.Parent := PnContainer;
   FormRoom.Align := alClient;
+
+  FormInvent.BorderStyle := bsNone;
+  FormInvent.Parent := PnContainer;
+  FormInvent.Align := alClient;
 
   // Displays the home form by default
   ShowMenuForm(FormHome);
@@ -146,6 +157,7 @@ procedure TFormMain.FormDestroy(Sender: TObject);
 begin
   GRyzomStringPack.Free;
   GGuild.Free;
+  GCharacter.Free;
   GRyzomApi.Free;
   GConfig.Free;
   GRegExpr.Free;
@@ -251,6 +263,14 @@ Displays the list of guilds
 procedure TFormMain.BtGuildClick(Sender: TObject);
 begin
   ShowMenuForm(FormGuild);
+end;
+
+{*******************************************************************************
+Displays the list of characters
+*******************************************************************************}
+procedure TFormMain.BtCharacterClick(Sender: TObject);
+begin
+  ShowMenuForm(FormCharacter);
 end;
 
 {*******************************************************************************

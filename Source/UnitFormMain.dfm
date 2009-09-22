@@ -206,7 +206,7 @@ object FormMain: TFormMain
     Height = 13
     Alignment = taCenter
     AutoSize = False
-    Caption = 'LbTime'
+    Caption = '-'
   end
   object ImgLeanon: TImage
     Left = 537
@@ -282,17 +282,16 @@ object FormMain: TFormMain
     TabOrder = 2
     OnClick = BtGuildClick
   end
-  object Button1: TButton
+  object BtCharacter: TButton
     Left = 154
     Top = 15
     Width = 75
     Height = 23
     Caption = 'Personnages'
-    Enabled = False
     ParentShowHint = False
     ShowHint = False
     TabOrder = 3
-    OnClick = BtGuildClick
+    OnClick = BtCharacterClick
   end
   object TimerStatus: TTimer
     Interval = 60000

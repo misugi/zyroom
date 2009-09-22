@@ -186,7 +186,7 @@ begin
         wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
         GGuild.AddGuild(wGuildID, wGuildKey, wGuildName);
 
-        ForceDirectories(GConfig.GetRoomPath(wGuildID));
+        ForceDirectories(GConfig.GetGuildRoomPath(wGuildID));
         wStream.Clear;
         GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
         wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
@@ -312,7 +312,11 @@ Selects a guild in the grid
 procedure TFormGuild.GridGuildSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
-  if ARow = 0 then CanSelect := False;
+  if ARow = 0 then begin
+    CanSelect := False;
+    Exit;
+  end;
+
   BtRoom.Enabled := GridGuild.Cells[3, ARow] <> '-';
 end;
 
@@ -351,7 +355,7 @@ begin
     end;
 
     GGuild.DeleteGuild(wGuildID);
-    MdkRemoveDir(GConfig.GetRoomPath(wGuildID));
+    MdkRemoveDir(GConfig.GetGuildRoomPath(wGuildID));
     MdkRemoveDir(GConfig.GetGuildPath(wGuildID));
     FIconList.Delete(wRow-1);
   end;

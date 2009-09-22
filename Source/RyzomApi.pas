@@ -52,6 +52,7 @@ const
 
 type
   TItemColor = (icRed, icBeige, icGreen, icTurquoise, icBlue, icPurple, icWhite, icBlack, icNone);
+  TCharacterPart = (cpFull, cpItems);
 
   // Ryzom API
   TRyzomApi = class
@@ -64,6 +65,7 @@ type
     destructor Destroy; override;
 
     procedure ApiGuild(AKey: String; AResponse: TStream);
+    procedure ApiCharacter(AKey: String; APart: TCharacterPart; AResponse: TStream);
     procedure ApiGuildIcon(AIcon: String; ASize: String; AResponse: TStream);
     procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor = icWhite;
       AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False);
@@ -146,6 +148,26 @@ Calls the "Guild" API
 procedure TRyzomApi.ApiGuild(AKey: String; AResponse: TStream);
 begin
   FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild.php?key=%s', [AKey]), AResponse);
+  AResponse.Position := 0;
+
+  if not FXmlDocument.LoadStream(AResponse) then
+    raise Exception.Create(RS_ERROR_LOADING_XML);
+
+  if CompareText(FXmlDocument.DocumentElement.NodeName, _NODE_ERROR) = 0 then
+    raise Exception.Create(FXmlDocument.DocumentElement.FirstChild.NodeValue);
+
+  AResponse.Position := 0;
+end;
+
+{*******************************************************************************
+Calls the "Character" API
+*******************************************************************************}
+procedure TRyzomApi.ApiCharacter(AKey: String; APart: TCharacterPart; AResponse: TStream);
+begin
+  case APart of
+    cpFull: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=full&key=%s', [AKey]), AResponse);
+    cpItems: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=items&key=%s', [AKey]), AResponse);
+  end;
   AResponse.Position := 0;
 
   if not FXmlDocument.LoadStream(AResponse) then

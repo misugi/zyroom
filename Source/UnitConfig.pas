@@ -32,12 +32,16 @@ resourcestring
   RS_ERROR_GUILD_NOTFOUND = 'La guilde est introuvable';
   RS_ERROR_KEY_NOTFOUND = 'La clé API est introuvable';
   RS_ERROR_NAME_NOTFOUND = 'Le nom de la guilde est introuvable';
+  RS_ERROR_CHAR_ALREADY_EXISTS = 'Le personnage existe déjà';
+  RS_ERROR_CHAR_NOTFOUND = 'Le personnage est introuvable';
+  RS_ERROR_CHARNAME_NOTFOUND = 'Le nom du personnage est introuvable';
   
 const
   _ENCRYPTION_KEY : TKey64 = (10, 158, 47, 92, 35, 221, 29, 203);
   _CONFIG_FILENAME = 'config.ini';
   _GUILD_DIR = 'guild';
   _ROOM_DIR = 'room';
+  _CHARACTER_DIR = 'character';
   _PACK_FILEPATH = '\save\string_client.pack';
   _LANGUAGE_FILENAME = 'languages.lcf';
   _LANGUAGE_FRENCH_ID = 1036;
@@ -57,8 +61,10 @@ const
   _KEY_INTERFACE_COLOR = 'Color';
 
   _GUILD_FILENAME = 'guild.ini';
-  _KEY_GUILD_KEY = 'Key';
-  _KEY_GUILD_NAME = 'Name';
+  _CHARACTER_FILENAME = 'character.ini';
+  _KEY_KEY = 'Key';
+  _KEY_NAME = 'Name';
+  _KEY_SERVER = 'Server';
 
   _RES_LOGO = 'logo';
   _RES_CLOSED = 'closed';
@@ -90,6 +96,24 @@ type
     procedure UpdateGuild(AGuildID, AGuildKey, AGuildName: String);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
+  end;
+
+  // List of the characters
+  TCharacter = class(TObject)
+  private
+    FIniFile: TIniFile;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function  GetCharKey(ACharID: String): String;
+    function  GetCharName(ACharID: String): String;
+    function  GetServerName(ACharID: String): String;
+    function  CharExists(ACharID: String): Boolean;
+    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer: String);
+    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer: String);
+    procedure DeleteChar(ACharID: String);
+    procedure CharList(ACharIDList: TStrings);
   end;
 
   // Settings of the application
@@ -139,13 +163,16 @@ type
     property ProxyPassword: String read GetProxyPassword write SetProxyPassword;
 
     function GetGuildPath(AGuildID: String): String;
-    function GetRoomPath(AGuildID: String): String;
+    function GetGuildRoomPath(AGuildID: String): String;
+    function GetCharPath(ACharID: String): String;
+    function GetCharRoomPath(ACharID: String): String;
   end;
 
 
 var
   GConfig: TConfig;
   GGuild: TGuild;
+  GCharacter: TCharacter;
 
 implementation
 
@@ -186,9 +213,25 @@ end;
 {*******************************************************************************
 Returns the path of a room directory
 *******************************************************************************}
-function TConfig.GetRoomPath(AGuildID: String): String;
+function TConfig.GetGuildRoomPath(AGuildID: String): String;
 begin
   Result := Format('%s%s\%s\%s\', [FCurrentPath, _GUILD_DIR, AGuildID, _ROOM_DIR]);
+end;
+
+{*******************************************************************************
+Returns the path of a character directory
+*******************************************************************************}
+function TConfig.GetCharPath(ACharID: String): String;
+begin
+  Result := Format('%s%s\%s\', [FCurrentPath, _CHARACTER_DIR, ACharID]);
+end;
+
+{*******************************************************************************
+Returns the path of a character directory
+*******************************************************************************}
+function TConfig.GetCharRoomPath(ACharID: String): String;
+begin
+  Result := Format('%s%s\%s\%s\', [FCurrentPath, _CHARACTER_DIR, ACharID, _ROOM_DIR]);
 end;
 
 {*******************************************************************************
@@ -376,8 +419,8 @@ begin
   if FIniFile.SectionExists(AGuildID) then
     raise Exception.Create(RS_ERROR_GUILD_ALREADY_EXISTS);
   wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
-  FIniFile.WriteString(AGuildID, _KEY_GUILD_KEY, wKey);
-  FIniFile.WriteString(AGuildID, _KEY_GUILD_NAME, AGuildName);
+  FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
+  FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
 end;
 
 {*******************************************************************************
@@ -390,8 +433,8 @@ begin
   if not FIniFile.SectionExists(AGuildID) then
     raise Exception.Create(RS_ERROR_GUILD_NOTFOUND);
   wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
-  FIniFile.WriteString(AGuildID, _KEY_GUILD_KEY, wKey);
-  FIniFile.WriteString(AGuildID, _KEY_GUILD_NAME, AGuildName);
+  FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
+  FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
 end;
 
 {*******************************************************************************
@@ -409,7 +452,7 @@ function TGuild.GetGuildKey(AGuildID: String): String;
 var
   wKey: String;
 begin
-  wKey := FIniFile.ReadString(AGuildID, _KEY_GUILD_KEY, '');
+  wKey := FIniFile.ReadString(AGuildID, _KEY_KEY, '');
   if wKey = '' then
     raise Exception.Create(RS_ERROR_KEY_NOTFOUND);
   Result := DESEncryptStringEx(wKey, _ENCRYPTION_KEY, False);
@@ -420,7 +463,7 @@ Returns the guild name from an ID number
 *******************************************************************************}
 function TGuild.GetGuildName(AGuildID: String): String;
 begin
-  Result := FIniFile.ReadString(AGuildID, _KEY_GUILD_NAME, '');
+  Result := FIniFile.ReadString(AGuildID, _KEY_NAME, '');
   if Result = '' then
     raise Exception.Create(RS_ERROR_NAME_NOTFOUND);
 end;
@@ -440,6 +483,114 @@ procedure TGuild.GuildList(AGuildIDList: TStrings);
 begin
   AGuildIDList.Clear;
   FIniFile.ReadSections(AGuildIDList);
+end;
+
+{ TCharacter }
+
+{*******************************************************************************
+Adds a character
+*******************************************************************************}
+procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer: String);
+var
+  wKey: String;
+begin
+  if FIniFile.SectionExists(ACharID) then
+    raise Exception.Create(RS_ERROR_CHAR_ALREADY_EXISTS);
+  wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
+  FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
+  FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
+  FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
+end;
+
+{*******************************************************************************
+Verifies if a character exists
+*******************************************************************************}
+function TCharacter.CharExists(ACharID: String): Boolean;
+begin
+  Result := FIniFile.SectionExists(ACharID);
+end;
+
+{*******************************************************************************
+Returns the list of the characters
+*******************************************************************************}
+procedure TCharacter.CharList(ACharIDList: TStrings);
+begin
+  ACharIDList.Clear;
+  FIniFile.ReadSections(ACharIDList);
+end;
+
+{*******************************************************************************
+Creates character object
+*******************************************************************************}
+constructor TCharacter.Create;
+begin
+  inherited;
+  FIniFile := TIniFile.Create(GConfig.CurrentPath + _CHARACTER_FILENAME);
+end;
+
+{*******************************************************************************
+Destroys character object
+*******************************************************************************}
+destructor TCharacter.Destroy;
+begin
+  FIniFile.Free;
+  inherited;
+end;
+
+{*******************************************************************************
+Deletes a character
+*******************************************************************************}
+procedure TCharacter.DeleteChar(ACharID: String);
+begin
+  FIniFile.EraseSection(ACharID);
+end;
+
+{*******************************************************************************
+Returns the character key from an ID number
+*******************************************************************************}
+function TCharacter.GetCharKey(ACharID: String): String;
+var
+  wKey: String;
+begin
+  wKey := FIniFile.ReadString(ACharID, _KEY_KEY, '');
+  if wKey = '' then
+    raise Exception.Create(RS_ERROR_KEY_NOTFOUND);
+  Result := DESEncryptStringEx(wKey, _ENCRYPTION_KEY, False);
+end;
+
+{*******************************************************************************
+Returns the character name from an ID number
+*******************************************************************************}
+function TCharacter.GetCharName(ACharID: String): String;
+begin
+  Result := FIniFile.ReadString(ACharID, _KEY_NAME, '');
+  if Result = '' then
+    raise Exception.Create(RS_ERROR_CHARNAME_NOTFOUND);
+end;
+
+{*******************************************************************************
+Returns the server from an ID number
+*******************************************************************************}
+function TCharacter.GetServerName(ACharID: String): String;
+begin
+  Result := FIniFile.ReadString(ACharID, _KEY_SERVER, '');
+  if Result = '' then
+    raise Exception.Create(RS_ERROR_NAME_NOTFOUND);
+end;
+
+{*******************************************************************************
+Updates a character
+*******************************************************************************}
+procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer: String);
+var
+  wKey: String;
+begin
+  if not FIniFile.SectionExists(ACharID) then
+    raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
+  wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
+  FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
+  FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
+  FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
 end;
 
 end.

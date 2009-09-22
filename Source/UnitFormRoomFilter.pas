@@ -71,7 +71,8 @@ var
 
 implementation
 
-uses UnitFormProgress, UnitFormGuild, UnitFormRoom;
+uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
+  UnitFormCharacter;
 
 {$R *.dfm}
 
@@ -89,6 +90,7 @@ procedure TFormRoomFilter.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   FormRoom.BtFilter.Down := False;
+  FormInvent.BtFilter.Down := False;
 end;
 
 {*******************************************************************************
@@ -105,10 +107,16 @@ Applies the filter
 procedure TFormRoomFilter.BtOKClick(Sender: TObject);
 var
   wGuildID: String;
+  wCharID: String;
 begin
   SaveCurrentFilter;
-  wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
-  FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  if FormRoom.Visible then begin
+    wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
+    FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  end else begin
+    wCharID := FormCharacter.GridChar.Cells[2, FormCharacter.GridChar.Row];
+    FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, FormInvent.TabInvent.TabIndex, GCurrentFilter);
+  end;
 end;
 
 {*******************************************************************************

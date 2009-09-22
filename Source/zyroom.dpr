@@ -25,7 +25,7 @@ program zyroom;
 uses
   Forms,
   UnitFormMain in 'UnitFormMain.pas' {FormMain},
-  UnitFormRoom in 'UnitFormRoom.pas' {FormRoom},
+  UnitFormInvent in 'UnitFormInvent.pas' {FormInvent},
   UnitFormOptions in 'UnitFormOptions.pas' {FormOptions},
   UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter},
   UnitFormProgress in 'UnitFormProgress.pas' {FormProgress},
@@ -34,8 +34,10 @@ uses
   UnitFormConfirmation in 'UnitFormConfirmation.pas' {FormConfirm},
   UnitFormHome in 'UnitFormHome.pas' {FormHome},
   RyzomApi in 'RyzomApi.pas',
+  UnitFormCharacter in 'UnitFormCharacter.pas' {FormCharacter},
+  UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit},
   UnitFormGuild in 'UnitFormGuild.pas' {FormGuild},
-  UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit};
+  UnitFormRoom in 'UnitFormRoom.pas' {FormRoom};
 
 {$R *.res}
 
@@ -47,9 +49,11 @@ begin
   Application.CreateForm(TFormRoomFilter, FormRoomFilter);
   Application.CreateForm(TFormProgress, FormProgress);
   Application.CreateForm(TFormConfirm, FormConfirm);
-  Application.CreateForm(TFormRoom, FormRoom);
+  Application.CreateForm(TFormInvent, FormInvent);
   Application.CreateForm(TFormHome, FormHome);
-  Application.CreateForm(TFormGuild, FormGuild);
+  Application.CreateForm(TFormCharacter, FormCharacter);
   Application.CreateForm(TFormGuildEdit, FormGuildEdit);
+  Application.CreateForm(TFormGuild, FormGuild);
+  Application.CreateForm(TFormRoom, FormRoom);
   Application.Run;
 end.

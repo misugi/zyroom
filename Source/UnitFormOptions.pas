@@ -73,7 +73,8 @@ implementation
 
 uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
   UnitFormGuild, UnitFormGuildEdit, UnitFormMain, UnitFormProgress,
-  UnitFormHome, UnitFormRoom;
+  UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormRoomFilter,
+  UnitFormInvent;
 
 {$R *.dfm}
 
@@ -217,6 +218,9 @@ begin
   TranslateComponent(FormHome);
   TranslateComponent(FormRoom);
   TranslateComponent(FormGuild);
+  TranslateComponent(FormCharacter);
+  TranslateComponent(FormRoomFilter);
+  TranslateComponent(FormInvent);
 
   // Color of the interface
   FormOptions.Color := GConfig.InterfaceColor;
@@ -227,6 +231,9 @@ begin
   FormHome.Color := GConfig.InterfaceColor;
   FormRoom.Color := GConfig.InterfaceColor;
   FormGuild.Color := GConfig.InterfaceColor;
+  FormCharacter.Color := GConfig.InterfaceColor;
+  FormRoomFilter.Color := GConfig.InterfaceColor;
+  FormInvent.Color := GConfig.InterfaceColor;
 
   // String resource file
   if FileExists(GConfig.PackFile) then

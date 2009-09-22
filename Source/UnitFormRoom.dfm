@@ -3,7 +3,7 @@ object FormRoom: TFormRoom
   Top = 282
   Width = 708
   Height = 432
-  Caption = 'Guildes'
+  Caption = 'Room'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,7 +23,7 @@ object FormRoom: TFormRoom
     Height = 13
     Alignment = taRightJustify
     AutoSize = False
-    Caption = 'LbGuildName'
+    Caption = '-'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
