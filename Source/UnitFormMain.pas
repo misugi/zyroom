@@ -36,12 +36,10 @@ resourcestring
   
 type
   TFormMain = class(TForm)
-    ImgLogo: TImage;
     PnContainer: TPanel;
-    BtOptions: TButton;
-    BtGuild: TButton;
     TimerStatus: TTimer;
-    BtCharacter: TButton;
+    PnHeader: TPanel;
+    ImgLogo: TImage;
     ImgAniro: TImage;
     LbAniro: TLabel;
     LbTime: TLabel;
@@ -49,6 +47,9 @@ type
     LbLeanon: TLabel;
     ImgArispotle: TImage;
     LbArispotle: TLabel;
+    BtOptions: TButton;
+    BtGuild: TButton;
+    BtCharacter: TButton;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -180,11 +181,7 @@ Auto-timer to update status and time
 *******************************************************************************}
 procedure TFormMain.TimerStatusTimer(Sender: TObject);
 begin
-  try
-    UpdateStatusAndTime(False);
-  except
-    LbTime.Caption := '-';
-  end;
+  UpdateStatusAndTime(False);
 end;
 
 {*******************************************************************************
@@ -195,69 +192,73 @@ var
   wStream: TStringStream;
   wServerID: String;
 begin
-  if not AOnlyTime then begin
-    GRyzomApi.UpdateStatus;
-
-    // Aniro status
-    case GRyzomApi.AniroStatus of
-      _STATUS_CLOSED: begin
-        ImgAniro.Hint := RS_STATUS_CLOSED;
-        ImgAniro.Picture.Assign(FPngClosed);
-      end;
-      _STATUS_OPEN: begin
-        ImgAniro.Hint := RS_STATUS_OPEN;
-        ImgAniro.Picture.Assign(FPngOpen);
-      end;
-      _STATUS_RESTRICTED: begin
-        ImgAniro.Hint := RS_STATUS_RESTRICTED;
-        ImgAniro.Picture.Assign(FPngRestricted);
-      end;
-    end;
-
-    // Leanon status
-    case GRyzomApi.LeanonStatus of
-      _STATUS_CLOSED: begin
-        ImgLeanon.Hint := RS_STATUS_CLOSED;
-        ImgLeanon.Picture.Assign(FPngClosed);
-      end;
-      _STATUS_OPEN: begin
-        ImgLeanon.Hint := RS_STATUS_OPEN;
-        ImgLeanon.Picture.Assign(FPngOpen);
-      end;
-      _STATUS_RESTRICTED: begin
-        ImgLeanon.Hint := RS_STATUS_RESTRICTED;
-        ImgLeanon.Picture.Assign(FPngRestricted);
-      end;
-    end;
-
-    // Arispotle status
-    case GRyzomApi.ArispotleStatus of
-      _STATUS_CLOSED: begin
-        ImgArispotle.Hint := RS_STATUS_CLOSED;
-        ImgArispotle.Picture.Assign(FPngClosed);
-      end;
-      _STATUS_OPEN: begin
-        ImgArispotle.Hint := RS_STATUS_OPEN;
-        ImgArispotle.Picture.Assign(FPngOpen);
-      end;
-      _STATUS_RESTRICTED: begin
-        ImgArispotle.Hint := RS_STATUS_RESTRICTED;
-        ImgArispotle.Picture.Assign(FPngRestricted);
-      end;
-    end;
-  end;
-
-  // Time
-  wStream := TStringStream.Create('');
   try
-    if FServerLabelSelected = LbAniro then wServerID := _SHARD_ANIRO_ID;
-    if FServerLabelSelected = LbLeanon then wServerID := _SHARD_LEANON_ID;
-    if FServerLabelSelected = LbArispotle then wServerID := _SHARD_ARIPOTLE_ID;
+    if not AOnlyTime then begin
+      GRyzomApi.UpdateStatus;
+
+      // Aniro status
+      case GRyzomApi.AniroStatus of
+        _STATUS_CLOSED: begin
+          ImgAniro.Hint := RS_STATUS_CLOSED;
+          ImgAniro.Picture.Assign(FPngClosed);
+        end;
+        _STATUS_OPEN: begin
+          ImgAniro.Hint := RS_STATUS_OPEN;
+          ImgAniro.Picture.Assign(FPngOpen);
+        end;
+        _STATUS_RESTRICTED: begin
+          ImgAniro.Hint := RS_STATUS_RESTRICTED;
+          ImgAniro.Picture.Assign(FPngRestricted);
+        end;
+      end;
+
+      // Leanon status
+      case GRyzomApi.LeanonStatus of
+        _STATUS_CLOSED: begin
+          ImgLeanon.Hint := RS_STATUS_CLOSED;
+          ImgLeanon.Picture.Assign(FPngClosed);
+        end;
+        _STATUS_OPEN: begin
+          ImgLeanon.Hint := RS_STATUS_OPEN;
+          ImgLeanon.Picture.Assign(FPngOpen);
+        end;
+        _STATUS_RESTRICTED: begin
+          ImgLeanon.Hint := RS_STATUS_RESTRICTED;
+          ImgLeanon.Picture.Assign(FPngRestricted);
+        end;
+      end;
+
+      // Arispotle status
+      case GRyzomApi.ArispotleStatus of
+        _STATUS_CLOSED: begin
+          ImgArispotle.Hint := RS_STATUS_CLOSED;
+          ImgArispotle.Picture.Assign(FPngClosed);
+        end;
+        _STATUS_OPEN: begin
+          ImgArispotle.Hint := RS_STATUS_OPEN;
+          ImgArispotle.Picture.Assign(FPngOpen);
+        end;
+        _STATUS_RESTRICTED: begin
+          ImgArispotle.Hint := RS_STATUS_RESTRICTED;
+          ImgArispotle.Picture.Assign(FPngRestricted);
+        end;
+      end;
+    end;
+
+    // Time
+    wStream := TStringStream.Create('');
+    try
+      if FServerLabelSelected = LbAniro then wServerID := _SHARD_ANIRO_ID;
+      if FServerLabelSelected = LbLeanon then wServerID := _SHARD_LEANON_ID;
+      if FServerLabelSelected = LbArispotle then wServerID := _SHARD_ARIPOTLE_ID;
    
-    GRyzomApi.ApiTime(wServerID, _FORMAT_TXT, wStream);
-    LbTime.Caption := wStream.DataString;
+      GRyzomApi.ApiTime(wServerID, _FORMAT_TXT, wStream);
+      LbTime.Caption := wStream.DataString;
+    finally
+      wStream.Free;
+    end;
   except
-    wStream.Free;
+    LbTime.Caption := '-';
   end;
 end;
 
@@ -267,6 +268,8 @@ Displays the list of guilds
 procedure TFormMain.BtGuildClick(Sender: TObject);
 begin
   ShowMenuForm(FormGuild);
+  BtGuild.Font.Style := [fsBold];
+  BtCharacter.Font.Style := [];
 end;
 
 {*******************************************************************************
@@ -275,6 +278,18 @@ Displays the list of characters
 procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
+  BtGuild.Font.Style := [];
+  BtCharacter.Font.Style := [fsBold];
+end;
+
+{*******************************************************************************
+Displays the home form
+*******************************************************************************}
+procedure TFormMain.ImgLogoClick(Sender: TObject);
+begin
+  ShowMenuForm(FormHome);
+  BtGuild.Font.Style := [];
+  BtCharacter.Font.Style := [];
 end;
 
 {*******************************************************************************
@@ -294,14 +309,6 @@ begin
 
   // Update only the time
   UpdateStatusAndTime(True);
-end;
-
-{*******************************************************************************
-Displays the home form
-*******************************************************************************}
-procedure TFormMain.ImgLogoClick(Sender: TObject);
-begin
-  ShowMenuForm(FormHome);
 end;
 
 {*******************************************************************************

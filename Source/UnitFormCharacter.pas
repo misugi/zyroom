@@ -247,7 +247,7 @@ begin
         GridChar.Cells[0, GridChar.RowCount-1] := GCharacter.GetServerName(wCharList[i]);
         GridChar.Cells[1, GridChar.RowCount-1] := GCharacter.GetCharName(wCharList[i]);
         GridChar.Cells[2, GridChar.RowCount-1] := wCharList[i];
-        if FileExists(wInfoFile) then
+        if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then
           GridChar.Cells[3, GridChar.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile))
         else
           GridChar.Cells[3, GridChar.RowCount-1] := '-';
@@ -261,6 +261,7 @@ begin
         BtUpdate.Enabled := True;
         BtSynchronize.Enabled := True;
         BtDelete.Enabled := True;
+        BtRoom.Enabled := True;
       end;
     finally
       wCharList.Free;
@@ -297,12 +298,7 @@ Selects a guild in the grid
 procedure TFormCharacter.GridCharSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
-  if ARow = 0 then begin
-    CanSelect := False;
-    Exit;
-  end;
-
-  BtRoom.Enabled := GridChar.Cells[3, ARow] <> '-';
+  if ARow = 0 then CanSelect := False;
 end;
 
 {*******************************************************************************
@@ -359,11 +355,10 @@ begin
   FormProgress.ShowFormSynchronizeChar(wCharID);
 
   wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
-  if FileExists(wInfoFile) then begin
+  if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then begin
     wXmlDoc := TXpObjModel.Create(nil);
     try
       GridChar.Cells[3, GridChar.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
-      BtRoom.Enabled := True;
     finally
       wXmlDoc.Free;
     end;
@@ -400,7 +395,7 @@ Double clic on the grid
 *******************************************************************************}
 procedure TFormCharacter.GridCharDblClick(Sender: TObject);
 begin
-  if BtRoom.Enabled then BtRoomClick(BtRoom);
+  BtRoomClick(BtRoom);
 end;
 
 end.

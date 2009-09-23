@@ -259,12 +259,17 @@ begin
         wIconFile := GConfig.GetGuildPath(wGuildList[i]) + _ICON_FILENAME;
         wInfoFile := GConfig.GetGuildPath(wGuildList[i]) + _INFO_FILENAME;
         wPng := TPNGObject.Create;
-        if FileExists(wIconFile) then wPng.LoadFromFile(wIconFile);
+        if FileExists(wIconFile) then begin
+          try
+            wPng.LoadFromFile(wIconFile);
+          except
+          end;
+        end;
         FIconList.Add(wPng);
         GridGuild.RowCount := GridGuild.RowCount + 1;
         GridGuild.Cells[1, GridGuild.RowCount-1] := GGuild.GetGuildName(wGuildList[i]);
         GridGuild.Cells[2, GridGuild.RowCount-1] := wGuildList[i];
-        if FileExists(wInfoFile) then
+        if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then
           GridGuild.Cells[3, GridGuild.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile))
         else
           GridGuild.Cells[3, GridGuild.RowCount-1] := '-';
@@ -278,6 +283,7 @@ begin
         BtUpdate.Enabled := True;
         BtSynchronize.Enabled := True;
         BtDelete.Enabled := True;
+        BtRoom.Enabled := True;
       end;
     finally
       wGuildList.Free;
@@ -314,12 +320,7 @@ Selects a guild in the grid
 procedure TFormGuild.GridGuildSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
-  if ARow = 0 then begin
-    CanSelect := False;
-    Exit;
-  end;
-
-  BtRoom.Enabled := GridGuild.Cells[3, ARow] <> '-';
+  if ARow = 0 then CanSelect := False;
 end;
 
 {*******************************************************************************
@@ -374,27 +375,28 @@ var
   wGuildIcon: String;
   wIconFile: String;
   wInfoFile: String;
-  wStream: TFileStream;
+  wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
 begin
   wGuildID := GridGuild.Cells[2, GridGuild.Row];
   FormProgress.ShowFormSynchronize(wGuildID);
 
   wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
-  if FileExists(wInfoFile) then begin
+  if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then begin
     wXmlDoc := TXpObjModel.Create(nil);
     try
       wXmlDoc.LoadDataSource(wInfoFile);
       wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
       wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
       wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
-      wStream := TFileStream.Create(wIconFile, fmCreate);
+      wStream := TMemoryStream.Create;
       GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
+      wStream.SaveToFile(wIconFile);
       wStream.Free;
       TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
       GridGuild.Cells[1, GridGuild.Row] := wGuildName;
       GridGuild.Cells[3, GridGuild.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
-      BtRoom.Enabled := True;
+      GridGuild.Refresh;
     finally
       wXmlDoc.Free;
     end;
@@ -430,7 +432,7 @@ Double clic on the grid
 *******************************************************************************}
 procedure TFormGuild.GridGuildDblClick(Sender: TObject);
 begin
-  if BtRoom.Enabled then BtRoomClick(BtRoom);
+  BtRoomClick(BtRoom);
 end;
 
 end.

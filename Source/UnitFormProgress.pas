@@ -179,16 +179,18 @@ Guild synchronization
 *******************************************************************************}
 procedure TFormProgress.SynchronizeGuild(AGuildID: String);
 var
-  wXmlFile: TFileStream;
+  wXmlFile: TMemoryStream;
   wGuildKey: String;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
 begin
   wGuildKey := GGuild.GetGuildKey(AGuildID);
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME, fmCreate);
+  wXmlFile := TMemoryStream.Create;
   try
     GRyzomApi.ApiGuild(wGuildKey, wXmlFile);
+    wXmlFile.SaveToFile(GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME);
+    wXmlFile.Position := 0;
     wXmlDoc.LoadStream(wXmlFile);
 
     wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
@@ -208,16 +210,18 @@ Character synchronization
 *******************************************************************************}
 procedure TFormProgress.SynchronizeChar(ACharID: String);
 var
-  wXmlFile: TFileStream;
+  wXmlFile: TMemoryStream;
   wCharKey: String;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
 begin
   wCharKey := GCharacter.GetCharKey(ACharID);
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(GConfig.GetCharPath(ACharID) + _INFO_FILENAME, fmCreate);
+  wXmlFile := TMemoryStream.Create;
   try
     GRyzomApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
+    wXmlFile.SaveToFile(GConfig.GetCharPath(ACharID) + _INFO_FILENAME);
+    wXmlFile.Position := 0;
     wXmlDoc.LoadStream(wXmlFile);
 
     // Room
@@ -371,7 +375,6 @@ begin
 
     SendMessage(FRoom.Handle, WM_SETREDRAW, 0, 0);
     try
-      FRoom.Clear;
       for i := 0 to wItemList.Count - 1 do begin
         if ModalResult = mrCancel then Exit;
 
@@ -412,9 +415,13 @@ var
   wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
+  wInfoFile: String;
 begin
+  FRoom.Clear;
+  wInfoFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
+  if (not FileExists(wInfoFile)) or (MdkFileSize(wInfoFile) = 0) then Exit;
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME, fmOpenRead);
+  wXmlFile := TFileStream.Create(wInfoFile, fmOpenRead);
   try
     wXmlDoc.LoadStream(wXmlFile);
     wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
@@ -437,9 +444,13 @@ var
   wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
+  wInfoFile: String;
 begin
+  FRoom.Clear;
+  wInfoFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
+  if (not FileExists(wInfoFile)) or (MdkFileSize(wInfoFile) = 0) then Exit;
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(GConfig.GetCharPath(ACharID) + _INFO_FILENAME, fmOpenRead);
+  wXmlFile := TFileStream.Create(wInfoFile, fmOpenRead);
   try
     wXmlDoc.LoadStream(wXmlFile);
     wNodeList := nil;

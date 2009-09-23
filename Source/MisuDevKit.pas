@@ -18,6 +18,7 @@ function MdkRemoveFiles(ADirectory: String; AFilter: String; SudDir: Boolean): B
 function MdkRemoveDir(ADirectory: String): Boolean;
 function MdkBoolToInteger(AValue: Boolean): Integer;
 function MdkFileVersionInfo(FileName: String; InfoType: TFileVersionInfo): String;
+function MdkFileSize(FileName: String): DWORD;
 
 procedure MdkWriteFile(AFileName: String; ABuffer: String; ANewLine: Boolean = True; AOverwrite: Boolean = False);
 
@@ -49,7 +50,7 @@ begin
 end;
 
 {*******************************************************************************
-Return system directory
+Returns a system directory
 *******************************************************************************}
 function MdkGetSystemDir(AFolder: Cardinal = CSIDL_DRIVES): String;
 var
@@ -60,7 +61,7 @@ begin
 end;
 
 {*******************************************************************************
-Return file date
+Returns the date of a file
 *******************************************************************************}
 function MdkGetFileDate(FileName: String): TDateTime;
 begin
@@ -68,7 +69,7 @@ begin
 end;
 
 {*******************************************************************************
-Retourne la liste des fichiers présents dans un répertoire
+Returns list of files than exists in a directory
 *******************************************************************************}
 function MdkListFiles(ADirectory: String; AFilter: String; SubDir: Boolean; AList: TStringList): Integer;
 var
@@ -102,7 +103,7 @@ begin
 end;
 
 {*******************************************************************************
-Supprime les fichiers d'un répertoire
+Deletes all files in a directory
 *******************************************************************************}
 function MdkRemoveFiles(ADirectory: String; AFilter: String; SudDir: Boolean): Boolean;
 var
@@ -122,7 +123,7 @@ begin
 end;
 
 {*******************************************************************************
-Supprime un répertoire
+Deletes a directory
 *******************************************************************************}
 function MdkRemoveDir(ADirectory: String): Boolean;
 begin
@@ -131,7 +132,7 @@ begin
 end;
 
 {*******************************************************************************
-Retourne 0 si False et 1 si True
+Returns 0 if false and 1 if true
 *******************************************************************************}
 function MdkBoolToInteger(AValue: Boolean): Integer;
 begin
@@ -139,7 +140,7 @@ begin
 end;
 
 {*******************************************************************************
-Ecrit dans un fichier texte
+Writes in a text file
 *******************************************************************************}
 procedure MdkWriteFile(AFileName: String; ABuffer: String; ANewLine: Boolean; AOverwrite: Boolean);
 var
@@ -159,7 +160,7 @@ begin
 end;
 
 {*******************************************************************************
-Retourne les informations de version d'un fichier
+Returns version information of a file
 *******************************************************************************}
 function MdkFileVersionInfo(FileName: String; InfoType: TFileVersionInfo): String;
 type
@@ -222,6 +223,21 @@ begin
           Result := pcValue;
     FreeMem(pcBuf,iAppSize);
   end;
+end;
+
+{*******************************************************************************
+Returns the size of a file
+*******************************************************************************}
+function MdkFileSize(FileName: String): DWORD;
+var
+  wHandle: THandle;
+begin
+  wHandle := Windows.CreateFile(PChar(FileName), 0, 0, nil, OPEN_EXISTING, 0, 0);
+  if wHandle <> INVALID_HANDLE_VALUE then begin
+      Result := Windows.GetFileSize(wHandle, nil);
+      CloseHandle(wHandle);
+    end else
+      Result := INVALID_FILE_SIZE;
 end;
 
 end.

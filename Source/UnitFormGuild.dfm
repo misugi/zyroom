@@ -2,7 +2,7 @@ object FormGuild: TFormGuild
   Left = 345
   Top = 282
   Width = 708
-  Height = 432
+  Height = 425
   Caption = 'Guildes'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,14 +16,14 @@ object FormGuild: TFormGuild
   OnResize = FormResize
   DesignSize = (
     700
-    405)
+    398)
   PixelsPerInch = 96
   TextHeight = 13
   object GridGuild: TStringGrid
     Left = 3
     Top = 28
     Width = 694
-    Height = 374
+    Height = 367
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColCount = 3
     DefaultColWidth = 36

@@ -2,7 +2,7 @@ object FormRoom: TFormRoom
   Left = 345
   Top = 282
   Width = 708
-  Height = 432
+  Height = 425
   Caption = 'Room'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object FormRoom: TFormRoom
   OnShow = FormShow
   DesignSize = (
     700
-    405)
+    398)
   PixelsPerInch = 96
   TextHeight = 13
   object LbGuildName: TLabel
@@ -63,7 +63,7 @@ object FormRoom: TFormRoom
     Left = 3
     Top = 28
     Width = 694
-    Height = 374
+    Height = 367
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Anchors = [akLeft, akTop, akRight, akBottom]

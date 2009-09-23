@@ -2,7 +2,7 @@ object FormInvent: TFormInvent
   Left = 345
   Top = 282
   Width = 708
-  Height = 432
+  Height = 425
   Caption = 'Inventaire'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object FormInvent: TFormInvent
   OnShow = FormShow
   DesignSize = (
     700
-    405)
+    398)
   PixelsPerInch = 96
   TextHeight = 13
   object LbCharName: TLabel
@@ -63,26 +63,26 @@ object FormInvent: TFormInvent
     Left = 0
     Top = 29
     Width = 700
-    Height = 376
+    Height = 370
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     Tabs.Strings = (
       'Appartement'
       'Sac'
-      'Mektoub 1'
-      'Mektoub 2'
-      'Mektoub 3'
-      'Monture')
+      'Animal 1'
+      'Animal 2'
+      'Animal 3'
+      'Animal 4')
     TabIndex = 0
     OnChange = TabInventChange
     DesignSize = (
       700
-      376)
+      370)
     object CharInvent: TScrollRoom
       Left = 5
       Top = 25
       Width = 690
-      Height = 346
+      Height = 340
       HorzScrollBar.Tracking = True
       VertScrollBar.Tracking = True
       Anchors = [akLeft, akTop, akRight, akBottom]
