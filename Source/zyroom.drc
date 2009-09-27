@@ -11,16 +11,18 @@
 #define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 65009
 #define UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION 65010
 #define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 65011
-#define UnitFormGuild_RS_NEW_GUILD 65012
-#define UnitFormGuild_RS_CHANGE_KEY 65013
-#define UnitFormGuild_RS_COL_GUILD_LOGO 65014
-#define UnitFormGuild_RS_COL_GUILD_NAME 65015
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 65016
-#define UnitFormGuild_RS_COL_LAST_SYNCHRONIZATION 65017
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 65018
-#define UnitFormMain_RS_STATUS_CLOSED 65019
-#define UnitFormMain_RS_STATUS_OPEN 65020
-#define UnitFormMain_RS_STATUS_RESTRICTED 65021
+#define UnitFormCharacter_RS_CHAR_KEY 65012
+#define UnitFormGuild_RS_NEW_GUILD 65013
+#define UnitFormGuild_RS_CHANGE_KEY 65014
+#define UnitFormGuild_RS_COL_GUILD_LOGO 65015
+#define UnitFormGuild_RS_COL_GUILD_NAME 65016
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 65017
+#define UnitFormGuild_RS_COL_LAST_SYNCHRONIZATION 65018
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 65019
+#define UnitFormGuild_RS_GUILD_KEY 65020
+#define UnitFormMain_RS_STATUS_CLOSED 65021
+#define UnitFormMain_RS_STATUS_OPEN 65022
+#define UnitFormMain_RS_STATUS_RESTRICTED 65023
 #define pnglang_EPNGUnknownCriticalChunkText 65024
 #define pnglang_EPNGUnknownCompressionText 65025
 #define pnglang_EPNGUnknownInterlaceText 65026
@@ -539,6 +541,7 @@ BEGIN
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER,	"Numéro"
 	UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION,	"Synchronisation"
 	UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer le personnage sélectionné ?"
+	UnitFormCharacter_RS_CHAR_KEY,	"Clé de personnage :"
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
 	UnitFormGuild_RS_CHANGE_KEY,	"Changement de clé"
 	UnitFormGuild_RS_COL_GUILD_LOGO,	"Blason"
@@ -546,6 +549,7 @@ BEGIN
 	UnitFormGuild_RS_COL_GUILD_NUMBER,	"Numéro"
 	UnitFormGuild_RS_COL_LAST_SYNCHRONIZATION,	"Synchronisation"
 	UnitFormGuild_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?"
+	UnitFormGuild_RS_GUILD_KEY,	"Clé de guilde :"
 	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
 	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"

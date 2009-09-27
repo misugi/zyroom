@@ -52,6 +52,8 @@ type
     PnColor: TPanel;
     Label1: TLabel;
     BtApply: TButton;
+    CbSavePosition: TCheckBox;
+    CbAutoOpenFilter: TCheckBox;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -163,6 +165,10 @@ begin
   EdProxyPort.Value := GConfig.ProxyPort;
   EdProxyUsername.Text := GConfig.ProxyUsername;
   EdProxyPassword.Text := GConfig.ProxyPassword;
+
+  // Positions
+  CbSavePosition.Checked := GConfig.SavePosition;
+  CbAutoOpenFilter.Checked := GConfig.AutoShowFilter;
 end;
 
 {*******************************************************************************
@@ -185,6 +191,10 @@ begin
   GConfig.ProxyPort := EdProxyPort.Value;
   GConfig.ProxyUsername := EdProxyUsername.Text;
   GConfig.ProxyPassword := EdProxyUsername.Text;
+
+  // Positions
+  GConfig.SavePosition := CbSavePosition.Checked;
+  GConfig.AutoShowFilter := CbAutoOpenFilter.Checked;
 end;
 
 {*******************************************************************************
@@ -211,6 +221,8 @@ end;
 Applies settings of the application
 *******************************************************************************}
 procedure TFormOptions.ApplyConfig;
+var
+  wPos: Integer;
 begin
   // Language of the interface
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
@@ -252,6 +264,14 @@ begin
       EdProxyPassword.Text);
   end else begin
     GRyzomApi.SetProxyParameters('', 0, '', '');
+  end;
+
+  // Position of the windows
+  if GConfig.SavePosition then begin
+    FormMain.Left := GConfig.PosMainLeft;
+    FormMain.Top := GConfig.PosMainTop;
+    FormRoomFilter.Left := GConfig.PosFilterLeft;
+    FormRoomFilter.Top := GConfig.PosFilterTop;
   end;
 end;
 

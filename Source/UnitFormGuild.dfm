@@ -62,34 +62,24 @@ object FormGuild: TFormGuild
     TabOrder = 2
     OnClick = BtUpdateClick
   end
-  object BtSynchronize: TButton
-    Left = 173
-    Top = 2
-    Width = 75
-    Height = 23
-    Caption = 'Synchroniser'
-    Enabled = False
-    TabOrder = 3
-    OnClick = BtSynchronizeClick
-  end
   object BtDelete: TButton
-    Left = 256
+    Left = 173
     Top = 2
     Width = 75
     Height = 23
     Caption = 'Supprimer'
     Enabled = False
-    TabOrder = 4
+    TabOrder = 3
     OnClick = BtDeleteClick
   end
   object BtRoom: TButton
-    Left = 339
+    Left = 256
     Top = 2
     Width = 75
     Height = 23
     Caption = 'Coffre'
     Enabled = False
-    TabOrder = 5
+    TabOrder = 4
     OnClick = BtRoomClick
   end
 end

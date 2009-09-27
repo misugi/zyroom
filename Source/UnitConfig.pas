@@ -25,7 +25,8 @@ unit UnitConfig;
 interface
 
 uses
-  Classes, IniFiles, SysUtils, LbCipher, LbClass, LbString, XpDOM, Graphics;
+  Classes, IniFiles, SysUtils, LbCipher, LbClass, LbString, XpDOM, Graphics,
+  Forms;
 
 resourcestring
   RS_ERROR_GUILD_ALREADY_EXISTS = 'La guilde existe déjà';
@@ -50,6 +51,7 @@ const
   
   _SECTION_GENERAL = 'GENERAL';
   _SECTION_PROXY = 'PROXY';
+  _SECTION_POSITION = 'POSITION';
   _KEY_LANGUAGE = 'Language';
   _KEY_PACKFILE = 'PackFile';
   _KEY_PROXY_ENABLED = 'Enabled';
@@ -59,6 +61,12 @@ const
   _KEY_PROXY_USER = 'Username';
   _KEY_PROXY_PASSWORD = 'Password';
   _KEY_INTERFACE_COLOR = 'Color';
+  _KEY_POS_AUTOSAVE = 'AutoSave';
+  _KEY_POS_MAIN_LEFT = 'MainLeft';
+  _KEY_POS_MAIN_TOP = 'MainTop';
+  _KEY_POS_FILTER_LEFT = 'FilterLeft';
+  _KEY_POS_FILTER_TOP = 'FilterTop';
+  _KEY_AUTO_SHOW_FILTER = 'AutoShowFilter';
 
   _GUILD_FILENAME = 'guild.ini';
   _CHARACTER_FILENAME = 'character.ini';
@@ -143,6 +151,18 @@ type
     procedure SetProxyUsername(const Value: String);
     procedure SetProxyBasicAuth(const Value: Boolean);
     procedure SetInterfaceColor(const Value: TColor);
+    function GetFilterLeft: Integer;
+    function GetFilterTop: Integer;
+    function GetMainLeft: Integer;
+    function GetMainTop: Integer;
+    procedure SetFilterLeft(const Value: Integer);
+    procedure SetFilterTop(const Value: Integer);
+    procedure SetMainLeft(const Value: Integer);
+    procedure SetMainTop(const Value: Integer);
+    function GetSavePosition: Boolean;
+    procedure SetSavePosition(const Value: Boolean);
+    function GetAutoShowFilter: Boolean;
+    procedure SetAutoShowFilter(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -161,6 +181,13 @@ type
     property ProxyPort: Integer read GetProxyPort write SetProxyPort;
     property ProxyUsername: String read GetProxyUsername write SetProxyUsername;
     property ProxyPassword: String read GetProxyPassword write SetProxyPassword;
+
+    property SavePosition: Boolean read GetSavePosition write SetSavePosition;
+    property PosMainLeft: Integer read GetMainLeft write SetMainLeft;
+    property PosMainTop: Integer read GetMainTop write SetMainTop;
+    property PosFilterLeft: Integer read GetFilterLeft write SetFilterLeft;
+    property PosFilterTop: Integer read GetFilterTop write SetFilterTop;
+    property AutoShowFilter: Boolean read GetAutoShowFilter write SetAutoShowFilter;
 
     function GetGuildPath(AGuildID: String): String;
     function GetGuildRoomPath(AGuildID: String): String;
@@ -591,6 +618,102 @@ begin
   FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
   FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
   FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
+end;
+
+{*******************************************************************************
+Returns the left position of the Filter window
+*******************************************************************************}
+function TConfig.GetFilterLeft: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_FILTER_LEFT, 0);
+end;
+
+{*******************************************************************************
+Returns the top position of the Filter window
+*******************************************************************************}
+function TConfig.GetFilterTop: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_FILTER_TOP, 0);
+end;
+
+{*******************************************************************************
+Returns the left position of the Main window
+*******************************************************************************}
+function TConfig.GetMainLeft: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_MAIN_LEFT, 0);
+end;
+
+{*******************************************************************************
+Returns the top position of the Main window
+*******************************************************************************}
+function TConfig.GetMainTop: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_MAIN_TOP, 0);
+end;
+
+{*******************************************************************************
+Saves the left position of the Filter window
+*******************************************************************************}
+procedure TConfig.SetFilterLeft(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_FILTER_LEFT, Value);
+end;
+
+{*******************************************************************************
+Saves the top position of the Filter window
+*******************************************************************************}
+procedure TConfig.SetFilterTop(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_FILTER_TOP, Value);
+end;
+
+{*******************************************************************************
+Saves the left position of the Main window
+*******************************************************************************}
+procedure TConfig.SetMainLeft(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_MAIN_LEFT, Value);
+end;
+
+{*******************************************************************************
+Saves the top position of the Main window
+*******************************************************************************}
+procedure TConfig.SetMainTop(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_MAIN_TOP, Value);
+end;
+
+{*******************************************************************************
+Returns the save position option
+*******************************************************************************}
+function TConfig.GetSavePosition: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_POSITION, _KEY_POS_AUTOSAVE, False);
+end;
+
+{*******************************************************************************
+Changes the save position option
+*******************************************************************************}
+procedure TConfig.SetSavePosition(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_POSITION, _KEY_POS_AUTOSAVE, Value);
+end;
+
+{*******************************************************************************
+Returns the option to show automatically the filter window
+*******************************************************************************}
+function TConfig.GetAutoShowFilter: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_GENERAL, _KEY_AUTO_SHOW_FILTER, False);
+end;
+
+{*******************************************************************************
+Changes the option to show automatically the filter window
+*******************************************************************************}
+procedure TConfig.SetAutoShowFilter(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_GENERAL, _KEY_AUTO_SHOW_FILTER, Value);
 end;
 
 end.

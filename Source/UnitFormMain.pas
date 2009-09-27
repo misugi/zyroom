@@ -59,6 +59,7 @@ type
     procedure LbServerClick(Sender: TObject);
     procedure ImgLogoClick(Sender: TObject);
     procedure BtCharacterClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
@@ -77,7 +78,7 @@ var
 implementation
 
 uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
-  UnitFormCharacter, UnitFormInvent;
+  UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter;
 
 {$R *.dfm}
 
@@ -101,6 +102,10 @@ begin
   FPngClosed.LoadFromResourceName(HInstance, _RES_CLOSED);
   FPngOpen.LoadFromResourceName(HInstance, _RES_OPEN);
   FPngRestricted.LoadFromResourceName(HInstance, _RES_RESTRICTED);
+
+  // Default position
+  Left := (Screen.Width - Self.Width) div 2;
+  Top := (Screen.Height - Self.Height) div 2;
 
   FCurrentForm := nil;
 end;
@@ -149,6 +154,17 @@ begin
 
   // Update the status and time
   UpdateStatusAndTime(False);
+end;
+
+{*******************************************************************************
+Closes the window
+*******************************************************************************}
+procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  GConfig.PosMainLeft := FormMain.Left;
+  GConfig.PosMainTop := FormMain.Top;
+  GConfig.PosFilterLeft := FormRoomFilter.Left;
+  GConfig.PosFilterTop := FormRoomFilter.Top;
 end;
 
 {*******************************************************************************

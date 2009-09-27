@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 263
+  ClientHeight = 348
   ClientWidth = 389
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     389
-    263)
+    348)
   PixelsPerInch = 96
   TextHeight = 13
   object LbLanguage: TLabel
@@ -57,6 +57,7 @@ object FormOptions: TFormOptions
     Top = 49
     Width = 297
     Height = 21
+    Color = clBtnFace
     ReadOnly = True
     TabOrder = 1
     OnChange = CmbLanguageChange
@@ -81,7 +82,7 @@ object FormOptions: TFormOptions
   end
   object BtOK: TButton
     Left = 143
-    Top = 236
+    Top = 321
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -93,7 +94,7 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TButton
     Left = 224
-    Top = 236
+    Top = 321
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -199,7 +200,7 @@ object FormOptions: TFormOptions
   end
   object BtApply: TButton
     Left = 305
-    Top = 236
+    Top = 321
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -207,6 +208,24 @@ object FormOptions: TFormOptions
     Enabled = False
     TabOrder = 8
     OnClick = BtApplyClick
+  end
+  object CbSavePosition: TCheckBox
+    Left = 8
+    Top = 237
+    Width = 281
+    Height = 17
+    Caption = 'Sauvegarder la position des fen'#234'tres'
+    TabOrder = 9
+    OnClick = CbProxyEnabledClick
+  end
+  object CbAutoOpenFilter: TCheckBox
+    Left = 8
+    Top = 257
+    Width = 281
+    Height = 17
+    Caption = 'Ouvrir automatiquement la fen'#234'tre de filtre'
+    TabOrder = 10
+    OnClick = CbProxyEnabledClick
   end
   object OdBrowsePackFile: TOpenDialog
     Filter = 'Fichiers pack (*.pack)|*.pack|Tous les fichiers (*.*)|*.*'

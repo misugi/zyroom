@@ -38,6 +38,7 @@ resourcestring
   RS_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
   RS_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
+  RS_GUILD_KEY = 'Clé de guilde :';
 
 type
   TPublicStringGrid = class(TCustomGrid); 
@@ -46,7 +47,6 @@ type
     GridGuild: TStringGrid;
     BtUpdate: TButton;
     BtNew: TButton;
-    BtSynchronize: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
     procedure FormCreate(Sender: TObject);
@@ -62,13 +62,14 @@ type
     procedure GridGuildSelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
     procedure BtDeleteClick(Sender: TObject);
-    procedure BtSynchronizeClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure GridGuildDblClick(Sender: TObject);
   private
     FIconList: TObjectList;
     procedure LoadGrid;
+    procedure Synchronize;
+    procedure Room;
   public
   end;
 
@@ -174,6 +175,7 @@ var
   wIconFile: String;
 begin
   FormGuildEdit.Caption := RS_NEW_GUILD;
+  FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
   FormGuildEdit.EdKey.Text := '';
   if FormGuildEdit.ShowModal = mrOk then begin
     wGuildKey := FormGuildEdit.EdKey.Text;
@@ -216,6 +218,7 @@ begin
   wGuildID := GridGuild.Cells[2, GridGuild.Row];
   wGuildKey := GGuild.GetGuildKey(wGuildID);
   FormGuildEdit.Caption := RS_CHANGE_KEY;
+  FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
   FormGuildEdit.EdKey.Text := wGuildKey;
   if FormGuildEdit.ShowModal = mrOk then begin
     wGuildKey := FormGuildEdit.EdKey.Text;
@@ -281,7 +284,6 @@ begin
       if GridGuild.RowCount > 1 then begin
         GridGuild.Row := 1;
         BtUpdate.Enabled := True;
-        BtSynchronize.Enabled := True;
         BtDelete.Enabled := True;
         BtRoom.Enabled := True;
       end;
@@ -350,7 +352,6 @@ begin
       if GridGuild.RowCount = 1 then begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
-        BtSynchronize.Enabled := False;
         BtRoom.Enabled := False;
       end;
     finally
@@ -366,9 +367,56 @@ begin
 end;
 
 {*******************************************************************************
-Synchronizes the selected guild
+Displays information of the selected guild
 *******************************************************************************}
-procedure TFormGuild.BtSynchronizeClick(Sender: TObject);
+procedure TFormGuild.BtRoomClick(Sender: TObject);
+begin
+  try
+    Synchronize;
+  except
+    on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
+  end;
+  Room;
+end;
+
+{*******************************************************************************
+Resize the window
+*******************************************************************************}
+procedure TFormGuild.FormResize(Sender: TObject);
+begin
+  GridGuild.ColWidths[1] := GridGuild.Width - GridGuild.ColWidths[0] - GridGuild.ColWidths[2] - GridGuild.ColWidths[3] - 7;
+end;
+
+{*******************************************************************************
+Double clic on the grid
+*******************************************************************************}
+procedure TFormGuild.GridGuildDblClick(Sender: TObject);
+begin
+  BtRoomClick(BtRoom);
+end;
+
+{*******************************************************************************
+Display room
+*******************************************************************************}
+procedure TFormGuild.Room;
+var
+  wGuildID: String;
+begin
+  FormMain.ShowMenuForm(FormRoom);
+  wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
+  GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  FormRoom.LbGuildName.Caption := Format('%s (%d)', [GridGuild.Cells[1, GridGuild.Row], FormRoom.GuildRoom.ControlCount]);
+  if GConfig.AutoShowFilter then begin
+    FormRoom.BtFilter.Down := True;
+    FormRoom.BtFilter.Click;
+  end;
+end;
+
+{*******************************************************************************
+Synchronization
+*******************************************************************************}
+procedure TFormGuild.Synchronize;
 var
   wGuildID: String;
   wGuildName: String;
@@ -403,36 +451,6 @@ begin
   end else begin
     GridGuild.Cells[3, GridGuild.Row] := '-';
   end;
-end;
-
-{*******************************************************************************
-Displays information of the selected guild
-*******************************************************************************}
-procedure TFormGuild.BtRoomClick(Sender: TObject);
-var
-  wGuildID: String;
-begin
-  FormMain.ShowMenuForm(FormRoom);
-  wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
-  GRyzomApi.SetDefaultFilter(GCurrentFilter);
-  FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
-  FormRoom.LbGuildName.Caption := Format('%s (%d)', [GridGuild.Cells[1, GridGuild.Row], FormRoom.GuildRoom.ControlCount]);
-end;
-
-{*******************************************************************************
-Resize the window
-*******************************************************************************}
-procedure TFormGuild.FormResize(Sender: TObject);
-begin
-  GridGuild.ColWidths[1] := GridGuild.Width - GridGuild.ColWidths[0] - GridGuild.ColWidths[2] - GridGuild.ColWidths[3] - 7;
-end;
-
-{*******************************************************************************
-Double clic on the grid
-*******************************************************************************}
-procedure TFormGuild.GridGuildDblClick(Sender: TObject);
-begin
-  BtRoomClick(BtRoom);
 end;
 
 end.

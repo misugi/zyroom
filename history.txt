@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 1.0.2 (2009-09-27)
+New: option to save position of windows
+New: option to automatically show the Filter window
+Change: button "Synchronize" was deleted, the synchronization is automatic when viewing the room or inventory
+Change: gray for the background color of "string_client.pack" zone because is read-only
+Fixed: some translation errors
+
 # version 1.0.1 (2009-09-24)
 New: bold font on the active button
 Change: "Room" button is now always enabled
@@ -19,6 +26,6 @@ Fixed: default selection of the tab for character inventory is resolved !
 Fixed: proxy activation is resolved.
 
 # version 0.0.2 (2009-09-22)
-You can manage characters now !
-The color for the filter windows is resolved.
-The state of the "Room" button is resolved.
+New: you can manage characters now !
+Fixed: the color for the filter windows is resolved.
+Fixed: the state of the "Room" button is resolved.

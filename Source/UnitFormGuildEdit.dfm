@@ -3,7 +3,7 @@ object FormGuildEdit: TFormGuildEdit
   Top = 457
   BorderStyle = bsDialog
   ClientHeight = 68
-  ClientWidth = 289
+  ClientWidth = 320
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,19 +14,19 @@ object FormGuildEdit: TFormGuildEdit
   Position = poMainFormCenter
   OnShow = FormShow
   DesignSize = (
-    289
+    320
     68)
   PixelsPerInch = 96
   TextHeight = 13
   object LbKey: TLabel
     Left = 8
     Top = 16
-    Width = 67
+    Width = 95
     Height = 13
-    Caption = 'Cl'#233' de guilde :'
+    Caption = 'Cl'#233' de personnage :'
   end
   object ImgProfilePage: TImage
-    Left = 261
+    Left = 292
     Top = 10
     Width = 24
     Height = 24
@@ -71,15 +71,15 @@ object FormGuildEdit: TFormGuildEdit
     OnClick = ImgProfilePageClick
   end
   object EdKey: TEdit
-    Left = 92
+    Left = 112
     Top = 12
-    Width = 165
+    Width = 176
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
   end
   object BtOK: TButton
-    Left = 128
+    Left = 159
     Top = 40
     Width = 75
     Height = 23
@@ -90,7 +90,7 @@ object FormGuildEdit: TFormGuildEdit
     TabOrder = 1
   end
   object BtCancel: TButton
-    Left = 210
+    Left = 241
     Top = 40
     Width = 75
     Height = 23

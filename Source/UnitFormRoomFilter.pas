@@ -81,6 +81,9 @@ Creates the form
 *******************************************************************************}
 procedure TFormRoomFilter.FormCreate(Sender: TObject);
 begin
+  // Default position
+  Left := (Screen.Width - Self.Width) div 2;
+  Top := (Screen.Height - Self.Height) div 2;
 end;
 
 {*******************************************************************************

@@ -38,6 +38,7 @@ resourcestring
   RS_CHAR_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
   RS_CHAR_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer le personnage sélectionné ?';
   RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
+  RS_CHAR_KEY = 'Clé de personnage :';
 
 type
   TPublicStringGrid = class(TCustomGrid); 
@@ -46,7 +47,6 @@ type
     GridChar: TStringGrid;
     BtUpdate: TButton;
     BtNew: TButton;
-    BtSynchronize: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
     procedure FormCreate(Sender: TObject);
@@ -62,12 +62,13 @@ type
     procedure GridCharSelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
     procedure BtDeleteClick(Sender: TObject);
-    procedure BtSynchronizeClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure GridCharDblClick(Sender: TObject);
   private
     procedure LoadGrid;
+    procedure Synchronize;
+    procedure Room;
   public
   end;
 
@@ -165,6 +166,7 @@ var
   wXmlDoc: TXpObjModel;
 begin
   FormGuildEdit.Caption := RS_CHAR_NEW_CHARACTER;
+  FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
   FormGuildEdit.EdKey.Text := '';
   if FormGuildEdit.ShowModal = mrOk then begin
     wCharKey := FormGuildEdit.EdKey.Text;
@@ -204,6 +206,7 @@ begin
   wCharID := GridChar.Cells[2, GridChar.Row];
   wCharKey := GCharacter.GetCharKey(wCharID);
   FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
+  FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
   FormGuildEdit.EdKey.Text := wCharKey;
   if FormGuildEdit.ShowModal = mrOk then begin
     wCharKey := FormGuildEdit.EdKey.Text;
@@ -259,7 +262,6 @@ begin
       if GridChar.RowCount > 1 then begin
         GridChar.Row := 1;
         BtUpdate.Enabled := True;
-        BtSynchronize.Enabled := True;
         BtDelete.Enabled := True;
         BtRoom.Enabled := True;
       end;
@@ -328,7 +330,6 @@ begin
       if GridChar.RowCount = 1 then begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
-        BtSynchronize.Enabled := False;
         BtRoom.Enabled := False;
       end;
     finally
@@ -343,9 +344,57 @@ begin
 end;
 
 {*******************************************************************************
-Synchronizes the selected guild
+Displays information of the selected guild
 *******************************************************************************}
-procedure TFormCharacter.BtSynchronizeClick(Sender: TObject);
+procedure TFormCharacter.BtRoomClick(Sender: TObject);
+begin
+  try
+    Synchronize;
+  except
+    on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
+  end;
+  Room;
+end;
+
+{*******************************************************************************
+Resize the window
+*******************************************************************************}
+procedure TFormCharacter.FormResize(Sender: TObject);
+begin
+  GridChar.ColWidths[1] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[2] - GridChar.ColWidths[3] - 7;
+end;
+
+{*******************************************************************************
+Double clic on the grid
+*******************************************************************************}
+procedure TFormCharacter.GridCharDblClick(Sender: TObject);
+begin
+  BtRoomClick(BtRoom);
+end;
+
+{*******************************************************************************
+Display inventory
+*******************************************************************************}
+procedure TFormCharacter.Room;
+var
+  wCharID: String;
+begin
+  FormInvent.TabInvent.TabIndex := _INVENT_BAG;
+  FormMain.ShowMenuForm(FormInvent);
+  wCharID := Self.GridChar.Cells[2, Self.GridChar.Row];
+  GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
+  FormInvent.LbCharName.Caption := Format('%s (%d)', [GridChar.Cells[1, GridChar.Row], FormInvent.CharInvent.ControlCount]);
+  if GConfig.AutoShowFilter then begin
+    FormInvent.BtFilter.Down := True;
+    FormInvent.BtFilter.Click;
+  end;
+end;
+
+{*******************************************************************************
+Synchronization
+*******************************************************************************}
+procedure TFormCharacter.Synchronize;
 var
   wCharID: String;
   wInfoFile: String;
@@ -365,37 +414,6 @@ begin
   end else begin
     GridChar.Cells[3, GridChar.Row] := '-';
   end;
-end;
-
-{*******************************************************************************
-Displays information of the selected guild
-*******************************************************************************}
-procedure TFormCharacter.BtRoomClick(Sender: TObject);
-var
-  wCharID: String;
-begin
-  FormInvent.TabInvent.TabIndex := _INVENT_BAG;
-  FormMain.ShowMenuForm(FormInvent);
-  wCharID := Self.GridChar.Cells[2, Self.GridChar.Row];
-  GRyzomApi.SetDefaultFilter(GCurrentFilter);
-  FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
-  FormInvent.LbCharName.Caption := Format('%s (%d)', [GridChar.Cells[1, GridChar.Row], FormInvent.CharInvent.ControlCount]);
-end;
-
-{*******************************************************************************
-Resize the window
-*******************************************************************************}
-procedure TFormCharacter.FormResize(Sender: TObject);
-begin
-  GridChar.ColWidths[1] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[2] - GridChar.ColWidths[3] - 7;
-end;
-
-{*******************************************************************************
-Double clic on the grid
-*******************************************************************************}
-procedure TFormCharacter.GridCharDblClick(Sender: TObject);
-begin
-  BtRoomClick(BtRoom);
 end;
 
 end.
