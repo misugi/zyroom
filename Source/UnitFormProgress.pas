@@ -27,7 +27,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, XpDOM, ExtCtrls, ScrollRoom, ItemImage,
-  pngimage, UnitRyzom, regexpr;
+  pngimage, UnitRyzom, regexpr, SyncObjs;
 
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
@@ -48,14 +48,25 @@ const
   _INVENT_ROOM = 5;
   
 type
+  TGetItemThread = class(TThread)
+  private
+    FNode: TXpNode;
+    FStoragePath: String;
+  public
+    constructor Create(ANode: TXpNode; AStoragePath: String);
+    procedure Execute; override;
+  end;
+  
   TFormProgress = class(TForm)
     ProgressBar: TProgressBar;
     LbProgress: TLabel;
     TimerStart: TTimer;
-    BtNo: TButton;
+    BtCancel: TButton;
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure TimerStartTimer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FEnabled: Boolean;
     FProcessingType: Integer;
@@ -81,12 +92,37 @@ type
 
 var
   FormProgress: TFormProgress;
+  GSection: TCriticalSection;
+  GEvent: TEvent;
+  GThreadCount: Integer;
+  GStrings: TStringList;
 
 implementation
 
 uses UnitConfig, RyzomApi, MisuDevKit, Math;
 
 {$R *.dfm}
+
+{*******************************************************************************
+Creates the form
+*******************************************************************************}
+procedure TFormProgress.FormCreate(Sender: TObject);
+begin
+  GStrings := TStringList.Create;
+  GSection := TCriticalSection.Create;
+  GEvent := TEvent.Create(nil, True, False, 'synchronization');
+  GEvent.ResetEvent;
+end;
+
+{*******************************************************************************
+Destroys the form
+*******************************************************************************}
+procedure TFormProgress.FormDestroy(Sender: TObject);
+begin
+  GStrings.Free;
+  GSection.Free;
+  GEvent.Free;
+end;
 
 {*******************************************************************************
 Closes the form
@@ -122,55 +158,42 @@ Get items and save image files
 procedure TFormProgress.GetItem(ANodeList: TXpNodeList;
   AStoragePath: String);
 var
-  i, j: Integer;
+  i: Integer;
+  wThread: TGetItemThread;
   wItemName: String;
-  wItemColor: TItemColor;
-  wItemQuality: Integer;
-  wItemSize: Integer;
-  wItemSap: Integer;
-  wItemDestroyed: Boolean;
-  wItemFileName: String;
-  wPngCheck: Boolean;
-  wPng: TPNGObject;
-  wIconFile: TMemoryStream;
 begin
-  wPng := TPNGObject.Create;
-  try
-    for i := 0 to ANodeList.Length - 1 do begin
-      if ModalResult = mrCancel then Exit;
+  GThreadCount := 0;
+  i := 0;
+  while i < ANodeList.Length do begin
+    if ModalResult = mrCancel then Break;
 
-      GRyzomApi.GetItemInfoFromXML(ANodeList.Item(i), wItemName, wItemColor,
-        wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName);
-      if not FileExists(AStoragePath + wItemFileName) then begin
-        j := 1;
-        wPngCheck := False;
-        while (not wPngCheck) and (j < 10) do begin
-          if ModalResult = mrCancel then Exit;
-          wIconFile := TMemoryStream.Create;
-          try
-            GRyzomApi.ApiItemIcon(wItemName, wIconFile, wItemColor, wItemQuality, wItemSize, wItemSap, wItemDestroyed);
-            try
-              wPng.LoadFromStream(wIconFile);
-              wPng.SaveToFile(AStoragePath + wItemFileName);
-              wPngCheck := True;
-            except
-              Sleep(100);
-              Application.ProcessMessages;
-            end;
-          finally
-            wIconFile.Free;
-          end;
-          Inc(j);
-        end;
-
-        if not wPngCheck then
-          raise Exception.Create(RS_CONNEXION_ERROR);
-      end;
-      ProgressBar.Position := Trunc( ((i+1) / ANodeList.Length) * 100);
-      Application.ProcessMessages;
+    wItemName := ANodeList.Item(i).Text;
+    if GStrings.IndexOfName(wItemName) < 0 then begin
+      GStrings.Append(wItemName + '=' + GRyzomStringPack.GetString(wItemName));
     end;
-  finally
-    wPng.Free;
+
+    if GThreadCount < GConfig.ThreadCount then begin
+      GSection.Enter;
+      try
+        wThread := TGetItemThread.Create(ANodeList.Item(i), AStoragePath);
+        wThread.Resume;
+        Inc(GThreadCount);
+      finally
+        GSection.Leave;
+      end;
+      Inc(i);
+    end else begin
+      GEvent.ResetEvent;
+      GEvent.WaitFor(100);
+    end;
+
+    ProgressBar.Position := Trunc( ((i+1) / ANodeList.Length) * 100);
+    Application.ProcessMessages;
+  end;
+
+  while GThreadCount > 0 do begin
+    GEvent.ResetEvent;
+    GEvent.WaitFor(100);
   end;
 end;
 
@@ -183,6 +206,7 @@ var
   wGuildKey: String;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
+  wIndexFile: String;
 begin
   wGuildKey := GGuild.GetGuildKey(AGuildID);
   wXmlDoc := TXpObjModel.Create(nil);
@@ -193,11 +217,21 @@ begin
     wXmlFile.Position := 0;
     wXmlDoc.LoadStream(wXmlFile);
 
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
+    // Prepare the index file for name search
+    wIndexFile := GConfig.GetGuildPath(AGuildID) + 'index.dat';
+    if FileExists(wIndexFile) then
+      GStrings.LoadFromFile(wIndexFile)
+    else
+      GStrings.Clear;
     try
-      GetItem(wNodeList, GConfig.GetGuildRoomPath(AGuildID));
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
+      try
+        GetItem(wNodeList, GConfig.GetGuildRoomPath(AGuildID));
+      finally
+        wNodeList.Free;
+      end;
     finally
-      wNodeList.Free;
+      GStrings.SaveToFile(wIndexFile);
     end;
   finally
     wXmlDoc.Free;
@@ -214,6 +248,7 @@ var
   wCharKey: String;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
+  wIndexFile: String;
 begin
   wCharKey := GCharacter.GetCharKey(ACharID);
   wXmlDoc := TXpObjModel.Create(nil);
@@ -224,52 +259,62 @@ begin
     wXmlFile.Position := 0;
     wXmlDoc.LoadStream(wXmlFile);
 
-    // Room
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item');
+    // Prepare the index file for name search
+    wIndexFile := GConfig.GetCharPath(ACharID) + 'index.dat';
+    if FileExists(wIndexFile) then
+      GStrings.LoadFromFile(wIndexFile)
+    else
+      GStrings.Clear;
     try
-      GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-    finally
-      wNodeList.Free;
-    end;
+      // Room
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
 
-   // Bag
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/bag/item');
-    try
-      GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-    finally
-      wNodeList.Free;
-    end;
+     // Bag
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/bag/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
 
-    // Pet1
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal1/item');
-    try
-      GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-    finally
-      wNodeList.Free;
-    end;
+      // Pet1
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal1/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
 
-    // Pet2
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal2/item');
-    try
-      GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-    finally
-      wNodeList.Free;
-    end;
+      // Pet2
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal2/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
 
-    // Pet3
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal3/item');
-    try
-      GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-    finally
-      wNodeList.Free;
-    end;
+      // Pet3
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal3/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
 
-    // Pet4
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal4/item');
-    try
-      GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      // Pet4
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal4/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
     finally
-      wNodeList.Free;
+      GStrings.SaveToFile(wIndexFile);
     end;
   finally
     wXmlDoc.Free;
@@ -359,6 +404,7 @@ var
   wItemImage: TItemImage;
   i: Integer;
   wItemList: TStringList;
+  wItemDesc: String;
 begin
   wItemList := TStringList.Create;
   try
@@ -375,13 +421,17 @@ begin
 
     SendMessage(FRoom.Handle, WM_SETREDRAW, 0, 0);
     try
+      // Loop on items list
       for i := 0 to wItemList.Count - 1 do begin
         if ModalResult = mrCancel then Exit;
 
         GRyzomApi.GetItemInfoFromXML(ANodeList.Item(StrToInt(wItemList.ValueFromIndex[i])), wItemName, wItemColor,
           wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName);
 
-        if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemName, wItemQuality, FFilter) then begin
+        if FFilter.ItemName <> '' then
+          wItemDesc := GStrings.Values[wItemName];
+
+        if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemName, wItemQuality, FFilter, wItemDesc) then begin
           wItemImage := TItemImage.Create(nil);
           wItemImage.ItemName := wItemName;
           if FileExists(AStoragePath + wItemFileName) then begin
@@ -416,6 +466,7 @@ var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wInfoFile: String;
+  wIndexFile: String;
 begin
   FRoom.Clear;
   wInfoFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
@@ -423,6 +474,12 @@ begin
   wXmlDoc := TXpObjModel.Create(nil);
   wXmlFile := TFileStream.Create(wInfoFile, fmOpenRead);
   try
+    wIndexFile := GConfig.GetGuildPath(AGuildID) + 'index.dat';
+    if FileExists(wIndexFile) then
+      GStrings.LoadFromFile(wIndexFile)
+    else
+      GStrings.Clear;
+    
     wXmlDoc.LoadStream(wXmlFile);
     wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
     try
@@ -472,6 +529,86 @@ begin
   finally
     wXmlDoc.Free;
     wXmlFile.Free;
+  end;
+end;
+
+{ TGetItemThread }
+
+{*******************************************************************************
+Creates the synchronization thread
+*******************************************************************************}
+constructor TGetItemThread.Create(ANode: TXpNode; AStoragePath: String);
+begin
+  inherited Create(True);
+  FreeOnTerminate := True;
+  FNode := ANode;
+  FStoragePath := AStoragePath;
+end;
+
+{*******************************************************************************
+Executes the synchronization thread
+*******************************************************************************}
+procedure TGetItemThread.Execute;
+var
+  j: Integer;
+  wItemName: String;
+  wItemColor: TItemColor;
+  wItemQuality: Integer;
+  wItemSize: Integer;
+  wItemSap: Integer;
+  wItemDestroyed: Boolean;
+  wItemFileName: String;
+  wPngCheck: Boolean;
+  wPng: TPNGObject;
+  wIconFile: TMemoryStream;
+  wApi: TRyzomApi;
+begin
+  try
+    GRyzomApi.GetItemInfoFromXML(FNode, wItemName, wItemColor,
+      wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName);
+
+    wPng := TPNGObject.Create;
+    wApi := TRyzomApi.Create;
+    try
+      if not FileExists(FStoragePath + wItemFileName) then begin
+        j := 1;
+        wPngCheck := False;
+        while (not wPngCheck) and (j < 10) do begin
+          wIconFile := TMemoryStream.Create;
+          try
+            if GConfig.ProxyEnabled then
+              wApi.SetProxyParameters(GConfig.ProxyAddress, GConfig.ProxyPort, GConfig.ProxyUsername, GConfig.ProxyPassword)
+            else
+              wApi.SetProxyParameters('', 0, '', '');
+            wApi.ApiItemIcon(wItemName, wIconFile, wItemColor, wItemQuality, wItemSize, wItemSap, wItemDestroyed);
+            try
+              wPng.LoadFromStream(wIconFile);
+              wPng.SaveToFile(FStoragePath + wItemFileName);
+              wPngCheck := True;
+            except
+              Sleep(100);
+            end;
+          finally
+            wIconFile.Free;
+          end;
+          Inc(j);
+        end;
+
+        if not wPngCheck then
+          raise Exception.Create(RS_CONNEXION_ERROR);
+      end;
+    finally
+      wPng.Free;
+      wApi.Free;
+    end;
+  finally
+    GSection.Enter;
+    try
+      Dec(GThreadCount);
+      GEvent.SetEvent;
+    finally
+      GSection.Leave;
+    end;
   end;
 end;
 

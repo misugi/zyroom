@@ -118,6 +118,14 @@ begin
   // Load the settings
   FormOptions.ApplyConfig;
 
+  // Position of the windows
+  if GConfig.SavePosition then begin
+    FormMain.Left := GConfig.PosMainLeft;
+    FormMain.Top := GConfig.PosMainTop;
+    FormRoomFilter.Left := GConfig.PosFilterLeft;
+    FormRoomFilter.Top := GConfig.PosFilterTop;
+  end;
+
   // Default server to display the time
   case GConfig.Language of
     _LANGUAGE_FRENCH_ID: FServerLabelSelected := LbAniro;
@@ -152,8 +160,11 @@ begin
   // Displays the home form by default
   ShowMenuForm(FormHome);
 
-  // Update the status and time
+  // Updates the status and time
   UpdateStatusAndTime(False);
+
+  // Sets default filter
+  GRyzomApi.SetDefaultFilter(GCurrentFilter);
 end;
 
 {*******************************************************************************
@@ -197,7 +208,8 @@ Auto-timer to update status and time
 *******************************************************************************}
 procedure TFormMain.TimerStatusTimer(Sender: TObject);
 begin
-  UpdateStatusAndTime(False);
+  if not FormProgress.Visible then
+    UpdateStatusAndTime(False);
 end;
 
 {*******************************************************************************

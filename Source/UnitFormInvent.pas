@@ -144,7 +144,6 @@ var
 begin
   wCharID := FormCharacter.GridChar.Cells[2, FormCharacter.GridChar.Row];
   FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
-  LbCharName.Caption := Format('%s (%d)', [FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row], CharInvent.ControlCount]);
 end;
 
 end.

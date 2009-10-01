@@ -67,6 +67,8 @@ const
   _KEY_POS_FILTER_LEFT = 'FilterLeft';
   _KEY_POS_FILTER_TOP = 'FilterTop';
   _KEY_AUTO_SHOW_FILTER = 'AutoShowFilter';
+  _KEY_THREAD_COUNT = 'ThreadCount';
+  _KEY_SAVE_FILTER = 'SaveFilter';
 
   _GUILD_FILENAME = 'guild.ini';
   _CHARACTER_FILENAME = 'character.ini';
@@ -163,6 +165,10 @@ type
     procedure SetSavePosition(const Value: Boolean);
     function GetAutoShowFilter: Boolean;
     procedure SetAutoShowFilter(const Value: Boolean);
+    function GetThreadCount: Integer;
+    procedure SetThreadCount(const Value: Integer);
+    function GetSaveFilter: Boolean;
+    procedure SetSaveFilter(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -175,6 +181,9 @@ type
     property Language: Integer read GetLanguage write SetLanguage;
     property PackFile: String read GetPackFile write SetPackFile;
     property InterfaceColor: TColor read GetInterfaceColor write SetInterfaceColor;
+    property ThreadCount: Integer read GetThreadCount write SetThreadCount;
+    property SaveFilter: Boolean read GetSaveFilter write SetSaveFilter;
+    
     property ProxyEnabled: Boolean read GetProxyEnabled write SetProxyEnabled;
     property ProxyBasicAuth: Boolean read GetProxyBasicAuth write SetProxyBasicAuth;
     property ProxyAddress: String read GetProxyAddress write SetProxyAddress;
@@ -714,6 +723,38 @@ Changes the option to show automatically the filter window
 procedure TConfig.SetAutoShowFilter(const Value: Boolean);
 begin
   FIniFile.WriteBool(_SECTION_GENERAL, _KEY_AUTO_SHOW_FILTER, Value);
+end;
+
+{*******************************************************************************
+Returns the thread count for synchronization
+*******************************************************************************}
+function TConfig.GetThreadCount: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_GENERAL, _KEY_THREAD_COUNT, 10);
+end;
+
+{*******************************************************************************
+Changes the thread count for synchronization
+*******************************************************************************}
+procedure TConfig.SetThreadCount(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_GENERAL, _KEY_THREAD_COUNT, Value);
+end;
+
+{*******************************************************************************
+Returns the option to save filter
+*******************************************************************************}
+function TConfig.GetSaveFilter: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, False);
+end;
+
+{*******************************************************************************
+Changes the option to save filter
+*******************************************************************************}
+procedure TConfig.SetSaveFilter(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, Value);
 end;
 
 end.

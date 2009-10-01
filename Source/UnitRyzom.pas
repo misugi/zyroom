@@ -47,6 +47,7 @@ type
     ClassMin: TItemClass;
     ClassMax: TItemClass;
     Ecosystem: TItemEcosystems;
+    ItemName: String;
   end;
   
   TRyzom = class(TRyzomApi)
@@ -63,7 +64,7 @@ type
     procedure UpdateStatus;
     procedure GetItemInfoFromXML(ANode: TXpNode; var AName: String; var AColor: TItemColor;
       var AQuality, ASize, ASap: Integer; var ADestroyed: Boolean; var AFileName: String);
-    function  CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter): Boolean;
+    function  CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter; AItemDesc: String): Boolean;
     procedure GetItemInfoFromName(AItemName: String; var AItemType: TItemType; var AItemClass: TItemClass; var AItemEcosys: TItemEcosystem);
     procedure SetDefaultFilter(var AFilter: TItemFilter);
 
@@ -179,6 +180,7 @@ begin
   AFilter.ClassMin := icBasic;
   AFilter.ClassMax := icSupreme;
   AFilter.Ecosystem := [ieCommon, iePrime, ieDesert, ieJungle, ieForest, ieLakes];
+  AFilter.ItemName := '';
 end;
 
 {*******************************************************************************
@@ -252,13 +254,34 @@ end;
 {*******************************************************************************
 Verifies if the item respects the filter
 *******************************************************************************}
-function TRyzom.CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter): Boolean;
+function TRyzom.CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter; AItemDesc: String): Boolean;
 var
   wItemType: TItemType;
   wItemClass: TItemClass;
   wItemEcosys: TItemEcosystem;
+  wList: TStringList;
+  wFound: Boolean;
+  i: Integer;
 begin
   Result := False;
+
+  // If the name does not match
+  if AFilter.ItemName <> '' then begin
+    wList := TStringList.Create;
+    try
+      wList.CommaText := AFilter.ItemName;
+      AItemDesc := MdkRemoveAccents(AItemDesc);
+      wFound := True;
+      i := 0;
+      while (i < wList.Count) and (wFound) do begin
+        wFound := wFound and (Pos(UpperCase(wList[i]), UpperCase(AItemDesc)) > 0);
+        Inc(i);
+      end;
+      if not wFound then Exit;
+    finally
+      wList.Free;
+    end;
+  end;
 
   // If not type then Exit
   if AFilter.Type_ = [] then Exit;

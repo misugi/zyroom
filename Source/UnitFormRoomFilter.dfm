@@ -3,7 +3,7 @@ object FormRoomFilter: TFormRoomFilter
   Top = 280
   BorderStyle = bsDialog
   Caption = 'Filtre'
-  ClientHeight = 265
+  ClientHeight = 287
   ClientWidth = 281
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,12 +17,19 @@ object FormRoomFilter: TFormRoomFilter
   OnShow = FormShow
   DesignSize = (
     281
-    265)
+    287)
   PixelsPerInch = 96
   TextHeight = 13
+  object LbName: TLabel
+    Left = 8
+    Top = 236
+    Width = 28
+    Height = 13
+    Caption = 'Nom :'
+  end
   object BtOK: TButton
     Left = 202
-    Top = 237
+    Top = 259
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
@@ -183,7 +190,7 @@ object FormRoomFilter: TFormRoomFilter
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
-      MaxValue = 270
+      MaxValue = 300
       MinValue = 0
       ParentFont = False
       TabOrder = 1
@@ -373,5 +380,12 @@ object FormRoomFilter: TFormRoomFilter
       ParentFont = False
       TabOrder = 5
     end
+  end
+  object EdName: TEdit
+    Left = 48
+    Top = 232
+    Width = 229
+    Height = 21
+    TabOrder = 5
   end
 end

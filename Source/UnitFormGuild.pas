@@ -404,9 +404,9 @@ var
 begin
   FormMain.ShowMenuForm(FormRoom);
   wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
-  GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
-  FormRoom.LbGuildName.Caption := Format('%s (%d)', [GridGuild.Cells[1, GridGuild.Row], FormRoom.GuildRoom.ControlCount]);
+  FormRoom.LbGuildName.Caption := GridGuild.Cells[1, GridGuild.Row];
   if GConfig.AutoShowFilter then begin
     FormRoom.BtFilter.Down := True;
     FormRoom.BtFilter.Click;

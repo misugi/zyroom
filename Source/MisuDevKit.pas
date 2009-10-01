@@ -13,12 +13,13 @@ type
 function MdkGetFileContent(AFileName: String): String;
 function MdkGetSystemDir(AFolder: Cardinal = CSIDL_DRIVES): String;
 function MdkGetFileDate(FileName: String): TDateTime;
-function MdkListFiles(ADirectory: String; AFilter: String; SubDir: Boolean; AList: TStringList): Integer;
-function MdkRemoveFiles(ADirectory: String; AFilter: String; SudDir: Boolean): Boolean;
+function MdkListFiles(ADirectory: String; AFilter: String; ASubDir: Boolean; AList: TStringList): Integer;
+function MdkRemoveFiles(ADirectory: String; AFilter: String; ASudDir: Boolean): Boolean;
 function MdkRemoveDir(ADirectory: String): Boolean;
 function MdkBoolToInteger(AValue: Boolean): Integer;
-function MdkFileVersionInfo(FileName: String; InfoType: TFileVersionInfo): String;
-function MdkFileSize(FileName: String): DWORD;
+function MdkFileVersionInfo(AFileName: String; AInfoType: TFileVersionInfo): String;
+function MdkFileSize(AFileName: String): DWORD;
+function MdkRemoveAccents(ASource: String): String;
 
 procedure MdkWriteFile(AFileName: String; ABuffer: String; ANewLine: Boolean = True; AOverwrite: Boolean = False);
 
@@ -71,19 +72,19 @@ end;
 {*******************************************************************************
 Returns list of files than exists in a directory
 *******************************************************************************}
-function MdkListFiles(ADirectory: String; AFilter: String; SubDir: Boolean; AList: TStringList): Integer;
+function MdkListFiles(ADirectory: String; AFilter: String; ASubDir: Boolean; AList: TStringList): Integer;
 var
   i: Integer;
   wRec: TSearchRec;
   wDir: String;
   wAttr: Integer;
 begin
-  if SubDir then wAttr := faAnyFile else wAttr := faAnyFile - faDirectory;
+  if ASubDir then wAttr := faAnyFile else wAttr := faAnyFile - faDirectory;
   wDir := IncludeTrailingPathDelimiter(ADirectory);
   Result := 0;
   i := FindFirst(wDir + AFilter, wAttr, wRec);
   while i = 0 do begin
-    if SubDir then begin
+    if ASubDir then begin
       if (wRec.Name <> '.') and (wRec.Name <> '..') then begin
         if (wRec.Attr and faDirectory) > 0 then begin
           Result := Result + MdkListFiles(wDir + wRec.Name, AFilter, True, AList);
@@ -105,7 +106,7 @@ end;
 {*******************************************************************************
 Deletes all files in a directory
 *******************************************************************************}
-function MdkRemoveFiles(ADirectory: String; AFilter: String; SudDir: Boolean): Boolean;
+function MdkRemoveFiles(ADirectory: String; AFilter: String; ASudDir: Boolean): Boolean;
 var
   wList: TStringList;
   i: Integer;
@@ -113,7 +114,7 @@ begin
   wList := TStringList.Create;
   try
     Result := True;
-    MdkListFiles(ADirectory, AFilter, SudDir, wList);
+    MdkListFiles(ADirectory, AFilter, ASudDir, wList);
     for i := 0 to wList.Count - 1 do begin
       Result := Result and DeleteFile(wList[i]);
     end;
@@ -162,7 +163,7 @@ end;
 {*******************************************************************************
 Returns version information of a file
 *******************************************************************************}
-function MdkFileVersionInfo(FileName: String; InfoType: TFileVersionInfo): String;
+function MdkFileVersionInfo(AFileName: String; AInfoType: TFileVersionInfo): String;
 type
   PTransBuffer = ^TTransBuffer;
   TTransBuffer = array[1..4] of smallint;
@@ -180,7 +181,7 @@ var
 begin
   Result := '';
 
-  sAppName := Filename;
+  sAppName := AFilename;
   // get version information values
   iAppSize:= Windows.GetFileVersionInfoSize(PChar(sAppName),// pointer to filename string
                                     iAppSize);      // pointer to variable to receive zero
@@ -205,7 +206,7 @@ begin
             pointer(ptrans), verSize);
     TransStr:= IntToHex(ptrans^[1], 4) + IntToHex(ptrans^[2], 4);
 
-    case InfoType of
+    case AInfoType of
       fviCompanyName: wInfo := 'CompanyName';
       fviFileDescription: wInfo := 'FileDescription';
       fviFileVersion: wInfo := 'FileVersion';
@@ -228,16 +229,39 @@ end;
 {*******************************************************************************
 Returns the size of a file
 *******************************************************************************}
-function MdkFileSize(FileName: String): DWORD;
+function MdkFileSize(AFileName: String): DWORD;
 var
   wHandle: THandle;
 begin
-  wHandle := Windows.CreateFile(PChar(FileName), 0, 0, nil, OPEN_EXISTING, 0, 0);
+  wHandle := Windows.CreateFile(PChar(AFileName), 0, 0, nil, OPEN_EXISTING, 0, 0);
   if wHandle <> INVALID_HANDLE_VALUE then begin
       Result := Windows.GetFileSize(wHandle, nil);
       CloseHandle(wHandle);
     end else
       Result := INVALID_FILE_SIZE;
+end;
+
+{*******************************************************************************
+Remove accents in a string
+*******************************************************************************}
+function MdkRemoveAccents(ASource: String): String;
+const
+  _WITH_ACCENTS =  'àäâãçéèêëìïîôöòõûüùÿñÁÀÄÂÃÇÉÈÊËÍÎÌÏÔÖÒÓÕÜÛÙÚÝŸÑ';
+  _WITHOUT_ACCENTS = 'aaaaceeeeiiioooouuuynAAAAACEEEEIIIIOOOOOUUUUYYN';
+var
+  i, wPos: Integer;
+  wValue: String;
+begin
+  wValue:= '';
+
+  for i := 1 to Length(ASource) do begin
+    wPos := Pos(ASource[i], _WITH_ACCENTS);
+    if wPos > 0
+    then wValue := wValue + _WITHOUT_ACCENTS[wPos]
+    else wValue := wValue + ASource[i];
+  end;
+  
+  Result:= wValue;
 end;
 
 end.

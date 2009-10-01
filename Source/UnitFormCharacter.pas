@@ -382,9 +382,9 @@ begin
   FormInvent.TabInvent.TabIndex := _INVENT_BAG;
   FormMain.ShowMenuForm(FormInvent);
   wCharID := Self.GridChar.Cells[2, Self.GridChar.Row];
-  GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
-  FormInvent.LbCharName.Caption := Format('%s (%d)', [GridChar.Cells[1, GridChar.Row], FormInvent.CharInvent.ControlCount]);
+  FormInvent.LbCharName.Caption := GridChar.Cells[1, GridChar.Row];
   if GConfig.AutoShowFilter then begin
     FormInvent.BtFilter.Down := True;
     FormInvent.BtFilter.Click;

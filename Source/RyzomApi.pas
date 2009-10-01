@@ -203,7 +203,7 @@ begin
   if AQuality > 0 then wOptions := wOptions + Format('&q=%d', [AQuality]);
   if ASize > 0 then wOptions := wOptions + Format('&s=%d', [ASize]);
   if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);
-  if ADestroyed then wOptions := wOptions + '&destroyed';
+  if ADestroyed then wOptions := wOptions + '&destroyed=1';
   
   FHttpRequest.Get('http://atys.ryzom.com/api/item_icon.php' + wOptions, AResponse);
   AResponse.Position := 0;

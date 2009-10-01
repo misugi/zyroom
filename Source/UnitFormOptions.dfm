@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 348
+  ClientHeight = 375
   ClientWidth = 389
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     389
-    348)
+    375)
   PixelsPerInch = 96
   TextHeight = 13
   object LbLanguage: TLabel
@@ -40,6 +40,13 @@ object FormOptions: TFormOptions
     Width = 105
     Height = 13
     Caption = 'Couleur de l'#39'interface :'
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 303
+    Width = 207
+    Height = 13
+    Caption = 'Nombre de threads pour la synchronisation :'
   end
   object CmbLanguage: TComboBox
     Left = 68
@@ -82,7 +89,7 @@ object FormOptions: TFormOptions
   end
   object BtOK: TButton
     Left = 143
-    Top = 321
+    Top = 348
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -94,7 +101,7 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TButton
     Left = 224
-    Top = 321
+    Top = 348
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -200,7 +207,7 @@ object FormOptions: TFormOptions
   end
   object BtApply: TButton
     Left = 305
-    Top = 321
+    Top = 348
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -225,6 +232,26 @@ object FormOptions: TFormOptions
     Height = 17
     Caption = 'Ouvrir automatiquement la fen'#234'tre de filtre'
     TabOrder = 10
+    OnClick = CbProxyEnabledClick
+  end
+  object EdThreadCount: TSpinEdit
+    Left = 220
+    Top = 298
+    Width = 49
+    Height = 22
+    MaxValue = 25
+    MinValue = 1
+    TabOrder = 11
+    Value = 10
+    OnChange = CmbLanguageChange
+  end
+  object CbKeepFilter: TCheckBox
+    Left = 8
+    Top = 277
+    Width = 281
+    Height = 17
+    Caption = 'Garder le filtre actif'
+    TabOrder = 12
     OnClick = CbProxyEnabledClick
   end
   object OdBrowsePackFile: TOpenDialog

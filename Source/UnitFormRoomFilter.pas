@@ -54,6 +54,8 @@ type
     CbEcoLakes: TCheckBox;
     CbEcoJungle: TCheckBox;
     CbTypeEquipment: TCheckBox;
+    EdName: TEdit;
+    LbName: TLabel;
     procedure BtOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CbTypeAnimalMatClick(Sender: TObject);
@@ -171,6 +173,9 @@ begin
   CbEcoLakes.Checked := (ieLakes in GCurrentFilter.Ecosystem);
   CbEcoJungle.Checked := (ieJungle in GCurrentFilter.Ecosystem);
 
+  // Item name
+  EdName.Text := GCurrentFilter.ItemName;
+
   EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked);
   EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked);
 end;
@@ -206,6 +211,9 @@ begin
   if EdClassMax.ItemIndex < EdClassMin.ItemIndex then EdClassMax.ItemIndex := EdClassMin.ItemIndex;
   GCurrentFilter.ClassMin := TItemClass(EdClassMin.ItemIndex);
   GCurrentFilter.ClassMax := TItemClass(EdClassMax.ItemIndex);
+
+  // Item name
+  GCurrentFilter.ItemName := Trim(EdName.Text);
 end;
 
 end.

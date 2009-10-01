@@ -14,6 +14,8 @@ object FormProgress: TFormProgress
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -43,7 +45,7 @@ object FormProgress: TFormProgress
     ShowHint = False
     TabOrder = 0
   end
-  object BtNo: TButton
+  object BtCancel: TButton
     Left = 123
     Top = 54
     Width = 75
