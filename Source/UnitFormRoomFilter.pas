@@ -54,13 +54,24 @@ type
     CbEcoLakes: TCheckBox;
     CbEcoJungle: TCheckBox;
     CbTypeEquipment: TCheckBox;
+    BtDefault: TButton;
+    GbName: TGroupBox;
     EdName: TEdit;
-    LbName: TLabel;
+    RbAllWords: TRadioButton;
+    RbOneWord: TRadioButton;
+    GbEquipment: TGroupBox;
+    CbEqHeavyArmors: TCheckBox;
+    CbEqWeapons1: TCheckBox;
+    CbEqMediumArmors: TCheckBox;
+    CbEqLightArmors: TCheckBox;
+    CbEqJewels: TCheckBox;
+    CbEqWeapons2: TCheckBox;
     procedure BtOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CbTypeAnimalMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtDefaultClick(Sender: TObject);
   private
     procedure EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
     procedure LoadCurrentFilter;
@@ -129,8 +140,9 @@ Changes the checkbox for natural or animal materials
 *******************************************************************************}
 procedure TFormRoomFilter.CbTypeAnimalMatClick(Sender: TObject);
 begin
-  EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked);
-  EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked);
+  EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
 end;
 
 {*******************************************************************************
@@ -175,9 +187,19 @@ begin
 
   // Item name
   EdName.Text := GCurrentFilter.ItemName;
+  RbAllWords.Checked := GCurrentFilter.AllWords;
 
-  EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked);
-  EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked);
+  // Item equipment
+  CbEqLightArmors.Checked := (iqLightArmor in GCurrentFilter.Equipment);
+  CbEqMediumArmors.Checked := (iqMediumArmor in GCurrentFilter.Equipment);
+  CbEqHeavyArmors.Checked := (iqHeavyArmor in GCurrentFilter.Equipment);
+  CbEqWeapons1.Checked := (iqWeapon1 in GCurrentFilter.Equipment);
+  CbEqWeapons2.Checked := (iqWeapon2 in GCurrentFilter.Equipment);
+  CbEqJewels.Checked := (iqJewel in GCurrentFilter.Equipment);
+
+  EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
 end;
 
 {*******************************************************************************
@@ -212,8 +234,27 @@ begin
   GCurrentFilter.ClassMin := TItemClass(EdClassMin.ItemIndex);
   GCurrentFilter.ClassMax := TItemClass(EdClassMax.ItemIndex);
 
+  // Item equipment
+  GCurrentFilter.Equipment := [];
+  if CbEqLightArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqLightArmor];
+  if CbEqMediumArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqMediumArmor];
+  if CbEqHeavyArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqHeavyArmor];
+  if CbEqWeapons1.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeapon1];
+  if CbEqWeapons2.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeapon2];
+  if CbEqJewels.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqJewel];
+
   // Item name
   GCurrentFilter.ItemName := Trim(EdName.Text);
+  GCurrentFilter.AllWords := RbAllWords.Checked;
+end;
+
+{*******************************************************************************
+Sets default filter
+*******************************************************************************}
+procedure TFormRoomFilter.BtDefaultClick(Sender: TObject);
+begin
+  GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  LoadCurrentFilter;
 end;
 
 end.

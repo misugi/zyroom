@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 1.2.0 (2009-10-06)
+New: for filter by equipment, you can choose equipement type !
+New: for filter by item name, you can search all words or one of the words !
+New: filter by item ecosystem and class is possible for equipment !
+Change: accents are ignored for the search by item name
+Fixed: small problem with equipment filter
+
 # version 1.1.0 (2009-09-30)
 New: filter by item name with multiple key-words !!!
 New: option to keep the active filter

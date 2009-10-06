@@ -405,6 +405,7 @@ var
   i: Integer;
   wItemList: TStringList;
   wItemDesc: String;
+  wItemClass: TItemClass;
 begin
   wItemList := TStringList.Create;
   try
@@ -426,12 +427,12 @@ begin
         if ModalResult = mrCancel then Exit;
 
         GRyzomApi.GetItemInfoFromXML(ANodeList.Item(StrToInt(wItemList.ValueFromIndex[i])), wItemName, wItemColor,
-          wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName);
+          wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName, wItemClass);
 
         if FFilter.ItemName <> '' then
           wItemDesc := GStrings.Values[wItemName];
 
-        if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemName, wItemQuality, FFilter, wItemDesc) then begin
+        if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemName, wItemQuality, FFilter, wItemDesc, wItemClass) then begin
           wItemImage := TItemImage.Create(nil);
           wItemImage.ItemName := wItemName;
           if FileExists(AStoragePath + wItemFileName) then begin
@@ -562,10 +563,11 @@ var
   wPng: TPNGObject;
   wIconFile: TMemoryStream;
   wApi: TRyzomApi;
+  wItemClass: TItemClass;
 begin
   try
     GRyzomApi.GetItemInfoFromXML(FNode, wItemName, wItemColor,
-      wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName);
+      wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName, wItemClass);
 
     wPng := TPNGObject.Create;
     wApi := TRyzomApi.Create;
