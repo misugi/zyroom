@@ -1,6 +1,6 @@
 object FormInvent: TFormInvent
   Left = 345
-  Top = 282
+  Top = 287
   Width = 708
   Height = 425
   Caption = 'Inventaire'
@@ -14,90 +14,88 @@ object FormInvent: TFormInvent
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  DesignSize = (
-    700
-    398)
   PixelsPerInch = 96
   TextHeight = 13
-  object LbCharName: TLabel
-    Left = 348
-    Top = 7
-    Width = 345
-    Height = 13
-    Alignment = taRightJustify
-    Anchors = [akLeft, akTop, akRight]
-    AutoSize = False
-    Caption = '-'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object BtFilter: TSpeedButton
-    Left = 7
-    Top = 2
-    Width = 75
-    Height = 23
-    AllowAllUp = True
-    GroupIndex = 1
-    Caption = 'Filtre'
-    Flat = True
-    Transparent = False
-    OnClick = BtFilterClick
-  end
-  object BtInfo: TSpeedButton
-    Left = 92
-    Top = 2
-    Width = 75
-    Height = 23
-    AllowAllUp = True
-    GroupIndex = 2
-    Caption = 'Informations'
-    Enabled = False
-    Flat = True
-    Transparent = False
-  end
-  object TabInvent: TTabControl
+  object PnFilter: TPanel
     Left = 0
-    Top = 29
-    Width = 700
-    Height = 370
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Top = 0
+    Width = 280
+    Height = 398
+    Align = alLeft
+    BevelOuter = bvNone
+    ParentColor = True
     TabOrder = 0
-    Tabs.Strings = (
-      'Appartement'
-      'Sac'
-      'Animal 1'
-      'Animal 2'
-      'Animal 3'
-      'Animal 4')
-    TabIndex = 0
-    OnChange = TabInventChange
+  end
+  object PnInvent: TPanel
+    Left = 280
+    Top = 0
+    Width = 420
+    Height = 398
+    Align = alClient
+    BevelOuter = bvNone
+    ParentColor = True
+    TabOrder = 1
     DesignSize = (
-      700
-      370)
-    object CharInvent: TScrollRoom
-      Left = 5
-      Top = 25
-      Width = 690
-      Height = 340
-      HorzScrollBar.Tracking = True
-      VertScrollBar.Tracking = True
+      420
+      398)
+    object LbCharName: TLabel
+      Left = 58
+      Top = 2
+      Width = 305
+      Height = 16
+      Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight]
+      AutoSize = False
+      Caption = '-'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object TabInvent: TTabControl
+      Left = 2
+      Top = 20
+      Width = 416
+      Height = 376
       Anchors = [akLeft, akTop, akRight, akBottom]
-      ParentShowHint = False
-      ShowHint = False
       TabOrder = 0
-      TabStop = True
-      OnClick = CharInventClick
-      OnMouseMove = CharInventMouseMove
-      OnMouseWheelDown = CharInventMouseWheelDown
-      OnMouseWheelUp = CharInventMouseWheelUp
-      Spacing = 2
-      ColCount = 16
-      ControlWidth = 40
-      ControlHeight = 40
+      Tabs.Strings = (
+        'Appartement'
+        'Sac'
+        'Animal 1'
+        'Animal 2'
+        'Animal 3'
+        'Animal 4')
+      TabIndex = 0
+      OnChange = TabInventChange
+      DesignSize = (
+        416
+        376)
+      object CharInvent: TScrollRoom
+        Left = 3
+        Top = 23
+        Width = 410
+        Height = 350
+        HorzScrollBar.Tracking = True
+        VertScrollBar.Increment = 42
+        VertScrollBar.Tracking = True
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 0
+        TabStop = True
+        OnClick = CharInventClick
+        OnMouseMove = CharInventMouseMove
+        OnMouseWheelDown = CharInventMouseWheelDown
+        OnMouseWheelUp = CharInventMouseWheelUp
+        OnResize = CharInventResize
+        Spacing = 2
+        ColCount = 16
+        ControlWidth = 40
+        ControlHeight = 40
+      end
     end
   end
 end

@@ -61,11 +61,13 @@ type
     RbOneWord: TRadioButton;
     GbEquipment: TGroupBox;
     CbEqHeavyArmors: TCheckBox;
-    CbEqWeapons1: TCheckBox;
+    CbEqWeaponsMelee: TCheckBox;
     CbEqMediumArmors: TCheckBox;
     CbEqLightArmors: TCheckBox;
+    CbEqAmplifier: TCheckBox;
+    CbEqWeaponsRange: TCheckBox;
+    CbEqOthers: TCheckBox;
     CbEqJewels: TCheckBox;
-    CbEqWeapons2: TCheckBox;
     procedure BtOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CbTypeAnimalMatClick(Sender: TObject);
@@ -105,8 +107,6 @@ Closes the form
 procedure TFormRoomFilter.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  FormRoom.BtFilter.Down := False;
-  FormInvent.BtFilter.Down := False;
 end;
 
 {*******************************************************************************
@@ -193,9 +193,11 @@ begin
   CbEqLightArmors.Checked := (iqLightArmor in GCurrentFilter.Equipment);
   CbEqMediumArmors.Checked := (iqMediumArmor in GCurrentFilter.Equipment);
   CbEqHeavyArmors.Checked := (iqHeavyArmor in GCurrentFilter.Equipment);
-  CbEqWeapons1.Checked := (iqWeapon1 in GCurrentFilter.Equipment);
-  CbEqWeapons2.Checked := (iqWeapon2 in GCurrentFilter.Equipment);
+  CbEqWeaponsMelee.Checked := (iqWeaponMelee in GCurrentFilter.Equipment);
+  CbEqWeaponsRange.Checked := (iqWeaponRange in GCurrentFilter.Equipment);
   CbEqJewels.Checked := (iqJewel in GCurrentFilter.Equipment);
+  CbEqOthers.Checked := (iqOthers in GCurrentFilter.Equipment);
+  CbEqAmplifier.Checked := (iqAmplifier in GCurrentFilter.Equipment);
 
   EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
@@ -239,9 +241,11 @@ begin
   if CbEqLightArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqLightArmor];
   if CbEqMediumArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqMediumArmor];
   if CbEqHeavyArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqHeavyArmor];
-  if CbEqWeapons1.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeapon1];
-  if CbEqWeapons2.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeapon2];
+  if CbEqWeaponsMelee.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeaponMelee];
+  if CbEqWeaponsRange.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeaponRange];
   if CbEqJewels.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqJewel];
+  if CbEqOthers.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqOthers];
+  if CbEqAmplifier.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqAmplifier];
 
   // Item name
   GCurrentFilter.ItemName := Trim(EdName.Text);

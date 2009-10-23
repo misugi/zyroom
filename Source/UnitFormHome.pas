@@ -25,8 +25,7 @@ unit UnitFormHome;
 interface
 
 uses
-  Controls, Forms, StdCtrls, pngimage, Classes, ExtCtrls, ShellAPI, Windows,
-  MisuDevKit, RegExpr;
+  Controls, Forms, StdCtrls, pngimage, Classes, ExtCtrls, ShellAPI, Windows;
 
 resourcestring
   RS_VERSION = 'Version';
@@ -50,11 +49,11 @@ type
     LbVersion: TLabel;
     LbVersionNum: TLabel;
     ImgAgpl: TImage;
-    procedure FormCreate(Sender: TObject);
     procedure LbContestClick(Sender: TObject);
     procedure LbProjectWebsiteClick(Sender: TObject);
     procedure ImgRyzomClick(Sender: TObject);
     procedure ImgAgplClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
   public
   end;
@@ -64,27 +63,20 @@ var
 
 implementation
 
+uses ConvUtils, UnitConfig;
+
 {$R *.dfm}
 
 {*******************************************************************************
-Creates the form
+Displays the form
 *******************************************************************************}
-procedure TFormHome.FormCreate(Sender: TObject);
-var
-  wReg: TRegExpr;
-  wVersion: String;
+procedure TFormHome.FormShow(Sender: TObject);
 begin
-  wReg := TRegExpr.Create;
   ImgRyzom.Hint := _URL_RYZOM_SITE;
   ImgAgpl.Hint := _URL_AGPL;
   LbProjectWebsite.Hint := _URL_PROJECT_SITE;
   LbContest.Hint := _URL_CONTEST_SITE;
-  wVersion := MdkFileVersionInfo(Application.ExeName, fviFileVersion);
-  wReg.Expression := '(\d+\.\d+\.\d+)\.\d+';
-  if wReg.Exec(wVersion) then
-    if wReg.SubExprMatchCount > 0 then
-      LbVersionNum.Caption := wReg.Match[1];
-  wReg.Free;
+  LbVersionNum.Caption := GConfig.Version;
 end;
 
 {*******************************************************************************

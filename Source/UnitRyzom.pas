@@ -32,8 +32,9 @@ const
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-e])01\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).+';
   _EXPR_EQUIPMENT_ARMOR = '^ic.a(.).+';
-  _EXPR_EQUIPMENT_WEAPON = '^ic.+[rm]([12]).+';
-  _EXPR_EQUIPMENT_JEWEL = '^ic.j.+';
+  _EXPR_EQUIPMENT_AMPLIFIER = '^ic.+m2ms.*';
+  _EXPR_EQUIPMENT_WEAPON = '^ic.+([rm])[12].*';
+  _EXPR_EQUIPMENT_JEWEL = '^ic.j.*';
   
 type
   TItemType =(itAnimalMat, itNaturalMat, itCata, itEquipment, itOthers);
@@ -41,7 +42,7 @@ type
   TItemClass = (icBasic, icFine, icChoice, icExcellent, icSupreme, icUnknown);
   TItemEcosystem = (ieCommon, iePrime, ieDesert, ieJungle, ieForest, ieLakes, ieUnknown);
   TItemEcosystems = set of TItemEcosystem;
-  TItemEquip = (iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeapon1, iqWeapon2, iqJewel, iqOther);
+  TItemEquip = (iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqAmplifier, iqJewel, iqOthers);
   TItemEquips = set of TItemEquip;
 
   TItemFilter = record
@@ -57,6 +58,18 @@ type
     Equipment: TItemEquips;
   end;
   
+  TItemInfo = class(TObject)
+  public
+    ItemName: String;
+    ItemColor: TItemColor;
+    ItemQuality: Integer;
+    ItemSize: Integer;
+    ItemSap: Integer;
+    ItemDestroyed: Boolean;
+    ItemFileName: String;
+    ItemClass: TItemClass;
+  end;
+
   TRyzom = class(TRyzomApi)
   private
     FXmlDocument: TXpObjModel;
@@ -71,8 +84,9 @@ type
     procedure UpdateStatus;
     procedure GetItemInfoFromXML(ANode: TXpNode; var AName: String; var AColor: TItemColor;
       var AQuality, ASize, ASap: Integer; var ADestroyed: Boolean; var AFileName: String; var AItemClass: TItemClass);
-    function  CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter; AItemDesc: String; AItemClass: TItemClass): Boolean;
-    procedure GetItemInfoFromName(AItemName: String; var AItemType: TItemType; var AItemClass: TItemClass; var AItemEcosys: TItemEcosystem);
+    function  CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter;
+      AItemDesc: String; AItemType: TItemType; AItemClass: TItemClass; AItemEcosys: TItemEcosystem; AItemEquip: TItemEquip): Boolean;
+    procedure GetItemInfoFromName(AItemName: String; var AItemType: TItemType; var AItemClass: TItemClass; var AItemEcosys: TItemEcosystem; var AItemEquip: TItemEquip);
     procedure SetDefaultFilter(var AFilter: TItemFilter);
 
     property AniroStatus: Integer read FAniroStatus;
@@ -202,14 +216,14 @@ begin
   AFilter.Ecosystem := [ieCommon, iePrime, ieDesert, ieJungle, ieForest, ieLakes];
   AFilter.ItemName := '';
   AFilter.AllWords := True;
-  AFilter.Equipment := [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeapon1, iqWeapon2, iqJewel];
+  AFilter.Equipment := [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqJewel, iqAmplifier, iqOthers];
 end;
 
 {*******************************************************************************
 Returns information about an item from the item name
 *******************************************************************************}
 procedure TRyzom.GetItemInfoFromName(AItemName: String; var AItemType: TItemType; var AItemClass: TItemClass;
-    var AItemEcosys: TItemEcosystem);
+    var AItemEcosys: TItemEcosystem; var AItemEquip: TItemEquip);
 begin
   AItemType := itOthers;
   AItemEcosys := ieUnknown;
@@ -232,7 +246,46 @@ begin
       109: AItemEcosys := ieForest; {m = matis}
       122: AItemEcosys := ieJungle; {z = zorai}
     end;
-    Exit;
+
+    AItemEquip := iqOthers;
+    
+    // Armor
+    GRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
+    if GRegExpr.Exec(AItemName) then begin
+      case Ord(GRegExpr.Match[1][1]) of
+        108: AItemEquip := iqLightArmor; {l = light}
+        99: AItemEquip := iqLightArmor; {c = light}
+        109: AItemEquip := iqMediumArmor; {m = medium}
+        104: AItemEquip := iqHeavyArmor; {h = heavy}
+      end;
+    end;
+
+    // Amplifier
+    if AItemEquip = iqOthers then begin
+      GRegExpr.Expression := _EXPR_EQUIPMENT_AMPLIFIER;
+      if GRegExpr.Exec(AItemName) then begin
+        AItemEquip := iqAmplifier;
+      end;
+    end;
+
+    // Weapon
+    if AItemEquip = iqOthers then begin
+      GRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
+      if GRegExpr.Exec(AItemName) then begin
+        case Ord(GRegExpr.Match[1][1]) of
+          109: AItemEquip := iqWeaponMelee; {m = melee}
+          114: AItemEquip := iqWeaponRange; {r = range}
+        end;
+      end;
+    end;
+
+    // Jewel
+    if AItemEquip = iqOthers then begin
+      GRegExpr.Expression := _EXPR_EQUIPMENT_JEWEL;
+      if GRegExpr.Exec(AItemName) then begin
+        AItemEquip := iqJewel;
+      end;
+    end;
   end;
 
   // Natural materials
@@ -287,11 +340,10 @@ end;
 {*******************************************************************************
 Verifies if the item respects the filter
 *******************************************************************************}
-function TRyzom.CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter; AItemDesc: String; AItemClass: TItemClass): Boolean;
+function TRyzom.CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter;
+  AItemDesc: String; AItemType: TItemType; AItemClass: TItemClass; AItemEcosys: TItemEcosystem;
+  AItemEquip: TItemEquip): Boolean;
 var
-  wItemType: TItemType;
-  wItemEcosys: TItemEcosystem;
-  wItemEquip: TItemEquip;
   wList: TStringList;
   wFound: Boolean;
   i: Integer;
@@ -325,56 +377,22 @@ begin
     end;
   end;
 
-  // Get more information from item name
-  GRyzomApi.GetItemInfoFromName(AItemName, wItemType, AItemClass, wItemEcosys);
-  
   // Type
-  if not (wItemType in AFilter.Type_) then Exit;
+  if not (AItemType in AFilter.Type_) then Exit;
 
   // Only for materials
-  if wItemType in [itAnimalMat, itNaturalMat, itEquipment] then begin
+  if AItemType in [itAnimalMat, itNaturalMat, itEquipment] then begin
     // Ecosystem
-    if not (wItemEcosys in AFilter.Ecosystem) then Exit;
+    if not (AItemEcosys in AFilter.Ecosystem) then Exit;
 
     // Class
     if (Ord(AItemClass) < Ord(AFilter.ClassMin)) or (Ord(AItemClass) > Ord(AFilter.ClassMax)) then Exit;
   end;
   
   // Item equipment
-  if wItemType = itEquipment then begin
+  if AItemType = itEquipment then begin
     if AFilter.Equipment = [] then Exit;
-    wItemEquip := iqOther;
-
-    // Armor
-    GRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
-    if GRegExpr.Exec(AItemName) then begin
-      case Ord(GRegExpr.Match[1][1]) of
-        108: wItemEquip := iqLightArmor; {l = light}
-        109: wItemEquip := iqMediumArmor; {m = medium}
-        104: wItemEquip := iqHeavyArmor; {h = heavy}
-      end;
-    end;
-
-    // Weapon
-    if wItemEquip = iqOther then begin
-      GRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
-      if GRegExpr.Exec(AItemName) then begin
-        case StrToInt(GRegExpr.Match[1]) of
-          1: wItemEquip := iqWeapon1;
-          2: wItemEquip := iqWeapon2;
-        end;
-      end;
-    end;
-
-    // Jewel
-    if wItemEquip = iqOther then begin
-      GRegExpr.Expression := _EXPR_EQUIPMENT_JEWEL;
-      if GRegExpr.Exec(AItemName) then begin
-        wItemEquip := iqJewel;
-      end;
-    end;
-
-    if not (wItemEquip in AFilter.Equipment) then Exit;
+    if not (AItemEquip in AFilter.Equipment) then Exit;
   end;
 
   Result := True;

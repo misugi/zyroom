@@ -7,6 +7,7 @@
   liée à l'exécutable produit.
 */
 
+#define UnitFormMain_RS_NEW_VERSION 64992
 #define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 65008
 #define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 65009
 #define UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION 65010
@@ -537,6 +538,7 @@
 #define SysConst_SDiskFull 65535
 STRINGTABLE
 BEGIN
+	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NAME,	"Nom de personnage"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER,	"Numéro"
 	UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION,	"Synchronisation"

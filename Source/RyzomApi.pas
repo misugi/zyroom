@@ -73,6 +73,7 @@ type
     procedure ApiTime(AShardID: String; AFormat: String; AResponse: TStream);
     procedure SetProxyParameters(AProxyAddress: String; AProxyPort: Integer;
       AProxyUsername: String; AProxyPassword: String);
+    procedure SendRequest(ARequest: String; AResponse: TStream);
   end;
 
   // Resource file
@@ -294,6 +295,15 @@ begin
   FHttpRequest.ProxyParams.ProxyPort := AProxyPort;
   FHttpRequest.ProxyParams.ProxyUsername := AProxyUsername;
   FHttpRequest.ProxyParams.ProxyPassword := AProxyPassword;
+end;
+
+{*******************************************************************************
+Send an HTTP request
+*******************************************************************************}
+procedure TRyzomApi.SendRequest(ARequest: String; AResponse: TStream);
+begin
+  FHttpRequest.Get(ARequest, AResponse);
+  AResponse.Position := 0;
 end;
 
 end.

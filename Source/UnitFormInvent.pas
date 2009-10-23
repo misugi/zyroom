@@ -26,15 +26,15 @@ interface
 
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
-  Windows, Messages, ItemImage, ComCtrls, Buttons;
+  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls;
 
 type
   TFormInvent = class(TForm)
-    LbCharName: TLabel;
-    BtFilter: TSpeedButton;
-    BtInfo: TSpeedButton;
+    PnFilter: TPanel;
+    PnInvent: TPanel;
     TabInvent: TTabControl;
     CharInvent: TScrollRoom;
+    LbCharName: TLabel;
     procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -44,9 +44,9 @@ type
       Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure BtFilterClick(Sender: TObject);
     procedure CharInventClick(Sender: TObject);
     procedure TabInventChange(Sender: TObject);
+    procedure CharInventResize(Sender: TObject);
   private
   public
   end;
@@ -74,6 +74,8 @@ Display the form
 *******************************************************************************}
 procedure TFormInvent.FormShow(Sender: TObject);
 begin
+  FormRoomFilter.Parent := PnFilter;
+  FormRoomFilter.Show;
 end;
 
 {*******************************************************************************
@@ -83,7 +85,7 @@ procedure TFormInvent.CharInventMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_PAGEDOWN, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
 end;
 
 {*******************************************************************************
@@ -93,7 +95,7 @@ procedure TFormInvent.CharInventMouseWheelUp(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_PAGEUP, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEUP, 0) ;
 end;
 
 {*******************************************************************************
@@ -120,14 +122,6 @@ begin
 end;
 
 {*******************************************************************************
-Shows or closes the filter form
-*******************************************************************************}
-procedure TFormInvent.BtFilterClick(Sender: TObject);
-begin
-  if TSpeedButton(Sender).Down then FormRoomFilter.Show else FormRoomFilter.Close;
-end;
-
-{*******************************************************************************
 Set the focus on the room
 *******************************************************************************}
 procedure TFormInvent.CharInventClick(Sender: TObject);
@@ -144,6 +138,14 @@ var
 begin
   wCharID := FormCharacter.GridChar.Cells[2, FormCharacter.GridChar.Row];
   FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
+end;
+
+{*******************************************************************************
+Adjust items in the scroll box
+*******************************************************************************}
+procedure TFormInvent.CharInventResize(Sender: TObject);
+begin
+  CharInvent.Adjust;
 end;
 
 end.

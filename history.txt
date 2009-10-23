@@ -1,6 +1,19 @@
 zyRoom - History of changes
 ===========================
 
+
+# version 1.3.0 (2009-10-23)
+New: adjustment of the items in room and inventory when resize the main window
+New: guilds and characters are now sorted by name
+New: filter for magic amplifiers
+New: auto-update indicator to download the last version if available !
+Change: optimized sorting on items !
+Change: filter window is now integrated in the main window
+Change: adjustment of the scrolling speed in room and inventory
+Change: filter for weapons - range or melee
+Fixed: problem with the filter of light armor that did not display the pants
+Fixed: add a filter "others" for equipment to view all items
+
 # version 1.2.0 (2009-10-06)
 New: for filter by equipment, you can choose equipement type !
 New: for filter by item name, you can search all words or one of the words !

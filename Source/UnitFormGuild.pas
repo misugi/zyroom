@@ -37,7 +37,6 @@ resourcestring
   RS_COL_GUILD_NUMBER = 'Numéro';
   RS_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
-  RS_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
   RS_GUILD_KEY = 'Clé de guilde :';
 
 type
@@ -173,6 +172,7 @@ var
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
   wIconFile: String;
+  i: Integer;
 begin
   FormGuildEdit.Caption := RS_NEW_GUILD;
   FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
@@ -196,7 +196,12 @@ begin
         wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
         wStream.SaveToFile(wIconFile);
         LoadGrid;
-        GridGuild.Row := GridGuild.RowCount - 1;
+        for i := 1 to GridGuild.RowCount - 1 do begin
+          if CompareText(wGuildName, GridGuild.Cells[1, i]) = 0 then begin
+            GridGuild.Row := i;
+            Break;
+          end;
+        end;
       finally
         wXmlDoc.Free;
       end;
@@ -250,7 +255,7 @@ begin
     GridGuild.RowHeights[0] := 20;
     GridGuild.ColWidths[0] := 50;
     GridGuild.ColWidths[2] := 90;
-    GridGuild.ColWidths[3] := 130;
+    GridGuild.ColWidths[3] := 140;
     GridGuild.ColWidths[1] := GridGuild.Width - GridGuild.ColWidths[0] -
       GridGuild.ColWidths[2] - GridGuild.ColWidths[3] - 7;
   
@@ -277,9 +282,6 @@ begin
         else
           GridGuild.Cells[3, GridGuild.RowCount-1] := '-';
       end;
-
-      if GridGuild.RowCount > _MAX_GRID_LINES then
-        GridGuild.ColWidths[1] := GridGuild.ColWidths[1] - _VERT_SCROLLBAR_WIDTH;
 
       if GridGuild.RowCount > 1 then begin
         GridGuild.Row := 1;
@@ -346,9 +348,6 @@ begin
       GridGuild.TopRow := wTopRow;
       if wRow < GridGuild.RowCount then GridGuild.Row := wRow;
 
-      if GridGuild.RowCount = _MAX_GRID_LINES then
-        GridGuild.ColWidths[1] := GridGuild.ColWidths[1] + _VERT_SCROLLBAR_WIDTH;
-
       if GridGuild.RowCount = 1 then begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
@@ -356,13 +355,13 @@ begin
       end;
     finally
       SendMessage(GridGuild.Handle, WM_SETREDRAW, 1, 0);
-      GridGuild.Refresh;
     end;
 
     GGuild.DeleteGuild(wGuildID);
     MdkRemoveDir(GConfig.GetGuildRoomPath(wGuildID));
     MdkRemoveDir(GConfig.GetGuildPath(wGuildID));
     FIconList.Delete(wRow-1);
+    GridGuild.Refresh;
   end;
 end;
 
@@ -407,10 +406,6 @@ begin
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
   FormRoom.LbGuildName.Caption := GridGuild.Cells[1, GridGuild.Row];
-  if GConfig.AutoShowFilter then begin
-    FormRoom.BtFilter.Down := True;
-    FormRoom.BtFilter.Click;
-  end;
 end;
 
 {*******************************************************************************

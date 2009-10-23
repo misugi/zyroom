@@ -1,9 +1,9 @@
 object FormRoomFilter: TFormRoomFilter
-  Left = 359
-  Top = 280
+  Left = 421
+  Top = 234
   BorderStyle = bsDialog
   Caption = 'Filtre'
-  ClientHeight = 416
+  ClientHeight = 419
   ClientWidth = 281
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -15,9 +15,6 @@ object FormRoomFilter: TFormRoomFilter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  DesignSize = (
-    281
-    416)
   PixelsPerInch = 96
   TextHeight = 13
   object BtOK: TButton
@@ -25,8 +22,7 @@ object FormRoomFilter: TFormRoomFilter
     Top = 388
     Width = 75
     Height = 23
-    Anchors = [akRight, akBottom]
-    Caption = 'Appliquer'
+    Caption = 'Filtrer'
     Default = True
     ModalResult = 1
     TabOrder = 0
@@ -36,7 +32,7 @@ object FormRoomFilter: TFormRoomFilter
     Left = 4
     Top = 4
     Width = 133
-    Height = 145
+    Height = 125
     Caption = 'Type'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -120,8 +116,8 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GbQuality: TGroupBox
-    Left = 4
-    Top = 240
+    Left = 144
+    Top = 88
     Width = 133
     Height = 77
     Caption = 'Qualit'#233
@@ -193,7 +189,7 @@ object FormRoomFilter: TFormRoomFilter
   end
   object GbClass: TGroupBox
     Left = 144
-    Top = 240
+    Top = 4
     Width = 133
     Height = 77
     Caption = 'Classe'
@@ -279,7 +275,7 @@ object FormRoomFilter: TFormRoomFilter
   end
   object GbEcosys: TGroupBox
     Left = 144
-    Top = 4
+    Top = 172
     Width = 133
     Height = 145
     Caption = 'Ecosyst'#232'me'
@@ -380,7 +376,6 @@ object FormRoomFilter: TFormRoomFilter
     Top = 388
     Width = 75
     Height = 23
-    Anchors = [akRight, akBottom]
     Caption = 'D'#233'faut'
     ModalResult = 1
     TabOrder = 5
@@ -445,9 +440,9 @@ object FormRoomFilter: TFormRoomFilter
   end
   object GbEquipment: TGroupBox
     Left = 4
-    Top = 152
-    Width = 273
-    Height = 85
+    Top = 132
+    Width = 133
+    Height = 185
     Caption = 'Equipement'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -470,12 +465,12 @@ object FormRoomFilter: TFormRoomFilter
       ParentFont = False
       TabOrder = 0
     end
-    object CbEqWeapons1: TCheckBox
-      Left = 140
-      Top = 20
+    object CbEqWeaponsMelee: TCheckBox
+      Left = 8
+      Top = 80
       Width = 121
       Height = 17
-      Caption = 'Armes '#224' 1 main'
+      Caption = 'Armes de m'#233'l'#233'e'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -512,9 +507,51 @@ object FormRoomFilter: TFormRoomFilter
       ParentFont = False
       TabOrder = 3
     end
+    object CbEqAmplifier: TCheckBox
+      Left = 8
+      Top = 120
+      Width = 121
+      Height = 17
+      Caption = 'Amplificateurs'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+    end
+    object CbEqWeaponsRange: TCheckBox
+      Left = 8
+      Top = 100
+      Width = 121
+      Height = 17
+      Caption = 'Armes de tir'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 5
+    end
+    object CbEqOthers: TCheckBox
+      Left = 8
+      Top = 160
+      Width = 121
+      Height = 17
+      Caption = 'Autres'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 6
+    end
     object CbEqJewels: TCheckBox
-      Left = 140
-      Top = 60
+      Left = 8
+      Top = 140
       Width = 121
       Height = 17
       Caption = 'Bijoux'
@@ -524,21 +561,7 @@ object FormRoomFilter: TFormRoomFilter
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 4
-    end
-    object CbEqWeapons2: TCheckBox
-      Left = 140
-      Top = 40
-      Width = 121
-      Height = 17
-      Caption = 'Armes '#224' 2 mains'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 5
+      TabOrder = 7
     end
   end
 end

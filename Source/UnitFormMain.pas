@@ -33,6 +33,7 @@ resourcestring
   RS_STATUS_CLOSED = 'Fermé';
   RS_STATUS_OPEN = 'Ouvert';
   RS_STATUS_RESTRICTED = 'Limité';
+  RS_NEW_VERSION = 'Nouvelle version disponible !';
   
 type
   TFormMain = class(TForm)
@@ -50,6 +51,8 @@ type
     BtOptions: TButton;
     BtGuild: TButton;
     BtCharacter: TButton;
+    ImgUpdate: TImage;
+    TimerUpdate: TTimer;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -60,12 +63,15 @@ type
     procedure ImgLogoClick(Sender: TObject);
     procedure BtCharacterClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ImgUpdateClick(Sender: TObject);
+    procedure TimerUpdateTimer(Sender: TObject);
   private
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
     FPngRestricted: TPNGObject;
     FServerLabelSelected: TLabel;
     FCurrentForm: TForm;
+    FFileUrl: String;
 
     procedure UpdateStatusAndTime(AOnlyTime: Boolean);
   public
@@ -157,6 +163,9 @@ begin
   FormInvent.Parent := PnContainer;
   FormInvent.Align := alClient;
 
+  FormRoomFilter.BorderStyle := bsNone;
+  FormRoomFilter.Align := alClient;
+
   // Displays the home form by default
   ShowMenuForm(FormHome);
 
@@ -165,6 +174,13 @@ begin
 
   // Sets default filter
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
+
+  // Check version
+  ImgUpdate.Hint := RS_NEW_VERSION;
+  if GConfig.CheckVersion(FFileUrl) then begin
+    ImgUpdate.Visible := True;
+    TimerUpdate.Enabled := True;
+  end;
 end;
 
 {*******************************************************************************
@@ -348,6 +364,25 @@ begin
   if Assigned(FCurrentForm) then FCurrentForm.Close;
   AForm.Show;
   FCurrentForm := AForm;
+end;
+
+{*******************************************************************************
+Link to the last version
+*******************************************************************************}
+procedure TFormMain.ImgUpdateClick(Sender: TObject);
+begin
+  ShellExecute(0, 'open', PChar(FFileUrl), nil, nil, SW_SHOW);
+end;
+
+{*******************************************************************************
+Hide and show image to update version
+*******************************************************************************}
+procedure TFormMain.TimerUpdateTimer(Sender: TObject);
+begin
+  ImgUpdate.Visible := False;
+  Application.ProcessMessages;
+  Sleep(100);
+  ImgUpdate.Visible := True;
 end;
 
 end.

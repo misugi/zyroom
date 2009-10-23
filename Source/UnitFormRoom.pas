@@ -26,14 +26,14 @@ interface
 
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
-  Windows, Messages, ItemImage, ComCtrls, Buttons;
+  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls;
 
 type
   TFormRoom = class(TForm)
-    GuildRoom: TScrollRoom;
+    PnRoom: TPanel;
     LbGuildName: TLabel;
-    BtFilter: TSpeedButton;
-    BtInfo: TSpeedButton;
+    PnFilter: TPanel;
+    GuildRoom: TScrollRoom;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -43,8 +43,8 @@ type
       Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure BtFilterClick(Sender: TObject);
     procedure GuildRoomClick(Sender: TObject);
+    procedure GuildRoomResize(Sender: TObject);
   private
   public
   end;
@@ -72,6 +72,8 @@ Display the form
 *******************************************************************************}
 procedure TFormRoom.FormShow(Sender: TObject);
 begin
+  FormRoomFilter.Parent := PnFilter;
+  FormRoomFilter.Show;
 end;
 
 {*******************************************************************************
@@ -81,7 +83,7 @@ procedure TFormRoom.GuildRoomMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_PAGEDOWN, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
 end;
 
 {*******************************************************************************
@@ -91,7 +93,7 @@ procedure TFormRoom.GuildRoomMouseWheelUp(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_PAGEUP, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEUP, 0) ;
 end;
 
 {*******************************************************************************
@@ -118,19 +120,19 @@ begin
 end;
 
 {*******************************************************************************
-Shows or closes the filter form
-*******************************************************************************}
-procedure TFormRoom.BtFilterClick(Sender: TObject);
-begin
-  if TSpeedButton(Sender).Down then FormRoomFilter.Show else FormRoomFilter.Close;
-end;
-
-{*******************************************************************************
 Set the focus on the room
 *******************************************************************************}
 procedure TFormRoom.GuildRoomClick(Sender: TObject);
 begin
   GuildRoom.SetFocus;
+end;
+
+{*******************************************************************************
+Adjust items in the scroll box
+*******************************************************************************}
+procedure TFormRoom.GuildRoomResize(Sender: TObject);
+begin
+  GuildRoom.Adjust;
 end;
 
 end.

@@ -26,7 +26,7 @@ interface
 
 uses
   Classes, IniFiles, SysUtils, LbCipher, LbClass, LbString, XpDOM, Graphics,
-  Forms;
+  Forms, RegExpr, MisuDevKit;
 
 resourcestring
   RS_ERROR_GUILD_ALREADY_EXISTS = 'La guilde existe déjà';
@@ -66,7 +66,6 @@ const
   _KEY_POS_MAIN_TOP = 'MainTop';
   _KEY_POS_FILTER_LEFT = 'FilterLeft';
   _KEY_POS_FILTER_TOP = 'FilterTop';
-  _KEY_AUTO_SHOW_FILTER = 'AutoShowFilter';
   _KEY_THREAD_COUNT = 'ThreadCount';
   _KEY_SAVE_FILTER = 'SaveFilter';
 
@@ -82,8 +81,6 @@ const
   _RES_RESTRICTED = 'restricted';
   _RES_NOICON = 'noicon';
 
-  _MAX_GRID_LINES = 10;
-  _VERT_SCROLLBAR_WIDTH = 16;
   _ICON_FILENAME = 'icon.png';
   _INFO_FILENAME = 'info.xml';
   _CATA_ITEM_NAME = 'ixpca01.sitem';
@@ -134,6 +131,7 @@ type
     FCurrentPath: String;
     FConfigFileName: String;
     FLanguageFileName: String;
+    FVersion: String;
     
     function GetLanguage: Integer;
     function GetPackFile: String;
@@ -163,8 +161,6 @@ type
     procedure SetMainTop(const Value: Integer);
     function GetSavePosition: Boolean;
     procedure SetSavePosition(const Value: Boolean);
-    function GetAutoShowFilter: Boolean;
-    procedure SetAutoShowFilter(const Value: Boolean);
     function GetThreadCount: Integer;
     procedure SetThreadCount(const Value: Integer);
     function GetSaveFilter: Boolean;
@@ -183,6 +179,7 @@ type
     property InterfaceColor: TColor read GetInterfaceColor write SetInterfaceColor;
     property ThreadCount: Integer read GetThreadCount write SetThreadCount;
     property SaveFilter: Boolean read GetSaveFilter write SetSaveFilter;
+    property Version: String read FVersion;
     
     property ProxyEnabled: Boolean read GetProxyEnabled write SetProxyEnabled;
     property ProxyBasicAuth: Boolean read GetProxyBasicAuth write SetProxyBasicAuth;
@@ -196,12 +193,12 @@ type
     property PosMainTop: Integer read GetMainTop write SetMainTop;
     property PosFilterLeft: Integer read GetFilterLeft write SetFilterLeft;
     property PosFilterTop: Integer read GetFilterTop write SetFilterTop;
-    property AutoShowFilter: Boolean read GetAutoShowFilter write SetAutoShowFilter;
 
     function GetGuildPath(AGuildID: String): String;
     function GetGuildRoomPath(AGuildID: String): String;
     function GetCharPath(ACharID: String): String;
     function GetCharRoomPath(ACharID: String): String;
+    function CheckVersion(var AFileUrl: String): Boolean;
   end;
 
 
@@ -212,7 +209,7 @@ var
 
 implementation
 
-uses RyzomApi;
+uses RyzomApi, UnitRyzom;
 
 { TConfig }
 
@@ -220,6 +217,9 @@ uses RyzomApi;
 Creates settings object
 *******************************************************************************}
 constructor TConfig.Create;
+var
+  wReg: TRegExpr;
+  wVersion: String;
 begin
   inherited;
   FCurrentDir := ExtractFileDir(ParamStr(0));
@@ -227,6 +227,14 @@ begin
   FConfigFileName := FCurrentPath + _CONFIG_FILENAME;
   FLanguageFileName := FCurrentPath + _LANGUAGE_FILENAME;;
   FIniFile := TIniFile.Create(FConfigFileName);
+
+  wReg := TRegExpr.Create;
+  wVersion := MdkFileVersionInfo(Application.ExeName, fviFileVersion);
+  wReg.Expression := '(\d+\.\d+\.\d+)\.\d+';
+  if wReg.Exec(wVersion) then
+    if wReg.SubExprMatchCount > 0 then
+      FVersion := wReg.Match[1];
+  wReg.Free;
 end;
 
 {*******************************************************************************
@@ -516,9 +524,23 @@ end;
 Returns the list of the guilds
 *******************************************************************************}
 procedure TGuild.GuildList(AGuildIDList: TStrings);
+var
+  wList: TStringList;
+  i: Integer;
 begin
   AGuildIDList.Clear;
   FIniFile.ReadSections(AGuildIDList);
+
+  wList := TStringList.Create;
+  for i := 0 to AGuildIDList.Count - 1 do begin
+    wList.Append(FIniFile.ReadString(AGuildIDList[i], _KEY_NAME, '') + '=' + AGuildIDList[i]);
+  end;
+  wList.Sort;
+
+  AGuildIDList.Clear;
+  for i := 0 to wList.Count - 1 do begin
+    AGuildIDList.Append(wList.ValueFromIndex[i]);
+  end;
 end;
 
 { TCharacter }
@@ -550,9 +572,23 @@ end;
 Returns the list of the characters
 *******************************************************************************}
 procedure TCharacter.CharList(ACharIDList: TStrings);
+var
+  wList: TStringList;
+  i: Integer;
 begin
   ACharIDList.Clear;
   FIniFile.ReadSections(ACharIDList);
+
+  wList := TStringList.Create;
+  for i := 0 to ACharIDList.Count - 1 do begin
+    wList.Append(FIniFile.ReadString(ACharIDList[i], _KEY_NAME, '') + '=' + ACharIDList[i]);
+  end;
+  wList.Sort;
+
+  ACharIDList.Clear;
+  for i := 0 to wList.Count - 1 do begin
+    ACharIDList.Append(wList.ValueFromIndex[i]);
+  end;
 end;
 
 {*******************************************************************************
@@ -710,22 +746,6 @@ begin
 end;
 
 {*******************************************************************************
-Returns the option to show automatically the filter window
-*******************************************************************************}
-function TConfig.GetAutoShowFilter: Boolean;
-begin
-  Result := FIniFile.ReadBool(_SECTION_GENERAL, _KEY_AUTO_SHOW_FILTER, False);
-end;
-
-{*******************************************************************************
-Changes the option to show automatically the filter window
-*******************************************************************************}
-procedure TConfig.SetAutoShowFilter(const Value: Boolean);
-begin
-  FIniFile.WriteBool(_SECTION_GENERAL, _KEY_AUTO_SHOW_FILTER, Value);
-end;
-
-{*******************************************************************************
 Returns the thread count for synchronization
 *******************************************************************************}
 function TConfig.GetThreadCount: Integer;
@@ -755,6 +775,22 @@ Changes the option to save filter
 procedure TConfig.SetSaveFilter(const Value: Boolean);
 begin
   FIniFile.WriteBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, Value);
+end;
+
+{*******************************************************************************
+Check version on Internet
+*******************************************************************************}
+function TConfig.CheckVersion(var AFileUrl: String): Boolean;
+var
+  wStream: TStringStream;
+begin
+  Result := False;
+  wStream := TStringStream.Create('');
+  GRyzomApi.SendRequest('http://zyroom.misulud.fr/version/version.txt', wStream);
+  if FVersion <> wStream.DataString then begin
+    AFileUrl := Format('http://zyroom.misulud.fr/version/zyroom-%s.zip', [wStream.DataString]);
+    Result := True;
+  end;
 end;
 
 end.

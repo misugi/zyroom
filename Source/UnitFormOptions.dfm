@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 375
+  ClientHeight = 337
   ClientWidth = 389
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     389
-    375)
+    337)
   PixelsPerInch = 96
   TextHeight = 13
   object LbLanguage: TLabel
@@ -43,7 +43,7 @@ object FormOptions: TFormOptions
   end
   object Label2: TLabel
     Left = 8
-    Top = 303
+    Top = 283
     Width = 207
     Height = 13
     Caption = 'Nombre de threads pour la synchronisation :'
@@ -89,7 +89,7 @@ object FormOptions: TFormOptions
   end
   object BtOK: TButton
     Left = 143
-    Top = 348
+    Top = 310
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -101,7 +101,7 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TButton
     Left = 224
-    Top = 348
+    Top = 310
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -207,7 +207,7 @@ object FormOptions: TFormOptions
   end
   object BtApply: TButton
     Left = 305
-    Top = 348
+    Top = 310
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -225,33 +225,24 @@ object FormOptions: TFormOptions
     TabOrder = 9
     OnClick = CbProxyEnabledClick
   end
-  object CbAutoOpenFilter: TCheckBox
-    Left = 8
-    Top = 257
-    Width = 281
-    Height = 17
-    Caption = 'Ouvrir automatiquement la fen'#234'tre de filtre'
-    TabOrder = 10
-    OnClick = CbProxyEnabledClick
-  end
   object EdThreadCount: TSpinEdit
     Left = 220
-    Top = 298
+    Top = 278
     Width = 49
     Height = 22
     MaxValue = 25
     MinValue = 1
-    TabOrder = 11
+    TabOrder = 10
     Value = 10
     OnChange = CmbLanguageChange
   end
   object CbKeepFilter: TCheckBox
     Left = 8
-    Top = 277
+    Top = 257
     Width = 281
     Height = 17
     Caption = 'Garder le filtre actif'
-    TabOrder = 12
+    TabOrder = 11
     OnClick = CbProxyEnabledClick
   end
   object OdBrowsePackFile: TOpenDialog

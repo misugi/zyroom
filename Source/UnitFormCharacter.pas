@@ -164,6 +164,7 @@ var
   wCharServer: String;
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
+  i: Integer;
 begin
   FormGuildEdit.Caption := RS_CHAR_NEW_CHARACTER;
   FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
@@ -183,7 +184,12 @@ begin
 
         ForceDirectories(GConfig.GetCharRoomPath(wCharID));
         LoadGrid;
-        GridChar.Row := GridChar.RowCount - 1;
+        for i := 1 to GridChar.RowCount - 1 do begin
+          if CompareText(wCharName, GridChar.Cells[1, i]) = 0 then begin
+            GridChar.Row := i;
+            Break;
+          end;
+        end;
       finally
         wXmlDoc.Free;
       end;
@@ -237,7 +243,7 @@ begin
     GridChar.RowHeights[0] := 20;
     GridChar.ColWidths[0] := 50;
     GridChar.ColWidths[2] := 90;
-    GridChar.ColWidths[3] := 130;
+    GridChar.ColWidths[3] := 140;
     GridChar.ColWidths[1] := GridChar.Width - GridChar.ColWidths[0] -
       GridChar.ColWidths[2] - GridChar.ColWidths[3] - 7;
   
@@ -255,9 +261,6 @@ begin
         else
           GridChar.Cells[3, GridChar.RowCount-1] := '-';
       end;
-
-      if GridChar.RowCount > _MAX_GRID_LINES then
-        GridChar.ColWidths[1] := GridChar.ColWidths[1] - _VERT_SCROLLBAR_WIDTH;
 
       if GridChar.RowCount > 1 then begin
         GridChar.Row := 1;
@@ -324,9 +327,6 @@ begin
       GridChar.TopRow := wTopRow;
       if wRow < GridChar.RowCount then GridChar.Row := wRow;
 
-      if GridChar.RowCount = _MAX_GRID_LINES then
-        GridChar.ColWidths[1] := GridChar.ColWidths[1] + _VERT_SCROLLBAR_WIDTH;
-
       if GridChar.RowCount = 1 then begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
@@ -385,10 +385,6 @@ begin
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
   FormInvent.LbCharName.Caption := GridChar.Cells[1, GridChar.Row];
-  if GConfig.AutoShowFilter then begin
-    FormInvent.BtFilter.Down := True;
-    FormInvent.BtFilter.Click;
-  end;
 end;
 
 {*******************************************************************************

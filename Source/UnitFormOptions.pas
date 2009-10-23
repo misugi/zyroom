@@ -53,7 +53,6 @@ type
     Label1: TLabel;
     BtApply: TButton;
     CbSavePosition: TCheckBox;
-    CbAutoOpenFilter: TCheckBox;
     EdThreadCount: TSpinEdit;
     Label2: TLabel;
     CbKeepFilter: TCheckBox;
@@ -171,7 +170,6 @@ begin
 
   // Positions
   CbSavePosition.Checked := GConfig.SavePosition;
-  CbAutoOpenFilter.Checked := GConfig.AutoShowFilter;
 
   // Threads count
   EdThreadCount.Value := GConfig.ThreadCount;
@@ -203,7 +201,6 @@ begin
 
   // Positions
   GConfig.SavePosition := CbSavePosition.Checked;
-  GConfig.AutoShowFilter := CbAutoOpenFilter.Checked;
 
   // Threads count
   GConfig.ThreadCount := EdThreadCount.Value;

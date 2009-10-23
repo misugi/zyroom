@@ -14,6 +14,7 @@ type
   
   TScrollRoom = class(TScrollBox)
   private
+    FAdjust: Boolean;
     FSpacing: Integer;
     FColCount: Integer;
     FCol: Integer;
@@ -29,6 +30,7 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure AddControl(AControl: TControl);
     procedure Clear;
+    procedure Adjust;
   published
     property Spacing: Integer read FSpacing write FSpacing default 10;
     property ColCount: Integer read FColCount write FColCount default 10;
@@ -77,12 +79,14 @@ begin
   end;
   
   FCol := FCol + 1;
-  
-  AControl.Width := FControlWidth;
-  AControl.Height := FControlHeight;
-  TMyControl(AControl).OnMouseMove := EvtMouseMove;
-  TMyControl(AControl).OnClick := EvtClick;
-  AControl.Parent := Self;
+
+  if not FAdjust then begin
+    AControl.Width := FControlWidth;
+    AControl.Height := FControlHeight;
+    TMyControl(AControl).OnMouseMove := EvtMouseMove;
+    TMyControl(AControl).OnClick := EvtClick;
+    AControl.Parent := Self;
+  end;
 end;
 
 {*******************************************************************************
@@ -116,6 +120,28 @@ procedure TScrollRoom.EvtClick(Sender: TObject);
 begin
   if Assigned(OnClick) then
     OnClick(Sender);
+end;
+
+{*******************************************************************************
+Adjust images
+*******************************************************************************}
+procedure TScrollRoom.Adjust;
+var
+  i: Integer;
+begin
+  VertScrollBar.Position := 0;
+  FColCount := (Self.Width - 22) div (Self.ControlWidth + Self.Spacing);
+  FCol := 0;
+  FRow := 0;
+
+  FAdjust := True;
+  try
+    for i := 0 to ControlCount - 1 do begin
+      AddControl(Controls[i]);
+    end;
+  finally
+    FAdjust := False;
+  end;
 end;
 
 end.
