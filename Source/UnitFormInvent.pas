@@ -104,12 +104,6 @@ Displays the names of items
 procedure TFormInvent.CharInventMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
-  if Sender is TItemImage then begin
-    with Sender as TItemImage do begin
-      if Hint = '' then
-        Hint := GRyzomStringPack.GetString(ItemName);
-    end;
-  end;
 end;
 
 {*******************************************************************************
@@ -127,6 +121,10 @@ Set the focus on the room
 procedure TFormInvent.CharInventClick(Sender: TObject);
 begin
   CharInvent.SetFocus;
+
+  if Sender is TItemImage then begin
+    FormRoomFilter.UpdateInfo(TItemImage(Sender));
+  end;
 end;
 
 {*******************************************************************************
@@ -136,7 +134,7 @@ procedure TFormInvent.TabInventChange(Sender: TObject);
 var
   wCharID: String;
 begin
-  wCharID := FormCharacter.GridChar.Cells[2, FormCharacter.GridChar.Row];
+  wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
   FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
 end;
 

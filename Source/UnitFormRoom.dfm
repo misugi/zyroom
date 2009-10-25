@@ -50,7 +50,7 @@ object FormRoom: TFormRoom
       Width = 416
       Height = 376
       HorzScrollBar.Tracking = True
-      VertScrollBar.Increment = 42
+      VertScrollBar.Increment = 44
       VertScrollBar.Tracking = True
       Anchors = [akLeft, akTop, akRight, akBottom]
       ParentShowHint = False

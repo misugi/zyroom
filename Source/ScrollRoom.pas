@@ -6,8 +6,7 @@ unit ScrollRoom;
 interface
 
 uses
-  SysUtils, Classes, Controls, Forms, ItemImage, Contnrs, Graphics,
-  Messages, Windows;
+  SysUtils, Classes, Controls, Forms, Contnrs, Graphics, Messages, Windows;
 
 type
   TMyControl = class(TControl);
@@ -83,6 +82,7 @@ begin
   if not FAdjust then begin
     AControl.Width := FControlWidth;
     AControl.Height := FControlHeight;
+    AControl.Cursor := crHandPoint;
     TMyControl(AControl).OnMouseMove := EvtMouseMove;
     TMyControl(AControl).OnClick := EvtClick;
     AControl.Parent := Self;

@@ -6,12 +6,13 @@ unit ItemImage;
 interface
 
 uses
-  SysUtils, Classes, Controls, Graphics, pngimage;
+  SysUtils, Classes, Controls, Graphics, Types, pngimage;
 
 type
   TItemImage = class(TGraphicControl)
   private
     FPngImage: TPNGObject;
+    FData: TObject;
     FItemName: String;
   protected
     procedure Paint; override;
@@ -22,6 +23,10 @@ type
     procedure LoadFromStream(AStream: TStream);
     procedure LoadFromFile(AFileName: String);
     procedure LoadFromResourceName(AResourceName: String);
+    procedure Assign(Source: TPersistent); override;
+
+    property Data: TObject read FData write FData;
+    property PngObject: TPNGObject read FPngImage write FPngImage;
   published
     property Width;
     property Height;
@@ -49,6 +54,7 @@ Creates the component
 constructor TItemImage.Create(AOwner: TComponent);
 begin
   inherited;
+  FData := nil;
   FItemName := '';
   ShowHint := True;
   FPngImage := TPNGObject.Create;
@@ -59,6 +65,7 @@ Destroys the component
 *******************************************************************************}
 destructor TItemImage.Destroy;
 begin
+  if Assigned(FData) then FData.Free;
   FPngImage.Free;
   inherited;
 end;
@@ -94,7 +101,20 @@ Drawing component
 procedure TItemImage.Paint;
 begin
   inherited;
-  if FPngImage.Width > 0 then Canvas.Draw(0, 0, FPngImage);
+  
+  with Canvas do begin
+    if FPngImage.Width > 0 then Draw(0, 0, FPngImage);
+  end;
+end;
+
+{*******************************************************************************
+Copy image from another component
+*******************************************************************************}
+procedure TItemImage.Assign(Source: TPersistent);
+begin
+  FPngImage.Assign(TItemImage(Source).PngObject);
+  Hint := TItemImage(Source).Hint;
+  Refresh;
 end;
 
 end.

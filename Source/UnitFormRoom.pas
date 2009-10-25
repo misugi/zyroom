@@ -65,6 +65,7 @@ Creates the form
 procedure TFormRoom.FormCreate(Sender: TObject);
 begin
   GuildRoom.DoubleBuffered := True;
+  DoubleBuffered := True;
 end;
 
 {*******************************************************************************
@@ -102,12 +103,6 @@ Displays the names of items
 procedure TFormRoom.GuildRoomMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
-  if Sender is TItemImage then begin
-    with Sender as TItemImage do begin
-      if Hint = '' then
-        Hint := GRyzomStringPack.GetString(ItemName);
-    end;
-  end;
 end;
 
 {*******************************************************************************
@@ -125,6 +120,10 @@ Set the focus on the room
 procedure TFormRoom.GuildRoomClick(Sender: TObject);
 begin
   GuildRoom.SetFocus;
+
+  if Sender is TItemImage then begin
+    FormRoomFilter.UpdateInfo(TItemImage(Sender));
+  end;
 end;
 
 {*******************************************************************************

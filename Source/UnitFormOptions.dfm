@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 337
+  ClientHeight = 338
   ClientWidth = 389
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     389
-    337)
+    338)
   PixelsPerInch = 96
   TextHeight = 13
   object LbLanguage: TLabel
@@ -43,7 +43,7 @@ object FormOptions: TFormOptions
   end
   object Label2: TLabel
     Left = 8
-    Top = 283
+    Top = 127
     Width = 207
     Height = 13
     Caption = 'Nombre de threads pour la synchronisation :'
@@ -71,7 +71,7 @@ object FormOptions: TFormOptions
   end
   object CbProxyEnabled: TCheckBox
     Left = 8
-    Top = 101
+    Top = 149
     Width = 281
     Height = 17
     Caption = 'Utiliser un serveur proxy'
@@ -89,7 +89,7 @@ object FormOptions: TFormOptions
   end
   object BtOK: TButton
     Left = 143
-    Top = 310
+    Top = 311
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -101,7 +101,7 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TButton
     Left = 224
-    Top = 310
+    Top = 311
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -112,7 +112,7 @@ object FormOptions: TFormOptions
   end
   object PnProxy: TPanel
     Left = 8
-    Top = 119
+    Top = 167
     Width = 373
     Height = 110
     BevelInner = bvRaised
@@ -207,7 +207,7 @@ object FormOptions: TFormOptions
   end
   object BtApply: TButton
     Left = 305
-    Top = 310
+    Top = 311
     Width = 75
     Height = 23
     Anchors = [akBottom]
@@ -216,33 +216,24 @@ object FormOptions: TFormOptions
     TabOrder = 8
     OnClick = BtApplyClick
   end
-  object CbSavePosition: TCheckBox
-    Left = 8
-    Top = 237
-    Width = 281
-    Height = 17
-    Caption = 'Sauvegarder la position des fen'#234'tres'
-    TabOrder = 9
-    OnClick = CbProxyEnabledClick
-  end
   object EdThreadCount: TSpinEdit
     Left = 220
-    Top = 278
+    Top = 122
     Width = 49
     Height = 22
     MaxValue = 25
     MinValue = 1
-    TabOrder = 10
+    TabOrder = 9
     Value = 10
     OnChange = CmbLanguageChange
   end
   object CbKeepFilter: TCheckBox
     Left = 8
-    Top = 257
+    Top = 101
     Width = 281
     Height = 17
     Caption = 'Garder le filtre actif'
-    TabOrder = 11
+    TabOrder = 10
     OnClick = CbProxyEnabledClick
   end
   object OdBrowsePackFile: TOpenDialog

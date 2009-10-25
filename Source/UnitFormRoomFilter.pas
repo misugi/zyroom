@@ -26,7 +26,16 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom;
+  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
+  ItemImage;
+
+resourcestring
+  RS_SKIN = 'Skin';
+  RS_DURABILITY = 'Durabilité';
+  RS_HPB = 'Bonus vie';
+  RS_SAB = 'Bonus sève';
+  RS_STB = 'Bonus endurance';
+  RS_FOB = 'Bonus concentration';
 
 type
   TFormRoomFilter = class(TForm)
@@ -60,6 +69,25 @@ type
     RbAllWords: TRadioButton;
     RbOneWord: TRadioButton;
     GbEquipment: TGroupBox;
+    GbCategory: TGroupBox;
+    EdCategory: TComboBox;
+    GroupBox1: TGroupBox;
+    ImgItem: TItemImage;
+    ImgHpb: TImage;
+    ImgFob: TImage;
+    ImgStb: TImage;
+    ImgSab: TImage;
+    LbHpb: TLabel;
+    LbSab: TLabel;
+    LbStb: TLabel;
+    LbFob: TLabel;
+    ImgSkin1: TImage;
+    ImgSkin2: TImage;
+    ImgSkin3: TImage;
+    ImgDura: TImage;
+    LbDura: TLabel;
+    LbClass: TLabel;
+    LbQuality: TLabel;
     CbEqHeavyArmors: TCheckBox;
     CbEqWeaponsMelee: TCheckBox;
     CbEqMediumArmors: TCheckBox;
@@ -78,7 +106,10 @@ type
     procedure EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
     procedure LoadCurrentFilter;
     procedure SaveCurrentFilter;
+    procedure ApplyFilter;
+    procedure InitInfo;
   public
+    procedure UpdateInfo(AItemImage: TItemImage);
   end;
 
 var
@@ -87,7 +118,7 @@ var
 implementation
 
 uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
-  UnitFormCharacter;
+  UnitFormCharacter, UnitConfig;
 
 {$R *.dfm}
 
@@ -96,9 +127,14 @@ Creates the form
 *******************************************************************************}
 procedure TFormRoomFilter.FormCreate(Sender: TObject);
 begin
-  // Default position
-  Left := (Screen.Width - Self.Width) div 2;
-  Top := (Screen.Height - Self.Height) div 2;
+  ImgSkin1.Hint := RS_SKIN;
+  ImgSkin2.Hint := RS_SKIN;
+  ImgSkin3.Hint := RS_SKIN;
+  ImgDura.Hint := RS_DURABILITY;
+  ImgHpb.Hint := RS_HPB;
+  ImgSab.Hint := RS_SAB;
+  ImgStb.Hint := RS_STB;
+  ImgFob.Hint := RS_FOB;
 end;
 
 {*******************************************************************************
@@ -115,24 +151,16 @@ Shows the form
 procedure TFormRoomFilter.FormShow(Sender: TObject);
 begin
   LoadCurrentFilter;
+  InitInfo;
 end;
 
 {*******************************************************************************
 Applies the filter
 *******************************************************************************}
 procedure TFormRoomFilter.BtOKClick(Sender: TObject);
-var
-  wGuildID: String;
-  wCharID: String;
 begin
-  SaveCurrentFilter;
-  if FormRoom.Visible then begin
-    wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
-    FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
-  end else begin
-    wCharID := FormCharacter.GridChar.Cells[2, FormCharacter.GridChar.Row];
-    FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, FormInvent.TabInvent.TabIndex, GCurrentFilter);
-  end;
+  ApplyFilter;
+  InitInfo;
 end;
 
 {*******************************************************************************
@@ -143,6 +171,7 @@ begin
   EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
+  EnabledGroup(GbCategory, FileExists(GConfig.CurrentPath + 'category.csv') and (CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked));
 end;
 
 {*******************************************************************************
@@ -199,6 +228,9 @@ begin
   CbEqOthers.Checked := (iqOthers in GCurrentFilter.Equipment);
   CbEqAmplifier.Checked := (iqAmplifier in GCurrentFilter.Equipment);
 
+  // Item category
+  EdCategory.ItemIndex := GCurrentFilter.CategoryIndex;
+
   EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
@@ -250,6 +282,9 @@ begin
   // Item name
   GCurrentFilter.ItemName := Trim(EdName.Text);
   GCurrentFilter.AllWords := RbAllWords.Checked;
+
+  // Item Category
+  GCurrentFilter.CategoryIndex := EdCategory.ItemIndex;
 end;
 
 {*******************************************************************************
@@ -259,6 +294,77 @@ procedure TFormRoomFilter.BtDefaultClick(Sender: TObject);
 begin
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
   LoadCurrentFilter;
+end;
+
+{*******************************************************************************
+Applies filter
+*******************************************************************************}
+procedure TFormRoomFilter.ApplyFilter;
+var
+  wGuildID: String;
+  wCharID: String;
+begin
+  SaveCurrentFilter;
+  if FormRoom.Visible then begin
+    wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
+    FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  end else begin
+    wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
+    FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, FormInvent.TabInvent.TabIndex, GCurrentFilter);
+  end;
+end;
+
+{*******************************************************************************
+Displays info of the selected item
+*******************************************************************************}
+procedure TFormRoomFilter.UpdateInfo(AItemImage: TItemImage);
+begin
+  InitInfo;
+  
+  with AItemImage.Data as TItemInfo do begin
+    ImgItem.Assign(AItemImage);
+    ImgItem.Visible := True;
+    LbQuality.Caption := 'Q' + IntToStr(ItemQuality);
+    if ItemClass <> icUnknown then
+      LbClass.Caption := EdClassMin.Items[Ord(ItemClass)];
+    if ItemHp > 0 then LbDura.Caption := Format('%d/%d', [ItemHp, ItemDur]);
+    if ItemHpb > 0 then LbHpb.Caption := IntToStr(ItemHpb);
+    if ItemSab > 0 then LbSab.Caption := IntToStr(ItemSab);
+    if ItemStb > 0 then LbStb.Caption := IntToStr(ItemStb);
+    if ItemFob > 0 then LbFob.Caption := IntToStr(ItemFob);
+
+    // Skin image
+    case ItemSkin of
+      isSkin1: ImgSkin1.Visible := True;
+      isSkin2: begin
+        ImgSkin1.Visible := True;
+        ImgSkin2.Visible := True;
+      end;
+      isSkin3: begin
+        ImgSkin1.Visible := True;
+        ImgSkin2.Visible := True;
+        ImgSkin3.Visible := True;
+      end;
+    end;
+  end;
+end;
+
+{*******************************************************************************
+Initialize info
+*******************************************************************************}
+procedure TFormRoomFilter.InitInfo;
+begin
+  ImgSkin1.Visible := False;
+  ImgSkin2.Visible := False;
+  ImgSkin3.Visible := False;
+  ImgItem.Visible := False;
+  LbQuality.Caption := '-';
+  LbClass.Caption := '-';
+  LbHpb.Caption := '-';
+  LbSab.Caption := '-';
+  LbStb.Caption := '-';
+  LbFob.Caption := '-';
+  LbDura.Caption := '-';
 end;
 
 end.

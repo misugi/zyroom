@@ -2,10 +2,10 @@ object FormMain: TFormMain
   Left = 382
   Top = 270
   Width = 788
-  Height = 532
+  Height = 615
   Caption = 'zyRoom'
   Color = 12631988
-  Constraints.MinHeight = 532
+  Constraints.MinHeight = 615
   Constraints.MinWidth = 788
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,6 +13,7 @@ object FormMain: TFormMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -23,7 +24,7 @@ object FormMain: TFormMain
     Left = 0
     Top = 57
     Width = 780
-    Height = 448
+    Height = 531
     Align = alClient
     BevelOuter = bvNone
     ParentColor = True

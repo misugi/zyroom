@@ -36,6 +36,7 @@ resourcestring
   RS_COL_GUILD_NAME = 'Nom de guilde';
   RS_COL_GUILD_NUMBER = 'Numéro';
   RS_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
+  RS_COL_COMMENT = 'Commentaire';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
   RS_GUILD_KEY = 'Clé de guilde :';
 
@@ -145,11 +146,17 @@ begin
       end;
 
       // Drawing text
-      if (ACol = 2) or (ACol = 3) then begin
+      if (ACol >= 2) and (ACol <= 4) then begin
         Font.Size := 8;
         Font.Style := [];
-        DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+        if (ACol >= 3) then begin
+          DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
+            DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+        end else begin
+          Rect.Left := Rect.Left + 5;
+          DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
+            DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+        end;
       end;
 
       // Drawing image
@@ -170,6 +177,7 @@ var
   wGuildName: String;
   wGuildIcon: String;
   wStream: TMemoryStream;
+  wComment: String;
   wXmlDoc: TXpObjModel;
   wIconFile: String;
   i: Integer;
@@ -177,8 +185,10 @@ begin
   FormGuildEdit.Caption := RS_NEW_GUILD;
   FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
   FormGuildEdit.EdKey.Text := '';
+  FormGuildEdit.EdComment.Text := '';
   if FormGuildEdit.ShowModal = mrOk then begin
     wGuildKey := FormGuildEdit.EdKey.Text;
+    wComment := FormGuildEdit.EdComment.Text;
     wStream := TMemoryStream.Create;
     try
       GRyzomApi.ApiGuild(wGuildKey, wStream);
@@ -188,7 +198,7 @@ begin
         wGuildID := wXmlDoc.DocumentElement.SelectString('/guild/gid');
         wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
         wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
-        GGuild.AddGuild(wGuildID, wGuildKey, wGuildName);
+        GGuild.AddGuild(wGuildID, wGuildKey, wGuildName, wComment);
 
         ForceDirectories(GConfig.GetGuildRoomPath(wGuildID));
         wStream.Clear;
@@ -219,16 +229,21 @@ var
   wGuildID: String;
   wGuildKey: String;
   wGuildName: String;
+  wComment: String;
 begin
-  wGuildID := GridGuild.Cells[2, GridGuild.Row];
+  wGuildID := GridGuild.Cells[3, GridGuild.Row];
   wGuildKey := GGuild.GetGuildKey(wGuildID);
+  wComment := GGuild.GetComment(wGuildID);
   FormGuildEdit.Caption := RS_CHANGE_KEY;
   FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
   FormGuildEdit.EdKey.Text := wGuildKey;
+  FormGuildEdit.EdComment.Text := wComment;
   if FormGuildEdit.ShowModal = mrOk then begin
     wGuildKey := FormGuildEdit.EdKey.Text;
+    wComment := FormGuildEdit.EdComment.Text;
     wGuildName := GridGuild.Cells[1, GridGuild.Row];
-    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName);
+    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment);
+    GridGuild.Cells[2, GridGuild.Row] := wComment;
   end;
 end;
 
@@ -249,16 +264,16 @@ begin
     GridGuild.Row := 0;
     GridGuild.Cells[0, 0] := RS_COL_GUILD_LOGO;
     GridGuild.Cells[1, 0] := RS_COL_GUILD_NAME;
-    GridGuild.Cells[2, 0] := RS_COL_GUILD_NUMBER;
-    GridGuild.Cells[3, 0] := RS_COL_LAST_SYNCHRONIZATION;
-    GridGuild.ColCount := 4;
+    GridGuild.Cells[2, 0] := RS_COL_COMMENT;
+    GridGuild.Cells[3, 0] := RS_COL_GUILD_NUMBER;
+    GridGuild.Cells[4, 0] := RS_COL_LAST_SYNCHRONIZATION;
+    GridGuild.ColCount := 5;
     GridGuild.RowHeights[0] := 20;
     GridGuild.ColWidths[0] := 50;
-    GridGuild.ColWidths[2] := 90;
-    GridGuild.ColWidths[3] := 140;
-    GridGuild.ColWidths[1] := GridGuild.Width - GridGuild.ColWidths[0] -
-      GridGuild.ColWidths[2] - GridGuild.ColWidths[3] - 7;
-  
+    GridGuild.ColWidths[1] := 250;
+    GridGuild.ColWidths[3] := 90;
+    GridGuild.ColWidths[4] := 140;
+
     FIconList.Clear;
     wGuildList := TStringList.Create;
     try
@@ -276,11 +291,12 @@ begin
         FIconList.Add(wPng);
         GridGuild.RowCount := GridGuild.RowCount + 1;
         GridGuild.Cells[1, GridGuild.RowCount-1] := GGuild.GetGuildName(wGuildList[i]);
-        GridGuild.Cells[2, GridGuild.RowCount-1] := wGuildList[i];
+        GridGuild.Cells[2, GridGuild.RowCount-1] := GGuild.GetComment(wGuildList[i]);
+        GridGuild.Cells[3, GridGuild.RowCount-1] := wGuildList[i];
         if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then
-          GridGuild.Cells[3, GridGuild.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile))
+          GridGuild.Cells[4, GridGuild.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile))
         else
-          GridGuild.Cells[3, GridGuild.RowCount-1] := '-';
+          GridGuild.Cells[4, GridGuild.RowCount-1] := '-';
       end;
 
       if GridGuild.RowCount > 1 then begin
@@ -338,7 +354,7 @@ var
 begin
   wRow := GridGuild.Row;
   if wRow > 0 then begin
-    wGuildID := GridGuild.Cells[2, wRow];
+    wGuildID := GridGuild.Cells[3, wRow];
     if FormConfirm.ShowConfirmation(RS_DELETE_CONFIRMATION) <> mrYes then Exit;
     
     SendMessage(GridGuild.Handle, WM_SETREDRAW, 0, 0);
@@ -383,7 +399,7 @@ Resize the window
 *******************************************************************************}
 procedure TFormGuild.FormResize(Sender: TObject);
 begin
-  GridGuild.ColWidths[1] := GridGuild.Width - GridGuild.ColWidths[0] - GridGuild.ColWidths[2] - GridGuild.ColWidths[3] - 7;
+  GridGuild.ColWidths[2] := GridGuild.Width - GridGuild.ColWidths[0] - GridGuild.ColWidths[1] - GridGuild.ColWidths[3] - GridGuild.ColWidths[4] - 8;
 end;
 
 {*******************************************************************************
@@ -401,9 +417,9 @@ procedure TFormGuild.Room;
 var
   wGuildID: String;
 begin
-  FormMain.ShowMenuForm(FormRoom);
-  wGuildID := FormGuild.GridGuild.Cells[2, FormGuild.GridGuild.Row];
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  FormMain.ShowMenuForm(FormRoom);
+  wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
   FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
   FormRoom.LbGuildName.Caption := GridGuild.Cells[1, GridGuild.Row];
 end;
@@ -421,7 +437,7 @@ var
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
 begin
-  wGuildID := GridGuild.Cells[2, GridGuild.Row];
+  wGuildID := GridGuild.Cells[3, GridGuild.Row];
   FormProgress.ShowFormSynchronize(wGuildID);
 
   wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
@@ -438,13 +454,13 @@ begin
       wStream.Free;
       TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
       GridGuild.Cells[1, GridGuild.Row] := wGuildName;
-      GridGuild.Cells[3, GridGuild.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
+      GridGuild.Cells[4, GridGuild.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
       GridGuild.Refresh;
     finally
       wXmlDoc.Free;
     end;
   end else begin
-    GridGuild.Cells[3, GridGuild.Row] := '-';
+    GridGuild.Cells[4, GridGuild.Row] := '-';
   end;
 end;
 

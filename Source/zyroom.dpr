@@ -27,7 +27,6 @@ uses
   UnitFormMain in 'UnitFormMain.pas' {FormMain},
   UnitFormInvent in 'UnitFormInvent.pas' {FormInvent},
   UnitFormOptions in 'UnitFormOptions.pas' {FormOptions},
-  UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter},
   UnitFormProgress in 'UnitFormProgress.pas' {FormProgress},
   UnitConfig in 'UnitConfig.pas',
   UnitRyzom in 'UnitRyzom.pas',
@@ -37,7 +36,8 @@ uses
   UnitFormCharacter in 'UnitFormCharacter.pas' {FormCharacter},
   UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit},
   UnitFormGuild in 'UnitFormGuild.pas' {FormGuild},
-  UnitFormRoom in 'UnitFormRoom.pas' {FormRoom};
+  UnitFormRoom in 'UnitFormRoom.pas' {FormRoom},
+  UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter};
 
 {$R *.res}
 
@@ -46,7 +46,6 @@ begin
   Application.Title := 'zyRoom';
   Application.CreateForm(TFormMain, FormMain);
   Application.CreateForm(TFormOptions, FormOptions);
-  Application.CreateForm(TFormRoomFilter, FormRoomFilter);
   Application.CreateForm(TFormProgress, FormProgress);
   Application.CreateForm(TFormConfirm, FormConfirm);
   Application.CreateForm(TFormInvent, FormInvent);
@@ -55,5 +54,6 @@ begin
   Application.CreateForm(TFormGuildEdit, FormGuildEdit);
   Application.CreateForm(TFormGuild, FormGuild);
   Application.CreateForm(TFormRoom, FormRoom);
+  Application.CreateForm(TFormRoomFilter, FormRoomFilter);
   Application.Run;
 end.

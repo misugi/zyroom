@@ -38,6 +38,8 @@ type
     BtOK: TButton;
     BtCancel: TButton;
     ImgProfilePage: TImage;
+    LbComment: TLabel;
+    EdComment: TEdit;
     procedure FormShow(Sender: TObject);
     procedure ImgProfilePageClick(Sender: TObject);
   private

@@ -109,10 +109,6 @@ begin
   FPngOpen.LoadFromResourceName(HInstance, _RES_OPEN);
   FPngRestricted.LoadFromResourceName(HInstance, _RES_RESTRICTED);
 
-  // Default position
-  Left := (Screen.Width - Self.Width) div 2;
-  Top := (Screen.Height - Self.Height) div 2;
-
   FCurrentForm := nil;
 end;
 
@@ -123,14 +119,6 @@ procedure TFormMain.FormShow(Sender: TObject);
 begin
   // Load the settings
   FormOptions.ApplyConfig;
-
-  // Position of the windows
-  if GConfig.SavePosition then begin
-    FormMain.Left := GConfig.PosMainLeft;
-    FormMain.Top := GConfig.PosMainTop;
-    FormRoomFilter.Left := GConfig.PosFilterLeft;
-    FormRoomFilter.Top := GConfig.PosFilterTop;
-  end;
 
   // Default server to display the time
   case GConfig.Language of

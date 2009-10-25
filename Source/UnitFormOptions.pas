@@ -52,7 +52,6 @@ type
     PnColor: TPanel;
     Label1: TLabel;
     BtApply: TButton;
-    CbSavePosition: TCheckBox;
     EdThreadCount: TSpinEdit;
     Label2: TLabel;
     CbKeepFilter: TCheckBox;
@@ -168,9 +167,6 @@ begin
   EdProxyUsername.Text := GConfig.ProxyUsername;
   EdProxyPassword.Text := GConfig.ProxyPassword;
 
-  // Positions
-  CbSavePosition.Checked := GConfig.SavePosition;
-
   // Threads count
   EdThreadCount.Value := GConfig.ThreadCount;
 
@@ -198,9 +194,6 @@ begin
   GConfig.ProxyPort := EdProxyPort.Value;
   GConfig.ProxyUsername := EdProxyUsername.Text;
   GConfig.ProxyPassword := EdProxyUsername.Text;
-
-  // Positions
-  GConfig.SavePosition := CbSavePosition.Checked;
 
   // Threads count
   GConfig.ThreadCount := EdThreadCount.Value;

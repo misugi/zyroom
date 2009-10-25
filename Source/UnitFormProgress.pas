@@ -27,7 +27,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, XpDOM, ExtCtrls, ScrollRoom, ItemImage,
-  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs;
+  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils;
 
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
@@ -82,6 +82,7 @@ type
     procedure FillInvent(ACharID: String);
     procedure GetItem(ANodeList: TXpNodeList; AStoragePath: String);
     procedure ShowItem(ANodeList: TXpNodeList; AStoragePath: String);
+    function  GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
   public
     procedure ShowFormSynchronize(AGuildID: String);
@@ -394,28 +395,14 @@ Show items
 *******************************************************************************}
 procedure TFormProgress.ShowItem(ANodeList: TXpNodeList; AStoragePath: String);
 var
-  wItemName: String;
-  wItemColor: TItemColor;
-  wItemQuality: Integer;
-  wItemSize: Integer;
-  wItemSap: Integer;
-  wItemDestroyed: Boolean;
-  wItemFileName: String;
-  wItemImage: TItemImage;
-  wItemDesc: String;
   i: Integer;
-
+  wItemImage: TItemImage;
   wItemInfo: TItemInfo;
   wItemList: TObjectList;
   wItemSort: TStringList;
   wSortPrefix: String;
-
-  wItemClass: TItemClass;
-  wItemType: TItemType;
-  wItemEcosys: TItemEcosystem;
-  wItemEquip: TItemEquip;
 begin
-  wItemList := TObjectList.Create;
+  wItemList := TObjectList.Create(False);
   wItemSort := TStringList.Create;
   try
     // Adjust the width of the room
@@ -427,66 +414,39 @@ begin
       for i := 0 to ANodeList.Length - 1 do begin
         if ModalResult = mrCancel then Exit;
 
+        wItemInfo := TItemInfo.Create;
+
         // Get direct information from XML file
-        GRyzomApi.GetItemInfoFromXML(ANodeList.Item(i), wItemName, wItemColor,
-          wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName, wItemClass);
+        GRyzomApi.GetItemInfoFromXML(ANodeList.Item(i), wItemInfo);
 
         // Get more information from item name
-        GRyzomApi.GetItemInfoFromName(wItemName, wItemType, wItemClass, wItemEcosys, wItemEquip);
-  
-        if FFilter.ItemName <> '' then
-          wItemDesc := GStrings.Values[wItemName];
+        GRyzomApi.GetItemInfoFromName(wItemInfo);
+
+        // Item description
+        wItemInfo.ItemDesc := GStrings.Values[wItemInfo.ItemName];
 
         // Check filter
-        if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemName, wItemQuality, FFilter, wItemDesc, wItemType, wItemClass, wItemEcosys, wItemEquip) then begin
-          wItemInfo := TItemInfo.Create;
-          wItemInfo.ItemName := wItemName;
-          wItemInfo.ItemColor := wItemColor;
-          wItemInfo.ItemQuality := wItemQuality;
-          wItemInfo.ItemSize := wItemSize;
-          wItemInfo.ItemSap := wItemSap;
-          wItemInfo.ItemDestroyed := wItemDestroyed;
-          wItemInfo.ItemFileName := wItemFileName;
-          wItemInfo.ItemClass := wItemClass;
+        if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemInfo, FFilter) then begin
           wItemList.Add(wItemInfo);
-
-          // Sorting
-          wSortPrefix := '99';
-
-          case wItemType of
-            itEquipment: begin
-              case wItemEquip of
-                iqLightArmor: wSortPrefix := '01';
-                iqMediumArmor: wSortPrefix := '02';
-                iqHeavyArmor: wSortPrefix := '03';
-                iqWeaponMelee: wSortPrefix := '04';
-                iqWeaponRange: wSortPrefix := '05';
-                iqOthers: wSortPrefix := '06';
-                iqAmplifier: wSortPrefix := '07';
-                iqJewel: wSortPrefix := '08';
-              end;
-            end;
-            itNaturalMat: wSortPrefix := '10';
-            itAnimalMat: wSortPrefix := '11';
-            itOthers: wSortPrefix := '15';
-            itCata: wSortPrefix := '16';
-          end;
-
-          if wItemType = itEquipment then
-            wItemSort.Append(Format('%s%3.3d%d%s=%d', [wSortPrefix, wItemQuality, Ord(wItemClass), wItemName, wItemList.Count-1]))
-          else
-            wItemSort.Append(Format('%s%s=%d', [wSortPrefix, wItemName, wItemList.Count-1]));
+          wSortPrefix := GetSortPrefix(wItemInfo);
+          wItemSort.Append(Format('%s%3.3d%d%s=%d', [wSortPrefix, wItemInfo.ItemQuality, Ord(wItemInfo.ItemClass), wItemInfo.ItemName, wItemList.Count-1]));
+        end else begin
+          wItemInfo.Free;
         end;
       end;
 
-      // Loop to display items
+      // Sorting
       wItemSort.Sort;
+
+      // Loop to display items
       for i := 0 to wItemSort.Count - 1 do begin
         if ModalResult = mrCancel then Exit;
 
-        wItemImage := TItemImage.Create(nil);
         wItemInfo := TItemInfo(wItemList.Items[StrToInt(wItemSort.ValueFromIndex[i])]);
-        wItemImage.ItemName := wItemInfo.ItemName;
+
+        wItemImage := TItemImage.Create(nil);
+        wItemImage.Hint := wItemInfo.ItemDesc;
+        wItemImage.Data := wItemInfo;
         if FileExists(AStoragePath + wItemInfo.ItemFileName) then begin
           try
             wItemImage.LoadFromFile(AStoragePath + wItemInfo.ItemFileName);
@@ -507,6 +467,44 @@ begin
   finally
     wItemSort.Free;
     wItemList.Free;
+  end;
+end;
+
+{*******************************************************************************
+Returns a sorting prefix
+*******************************************************************************}
+function TFormProgress.GetSortPrefix(AItemInfo: TItemInfo): String;
+begin
+  case AItemInfo.ItemType of
+    itEquipment: begin
+      case AItemInfo.ItemEquip of
+        iqLightArmor: Result := '01';
+        iqMediumArmor: Result := '02';
+        iqHeavyArmor: Result := '03';
+        iqWeaponMelee: begin
+          case AItemInfo.ItemWeapon of
+            iwOneHand: Result := '041';
+            iwTwoHands: Result := '042';
+          end;
+        end;
+        iqAmplifier: Result := '05';
+        iqWeaponRange: begin
+          case AItemInfo.ItemWeapon of
+            iwOneHand: Result := '061';
+            iwTwoHands: Result := '062';
+          end;
+        end;
+        iqOthers: Result := '07';
+        iqJewel: Result := '08';
+      end;
+    end;
+    itNaturalMat, itAnimalMat: begin
+      Result := '10' + Format('%2.2d', [Min(AnsiIndexText(AItemInfo.ItemCategory1, _ITEM_CATEGORY),
+                                                 AnsiIndexText(AItemInfo.ItemCategory2, _ITEM_CATEGORY))]);
+      if Pos('m0312', AItemInfo.ItemName) = 1 then Result := '1099'; {larva}
+    end;
+    itOthers: Result := '15';
+    itCata: Result := '16';
   end;
 end;
 
@@ -604,28 +602,22 @@ Executes the synchronization thread
 procedure TGetItemThread.Execute;
 var
   j: Integer;
-  wItemName: String;
-  wItemColor: TItemColor;
-  wItemQuality: Integer;
-  wItemSize: Integer;
-  wItemSap: Integer;
-  wItemDestroyed: Boolean;
-  wItemFileName: String;
   wPngCheck: Boolean;
   wPng: TPNGObject;
   wIconFile: TMemoryStream;
   wApi: TRyzomApi;
-  wItemClass: TItemClass;
+  wItemInfo: TItemInfo;
 begin
   try
-    GRyzomApi.GetItemInfoFromXML(FNode, wItemName, wItemColor,
-      wItemQuality, wItemSize, wItemSap, wItemDestroyed, wItemFileName, wItemClass);
-
     wPng := TPNGObject.Create;
     wApi := TRyzomApi.Create;
+    wItemInfo := TItemInfo.Create;
     try
+      // Get item infos
+      GRyzomApi.GetItemInfoFromXML(FNode, wItemInfo);
+
       // Ignore item if file already exists in guild directory
-      if not FileExists(FStoragePath + wItemFileName) then begin
+      if not FileExists(FStoragePath + wItemInfo.ItemFileName) then begin
         j := 1;
         wPngCheck := False;
         while (not wPngCheck) and (j < 10) do begin
@@ -638,10 +630,10 @@ begin
               wApi.SetProxyParameters('', 0, '', '');
 
             // Get item icon
-            wApi.ApiItemIcon(wItemName, wIconFile, wItemColor, wItemQuality, wItemSize, wItemSap, wItemDestroyed);
+            wApi.ApiItemIcon(wItemInfo.ItemName, wIconFile, wItemInfo.ItemColor, wItemInfo.ItemQuality, wItemInfo.ItemSize, wItemInfo.ItemSap, wItemInfo.ItemDestroyed);
             try
               wPng.LoadFromStream(wIconFile);
-              wPng.SaveToFile(FStoragePath + wItemFileName);
+              wPng.SaveToFile(FStoragePath + wItemInfo.ItemFileName);
               wPngCheck := True;
             except
               Sleep(100);
@@ -656,6 +648,7 @@ begin
           raise Exception.Create(RS_CONNEXION_ERROR);
       end;
     finally
+      wItemInfo.Free;
       wPng.Free;
       wApi.Free;
     end;

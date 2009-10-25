@@ -73,6 +73,7 @@ const
   _CHARACTER_FILENAME = 'character.ini';
   _KEY_KEY = 'Key';
   _KEY_NAME = 'Name';
+  _KEY_COMMENT = 'Comment';
   _KEY_SERVER = 'Server';
 
   _RES_LOGO = 'logo';
@@ -98,9 +99,10 @@ type
 
     function  GetGuildKey(AGuildID: String): String;
     function  GetGuildName(AGuildID: String): String;
+    function  GetComment(AID: String): String;
     function  GuildExists(AGuildID: String): Boolean;
-    procedure AddGuild(AGuildID, AGuildKey, AGuildName: String);
-    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName: String);
+    procedure AddGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
+    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
   end;
@@ -117,8 +119,8 @@ type
     function  GetCharName(ACharID: String): String;
     function  GetServerName(ACharID: String): String;
     function  CharExists(ACharID: String): Boolean;
-    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer: String);
-    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer: String);
+    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
+    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
     procedure DeleteChar(ACharID: String);
     procedure CharList(ACharIDList: TStrings);
   end;
@@ -456,7 +458,7 @@ end;
 {*******************************************************************************
 Adds a guild
 *******************************************************************************}
-procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName: String);
+procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
 var
   wKey: String;
 begin
@@ -465,12 +467,13 @@ begin
   wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
   FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
+  FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
 end;
 
 {*******************************************************************************
 Updates a guild
 *******************************************************************************}
-procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName: String);
+procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
 var
   wKey: String;
 begin
@@ -479,6 +482,7 @@ begin
   wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
   FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
+  FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
 end;
 
 {*******************************************************************************
@@ -510,6 +514,14 @@ begin
   Result := FIniFile.ReadString(AGuildID, _KEY_NAME, '');
   if Result = '' then
     raise Exception.Create(RS_ERROR_NAME_NOTFOUND);
+end;
+
+{*******************************************************************************
+Returns the comment
+*******************************************************************************}
+function TGuild.GetComment(AID: String): String;
+begin
+  Result := FIniFile.ReadString(AID, _KEY_COMMENT, '');
 end;
 
 {*******************************************************************************
@@ -548,7 +560,7 @@ end;
 {*******************************************************************************
 Adds a character
 *******************************************************************************}
-procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer: String);
+procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
 var
   wKey: String;
 begin
@@ -558,6 +570,7 @@ begin
   FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
   FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
   FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
+  FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
 end;
 
 {*******************************************************************************
@@ -653,7 +666,7 @@ end;
 {*******************************************************************************
 Updates a character
 *******************************************************************************}
-procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer: String);
+procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
 var
   wKey: String;
 begin
@@ -663,6 +676,7 @@ begin
   FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
   FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
   FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
+  FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
 end;
 
 {*******************************************************************************

@@ -2,7 +2,7 @@ object FormHome: TFormHome
   Left = 345
   Top = 282
   Width = 788
-  Height = 475
+  Height = 558
   Caption = 'Home'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object FormHome: TFormHome
   TextHeight = 13
   object ImgRoom: TImage
     Left = 40
-    Top = 20
+    Top = 60
     Width = 700
     Height = 405
     AutoSize = True
@@ -13126,7 +13126,7 @@ object FormHome: TFormHome
   end
   object LbCreatedFor: TLabel
     Left = 265
-    Top = 168
+    Top = 208
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13142,7 +13142,7 @@ object FormHome: TFormHome
   end
   object LbContest: TLabel
     Left = 265
-    Top = 184
+    Top = 224
     Width = 250
     Height = 13
     Cursor = crHandPoint
@@ -13162,7 +13162,7 @@ object FormHome: TFormHome
   end
   object LbCreatedBy: TLabel
     Left = 265
-    Top = 209
+    Top = 249
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13178,7 +13178,7 @@ object FormHome: TFormHome
   end
   object LbAuthor: TLabel
     Left = 265
-    Top = 225
+    Top = 265
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13194,7 +13194,7 @@ object FormHome: TFormHome
   end
   object LbWebsite: TLabel
     Left = 265
-    Top = 249
+    Top = 289
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13210,7 +13210,7 @@ object FormHome: TFormHome
   end
   object LbProjectWebsite: TLabel
     Left = 265
-    Top = 265
+    Top = 305
     Width = 250
     Height = 13
     Cursor = crHandPoint
@@ -13230,7 +13230,7 @@ object FormHome: TFormHome
   end
   object ImgRyzom: TImage
     Left = 340
-    Top = 333
+    Top = 373
     Width = 100
     Height = 33
     Cursor = crHandPoint
@@ -13497,7 +13497,7 @@ object FormHome: TFormHome
   end
   object LbVersion: TLabel
     Left = 265
-    Top = 287
+    Top = 327
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13513,7 +13513,7 @@ object FormHome: TFormHome
   end
   object LbVersionNum: TLabel
     Left = 265
-    Top = 303
+    Top = 343
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13531,7 +13531,7 @@ object FormHome: TFormHome
   end
   object ImgAgpl: TImage
     Left = 554
-    Top = 320
+    Top = 360
     Width = 112
     Height = 55
     Cursor = crHandPoint

@@ -25,15 +25,19 @@ unit UnitRyzom;
 interface
 
 uses
-  Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig;
+  Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig, StrUtils;
 
 const
+  _ITEM_CATEGORY : array [0..20] of String = ('Blade', 'Hammer', 'Point', 'Shaft', 'Grip', 'Counterweight',
+    'MagicFokus', 'Trigger', 'FiringPin', 'Barrel', 'Explosive', 'Jacket', 'Bullet',
+    'Cloth', 'ArmorShell', 'Lining', 'Stuffing', 'ArmorClip', 'JewelSetting', 'Jewels', 'Unknown');
+
   _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([b-f])01\.sitem';
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-e])01\.sitem';
-  _EXPR_EQUIPMENT = '^ic(.).+';
-  _EXPR_EQUIPMENT_ARMOR = '^ic.a(.).+';
+  _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
+  _EXPR_EQUIPMENT_ARMOR = '^ic.a(.).*';
   _EXPR_EQUIPMENT_AMPLIFIER = '^ic.+m2ms.*';
-  _EXPR_EQUIPMENT_WEAPON = '^ic.+([rm])[12].*';
+  _EXPR_EQUIPMENT_WEAPON = '^ic.+([rm])([12]).*';
   _EXPR_EQUIPMENT_JEWEL = '^ic.j.*';
   
 type
@@ -43,6 +47,8 @@ type
   TItemEcosystem = (ieCommon, iePrime, ieDesert, ieJungle, ieForest, ieLakes, ieUnknown);
   TItemEcosystems = set of TItemEcosystem;
   TItemEquip = (iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqAmplifier, iqJewel, iqOthers);
+  TItemWeapon = (iwOneHand, iwTwoHands);
+  TItemSkin = (isSkin1, isSkin2, isSkin3, isNoSkin);
   TItemEquips = set of TItemEquip;
 
   TItemFilter = record
@@ -56,6 +62,7 @@ type
     ItemName: String;
     AllWords: Boolean;
     Equipment: TItemEquips;
+    CategoryIndex: Integer;
   end;
   
   TItemInfo = class(TObject)
@@ -68,11 +75,26 @@ type
     ItemDestroyed: Boolean;
     ItemFileName: String;
     ItemClass: TItemClass;
+    ItemType: TItemType;
+    ItemEcosys: TItemEcosystem;
+    ItemEquip: TItemEquip;
+    ItemCategory1: String;
+    ItemCategory2: String;
+    ItemWeapon: TItemWeapon;
+    ItemSkin: TItemSkin;
+    ItemDesc: String;
+    ItemHp: Integer;
+    ItemDur: Integer;
+    ItemHpb: Integer;
+    ItemSab: Integer;
+    ItemStb: Integer;
+    ItemFob: Integer;
   end;
 
   TRyzom = class(TRyzomApi)
   private
     FXmlDocument: TXpObjModel;
+    FCatStrings: TStringList;
 
     FAniroStatus: Integer;
     FArispotleStatus: Integer;
@@ -82,13 +104,11 @@ type
     destructor Destroy; override;
 
     procedure UpdateStatus;
-    procedure GetItemInfoFromXML(ANode: TXpNode; var AName: String; var AColor: TItemColor;
-      var AQuality, ASize, ASap: Integer; var ADestroyed: Boolean; var AFileName: String; var AItemClass: TItemClass);
-    function  CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter;
-      AItemDesc: String; AItemType: TItemType; AItemClass: TItemClass; AItemEcosys: TItemEcosystem; AItemEquip: TItemEquip): Boolean;
-    procedure GetItemInfoFromName(AItemName: String; var AItemType: TItemType; var AItemClass: TItemClass; var AItemEcosys: TItemEcosystem; var AItemEquip: TItemEquip);
+    procedure GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
+    function  CheckItem(AItemInfo: TItemInfo; AFilter: TItemFilter): Boolean;
+    procedure GetItemInfoFromName(AItemInfo: TItemInfo);
     procedure SetDefaultFilter(var AFilter: TItemFilter);
-
+    
     property AniroStatus: Integer read FAniroStatus;
     property LeanonStatus: Integer read FLeanonStatus;
     property ArispotleStatus: Integer read FArispotleStatus;
@@ -111,9 +131,15 @@ uses MisuDevKit;
 Creates the interface object
 *******************************************************************************}
 constructor TRyzom.Create;
+var
+  wCatFile: String;
 begin
   inherited Create;
   FXmlDocument := TXpObjModel.Create(nil);
+  FCatStrings := TStringList.Create;
+  wCatFile := GConfig.CurrentPath + 'category.csv';
+  if FileExists(wCatFile) then
+    FCatStrings.LoadFromFile(wCatFile);
 end;
 
 {*******************************************************************************
@@ -121,6 +147,7 @@ Destroys the interface object
 *******************************************************************************}
 destructor TRyzom.Destroy;
 begin
+  FCatStrings.Free;
   FXmlDocument.Free;
   inherited;
 end;
@@ -128,56 +155,81 @@ end;
 {*******************************************************************************
 Returns information of an item
 *******************************************************************************}
-procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; var AName: String; var AColor: TItemColor;
-  var AQuality, ASize, ASap: Integer; var ADestroyed: Boolean; var AFileName: String; var AItemClass: TItemClass);
+procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
   wNode: TXpNode;
 begin
   // Default values
-  AColor := icNone;
-  AQuality := -1;
-  ASize := -1;
-  ASap := -1;
-  ADestroyed := False;
-  AItemClass := icUnknown;
+  AItemInfo.ItemColor := icNone;
+  AItemInfo.ItemQuality := -1;
+  AItemInfo.ItemSize := -1;
+  AItemInfo.ItemSap := -1;
+  AItemInfo.ItemDestroyed := False;
+  AItemInfo.ItemClass := icUnknown;
+  AItemInfo.ItemHp := 0;
   
   // Name
-  AName := ANode.Text;
+  AItemInfo.ItemName := ANode.Text;
 
   // Color
   wNode := ANode.Attributes.GetNamedItem('c');
-  if Assigned(wNode) then AColor := ToItemColor(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemColor := ToItemColor(wNode.NodeValue);
 
   // Quality
   wNode := ANode.Attributes.GetNamedItem('q');
-  if Assigned(wNode) then AQuality := StrToInt(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemQuality := StrToInt(wNode.NodeValue);
 
   // Size
   wNode := ANode.Attributes.GetNamedItem('s');
-  if Assigned(wNode) then ASize := StrToInt(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemSize := StrToInt(wNode.NodeValue);
 
   // Sap load
   wNode := ANode.Attributes.GetNamedItem('sap');
-  if Assigned(wNode) then ASap := StrToInt(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemSap := StrToInt(wNode.NodeValue);
 
-  // Destroyed
+  // Destroyed / HP
   wNode := ANode.Attributes.GetNamedItem('hp');
-  if Assigned(wNode) then ADestroyed := StrToInt(wNode.NodeValue) <= 1;
+  if Assigned(wNode) then begin
+    AItemInfo.ItemHp := StrToInt(wNode.NodeValue);
+    AItemInfo.ItemDestroyed := AItemInfo.ItemHp <= 1;
+  end;
 
-  // Destroyed
+  // Durability
+  wNode := ANode.Attributes.GetNamedItem('dur');
+  if Assigned(wNode) then AItemInfo.ItemDur := StrToInt(wNode.NodeValue);
+
+  // HP Bonus
+  wNode := ANode.Attributes.GetNamedItem('hpb');
+  if Assigned(wNode) then AItemInfo.ItemHpb := StrToInt(wNode.NodeValue);
+
+  // Sap Bonus
+  wNode := ANode.Attributes.GetNamedItem('sab');
+  if Assigned(wNode) then AItemInfo.ItemSab := StrToInt(wNode.NodeValue);
+
+  // Stamina Bonus
+  wNode := ANode.Attributes.GetNamedItem('stb');
+  if Assigned(wNode) then AItemInfo.ItemStb := StrToInt(wNode.NodeValue);
+
+  // Focus Bonus
+  wNode := ANode.Attributes.GetNamedItem('fob');
+  if Assigned(wNode) then AItemInfo.ItemFob := StrToInt(wNode.NodeValue);
+
+  // Energy
   wNode := ANode.Attributes.GetNamedItem('e');
   if Assigned(wNode) then begin
     case Ord(wNode.NodeValue[1]) of
-      98:  AItemClass := icBasic; {b = base}
-      102: AItemClass := icFine; {f = fine}
-      99:  AItemClass := icChoice; {c = choice}
-      101: AItemClass := icExcellent; {e = excelent}
-      115: AItemClass := icSupreme; {s = supreme}
+      98:  AItemInfo.ItemClass := icBasic; {b = base}
+      102: AItemInfo.ItemClass := icFine; {f = fine}
+      99:  AItemInfo.ItemClass := icChoice; {c = choice}
+      101: AItemInfo.ItemClass := icExcellent; {e = excelent}
+      115: AItemInfo.ItemClass := icSupreme; {s = supreme}
     end;
   end;
 
   // Image filename
-  AFileName := Format('%s.c%dq%ds%dd%d%s', [AName, Ord(AColor), AQuality, ASize, MdkBoolToInteger(ADestroyed), _ICON_FORMAT]);
+  AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s',
+    [AItemInfo.ItemName, Ord(AItemInfo.ItemColor), AItemInfo.ItemQuality, AItemInfo.ItemSize,
+    MdkBoolToInteger(AItemInfo.ItemDestroyed), _ICON_FORMAT]);
 end;
 
 {*******************************************************************************
@@ -217,122 +269,145 @@ begin
   AFilter.ItemName := '';
   AFilter.AllWords := True;
   AFilter.Equipment := [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqJewel, iqAmplifier, iqOthers];
+  AFilter.CategoryIndex := 0;
 end;
 
 {*******************************************************************************
 Returns information about an item from the item name
 *******************************************************************************}
-procedure TRyzom.GetItemInfoFromName(AItemName: String; var AItemType: TItemType; var AItemClass: TItemClass;
-    var AItemEcosys: TItemEcosystem; var AItemEquip: TItemEquip);
+procedure TRyzom.GetItemInfoFromName(AItemInfo: TItemInfo);
+var
+  wIndex: Integer;
 begin
-  AItemType := itOthers;
-  AItemEcosys := ieUnknown;
+  AItemInfo.ItemType := itOthers;
+  AItemInfo.ItemEcosys := ieUnknown;
+  AItemInfo.ItemSkin := isNoSkin;
 
   // Catalyzer
-  if CompareText(AItemName, _CATA_ITEM_NAME) = 0 then begin
-    AItemType := itCata;
+  if CompareText(AItemInfo.ItemName, _CATA_ITEM_NAME) = 0 then begin
+    AItemInfo.ItemType := itCata;
     Exit;
   end;
 
   // Equipment
   GRegExpr.Expression := _EXPR_EQUIPMENT;
-  if GRegExpr.Exec(AItemName) then begin
-    AItemType := itEquipment;
+  if GRegExpr.Exec(AItemInfo.ItemName) then begin
+    AItemInfo.ItemType := itEquipment;
     case Ord(GRegExpr.Match[1][1]) of
-      99: AItemEcosys := ieCommon; {c = common}
-      111: AItemEcosys := ieCommon; {o = common}
-      116: AItemEcosys := ieLakes; {t = tryker}
-      102: AItemEcosys := ieDesert; {f = fyros}
-      109: AItemEcosys := ieForest; {m = matis}
-      122: AItemEcosys := ieJungle; {z = zorai}
+      116: AItemInfo.ItemEcosys := ieLakes; {t = tryker}
+      102: AItemInfo.ItemEcosys := ieDesert; {f = fyros}
+      109: AItemInfo.ItemEcosys := ieForest; {m = matis}
+      122: AItemInfo.ItemEcosys := ieJungle; {z = zorai}
+    else
+      AItemInfo.ItemEcosys := ieCommon;
     end;
 
-    AItemEquip := iqOthers;
+    AItemInfo.ItemSkin := isSkin1;
+    case Ord(GRegExpr.Match[2][2]) of
+      50: AItemInfo.ItemSkin := isSkin2; {2 = skin2}
+      51: AItemInfo.ItemSkin := isSkin3; {3 = skin3}
+    end;
+
+    AItemInfo.ItemEquip := iqOthers;
     
     // Armor
     GRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
-    if GRegExpr.Exec(AItemName) then begin
+    if GRegExpr.Exec(AItemInfo.ItemName) then begin
       case Ord(GRegExpr.Match[1][1]) of
-        108: AItemEquip := iqLightArmor; {l = light}
-        99: AItemEquip := iqLightArmor; {c = light}
-        109: AItemEquip := iqMediumArmor; {m = medium}
-        104: AItemEquip := iqHeavyArmor; {h = heavy}
+        108: AItemInfo.ItemEquip := iqLightArmor; {l = light}
+        99: AItemInfo.ItemEquip := iqLightArmor; {c = light}
+        109: AItemInfo.ItemEquip := iqMediumArmor; {m = medium}
+        104: AItemInfo.ItemEquip := iqHeavyArmor; {h = heavy}
       end;
     end;
 
     // Amplifier
-    if AItemEquip = iqOthers then begin
+    if AItemInfo.ItemEquip = iqOthers then begin
       GRegExpr.Expression := _EXPR_EQUIPMENT_AMPLIFIER;
-      if GRegExpr.Exec(AItemName) then begin
-        AItemEquip := iqAmplifier;
+      if GRegExpr.Exec(AItemInfo.ItemName) then begin
+        AItemInfo.ItemEquip := iqAmplifier;
       end;
     end;
 
     // Weapon
-    if AItemEquip = iqOthers then begin
+    if AItemInfo.ItemEquip = iqOthers then begin
       GRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
-      if GRegExpr.Exec(AItemName) then begin
+      if GRegExpr.Exec(AItemInfo.ItemName) then begin
         case Ord(GRegExpr.Match[1][1]) of
-          109: AItemEquip := iqWeaponMelee; {m = melee}
-          114: AItemEquip := iqWeaponRange; {r = range}
+          109: AItemInfo.ItemEquip := iqWeaponMelee; {m = melee}
+          114: AItemInfo.ItemEquip := iqWeaponRange; {r = range}
+        end;
+        case Ord(GRegExpr.Match[2][1]) of
+          49: AItemInfo.ItemWeapon := iwOneHand; {1 = 1 hand}
+          50: AItemInfo.ItemWeapon := iwTwoHands; {2 = 2 hands}
         end;
       end;
     end;
 
     // Jewel
-    if AItemEquip = iqOthers then begin
+    if AItemInfo.ItemEquip = iqOthers then begin
       GRegExpr.Expression := _EXPR_EQUIPMENT_JEWEL;
-      if GRegExpr.Exec(AItemName) then begin
-        AItemEquip := iqJewel;
+      if GRegExpr.Exec(AItemInfo.ItemName) then begin
+        AItemInfo.ItemEquip := iqJewel;
       end;
     end;
   end;
 
   // Natural materials
-  if AItemType = itOthers then begin
+  if AItemInfo.ItemType = itOthers then begin
     GRegExpr.Expression := _EXPR_NATURAL_MAT;
-    if GRegExpr.Exec(AItemName) then
-      AItemType := itNaturalMat;
+    if GRegExpr.Exec(AItemInfo.ItemName) then
+      AItemInfo.ItemType := itNaturalMat;
   end;
 
   // Animal materials
-  if AItemType = itOthers then begin
+  if AItemInfo.ItemType = itOthers then begin
     GRegExpr.Expression := _EXPR_ANIMAL_MAT;
-    if GRegExpr.Exec(AItemName) then
-      AItemType := itAnimalMat;
+    if GRegExpr.Exec(AItemInfo.ItemName) then
+      AItemInfo.ItemType := itAnimalMat;
   end;
 
   // Natural and Animal
-  if (AItemType = itNaturalMat) or (AItemType = itAnimalMat) then begin
+  if (AItemInfo.ItemType = itNaturalMat) or (AItemInfo.ItemType = itAnimalMat) then begin
+    // Categories
+    AItemInfo.ItemCategory1 := 'Unknown';
+    AItemInfo.ItemCategory2 := 'Unknown';
+    wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
+    if wIndex >= 0 then begin
+      AItemInfo.ItemCategory1 := FCatStrings.ValueFromIndex[wIndex];
+      AItemInfo.ItemCategory2 := FCatStrings.ValueFromIndex[wIndex+1];
+    end;
+
+    // Ecosystem
     case Ord(GRegExpr.Match[1][1]) of
-      99: AItemEcosys := ieCommon; {c}
-      112: AItemEcosys := iePrime; {p}
-      100: AItemEcosys := ieDesert; {d}
-      102: AItemEcosys := ieForest; {f}
-      108: AItemEcosys := ieLakes; {l}
-      106: AItemEcosys := ieJungle; {j}
+      99: AItemInfo.ItemEcosys := ieCommon; {c}
+      112: AItemInfo.ItemEcosys := iePrime; {p}
+      100: AItemInfo.ItemEcosys := ieDesert; {d}
+      102: AItemInfo.ItemEcosys := ieForest; {f}
+      108: AItemInfo.ItemEcosys := ieLakes; {l}
+      106: AItemInfo.ItemEcosys := ieJungle; {j}
     end;
   end;
 
   // Natural
-  if AItemType = itNaturalMat then begin
+  if AItemInfo.ItemType = itNaturalMat then begin
     case Ord(GRegExpr.Match[2][1]) of
-      98: AItemClass := icBasic; {b}
-      99: AItemClass := icFine; {c}
-      100: AItemClass := icChoice; {d}
-      101: AItemClass := icExcellent; {e}
-      102: AItemClass := icSupreme; {f}
+      98: AItemInfo.ItemClass := icBasic; {b}
+      99: AItemInfo.ItemClass := icFine; {c}
+      100: AItemInfo.ItemClass := icChoice; {d}
+      101: AItemInfo.ItemClass := icExcellent; {e}
+      102: AItemInfo.ItemClass := icSupreme; {f}
     end;
   end;
 
   // Animal
-  if AItemType = itAnimalMat then begin
+  if AItemInfo.ItemType = itAnimalMat then begin
     case Ord(GRegExpr.Match[2][1]) of
-      97: AItemClass := icBasic; {a}
-      98: AItemClass := icFine; {b}
-      99: AItemClass := icChoice; {c}
-      100: AItemClass := icExcellent; {d}
-      101: AItemClass := icSupreme; {e}
+      97: AItemInfo.ItemClass := icBasic; {a}
+      98: AItemInfo.ItemClass := icFine; {b}
+      99: AItemInfo.ItemClass := icChoice; {c}
+      100: AItemInfo.ItemClass := icExcellent; {d}
+      101: AItemInfo.ItemClass := icSupreme; {e}
     end;
   end;
 end;
@@ -340,12 +415,12 @@ end;
 {*******************************************************************************
 Verifies if the item respects the filter
 *******************************************************************************}
-function TRyzom.CheckItem(AItemName: String; AQuality: Integer; AFilter: TItemFilter;
-  AItemDesc: String; AItemType: TItemType; AItemClass: TItemClass; AItemEcosys: TItemEcosystem;
-  AItemEquip: TItemEquip): Boolean;
+function TRyzom.CheckItem(AItemInfo: TItemInfo; AFilter: TItemFilter): Boolean;
 var
   wList: TStringList;
   wFound: Boolean;
+  wCatIndex1: Integer;
+  wCatIndex2: Integer;
   i: Integer;
 begin
   Result := False;
@@ -354,21 +429,21 @@ begin
   if AFilter.Type_ = [] then Exit;
 
   // Quality
-  if (AQuality < AFilter.QualityMin) or (AQuality > AFilter.QualityMax) then Exit;
+  if (AItemInfo.ItemQuality < AFilter.QualityMin) or (AItemInfo.ItemQuality > AFilter.QualityMax) then Exit;
 
   // If the name does not match
   if AFilter.ItemName <> '' then begin
     wList := TStringList.Create;
     try
       wList.CommaText := MdkRemoveAccents(AFilter.ItemName);
-      AItemDesc := MdkRemoveAccents(AItemDesc);
+      AItemInfo.ItemDesc := MdkRemoveAccents(AItemInfo.ItemDesc);
       wFound := AFilter.AllWords;
       i := 0;
       while (i < wList.Count) do begin
         if AFilter.AllWords then
-          wFound := wFound and (Pos(UpperCase(wList[i]), UpperCase(AItemDesc)) > 0)
+          wFound := wFound and (Pos(UpperCase(wList[i]), UpperCase(AItemInfo.ItemDesc)) > 0)
         else
-          wFound := wFound or (Pos(UpperCase(wList[i]), UpperCase(AItemDesc)) > 0);
+          wFound := wFound or (Pos(UpperCase(wList[i]), UpperCase(AItemInfo.ItemDesc)) > 0);
         Inc(i);
       end;
       if not wFound then Exit;
@@ -378,21 +453,31 @@ begin
   end;
 
   // Type
-  if not (AItemType in AFilter.Type_) then Exit;
+  if not (AItemInfo.ItemType in AFilter.Type_) then Exit;
 
-  // Only for materials
-  if AItemType in [itAnimalMat, itNaturalMat, itEquipment] then begin
+  // Materials and equipment
+  if AItemInfo.ItemType in [itAnimalMat, itNaturalMat, itEquipment] then begin
     // Ecosystem
-    if not (AItemEcosys in AFilter.Ecosystem) then Exit;
+    if not (AItemInfo.ItemEcosys in AFilter.Ecosystem) then Exit;
 
     // Class
-    if (Ord(AItemClass) < Ord(AFilter.ClassMin)) or (Ord(AItemClass) > Ord(AFilter.ClassMax)) then Exit;
+    if (Ord(AItemInfo.ItemClass) < Ord(AFilter.ClassMin)) or (Ord(AItemInfo.ItemClass) > Ord(AFilter.ClassMax)) then Exit;
+
+  end;
+  
+  // Item category (only materials)
+  if AItemInfo.ItemType in [itAnimalMat, itNaturalMat] then begin
+    if (AFilter.CategoryIndex > 0) and (Pos('m0312', AItemInfo.ItemName) = 0) {larva} then begin
+      wCatIndex1 := AnsiIndexText(AItemInfo.ItemCategory1, _ITEM_CATEGORY)+1;
+      wCatIndex2 := AnsiIndexText(AItemInfo.ItemCategory2, _ITEM_CATEGORY)+1;
+      if (wCatIndex1 <> AFilter.CategoryIndex) and (wCatIndex2 <> AFilter.CategoryIndex) then Exit;
+    end;
   end;
   
   // Item equipment
-  if AItemType = itEquipment then begin
+  if AItemInfo.ItemType = itEquipment then begin
     if AFilter.Equipment = [] then Exit;
-    if not (AItemEquip in AFilter.Equipment) then Exit;
+    if not (AItemInfo.ItemEquip in AFilter.Equipment) then Exit;
   end;
 
   Result := True;

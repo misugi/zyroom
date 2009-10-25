@@ -36,6 +36,7 @@ resourcestring
   RS_CHAR_COL_CHAR_NAME = 'Nom de personnage';
   RS_CHAR_COL_CHAR_NUMBER = 'Numéro';
   RS_CHAR_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
+  RS_CHAR_COL_COMMENT = 'Commentaire';
   RS_CHAR_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer le personnage sélectionné ?';
   RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
   RS_CHAR_KEY = 'Clé de personnage :';
@@ -143,7 +144,16 @@ begin
       end;
 
       // Drawing text
-      if (ACol = 0) or (ACol = 2) or (ACol = 3) then begin
+      if (ACol = 2) then begin
+        Font.Size := 8;
+        Font.Style := [];
+        Rect.Left := Rect.Left + 5;
+        DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+      end;
+
+      // Drawing text
+      if (ACol = 0) or (ACol = 3) or (ACol = 4) then begin
         Font.Size := 8;
         Font.Style := [];
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
@@ -163,14 +173,17 @@ var
   wCharName: String;
   wCharServer: String;
   wStream: TMemoryStream;
+  wComment: String;
   wXmlDoc: TXpObjModel;
   i: Integer;
 begin
   FormGuildEdit.Caption := RS_CHAR_NEW_CHARACTER;
   FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
   FormGuildEdit.EdKey.Text := '';
+  FormGuildEdit.EdComment.Text := '';
   if FormGuildEdit.ShowModal = mrOk then begin
     wCharKey := FormGuildEdit.EdKey.Text;
+    wComment := FormGuildEdit.EdComment.Text;
     wStream := TMemoryStream.Create;
     try
       GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
@@ -180,7 +193,7 @@ begin
         wCharID := wXmlDoc.DocumentElement.SelectString('/character/cid');
         wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
         wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
-        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer);
+        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment);
 
         ForceDirectories(GConfig.GetCharRoomPath(wCharID));
         LoadGrid;
@@ -208,17 +221,22 @@ var
   wCharKey: String;
   wCharName: String;
   wCharServer: String;
+  wComment: String;
 begin
-  wCharID := GridChar.Cells[2, GridChar.Row];
+  wCharID := GridChar.Cells[3, GridChar.Row];
   wCharKey := GCharacter.GetCharKey(wCharID);
+  wComment := GGuild.GetComment(wCharID);
   FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
   FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
   FormGuildEdit.EdKey.Text := wCharKey;
+  FormGuildEdit.EdComment.Text := wComment;
   if FormGuildEdit.ShowModal = mrOk then begin
     wCharKey := FormGuildEdit.EdKey.Text;
+    wComment := FormGuildEdit.EdComment.Text;
     wCharName := GridChar.Cells[1, GridChar.Row];
     wCharServer := GridChar.Cells[0, GridChar.Row];
-    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer);
+    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment);
+    GridChar.Cells[2, GridChar.Row] := wComment;
   end;
 end;
 
@@ -237,15 +255,15 @@ begin
     GridChar.Row := 0;
     GridChar.Cells[0, 0] := RS_CHAR_COL_CHAR_SERVER;
     GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
-    GridChar.Cells[2, 0] := RS_CHAR_COL_CHAR_NUMBER;
-    GridChar.Cells[3, 0] := RS_CHAR_COL_LAST_SYNCHRONIZATION;
-    GridChar.ColCount := 4;
+    GridChar.Cells[2, 0] := RS_CHAR_COL_COMMENT;
+    GridChar.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
+    GridChar.Cells[4, 0] := RS_CHAR_COL_LAST_SYNCHRONIZATION;
+    GridChar.ColCount := 5;
     GridChar.RowHeights[0] := 20;
     GridChar.ColWidths[0] := 50;
-    GridChar.ColWidths[2] := 90;
-    GridChar.ColWidths[3] := 140;
-    GridChar.ColWidths[1] := GridChar.Width - GridChar.ColWidths[0] -
-      GridChar.ColWidths[2] - GridChar.ColWidths[3] - 7;
+    GridChar.ColWidths[1] := 250;
+    GridChar.ColWidths[3] := 90;
+    GridChar.ColWidths[4] := 140;
   
     wCharList := TStringList.Create;
     try
@@ -255,11 +273,12 @@ begin
         GridChar.RowCount := GridChar.RowCount + 1;
         GridChar.Cells[0, GridChar.RowCount-1] := GCharacter.GetServerName(wCharList[i]);
         GridChar.Cells[1, GridChar.RowCount-1] := GCharacter.GetCharName(wCharList[i]);
-        GridChar.Cells[2, GridChar.RowCount-1] := wCharList[i];
+        GridChar.Cells[2, GridChar.RowCount-1] := GGuild.GetComment(wCharList[i]);
+        GridChar.Cells[3, GridChar.RowCount-1] := wCharList[i];
         if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then
-          GridChar.Cells[3, GridChar.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile))
+          GridChar.Cells[4, GridChar.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile))
         else
-          GridChar.Cells[3, GridChar.RowCount-1] := '-';
+          GridChar.Cells[4, GridChar.RowCount-1] := '-';
       end;
 
       if GridChar.RowCount > 1 then begin
@@ -317,7 +336,7 @@ var
 begin
   wRow := GridChar.Row;
   if wRow > 0 then begin
-    wCharID := GridChar.Cells[2, wRow];
+    wCharID := GridChar.Cells[3, wRow];
     if FormConfirm.ShowConfirmation(RS_CHAR_DELETE_CONFIRMATION) <> mrYes then Exit;
     
     SendMessage(GridChar.Handle, WM_SETREDRAW, 0, 0);
@@ -334,12 +353,12 @@ begin
       end;
     finally
       SendMessage(GridChar.Handle, WM_SETREDRAW, 1, 0);
-      GridChar.Refresh;
     end;
 
     GCharacter.DeleteChar(wCharID);
     MdkRemoveDir(GConfig.GetCharRoomPath(wCharID));
     MdkRemoveDir(GConfig.GetCharPath(wCharID));
+    GridChar.Refresh;
   end;
 end;
 
@@ -361,7 +380,7 @@ Resize the window
 *******************************************************************************}
 procedure TFormCharacter.FormResize(Sender: TObject);
 begin
-  GridChar.ColWidths[1] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[2] - GridChar.ColWidths[3] - 7;
+  GridChar.ColWidths[2] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[1] - GridChar.ColWidths[3] - GridChar.ColWidths[4] - 8;
 end;
 
 {*******************************************************************************
@@ -379,10 +398,10 @@ procedure TFormCharacter.Room;
 var
   wCharID: String;
 begin
+  if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormInvent.TabInvent.TabIndex := _INVENT_BAG;
   FormMain.ShowMenuForm(FormInvent);
-  wCharID := Self.GridChar.Cells[2, Self.GridChar.Row];
-  if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  wCharID := Self.GridChar.Cells[3, Self.GridChar.Row];
   FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
   FormInvent.LbCharName.Caption := GridChar.Cells[1, GridChar.Row];
 end;
@@ -396,19 +415,19 @@ var
   wInfoFile: String;
   wXmlDoc: TXpObjModel;
 begin
-  wCharID := GridChar.Cells[2, GridChar.Row];
+  wCharID := GridChar.Cells[3, GridChar.Row];
   FormProgress.ShowFormSynchronizeChar(wCharID);
 
   wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
   if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then begin
     wXmlDoc := TXpObjModel.Create(nil);
     try
-      GridChar.Cells[3, GridChar.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
+      GridChar.Cells[4, GridChar.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
     finally
       wXmlDoc.Free;
     end;
   end else begin
-    GridChar.Cells[3, GridChar.Row] := '-';
+    GridChar.Cells[4, GridChar.Row] := '-';
   end;
 end;
 
