@@ -230,6 +230,11 @@ var
   wGuildKey: String;
   wGuildName: String;
   wComment: String;
+  wGuildIcon: String;
+  wIconFile: String;
+  wInfoFile: String;
+  wStream: TMemoryStream;
+  wXmlDoc: TXpObjModel;
 begin
   wGuildID := GridGuild.Cells[3, GridGuild.Row];
   wGuildKey := GGuild.GetGuildKey(wGuildID);
@@ -242,7 +247,31 @@ begin
     wGuildKey := FormGuildEdit.EdKey.Text;
     wComment := FormGuildEdit.EdComment.Text;
     wGuildName := GridGuild.Cells[1, GridGuild.Row];
+
+    // Updates icon
+    wStream := TMemoryStream.Create;
+    wXmlDoc := TXpObjModel.Create(nil);
+    try
+      GRyzomApi.ApiGuild(wGuildKey, wStream);
+      wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
+      wStream.SaveToFile(wInfoFile);
+      wStream.Clear;
+      wXmlDoc.LoadDataSource(wInfoFile);
+      wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
+      wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
+      wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
+      wStream := TMemoryStream.Create;
+      GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
+      wStream.SaveToFile(wIconFile);
+      TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
+      GridGuild.Refresh;
+    finally
+      wXmlDoc.Free;
+      wStream.Free;
+    end;
+    
     GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment);
+    GridGuild.Cells[1, GridGuild.Row] := wGuildName;
     GridGuild.Cells[2, GridGuild.Row] := wComment;
   end;
 end;
@@ -430,35 +459,14 @@ Synchronization
 procedure TFormGuild.Synchronize;
 var
   wGuildID: String;
-  wGuildName: String;
-  wGuildIcon: String;
-  wIconFile: String;
   wInfoFile: String;
-  wStream: TMemoryStream;
-  wXmlDoc: TXpObjModel;
 begin
   wGuildID := GridGuild.Cells[3, GridGuild.Row];
   FormProgress.ShowFormSynchronize(wGuildID);
 
   wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
   if FileExists(wInfoFile) and (MdkFileSize(wInfoFile) > 0) then begin
-    wXmlDoc := TXpObjModel.Create(nil);
-    try
-      wXmlDoc.LoadDataSource(wInfoFile);
-      wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
-      wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
-      wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
-      wStream := TMemoryStream.Create;
-      GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
-      wStream.SaveToFile(wIconFile);
-      wStream.Free;
-      TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
-      GridGuild.Cells[1, GridGuild.Row] := wGuildName;
-      GridGuild.Cells[4, GridGuild.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
-      GridGuild.Refresh;
-    finally
-      wXmlDoc.Free;
-    end;
+    GridGuild.Cells[4, GridGuild.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wInfoFile));
   end else begin
     GridGuild.Cells[4, GridGuild.Row] := '-';
   end;

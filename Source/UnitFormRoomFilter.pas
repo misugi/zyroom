@@ -309,7 +309,7 @@ begin
     wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
     FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
   end else begin
-    wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
+    wCharID := FormCharacter.GridChar.Cells[4, FormCharacter.GridChar.Row];
     FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, FormInvent.TabInvent.TabIndex, GCurrentFilter);
   end;
 end;

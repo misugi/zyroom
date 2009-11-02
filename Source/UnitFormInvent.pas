@@ -134,7 +134,7 @@ procedure TFormInvent.TabInventChange(Sender: TObject);
 var
   wCharID: String;
 begin
-  wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
+  wCharID := FormCharacter.GridChar.Cells[4, FormCharacter.GridChar.Row];
   FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
 end;
 

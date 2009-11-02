@@ -1,6 +1,10 @@
 zyRoom - History of changes
 ===========================
 
+# version 1.5.0 (2009-11-02)
+New: image of the character is now displayed !!! (for existing characters, please update the character with the button and just click OK)
+Fixed: comment for character was saved but not displayed
+
 # version 1.4.0 (2009-10-25)
 New: comment for guild and character
 New: it is now possible to select an object to see its information !!! (quality, class, skin, durability, bonus)

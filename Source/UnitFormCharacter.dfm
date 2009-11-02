@@ -27,7 +27,7 @@ object FormCharacter: TFormCharacter
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColCount = 3
     DefaultColWidth = 36
-    DefaultRowHeight = 38
+    DefaultRowHeight = 60
     DefaultDrawing = False
     FixedCols = 0
     RowCount = 2

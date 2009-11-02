@@ -15,11 +15,12 @@ object FormHome: TFormHome
   PixelsPerInch = 96
   TextHeight = 13
   object ImgRoom: TImage
-    Left = 40
-    Top = 60
-    Width = 700
-    Height = 405
-    AutoSize = True
+    Left = 0
+    Top = 0
+    Width = 780
+    Height = 531
+    Align = alClient
+    Center = True
     Picture.Data = {
       0A54504E474F626A65637489504E470D0A1A0A0000000D49484452000002BC00
       00019508060000001CF122200000000774494D4507D9080C152919B983458E00

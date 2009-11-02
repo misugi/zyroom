@@ -84,6 +84,7 @@ const
 
   _ICON_FILENAME = 'icon.png';
   _INFO_FILENAME = 'info.xml';
+  _ITEMS_FILENAME = 'items.xml';
   _CATA_ITEM_NAME = 'ixpca01.sitem';
   _MIN_QUALITY = 0;
   _MAX_QUALITY = 270;
@@ -117,6 +118,7 @@ type
 
     function  GetCharKey(ACharID: String): String;
     function  GetCharName(ACharID: String): String;
+    function  GetComment(AID: String): String;
     function  GetServerName(ACharID: String): String;
     function  CharExists(ACharID: String): Boolean;
     procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
@@ -661,6 +663,14 @@ begin
   Result := FIniFile.ReadString(ACharID, _KEY_SERVER, '');
   if Result = '' then
     raise Exception.Create(RS_ERROR_NAME_NOTFOUND);
+end;
+
+{*******************************************************************************
+Returns the comment
+*******************************************************************************}
+function TCharacter.GetComment(AID: String): String;
+begin
+  Result := FIniFile.ReadString(AID, _KEY_COMMENT, '');
 end;
 
 {*******************************************************************************

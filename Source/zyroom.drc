@@ -7,31 +7,32 @@
   liée à l'exécutable produit.
 */
 
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 64992
-#define UnitFormGuild_RS_COL_LAST_SYNCHRONIZATION 64993
-#define UnitFormGuild_RS_COL_COMMENT 64994
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 64995
-#define UnitFormGuild_RS_GUILD_KEY 64996
-#define UnitFormMain_RS_STATUS_CLOSED 64997
-#define UnitFormMain_RS_STATUS_OPEN 64998
-#define UnitFormMain_RS_STATUS_RESTRICTED 64999
-#define UnitFormMain_RS_NEW_VERSION 65000
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 65008
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 65009
-#define UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION 65010
-#define UnitFormCharacter_RS_CHAR_COL_COMMENT 65011
-#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 65012
-#define UnitFormCharacter_RS_CHAR_KEY 65013
-#define UnitFormRoomFilter_RS_SKIN 65014
-#define UnitFormRoomFilter_RS_DURABILITY 65015
-#define UnitFormRoomFilter_RS_HPB 65016
-#define UnitFormRoomFilter_RS_SAB 65017
-#define UnitFormRoomFilter_RS_STB 65018
-#define UnitFormRoomFilter_RS_FOB 65019
-#define UnitFormGuild_RS_NEW_GUILD 65020
-#define UnitFormGuild_RS_CHANGE_KEY 65021
-#define UnitFormGuild_RS_COL_GUILD_LOGO 65022
-#define UnitFormGuild_RS_COL_GUILD_NAME 65023
+#define UnitFormGuild_RS_COL_GUILD_NAME 64992
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 64993
+#define UnitFormGuild_RS_COL_LAST_SYNCHRONIZATION 64994
+#define UnitFormGuild_RS_COL_COMMENT 64995
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 64996
+#define UnitFormGuild_RS_GUILD_KEY 64997
+#define UnitFormMain_RS_STATUS_CLOSED 64998
+#define UnitFormMain_RS_STATUS_OPEN 64999
+#define UnitFormMain_RS_STATUS_RESTRICTED 65000
+#define UnitFormMain_RS_NEW_VERSION 65001
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_SERVER 65008
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 65009
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 65010
+#define UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION 65011
+#define UnitFormCharacter_RS_CHAR_COL_COMMENT 65012
+#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 65013
+#define UnitFormCharacter_RS_CHAR_KEY 65014
+#define UnitFormRoomFilter_RS_SKIN 65015
+#define UnitFormRoomFilter_RS_DURABILITY 65016
+#define UnitFormRoomFilter_RS_HPB 65017
+#define UnitFormRoomFilter_RS_SAB 65018
+#define UnitFormRoomFilter_RS_STB 65019
+#define UnitFormRoomFilter_RS_FOB 65020
+#define UnitFormGuild_RS_NEW_GUILD 65021
+#define UnitFormGuild_RS_CHANGE_KEY 65022
+#define UnitFormGuild_RS_COL_GUILD_LOGO 65023
 #define pnglang_EPNGUnknownCriticalChunkText 65024
 #define pnglang_EPNGUnknownCompressionText 65025
 #define pnglang_EPNGUnknownInterlaceText 65026
@@ -47,7 +48,7 @@
 #define UnitFormProgress_RS_CONNEXION_ERROR 65036
 #define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 65037
 #define UnitFormCharacter_RS_CHAR_CHANGE_KEY 65038
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_SERVER 65039
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 65039
 #define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 65040
 #define UnitConfig_RS_ERROR_GUILD_NOTFOUND 65041
 #define UnitConfig_RS_ERROR_KEY_NOTFOUND 65042
@@ -546,6 +547,7 @@
 #define SysConst_SDiskFull 65535
 STRINGTABLE
 BEGIN
+	UnitFormGuild_RS_COL_GUILD_NAME,	"Nom de guilde"
 	UnitFormGuild_RS_COL_GUILD_NUMBER,	"Numéro"
 	UnitFormGuild_RS_COL_LAST_SYNCHRONIZATION,	"Synchronisation"
 	UnitFormGuild_RS_COL_COMMENT,	"Commentaire"
@@ -555,6 +557,7 @@ BEGIN
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
 	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
+	UnitFormCharacter_RS_CHAR_COL_CHAR_SERVER,	"Serveur"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NAME,	"Nom de personnage"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER,	"Numéro"
 	UnitFormCharacter_RS_CHAR_COL_LAST_SYNCHRONIZATION,	"Synchronisation"
@@ -570,7 +573,6 @@ BEGIN
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
 	UnitFormGuild_RS_CHANGE_KEY,	"Changement de clé"
 	UnitFormGuild_RS_COL_GUILD_LOGO,	"Blason"
-	UnitFormGuild_RS_COL_GUILD_NAME,	"Nom de guilde"
 	pnglang_EPNGUnknownCriticalChunkText,	"This \"Portable Network Graphics\" image contains an unknown critical part which could not be decoded."
 	pnglang_EPNGUnknownCompressionText,	"This \"Portable Network Graphics\" image is encoded with an unknown compression scheme which could not be decoded."
 	pnglang_EPNGUnknownInterlaceText,	"This \"Portable Network Graphics\" image uses an unknown interlace scheme which could not be decoded."
@@ -586,7 +588,7 @@ BEGIN
 	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
 	UnitFormCharacter_RS_CHAR_NEW_CHARACTER,	"Nouveau personnage"
 	UnitFormCharacter_RS_CHAR_CHANGE_KEY,	"Changement de clé"
-	UnitFormCharacter_RS_CHAR_COL_CHAR_SERVER,	"Serveur"
+	UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD,	"Tête"
 	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
 	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
 	UnitConfig_RS_ERROR_KEY_NOTFOUND,	"La clé API est introuvable"

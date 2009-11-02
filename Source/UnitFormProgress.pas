@@ -256,7 +256,7 @@ begin
   wXmlFile := TMemoryStream.Create;
   try
     GRyzomApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
-    wXmlFile.SaveToFile(GConfig.GetCharPath(ACharID) + _INFO_FILENAME);
+    wXmlFile.SaveToFile(GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME);
     wXmlFile.Position := 0;
     wXmlDoc.LoadStream(wXmlFile);
 
@@ -552,13 +552,13 @@ var
   wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
-  wInfoFile: String;
+  wItemsFile: String;
 begin
   FRoom.Clear;
-  wInfoFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
-  if (not FileExists(wInfoFile)) or (MdkFileSize(wInfoFile) = 0) then Exit;
+  wItemsFile := GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(wInfoFile, fmOpenRead);
+  wXmlFile := TFileStream.Create(wItemsFile, fmOpenRead);
   try
     wXmlDoc.LoadStream(wXmlFile);
     wNodeList := nil;

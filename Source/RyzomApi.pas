@@ -70,6 +70,8 @@ type
     procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor = icWhite;
       AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False);
     procedure ApiStatus(AFormat: String; AResponse: TStream);
+    procedure ApiBallisticMystix(ARace: String; AGender: String; AHairType: Integer; AHairColor: Integer;
+      ATatoo: Integer; AEyesColor: Integer; AResponse: TStream);
     procedure ApiTime(AShardID: String; AFormat: String; AResponse: TStream);
     procedure SetProxyParameters(AProxyAddress: String; AProxyPort: Integer;
       AProxyUsername: String; AProxyPassword: String);
@@ -303,6 +305,17 @@ Send an HTTP request
 procedure TRyzomApi.SendRequest(ARequest: String; AResponse: TStream);
 begin
   FHttpRequest.Get(ARequest, AResponse);
+  AResponse.Position := 0;
+end;
+
+{*******************************************************************************
+Get character image
+*******************************************************************************}
+procedure TRyzomApi.ApiBallisticMystix(ARace, AGender: String; AHairType,
+  AHairColor, ATatoo, AEyesColor: Integer; AResponse: TStream);
+begin
+  FHttpRequest.Get(Format('http://ballisticmystix.net/api/dressingroom.php?race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d',
+    [ARace, AGender, AHairType, AHairColor, ATatoo, AEyesColor]), AResponse);
   AResponse.Position := 0;
 end;
 
