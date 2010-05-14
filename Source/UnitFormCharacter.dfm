@@ -2,7 +2,7 @@ object FormCharacter: TFormCharacter
   Left = 345
   Top = 282
   Width = 708
-  Height = 425
+  Height = 438
   Caption = 'Personnages'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -14,17 +14,14 @@ object FormCharacter: TFormCharacter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
-  DesignSize = (
-    700
-    398)
   PixelsPerInch = 96
   TextHeight = 13
   object GridChar: TStringGrid
-    Left = 3
+    Left = 0
     Top = 28
-    Width = 694
-    Height = 367
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Width = 692
+    Height = 372
+    Align = alClient
     ColCount = 3
     DefaultColWidth = 36
     DefaultRowHeight = 60
@@ -43,43 +40,53 @@ object FormCharacter: TFormCharacter
       36
       36)
   end
-  object BtNew: TButton
-    Left = 7
-    Top = 2
-    Width = 75
-    Height = 23
-    Caption = 'Ajouter'
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 692
+    Height = 28
+    Align = alTop
+    BevelOuter = bvNone
+    ParentColor = True
     TabOrder = 1
-    OnClick = BtNewClick
-  end
-  object BtUpdate: TButton
-    Left = 90
-    Top = 2
-    Width = 75
-    Height = 23
-    Caption = 'Modifier'
-    Enabled = False
-    TabOrder = 2
-    OnClick = BtUpdateClick
-  end
-  object BtDelete: TButton
-    Left = 173
-    Top = 2
-    Width = 75
-    Height = 23
-    Caption = 'Supprimer'
-    Enabled = False
-    TabOrder = 3
-    OnClick = BtDeleteClick
-  end
-  object BtRoom: TButton
-    Left = 256
-    Top = 2
-    Width = 75
-    Height = 23
-    Caption = 'Inventaire'
-    Enabled = False
-    TabOrder = 4
-    OnClick = BtRoomClick
+    object BtNew: TButton
+      Left = 0
+      Top = 0
+      Width = 75
+      Height = 23
+      Caption = 'Ajouter'
+      TabOrder = 0
+      OnClick = BtNewClick
+    end
+    object BtUpdate: TButton
+      Left = 83
+      Top = 0
+      Width = 75
+      Height = 23
+      Caption = 'Modifier'
+      Enabled = False
+      TabOrder = 1
+      OnClick = BtUpdateClick
+    end
+    object BtDelete: TButton
+      Left = 166
+      Top = 0
+      Width = 75
+      Height = 23
+      Caption = 'Supprimer'
+      Enabled = False
+      TabOrder = 2
+      OnClick = BtDeleteClick
+    end
+    object BtRoom: TButton
+      Left = 249
+      Top = 0
+      Width = 75
+      Height = 23
+      Caption = 'Inventaire'
+      Enabled = False
+      TabOrder = 3
+      OnClick = BtRoomClick
+    end
   end
 end

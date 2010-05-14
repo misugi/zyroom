@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -28,13 +29,19 @@ uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
   Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls;
 
+resourcestring
+  RS_TAB_PET = 'Mektoub';
+  RS_TAB_MOUNT = 'Monture';
+
 type
   TFormInvent = class(TForm)
     PnFilter: TPanel;
     PnInvent: TPanel;
     TabInvent: TTabControl;
     CharInvent: TScrollRoom;
+    Panel1: TPanel;
     LbCharName: TLabel;
+    LbVolume: TLabel;
     procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -48,7 +55,12 @@ type
     procedure TabInventChange(Sender: TObject);
     procedure CharInventResize(Sender: TObject);
   private
+    FMountID: Integer;
+    procedure SetFMountID(const Value: Integer);
   public
+    procedure UpdateRoom;
+    procedure UpdateTabNames;
+    property MountID: Integer read FMountID write SetFMountID;
   end;
 
 var
@@ -76,6 +88,7 @@ procedure TFormInvent.FormShow(Sender: TObject);
 begin
   FormRoomFilter.Parent := PnFilter;
   FormRoomFilter.Show;
+  UpdateTabNames;
 end;
 
 {*******************************************************************************
@@ -104,6 +117,11 @@ Displays the names of items
 procedure TFormInvent.CharInventMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
+  if Sender is TItemImage then begin
+    FormRoomFilter.UpdateInfo(TItemImage(Sender));
+  end else begin
+    FormRoomFilter.InitInfo;
+  end;
 end;
 
 {*******************************************************************************
@@ -121,21 +139,22 @@ Set the focus on the room
 procedure TFormInvent.CharInventClick(Sender: TObject);
 begin
   CharInvent.SetFocus;
-
-  if Sender is TItemImage then begin
-    FormRoomFilter.UpdateInfo(TItemImage(Sender));
-  end;
 end;
 
 {*******************************************************************************
-Changes between bag/pet1/pet2/pet3/pet4
+Tab change
 *******************************************************************************}
 procedure TFormInvent.TabInventChange(Sender: TObject);
-var
-  wCharID: String;
 begin
-  wCharID := FormCharacter.GridChar.Cells[4, FormCharacter.GridChar.Row];
-  FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
+  UpdateRoom
+end;
+
+{*******************************************************************************
+Mount ID
+*******************************************************************************}
+procedure TFormInvent.SetFMountID(const Value: Integer);
+begin
+  FMountID := Value + 2;
 end;
 
 {*******************************************************************************
@@ -144,6 +163,51 @@ Adjust items in the scroll box
 procedure TFormInvent.CharInventResize(Sender: TObject);
 begin
   CharInvent.Adjust;
+end;
+
+{*******************************************************************************
+room/bag/pet1/pet2/pet3/pet4
+*******************************************************************************}
+procedure TFormInvent.UpdateRoom;
+var
+  wCharID: String;
+  wMaxVolume: String;
+begin
+  wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
+  FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
+
+  if TabInvent.TabIndex = 0 then
+    wMaxVolume := '/2000' // room
+  else
+    if TabInvent.TabIndex = 1 then
+      wMaxVolume := '/300' // bag
+    else
+      if FMountID < 2 then
+        wMaxVolume := '/?' // mount unfound
+      else
+        if TabInvent.TabIndex = FMountID then
+          wMaxVolume := '/100' // mount
+        else
+          wMaxVolume := '/500'; // pack
+
+  LbCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
+  LbVolume.Caption :=  FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
+end;
+
+{*******************************************************************************
+Updates names of tab
+*******************************************************************************}
+procedure TFormInvent.UpdateTabNames;
+var
+  i: Integer;
+begin
+  for i := 2 to TabInvent.Tabs.Count - 1 do begin
+    if i = FMountID then begin
+      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_MOUNT, i-1]);
+    end else begin
+      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_PET, i-1]);
+    end;
+  end;
 end;
 
 end.

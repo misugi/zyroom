@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -40,7 +41,6 @@ type
     PnContainer: TPanel;
     TimerStatus: TTimer;
     PnHeader: TPanel;
-    ImgLogo: TImage;
     ImgAniro: TImage;
     LbAniro: TLabel;
     LbTime: TLabel;
@@ -369,7 +369,7 @@ procedure TFormMain.TimerUpdateTimer(Sender: TObject);
 begin
   ImgUpdate.Visible := False;
   Application.ProcessMessages;
-  Sleep(100);
+  Sleep(200);
   ImgUpdate.Visible := True;
 end;
 

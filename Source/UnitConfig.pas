@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -26,7 +27,7 @@ interface
 
 uses
   Classes, IniFiles, SysUtils, LbCipher, LbClass, LbString, XpDOM, Graphics,
-  Forms, RegExpr, MisuDevKit;
+  Forms, RegExpr, MisuDevKit, StrUtils;
 
 resourcestring
   RS_ERROR_GUILD_ALREADY_EXISTS = 'La guilde existe déjà';
@@ -75,6 +76,7 @@ const
   _KEY_NAME = 'Name';
   _KEY_COMMENT = 'Comment';
   _KEY_SERVER = 'Server';
+  _KEY_GUILD = 'Guild';
 
   _RES_LOGO = 'logo';
   _RES_CLOSED = 'closed';
@@ -85,7 +87,6 @@ const
   _ICON_FILENAME = 'icon.png';
   _INFO_FILENAME = 'info.xml';
   _ITEMS_FILENAME = 'items.xml';
-  _CATA_ITEM_NAME = 'ixpca01.sitem';
   _MIN_QUALITY = 0;
   _MAX_QUALITY = 270;
 
@@ -101,9 +102,10 @@ type
     function  GetGuildKey(AGuildID: String): String;
     function  GetGuildName(AGuildID: String): String;
     function  GetComment(AID: String): String;
+    function  GetServerName(AGuildID: String): String;
     function  GuildExists(AGuildID: String): Boolean;
-    procedure AddGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
-    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
+    procedure AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
+    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
   end;
@@ -120,9 +122,10 @@ type
     function  GetCharName(ACharID: String): String;
     function  GetComment(AID: String): String;
     function  GetServerName(ACharID: String): String;
+    function  GetGuildName(ACharID: String): String;
     function  CharExists(ACharID: String): Boolean;
-    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
-    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
+    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
+    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
     procedure DeleteChar(ACharID: String);
     procedure CharList(ACharIDList: TStrings);
   end;
@@ -460,7 +463,7 @@ end;
 {*******************************************************************************
 Adds a guild
 *******************************************************************************}
-procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
+procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
 var
   wKey: String;
 begin
@@ -470,12 +473,13 @@ begin
   FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
   FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
+  FIniFile.WriteString(AGuildID, _KEY_SERVER, AServer);
 end;
 
 {*******************************************************************************
 Updates a guild
 *******************************************************************************}
-procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment: String);
+procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
 var
   wKey: String;
 begin
@@ -485,6 +489,7 @@ begin
   FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
   FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
+  FIniFile.WriteString(AGuildID, _KEY_SERVER, AServer);
 end;
 
 {*******************************************************************************
@@ -514,8 +519,6 @@ Returns the guild name from an ID number
 function TGuild.GetGuildName(AGuildID: String): String;
 begin
   Result := FIniFile.ReadString(AGuildID, _KEY_NAME, '');
-  if Result = '' then
-    raise Exception.Create(RS_ERROR_NAME_NOTFOUND);
 end;
 
 {*******************************************************************************
@@ -557,12 +560,20 @@ begin
   end;
 end;
 
+{*******************************************************************************
+Returns the server from an ID number
+*******************************************************************************}
+function TGuild.GetServerName(AGuildID: String): String;
+begin
+  Result := FIniFile.ReadString(AGuildID, _KEY_SERVER, '');
+end;
+
 { TCharacter }
 
 {*******************************************************************************
 Adds a character
 *******************************************************************************}
-procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
+procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
 var
   wKey: String;
 begin
@@ -573,6 +584,7 @@ begin
   FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
   FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
   FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
+  FIniFile.WriteString(ACharID, _KEY_GUILD, AGuild);
 end;
 
 {*******************************************************************************
@@ -661,8 +673,14 @@ Returns the server from an ID number
 function TCharacter.GetServerName(ACharID: String): String;
 begin
   Result := FIniFile.ReadString(ACharID, _KEY_SERVER, '');
-  if Result = '' then
-    raise Exception.Create(RS_ERROR_NAME_NOTFOUND);
+end;
+
+{*******************************************************************************
+Returns the guild from an ID number
+*******************************************************************************}
+function TCharacter.GetGuildName(ACharID: String): String;
+begin
+  Result := FIniFile.ReadString(ACharID, _KEY_GUILD, '');
 end;
 
 {*******************************************************************************
@@ -676,7 +694,7 @@ end;
 {*******************************************************************************
 Updates a character
 *******************************************************************************}
-procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment: String);
+procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
 var
   wKey: String;
 begin
@@ -687,6 +705,7 @@ begin
   FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
   FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
   FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
+  FIniFile.WriteString(ACharID, _KEY_GUILD, AGuild);
 end;
 
 {*******************************************************************************

@@ -17,9 +17,8 @@ object FormHome: TFormHome
   object ImgRoom: TImage
     Left = 0
     Top = 0
-    Width = 780
-    Height = 531
-    Align = alClient
+    Width = 772
+    Height = 520
     Center = True
     Picture.Data = {
       0A54504E474F626A65637489504E470D0A1A0A0000000D49484452000002BC00

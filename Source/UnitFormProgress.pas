@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -31,7 +32,7 @@ uses
 
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
-  RS_PROGRESS_ROOM = 'Affichage du coffre, veuillez patienter...';
+  RS_PROGRESS_ROOM = 'Affichage en cours, veuillez patienter...';
   RS_CONNEXION_ERROR = 'Trop d''erreurs API, arrêt de la synchronisation';
 
 const
@@ -40,12 +41,12 @@ const
   _TASK_SYNCHRONIZE_CHAR = 2;
   _TASK_INVENT = 3;
 
-  _INVENT_BAG = 0;
-  _INVENT_PET1 = 1;
-  _INVENT_PET2 = 2;
-  _INVENT_PET3 = 3;
-  _INVENT_PET4 = 4;
-  _INVENT_ROOM = 5;
+  _INVENT_ROOM = 0;
+  _INVENT_BAG = 1;
+  _INVENT_PET1 = 2;
+  _INVENT_PET2 = 3;
+  _INVENT_PET3 = 4;
+  _INVENT_PET4 = 5;
   
 type
   TGetItemThread = class(TThread)
@@ -75,6 +76,7 @@ type
     FCharID: String;
     FRoom: TScrollRoom;
     FFilter: TItemFilter;
+    FTotalVolume: Double;
 
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -89,6 +91,7 @@ type
     procedure ShowFormSynchronizeChar(ACharID: String);
     procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
     procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
+    property  TotalVolume: Double read FTotalVolume write FTotalVolume;
   end;
 
 var
@@ -439,10 +442,12 @@ begin
       wItemSort.Sort;
 
       // Loop to display items
+      FTotalVolume := 0.0;
       for i := 0 to wItemSort.Count - 1 do begin
         if ModalResult = mrCancel then Exit;
 
         wItemInfo := TItemInfo(wItemList.Items[StrToInt(wItemSort.ValueFromIndex[i])]);
+        FTotalVolume := FTotalVolume + wItemInfo.ItemVolume;
 
         wItemImage := TItemImage.Create(nil);
         wItemImage.Hint := wItemInfo.ItemDesc;
@@ -494,8 +499,11 @@ begin
             iwTwoHands: Result := '062';
           end;
         end;
-        iqOthers: Result := '07';
-        iqJewel: Result := '08';
+        iqShield: Result := '070';
+        iqBuckler: Result := '071';
+        iqAmmo: Result := '072';
+        iqOthers: Result := '08';
+        iqJewel: Result := '09';
       end;
     end;
     itNaturalMat, itAnimalMat: begin
@@ -503,6 +511,7 @@ begin
                                                  AnsiIndexText(AItemInfo.ItemCategory2, _ITEM_CATEGORY))]);
       if Pos('m0312', AItemInfo.ItemName) = 1 then Result := '1099'; {larva}
     end;
+    itTool: Result := '14';
     itOthers: Result := '15';
     itCata: Result := '16';
   end;

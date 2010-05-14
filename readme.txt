@@ -1,6 +1,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,

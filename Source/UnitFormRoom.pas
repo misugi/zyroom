@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -31,9 +32,11 @@ uses
 type
   TFormRoom = class(TForm)
     PnRoom: TPanel;
-    LbGuildName: TLabel;
     PnFilter: TPanel;
     GuildRoom: TScrollRoom;
+    Panel1: TPanel;
+    LbGuildName: TLabel;
+    LbVolume: TLabel;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -103,6 +106,11 @@ Displays the names of items
 procedure TFormRoom.GuildRoomMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
+  if Sender is TItemImage then begin
+    FormRoomFilter.UpdateInfo(TItemImage(Sender));
+  end else begin
+    FormRoomFilter.InitInfo;
+  end;
 end;
 
 {*******************************************************************************
@@ -120,10 +128,6 @@ Set the focus on the room
 procedure TFormRoom.GuildRoomClick(Sender: TObject);
 begin
   GuildRoom.SetFocus;
-
-  if Sender is TItemImage then begin
-    FormRoomFilter.UpdateInfo(TItemImage(Sender));
-  end;
 end;
 
 {*******************************************************************************

@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -27,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
-  ItemImage;
+  ItemImage, StrUtils;
 
 resourcestring
   RS_SKIN = 'Skin';
@@ -96,6 +97,11 @@ type
     CbEqWeaponsRange: TCheckBox;
     CbEqOthers: TCheckBox;
     CbEqJewels: TCheckBox;
+    LbDesc: TLabel;
+    ImgVolume: TImage;
+    LbVolume: TLabel;
+    LbCraft: TLabel;
+    LbSheet: TLabel;
     procedure BtOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CbTypeAnimalMatClick(Sender: TObject);
@@ -103,12 +109,14 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtDefaultClick(Sender: TObject);
   private
+    FCurrentItem: TItemImage;
+    
     procedure EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
     procedure LoadCurrentFilter;
     procedure SaveCurrentFilter;
     procedure ApplyFilter;
-    procedure InitInfo;
   public
+    procedure InitInfo;
     procedure UpdateInfo(AItemImage: TItemImage);
   end;
 
@@ -195,7 +203,8 @@ begin
   CbTypeNaturalMat.Checked := (itNaturalMat in GCurrentFilter.Type_);
   CbTypeAnimalMat.Checked := (itAnimalMat in GCurrentFilter.Type_);
   CbTypeCata.Checked := (itCata in GCurrentFilter.Type_);
-  CbTypeOthers.Checked := (itOthers in GCurrentFilter.Type_);
+  CbTypeOthers.Checked := (itTool in GCurrentFilter.Type_) or
+                          (itOthers in GCurrentFilter.Type_);
   CbTypeEquipment.Checked := (itEquipment in GCurrentFilter.Type_);
 
   // Quality
@@ -225,7 +234,10 @@ begin
   CbEqWeaponsMelee.Checked := (iqWeaponMelee in GCurrentFilter.Equipment);
   CbEqWeaponsRange.Checked := (iqWeaponRange in GCurrentFilter.Equipment);
   CbEqJewels.Checked := (iqJewel in GCurrentFilter.Equipment);
-  CbEqOthers.Checked := (iqOthers in GCurrentFilter.Equipment);
+  CbEqOthers.Checked := (iqShield in GCurrentFilter.Equipment) or
+                        (iqBuckler in GCurrentFilter.Equipment) or
+                        (iqAmmo in GCurrentFilter.Equipment) or
+                        (iqOthers in GCurrentFilter.Equipment);
   CbEqAmplifier.Checked := (iqAmplifier in GCurrentFilter.Equipment);
 
   // Item category
@@ -247,7 +259,7 @@ begin
   if CbTypeNaturalMat.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itNaturalMat];
   if CbTypeCata.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itCata];
   if CbTypeEquipment.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itEquipment];
-  if CbTypeOthers.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itOthers];
+  if CbTypeOthers.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itTool, itOthers];
 
   // Item quality
   if EdQualityMax.Value < EdQualityMin.Value then EdQualityMax.Value := EdQualityMin.Value;
@@ -276,7 +288,7 @@ begin
   if CbEqWeaponsMelee.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeaponMelee];
   if CbEqWeaponsRange.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeaponRange];
   if CbEqJewels.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqJewel];
-  if CbEqOthers.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqOthers];
+  if CbEqOthers.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqAmmo, iqShield, iqBuckler, iqOthers];
   if CbEqAmplifier.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqAmplifier];
 
   // Item name
@@ -308,9 +320,11 @@ begin
   if FormRoom.Visible then begin
     wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
     FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+    FormRoom.LbVolume.Caption := Format('%.2f', [FormProgress.TotalVolume]);
   end else begin
-    wCharID := FormCharacter.GridChar.Cells[4, FormCharacter.GridChar.Row];
+    wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
     FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, FormInvent.TabInvent.TabIndex, GCurrentFilter);
+    FormInvent.LbVolume.Caption := Format('%.2f', [FormProgress.TotalVolume]);
   end;
 end;
 
@@ -318,13 +332,33 @@ end;
 Displays info of the selected item
 *******************************************************************************}
 procedure TFormRoomFilter.UpdateInfo(AItemImage: TItemImage);
+var
+  wIndex1, wIndex2: Integer;
 begin
+  if FCurrentItem = AItemImage then Exit;
   InitInfo;
+  FCurrentItem := AItemImage;
   
   with AItemImage.Data as TItemInfo do begin
     ImgItem.Assign(AItemImage);
     ImgItem.Visible := True;
+    LbDesc.Caption := ItemDesc;
+    LbSheet.Caption := Format('(%s)', [ItemName]);
     LbQuality.Caption := 'Q' + IntToStr(ItemQuality);
+    LbVolume.Caption := FormatFloat('####0.##', ItemVolume);
+    if (ItemType = itAnimalMat) or (ItemType = itNaturalMat) then begin
+      if Pos('m0312', ItemName) = 1 then begin {larva}
+        LbCraft.Caption :=  EdCategory.Items[0];
+      end else begin
+        wIndex1 := AnsiIndexText(ItemCategory1, _ITEM_CATEGORY)+1;
+        wIndex2 := AnsiIndexText(ItemCategory2, _ITEM_CATEGORY)+1;
+        if wIndex1 < wIndex2 then
+          LbCraft.Caption :=  EdCategory.Items[wIndex1] + ', ' + EdCategory.Items[wIndex2]
+        else
+          LbCraft.Caption :=  EdCategory.Items[wIndex2] + ', ' + EdCategory.Items[wIndex1]
+      end;
+    end;
+    
     if ItemClass <> icUnknown then
       LbClass.Caption := EdClassMin.Items[Ord(ItemClass)];
     if ItemHp > 0 then LbDura.Caption := Format('%d/%d', [ItemHp, ItemDur]);
@@ -354,6 +388,7 @@ Initialize info
 *******************************************************************************}
 procedure TFormRoomFilter.InitInfo;
 begin
+  FCurrentItem := nil;
   ImgSkin1.Visible := False;
   ImgSkin2.Visible := False;
   ImgSkin3.Visible := False;
@@ -365,6 +400,10 @@ begin
   LbStb.Caption := '-';
   LbFob.Caption := '-';
   LbDura.Caption := '-';
+  LbDesc.Caption := '-';
+  LbCraft.Caption := '-';
+  LbVolume.Caption := '-';
+  LbSheet.Caption := '-';
 end;
 
 end.

@@ -17,42 +17,23 @@ object FormRoom: TFormRoom
   PixelsPerInch = 96
   TextHeight = 13
   object PnRoom: TPanel
-    Left = 280
+    Left = 275
     Top = 0
-    Width = 420
-    Height = 398
+    Width = 417
+    Height = 387
     Align = alClient
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
-    DesignSize = (
-      420
-      398)
-    object LbGuildName: TLabel
-      Left = 78
-      Top = 2
-      Width = 264
-      Height = 16
-      Alignment = taCenter
-      Anchors = [akLeft, akTop, akRight]
-      AutoSize = False
-      Caption = '-'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
     object GuildRoom: TScrollRoom
-      Left = 2
-      Top = 20
-      Width = 416
-      Height = 376
+      Left = 0
+      Top = 21
+      Width = 417
+      Height = 366
       HorzScrollBar.Tracking = True
       VertScrollBar.Increment = 44
       VertScrollBar.Tracking = True
-      Anchors = [akLeft, akTop, akRight, akBottom]
+      Align = alClient
       ParentShowHint = False
       ShowHint = False
       TabOrder = 0
@@ -67,12 +48,59 @@ object FormRoom: TFormRoom
       ControlWidth = 40
       ControlHeight = 40
     end
+    object Panel1: TPanel
+      Left = 0
+      Top = 0
+      Width = 417
+      Height = 21
+      Align = alTop
+      BevelOuter = bvNone
+      ParentColor = True
+      TabOrder = 1
+      DesignSize = (
+        417
+        21)
+      object LbGuildName: TLabel
+        Left = 2
+        Top = 0
+        Width = 271
+        Height = 16
+        Anchors = [akLeft, akTop, akRight]
+        AutoSize = False
+        Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object LbVolume: TLabel
+        Left = 275
+        Top = 0
+        Width = 136
+        Height = 16
+        Hint = 'Volume'
+        Alignment = taRightJustify
+        Anchors = [akTop, akRight]
+        AutoSize = False
+        Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+      end
+    end
   end
   object PnFilter: TPanel
     Left = 0
     Top = 0
-    Width = 280
-    Height = 398
+    Width = 275
+    Height = 387
     Align = alLeft
     BevelOuter = bvNone
     ParentColor = True

@@ -1,6 +1,20 @@
 zyRoom - History of changes
 ===========================
 
+# version 1.6.0 (2010-05-14)
+New: volume calculation !!!
+New: special name for the mount
+New: adding information for an item: volume, name, identifier and elements craft
+New: the column Character contains now the name, the guild and the server
+(for existing characters, please update the character with the button and just click OK)
+New: the column Guild contains now the name and the server
+(for existing guilds, please update the character with the button and just click OK)
+Change: interface improvements
+Change: just put the cursor over an item to display information
+Change: the column Server has been deleted
+Change: the column Synchronization has been deleted
+Fixed: kara/kami tools are now displayed
+
 # version 1.5.0 (2009-11-02)
 New: image of the character is now displayed !!! (for existing characters, please update the character with the button and just click OK)
 Fixed: comment for character was saved but not displayed

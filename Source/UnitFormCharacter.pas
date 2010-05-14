@@ -2,6 +2,7 @@
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi
 http://zyroom.misulud.fr
+http://github.com/misugi/zyroom
 contact@misulud.fr
 
 Developed with Delphi 7 Personal,
@@ -27,14 +28,13 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit;
+  LcUnit, StrUtils;
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
   RS_CHAR_CHANGE_KEY = 'Changement de clé';
   RS_CHAR_COL_CHAR_HEAD = 'Tête';
-  RS_CHAR_COL_CHAR_SERVER = 'Serveur';
-  RS_CHAR_COL_CHAR_NAME = 'Nom de personnage';
+  RS_CHAR_COL_CHAR_NAME = 'Personnage';
   RS_CHAR_COL_CHAR_NUMBER = 'Numéro';
   RS_CHAR_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
   RS_CHAR_COL_COMMENT = 'Commentaire';
@@ -42,13 +42,17 @@ resourcestring
   RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
   RS_CHAR_KEY = 'Clé de personnage :';
 
+const
+  _EXPR_MOUNT = '^ias[dfjl]\.sitem';
+
 type
   TPublicStringGrid = class(TCustomGrid); 
 
   TFormCharacter = class(TForm)
     GridChar: TStringGrid;
-    BtUpdate: TButton;
+    Panel1: TPanel;
     BtNew: TButton;
+    BtUpdate: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
     procedure FormCreate(Sender: TObject);
@@ -71,8 +75,9 @@ type
     FIconList: TObjectList;
     procedure LoadGrid;
     procedure Synchronize;
-    procedure Room;
+    procedure ShowRoom;
     procedure GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
+    procedure UpdateInfos;
   public
   end;
 
@@ -110,6 +115,9 @@ Displays the grid
 *******************************************************************************}
 procedure TFormCharacter.GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
+var
+  wGuild: String;
+  wServer: String;
 begin
   with Sender as TStringGrid do with Canvas do begin
     if ARow = 0 then begin
@@ -139,17 +147,32 @@ begin
         Then Font.Color:=clWhite
         Else Font.Color:=clBlack;
 
-      // Drawing text
-      if (ACol = 2) then begin
+      // Name
+      if (ACol = 1) then begin
         Font.Size := 10;
         Font.Style := [fsBold];
+        Rect.Top := Rect.Top - 35;
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
           DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+
+        // Guild
+        Font.Size := 8;
+        Font.Style := [];
+        Rect.Top := Rect.Top + 35;
+        wGuild := GCharacter.GetGuildName(Cells[3,ARow]);
+        DrawText(Handle, PChar(wGuild), -1, Rect ,
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+
+        // Server
+        Rect.Top := Rect.Top + 35;
+        wServer := GCharacter.GetServerName(Cells[3,ARow]);
+        DrawText(Handle, PChar(wServer), -1, Rect ,
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
       end;
 
-      // Drawing text
-      if (ACol = 3) then begin
+      // Comment
+      if (ACol = 2) then begin
         Font.Size := 8;
         Font.Style := [];
         Rect.Left := Rect.Left + 5;
@@ -157,15 +180,15 @@ begin
           DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
       end;
 
-      // Drawing text
-      if (ACol = 1) or (ACol = 4) or (ACol = 5) then begin
+      // Number
+      if (ACol = 3) then begin
         Font.Size := 8;
         Font.Style := [];
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
           DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
       end;
 
-      // Drawing image
+      // Drawing image (head)
       if (ACol = 0) then
         GetHead(TPNGObject(FIconList.Items[ARow-1]), TStringGrid(Sender).Canvas, Rect, Brush.Color);
     end;
@@ -181,6 +204,7 @@ var
   wCharID: String;
   wCharName: String;
   wCharServer: String;
+  wCharGuild: String;
   wStream: TMemoryStream;
   wComment: String;
   wXmlDoc: TXpObjModel;
@@ -204,7 +228,9 @@ begin
         wCharID := wXmlDoc.DocumentElement.SelectString('/character/cid');
         wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
         wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
-        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment);
+        wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
+        wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
+        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
 
         ForceDirectories(GConfig.GetCharRoomPath(wCharID));
         wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
@@ -222,7 +248,7 @@ begin
         wStream.SaveToFile(wIconFile);
         LoadGrid;
         for i := 1 to GridChar.RowCount - 1 do begin
-          if CompareText(wCharName, GridChar.Cells[2, i]) = 0 then begin
+          if CompareText(wCharName, GridChar.Cells[1, i]) = 0 then begin
             GridChar.Row := i;
             Break;
           end;
@@ -246,12 +272,13 @@ var
   wCharName: String;
   wCharServer: String;
   wComment: String;
+  wCharGuild: String;
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
   wInfoFile: String;
   wIconFile: String;
 begin
-  wCharID := GridChar.Cells[4, GridChar.Row];
+  wCharID := GridChar.Cells[3, GridChar.Row];
   wCharKey := GCharacter.GetCharKey(wCharID);
   wComment := GGuild.GetComment(wCharID);
   FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
@@ -273,6 +300,8 @@ begin
       wXmlDoc.LoadDataSource(wInfoFile);
       wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
       wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
+      wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
+      wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
       wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
       GRyzomApi.ApiBallisticMystix(
           wXmlDoc.DocumentElement.SelectString('/character/race'),
@@ -290,10 +319,9 @@ begin
       wStream.Free;
     end;
 
-    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment);
-    GridChar.Cells[1, GridChar.Row] := wCharServer;
-    GridChar.Cells[2, GridChar.Row] := wCharName;
-    GridChar.Cells[3, GridChar.Row] := wComment;
+    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
+    GridChar.Cells[1, GridChar.Row] := wCharName;
+    GridChar.Cells[2, GridChar.Row] := wComment;
   end;
 end;
 
@@ -313,18 +341,14 @@ begin
     GridChar.RowCount := 1;
     GridChar.Row := 0;
     GridChar.Cells[0, 0] := RS_CHAR_COL_CHAR_HEAD;
-    GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_SERVER;
-    GridChar.Cells[2, 0] := RS_CHAR_COL_CHAR_NAME;
-    GridChar.Cells[3, 0] := RS_CHAR_COL_COMMENT;
-    GridChar.Cells[4, 0] := RS_CHAR_COL_CHAR_NUMBER;
-    GridChar.Cells[5, 0] := RS_CHAR_COL_LAST_SYNCHRONIZATION;
-    GridChar.ColCount := 6;
+    GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
+    GridChar.Cells[2, 0] := RS_CHAR_COL_COMMENT;
+    GridChar.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
+    GridChar.ColCount := 4;
     GridChar.RowHeights[0] := 20;
     GridChar.ColWidths[0] := 60;
-    GridChar.ColWidths[1] := 50;
-    GridChar.ColWidths[2] := 200;
-    GridChar.ColWidths[4] := 90;
-    GridChar.ColWidths[5] := 140;
+    GridChar.ColWidths[1] := 200;
+    GridChar.ColWidths[3] := 70;
   
     FIconList.Clear;
     wCharList := TStringList.Create;
@@ -342,14 +366,9 @@ begin
         end;
         FIconList.Add(wPng);
         GridChar.RowCount := GridChar.RowCount + 1;
-        GridChar.Cells[1, GridChar.RowCount-1] := GCharacter.GetServerName(wCharList[i]);
-        GridChar.Cells[2, GridChar.RowCount-1] := GCharacter.GetCharName(wCharList[i]);
-        GridChar.Cells[3, GridChar.RowCount-1] := GCharacter.GetComment(wCharList[i]);
-        GridChar.Cells[4, GridChar.RowCount-1] := wCharList[i];
-        if FileExists(wItemsFile) and (MdkFileSize(wItemsFile) > 0) then
-          GridChar.Cells[5, GridChar.RowCount-1] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wItemsFile))
-        else
-          GridChar.Cells[5, GridChar.RowCount-1] := '-';
+        GridChar.Cells[1, GridChar.RowCount-1] := GCharacter.GetCharName(wCharList[i]);
+        GridChar.Cells[2, GridChar.RowCount-1] := GCharacter.GetComment(wCharList[i]);
+        GridChar.Cells[3, GridChar.RowCount-1] := wCharList[i];
       end;
 
       if GridChar.RowCount > 1 then begin
@@ -407,7 +426,7 @@ var
 begin
   wRow := GridChar.Row;
   if wRow > 0 then begin
-    wCharID := GridChar.Cells[4, wRow];
+    wCharID := GridChar.Cells[3, wRow];
     if FormConfirm.ShowConfirmation(RS_CHAR_DELETE_CONFIRMATION) <> mrYes then Exit;
     
     SendMessage(GridChar.Handle, WM_SETREDRAW, 0, 0);
@@ -440,11 +459,12 @@ Displays information of the selected guild
 procedure TFormCharacter.BtRoomClick(Sender: TObject);
 begin
   try
+    UpdateInfos;
     Synchronize;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
   end;
-  Room;
+  ShowRoom;
 end;
 
 {*******************************************************************************
@@ -452,7 +472,7 @@ Resize the window
 *******************************************************************************}
 procedure TFormCharacter.FormResize(Sender: TObject);
 begin
-  GridChar.ColWidths[3] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[1] - GridChar.ColWidths[2] - GridChar.ColWidths[4] - GridChar.ColWidths[5] - 8;
+  GridChar.ColWidths[2] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[1] - GridChar.ColWidths[3] - 25;
 end;
 
 {*******************************************************************************
@@ -466,16 +486,12 @@ end;
 {*******************************************************************************
 Display inventory
 *******************************************************************************}
-procedure TFormCharacter.Room;
-var
-  wCharID: String;
+procedure TFormCharacter.ShowRoom;
 begin
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
-  FormInvent.TabInvent.TabIndex := _INVENT_BAG;
+  FormInvent.TabInvent.TabIndex := _INVENT_ROOM;
   FormMain.ShowMenuForm(FormInvent);
-  wCharID := Self.GridChar.Cells[4, Self.GridChar.Row];
-  FormProgress.ShowFormInvent(wCharID, FormInvent.CharInvent, _INVENT_BAG, GCurrentFilter);
-  FormInvent.LbCharName.Caption := GridChar.Cells[2, GridChar.Row];
+  FormInvent.UpdateRoom;
 end;
 
 {*******************************************************************************
@@ -484,17 +500,9 @@ Synchronization
 procedure TFormCharacter.Synchronize;
 var
   wCharID: String;
-  wItemsFile: String;
 begin
-  wCharID := GridChar.Cells[4, GridChar.Row];
+  wCharID := GridChar.Cells[3, GridChar.Row];
   FormProgress.ShowFormSynchronizeChar(wCharID);
-
-  wItemsFile := GConfig.GetCharPath(wCharID) + _ITEMS_FILENAME;
-  if FileExists(wItemsFile) and (MdkFileSize(wItemsFile) > 0) then begin
-    GridChar.Cells[5, GridChar.Row] := FormatDateTime('YYYY-MM-DD HH:NN:SS', MdkGetFileDate(wItemsFile));
-  end else begin
-    GridChar.Cells[5, GridChar.Row] := '-';
-  end;
 end;
 
 {*******************************************************************************
@@ -545,6 +553,48 @@ begin
   wBmp.Canvas.Draw(0, 0, AIcon);
   ACanvas.CopyRect(ARect, wBmp.Canvas, wRectSrc);
   wBmp.Free;
+end;
+
+{*******************************************************************************
+Update information about character
+*******************************************************************************}
+procedure TFormCharacter.UpdateInfos;
+var
+  wCharID: String;
+  wCharKey: String;
+  wStream: TMemoryStream;
+//  wInfoFile: String;
+  wPetList: TXpNodeList;
+  wPetSheet: String;
+  wXmlDoc: TXpObjModel;
+  i: Integer;
+begin
+  wCharID := GridChar.Cells[3, GridChar.Row];
+  wCharKey := GCharacter.GetCharKey(wCharID);
+
+  wStream := TMemoryStream.Create;
+  wXmlDoc := TXpObjModel.Create(nil);
+  try
+    GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
+//    wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
+//    wStream.SaveToFile(wInfoFile);
+//    wXmlDoc.LoadDataSource(wInfoFile);
+    wXmlDoc.LoadStream(wStream);
+    wPetList := wXmlDoc.DocumentElement.SelectNodes('/character/pets/pet');
+
+    FormInvent.MountID := -1;
+    for i := 0 to wPetList.Length - 1 do begin
+      wPetSheet := wPetList.Item(i).Attributes.GetNamedItem('sheet').NodeValue;
+      GRegExpr.Expression := _EXPR_MOUNT;
+      if GRegExpr.Exec(wPetSheet) then begin
+        FormInvent.MountID := i;
+        Break;
+      end;
+    end;
+  finally
+    wXmlDoc.Free;
+    wStream.Free;
+  end;
 end;
 
 end.

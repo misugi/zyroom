@@ -3,8 +3,8 @@ object FormRoomFilter: TFormRoomFilter
   Top = 225
   BorderStyle = bsDialog
   Caption = 'Filtre'
-  ClientHeight = 531
-  ClientWidth = 281
+  ClientHeight = 530
+  ClientWidth = 270
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object FormRoomFilter: TFormRoomFilter
   PixelsPerInch = 96
   TextHeight = 13
   object BtOK: TButton
-    Left = 202
-    Top = 398
+    Left = 196
+    Top = 361
     Width = 75
     Height = 23
     Caption = 'Filtrer'
@@ -29,10 +29,10 @@ object FormRoomFilter: TFormRoomFilter
     OnClick = BtOKClick
   end
   object GbType: TGroupBox
-    Left = 4
-    Top = 4
-    Width = 133
-    Height = 125
+    Left = 0
+    Top = 0
+    Width = 132
+    Height = 112
     Caption = 'Type'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -43,7 +43,7 @@ object FormRoomFilter: TFormRoomFilter
     TabOrder = 1
     object CbTypeNaturalMat: TCheckBox
       Left = 8
-      Top = 36
+      Top = 34
       Width = 121
       Height = 17
       Caption = 'Forage'
@@ -73,7 +73,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbTypeCata: TCheckBox
       Left = 8
-      Top = 56
+      Top = 52
       Width = 121
       Height = 17
       Caption = 'Catalyseurs'
@@ -87,7 +87,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbTypeOthers: TCheckBox
       Left = 8
-      Top = 96
+      Top = 88
       Width = 121
       Height = 17
       Caption = 'Autres'
@@ -101,7 +101,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbTypeEquipment: TCheckBox
       Left = 8
-      Top = 76
+      Top = 70
       Width = 121
       Height = 17
       Caption = 'Equipement'
@@ -116,10 +116,10 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GbQuality: TGroupBox
-    Left = 4
-    Top = 208
-    Width = 133
-    Height = 73
+    Left = 0
+    Top = 182
+    Width = 132
+    Height = 70
     Caption = 'Qualit'#233
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -143,7 +143,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object LbQualityMax: TLabel
       Left = 8
-      Top = 48
+      Top = 47
       Width = 26
       Height = 13
       Caption = 'Max :'
@@ -172,7 +172,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object EdQualityMax: TSpinEdit
       Left = 40
-      Top = 44
+      Top = 42
       Width = 85
       Height = 22
       Font.Charset = DEFAULT_CHARSET
@@ -188,10 +188,10 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GbClass: TGroupBox
-    Left = 4
-    Top = 132
-    Width = 133
-    Height = 73
+    Left = 0
+    Top = 114
+    Width = 132
+    Height = 67
     Caption = 'Classe'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -215,7 +215,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object LbClassMax: TLabel
       Left = 8
-      Top = 48
+      Top = 44
       Width = 26
       Height = 13
       Caption = 'Max :'
@@ -251,7 +251,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object EdClassMax: TComboBox
       Left = 40
-      Top = 44
+      Top = 40
       Width = 85
       Height = 21
       Style = csDropDownList
@@ -274,10 +274,10 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GbEcosys: TGroupBox
-    Left = 144
-    Top = 4
-    Width = 133
-    Height = 141
+    Left = 138
+    Top = 0
+    Width = 132
+    Height = 129
     Caption = 'Ecosyst'#232'me'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -288,7 +288,7 @@ object FormRoomFilter: TFormRoomFilter
     TabOrder = 4
     object CbEcoPrime: TCheckBox
       Left = 8
-      Top = 36
+      Top = 34
       Width = 121
       Height = 17
       Caption = 'Primes Racines'
@@ -316,7 +316,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEcoDesert: TCheckBox
       Left = 8
-      Top = 76
+      Top = 70
       Width = 121
       Height = 17
       Caption = 'D'#233'sert'
@@ -330,7 +330,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEcoForest: TCheckBox
       Left = 8
-      Top = 56
+      Top = 52
       Width = 121
       Height = 17
       Caption = 'For'#234't'
@@ -344,7 +344,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEcoLakes: TCheckBox
       Left = 8
-      Top = 96
+      Top = 88
       Width = 121
       Height = 17
       Caption = 'Lacs'
@@ -358,7 +358,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEcoJungle: TCheckBox
       Left = 8
-      Top = 116
+      Top = 106
       Width = 121
       Height = 17
       Caption = 'Jungle'
@@ -372,8 +372,8 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object BtDefault: TButton
-    Left = 4
-    Top = 398
+    Left = 0
+    Top = 361
     Width = 75
     Height = 23
     Caption = 'D'#233'faut'
@@ -382,9 +382,9 @@ object FormRoomFilter: TFormRoomFilter
     OnClick = BtDefaultClick
   end
   object GbName: TGroupBox
-    Left = 4
-    Top = 332
-    Width = 273
+    Left = 0
+    Top = 297
+    Width = 270
     Height = 61
     Caption = 'Nom'
     Font.Charset = DEFAULT_CHARSET
@@ -394,11 +394,15 @@ object FormRoomFilter: TFormRoomFilter
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 6
+    DesignSize = (
+      270
+      61)
     object EdName: TEdit
       Left = 8
       Top = 16
-      Width = 257
+      Width = 254
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -439,10 +443,10 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GbEquipment: TGroupBox
-    Left = 144
-    Top = 148
-    Width = 133
-    Height = 181
+    Left = 138
+    Top = 131
+    Width = 132
+    Height = 165
     Caption = 'Equipement'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -453,7 +457,7 @@ object FormRoomFilter: TFormRoomFilter
     TabOrder = 7
     object CbEqHeavyArmors: TCheckBox
       Left = 8
-      Top = 56
+      Top = 52
       Width = 121
       Height = 17
       Caption = 'Armures lourdes'
@@ -467,7 +471,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEqWeaponsMelee: TCheckBox
       Left = 8
-      Top = 76
+      Top = 70
       Width = 121
       Height = 17
       Caption = 'Armes de m'#233'l'#233'e'
@@ -481,7 +485,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEqMediumArmors: TCheckBox
       Left = 8
-      Top = 36
+      Top = 34
       Width = 121
       Height = 17
       Caption = 'Armures moyennes'
@@ -509,7 +513,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEqAmplifier: TCheckBox
       Left = 8
-      Top = 116
+      Top = 106
       Width = 121
       Height = 17
       Caption = 'Amplificateurs'
@@ -523,7 +527,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEqWeaponsRange: TCheckBox
       Left = 8
-      Top = 96
+      Top = 88
       Width = 121
       Height = 17
       Caption = 'Armes de tir'
@@ -537,7 +541,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEqOthers: TCheckBox
       Left = 8
-      Top = 156
+      Top = 142
       Width = 121
       Height = 17
       Caption = 'Autres'
@@ -551,7 +555,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object CbEqJewels: TCheckBox
       Left = 8
-      Top = 136
+      Top = 124
       Width = 121
       Height = 17
       Caption = 'Bijoux'
@@ -565,10 +569,10 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GbCategory: TGroupBox
-    Left = 4
-    Top = 284
-    Width = 133
-    Height = 45
+    Left = 0
+    Top = 253
+    Width = 132
+    Height = 43
     Caption = 'Cat'#233'gorie'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -616,10 +620,10 @@ object FormRoomFilter: TFormRoomFilter
     end
   end
   object GroupBox1: TGroupBox
-    Left = 4
-    Top = 428
-    Width = 273
-    Height = 97
+    Left = 0
+    Top = 387
+    Width = 270
+    Height = 143
     Caption = 'Informations'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -630,14 +634,14 @@ object FormRoomFilter: TFormRoomFilter
     TabOrder = 9
     object ImgItem: TItemImage
       Left = 8
-      Top = 21
+      Top = 51
       Width = 40
       Height = 40
       ShowHint = True
     end
     object ImgHpb: TImage
       Left = 8
-      Top = 68
+      Top = 113
       Width = 24
       Height = 24
       ParentShowHint = False
@@ -681,7 +685,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object ImgFob: TImage
       Left = 212
-      Top = 68
+      Top = 113
       Width = 24
       Height = 24
       ParentShowHint = False
@@ -725,7 +729,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object ImgStb: TImage
       Left = 144
-      Top = 68
+      Top = 113
       Width = 24
       Height = 24
       ParentShowHint = False
@@ -770,7 +774,7 @@ object FormRoomFilter: TFormRoomFilter
     end
     object ImgSab: TImage
       Left = 76
-      Top = 68
+      Top = 113
       Width = 24
       Height = 24
       ParentShowHint = False
@@ -814,59 +818,59 @@ object FormRoomFilter: TFormRoomFilter
     end
     object LbHpb: TLabel
       Left = 36
-      Top = 74
-      Width = 22
+      Top = 119
+      Width = 18
       Height = 13
       Caption = '125'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object LbSab: TLabel
       Left = 104
-      Top = 74
-      Width = 22
+      Top = 119
+      Width = 18
       Height = 13
       Caption = '125'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object LbStb: TLabel
       Left = 172
-      Top = 74
-      Width = 22
+      Top = 119
+      Width = 18
       Height = 13
       Caption = '125'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object LbFob: TLabel
       Left = 240
-      Top = 74
-      Width = 22
+      Top = 119
+      Width = 18
       Height = 13
       Caption = '125'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object ImgSkin1: TImage
-      Left = 96
-      Top = 21
+      Left = 101
+      Top = 51
       Width = 16
       Height = 16
       ParentShowHint = False
@@ -984,8 +988,8 @@ object FormRoomFilter: TFormRoomFilter
       ShowHint = True
     end
     object ImgSkin2: TImage
-      Left = 113
-      Top = 21
+      Left = 118
+      Top = 51
       Width = 16
       Height = 16
       ParentShowHint = False
@@ -1103,8 +1107,8 @@ object FormRoomFilter: TFormRoomFilter
       ShowHint = True
     end
     object ImgSkin3: TImage
-      Left = 130
-      Top = 21
+      Left = 135
+      Top = 51
       Width = 16
       Height = 16
       ParentShowHint = False
@@ -1222,101 +1226,182 @@ object FormRoomFilter: TFormRoomFilter
       ShowHint = True
     end
     object ImgDura: TImage
-      Left = 168
-      Top = 29
+      Left = 188
+      Top = 71
       Width = 24
       Height = 24
       ParentShowHint = False
       Picture.Data = {
         0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
-        0000180806000000E0773DF8000005F74944415478DACD954B6C9CD515C7CFB9
-        F77BCDE7473C7E4C664C9CA4C6633B098E83271883F3704A48901368490334A2
-        AA50BB605121A42E4A176DC5860D59B4A5AA9405820D6979B4A551174051689B
-        E03604C736716CE3C41EC7B11D4FC69EF18C3DAFEF71EFED192B748354553CA4
-        5EE9E8FB16F7FE7FE7DCF3B8085FF3C2FF1B00D72A3768D696A8579A1A93BE53
-        FCD200CDA80DE97657AF66C6F67123B617A075A754C0B92E4AA0C607853378CE
-        2F7E7CCEC98D5C107E61EDBF0290965D1D0A6F6DE9D9DFB6BDB72FD4D8B3776C
-        26D23AB7E030DF9320A40449A69404CE9028E588104C1DA1BE5E788DB58BC3B9
-        95C1F3D7C607FE3117BF38E0965633FF01B475F6F4EE3F71F254435DFBB6BB9A
-        2DD6BED940DB44F8D3BBD3EA2F67A731D8B801021506A0CEC91B052547804610
-        291464968B905F29A8EF9DE8815DD100C4131226E6F26E36F9C9C899DFFCF0C9
-        C4CDB969DCFBD0B1274EFEF6D5D399825033095F71AEB16040474951BDF9C608
-        AE4880DE073642346C8347C28200D7137918195A86F8C7578199F3EA81C387D5
-        DD1D5115ACA088AA10B28EAF7EFCC4FEFBAE4E8C0DE2FD0F7EEBF1E75E7CF9F4
-        8D2557AD16E8127C20EF003C0F989445EDBD3F5E824DBB9AE0605F18AA6C0D92
-        CB25B830B804F1E105B0E508F41E3D21AA6A6A45B58DB8356C627B24C052794F
-        3DF5F07DDDD726278630D6F7F063479E79E935A70420485C7808BE07E0BBE44D
-        83A9CD8E0EB0E151173AF63541B4B91A26263330339682C2DC79F8E623FD4AD9
-        518F7105BA01600600DA9B2C16ACE4F8ECF13DDDF1A9C921DCD9DBFF58EF53BF
-        7C4DDE162F437C07C12500F802DA5B84FEFEDBEFA05F7927B475D4C1CC541692
-        E39720766F0318A1435402A81029F986024D0308D669186ED0F1D74F1FE89E8D
-        4F0DE3F67B1F3ADEF9F8C9D36561CF65E097CA00004547B970A0AE8633531BD7
-        CE7D300F9B7674C0C2D5EB10A9B9065B3A9FF40B9EAD727945CA54D656B9B415
-        046C849A3A1DCFFCFC70F7FC8D99118CC60E1D6FEE7FE174D96BDF25F1120324
-        CF19510C2E20120E32CB4CB3C9A13FB36CBE15C01D828E9E63D2976199CD1555
-        9EBA42682655198266AA75B328D9974E1DBB6771E1C665FC46E7C1EF84F73CFF
-        BBF2BD7B04912E79EE39A011CD0001AD9D3BB4622AA5983ECC66270731DA7150
-        E5329BA99804A49657A4871A789A019292C00D04BD0CA148A6DEFAEEEE646261
-        149BB61F3856D5F5B3DF932648A72C5EA2081CD089C8950B9BB66CE391509425
-        13FF929575F37C2DD92A0CBB0E166F5E95B9425E096680CF0940519421CC4230
-        2C05C977BFBF7B29B9388A8DADFB1EC5E84F5F578E0FDC2F00134532179092C2
-        C92AAC1A8CB6F46BEE6A5AF9E213C979272B8855B598B848515087535B4BCAAE
-        E404E001FAB78113A470E1075DA9A55B63B8B179CFA3EACE9FBCA1F2CB0ABDFC
-        BA3823E1B29573C129873555CDAC2ED8C5388E4BC78FF16C7E5AA533178444A5
-        14892B5E06E8246E80D22A00741BC4951F75A5534B6318DADAF36DBEE3577FF0
-        9257A42ADC54AC5C4654B38CBA0D25078E26EA7420148EB1604D49098CF1D4D2
-        94BAB570567A6A8D86875C2F1FC5CBE29692B417F40060FC1777AFA497C7B1BE
-        29F608B69E7A5BAE4C482F3D24B9D268A00550A370996E51E24C6A220BAAEB37
-        E21DE10D2002517EEBFAB44CCD5F969E9B07E915C1F3F3E8A922A17C8A26A0D0
-        AC54FAAD97BA332BE9CB581F693BC022CF9D11D862CBE24DC990AEC5D0D64D33
-        C90C9DBE3A04AA2A606B7310DDEA5AB678E586CC2E2695E77854753EF58D0FC2
-        F56802B82044166C6B365B9C7BE5E95C6EED6FEBE3DAB6ED0DD5F5DB0E590DBD
-        47CCFADD873C2352AF93A84110D3E4600474306D1D9ADBAAD0310D9C1D5E96B9
-        74015C1A7C1E01240D2ECCC71385C487174BA98F3E58599A1EA0F1BE40D299CF
-        3D389AA6990D77447B6A9BF71E096FEBEBB742AD51C330D0B434D8DC6861A628
-        21B958505EA9A832B34333C94FFFFECF54FCC3B3E9A585413A9E24CB93515751
-        7AFE87279385224DD1CD3BFB8EB6DCF3E0D1E8F6BB768D0E0E7C3A7DF1AF1F5D
-        BF7CFEFDB5D5CC38ED499115C8C467A25FE84D2EEFA5E82CDFF7B5DB62CEEDEF
-        177B93BFAAF56F6DF9EB4DB005E5840000000049454E44AE426082}
+        0000180806000000E0773DF80000000774494D4507DA050B170F036768651800
+        0000097048597300000B1200000B1201D2DD7EFC0000000467414D410000B18F
+        0BFC6105000003264944415478DAED955D48536118C7FFE7EC6C73CCCDE99A73
+        464AE86E5C2335C48F8B8CEAC28B2C32904A28E8C22823922895C09B0C6D140A
+        A5918A247525991415428675D1074520826DE6665132DDCA4D67A26EE76CBDE7
+        EC58229B13A18BA0179E7338EF39CFF37BBEDEE750F8CB8BFA0FD810E0139093
+        585ADA203765EDA16432DA3F3131E4EBEBED7AEFF57565131D86A60F280B0A76
+        33E96929ACC7EB9A1B18E8C9E4B8E7EB0238B4DA527D6D4D8F32273B4ED8A069
+        40428373BBE1E9ECB449D52A4D7C59590AB33583EC4B04F18F7F86ABB5F54EC3
+        E08BCA76201015F01130A4569FB326E4E62440A100A45251188021B2B840EEE4
+        592E07824180E300964820008E65316AB1B49A5EBF3D13153066343665549DAA
+        A1A4A2119908E08D32C45B9A17A2120A11002F228018C7D2127CB651AEEBAAC5
+        5C0D5823022676150F6F2E2A340BDE0B00D99F08248C902A50A28A10C1721424
+        2B011621DF1C1E37B7D4EDF77A9B22029C3B72BD86BC3C0DE244E372D9AA0856
+        00F82804001B8E8000E0F3E149CFFDF67D9393272302BEEA36FDD862366BA1D7
+        E33744160BC0858D9328421E0FEEF5F6DD38C6716723024694CA5759C9BA22A8
+        E281242DA05685413C40E8980800DEFBF979607A1AF3532E343AC62BAF001D11
+        018F800B25C93A8B54A8812C1C415C5CB81E5211428945E63DF7FB49672D86EF
+        44865D6EDFCE59DFF659E04B44C05120B14E2E1BD9A6521B84D40845165B74B9
+        83A8155DC443B870FE1708E89ACB7DAB3E14AAE2E38B7AD0AE03872A148A1EBD
+        2A9E163A45BA323D7458232476112FA42E1CD97CE0745A8FB3EC5E72529CB146
+        05454EE3E5728DE65282460390C2095EAF06F01752278EEC3FB53BBE5D64D983
+        36E043CC51212EE636D052AED75769D2D3C9FC70082D28807851AB01A3114B33
+        33E8B3D9ECF5C160C518F02E92A1B5A629D30C34961B0CE753F3F3294C4E0276
+        3B909909A4A5C1333484EEB1B137A4634E4C03B66846628D6BBA16385D919868
+        31959428289D0E21E2B5ADBF9FBDE976DF6D036AC837DFD732B0AEFFC111A0F8
+        B044D2516832195F5AAD536D8140FD20D04D5EF963E9AEFB8743B29E540A543C
+        049EFD5C23251B066C74FDFB805FEEFE3228B945EA7D0000000049454E44AE42
+        6082}
       ShowHint = True
     end
     object LbDura: TLabel
-      Left = 196
-      Top = 35
-      Width = 49
+      Left = 216
+      Top = 77
+      Width = 41
       Height = 13
       Caption = '156/220'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object LbClass: TLabel
-      Left = 56
-      Top = 43
-      Width = 53
+      Left = 61
+      Top = 77
+      Width = 31
       Height = 13
-      Caption = 'Excellent'
+      Caption = 'Classe'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object LbQuality: TLabel
-      Left = 56
-      Top = 23
-      Width = 31
+      Left = 61
+      Top = 53
+      Width = 26
       Height = 13
       Caption = 'Q210'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
-      Font.Style = [fsBold]
+      Font.Style = []
+      ParentFont = False
+    end
+    object ImgVolume: TImage
+      Left = 188
+      Top = 47
+      Width = 24
+      Height = 24
+      ParentShowHint = False
+      Picture.Data = {
+        0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
+        0000180806000000E0773DF80000002D744558744372656174696F6E2054696D
+        65006D65722E203132206D616920323031302030313A31383A3233202B303130
+        30551810FC0000000774494D4507DA050B17131B9273A0130000000970485973
+        00000AF000000AF00142AC34980000000467414D410000B18F0BFC6105000003
+        EB4944415478DAED956D4C5B5518C7FFE7DEDBDB57DA0202052614C6C6641515
+        C64B610E583627D916A38D31D1189084D9C4EC83C916639C9946638CCEC4E807
+        976589C9B6640BCCCCC43848816593B10023F2B6325B5C65744229D0965D684B
+        6FDBEB29A8F1432731C60F1A4FF2DC0F27CFF3FC9EFFFFE69C43F00F2FF23FE0
+        6F01F6BE2933F9746816E5A893581809C370747B46016E2097559FBF64F576D3
+        0ED25F06D4B42045DC4C3E25066D5371F6E3AC515704BD221D0C611112839811
+        7E4624E493C459E74B6D5DEE5B45D9681E1DC431F493D08680BA26E8838F929E
+        2DDBCBCBCA0DB5E0590E84594F4C8C2AC5011E0AD817DB316B670EFB3CB75B4D
+        46947E3F89BEDEDE8546DCC810FE1450FD212E9A2AAB2DDBD24BC1B1004B8321
+        F89D40A85701C10567D4869F6CEDD35B1EB2E425EAE214DC3781738E93E4E507
+        026AAC7832B3D170ADCA584F781920A38EB3747A26A180664A1241686905CEF8
+        65F8DC8DE0EF7D0D25CF201603441198F3216E1B0856A1433D9414B0EB04BE28
+        DF5561CDD26440CEAF037E539148149642F8F1FE0062AC1681E111A42AB3D654
+        45A3402402848240EF58F4C4EC97B2A349014F9DC28D4A73A559AB94434101FC
+        1F20513AE2D0A81DB25C019EB16F90C91D00C72554AD4F1F0E03C16560FC4EA4
+        D3FE89BC3129E0C069D8732BD8922C6D1AD2547AA4C8955409B30600F57872D1
+        893B2371D770FF545EC3CE2C4E215F078468F3453F30ED01BC73C16B8E8FD4F5
+        C9157C8EF1927D3069D5400A0D8D92815AA6831C7AB04481583C86FE0BF1E3ED
+        1D672CCF36EF28D5EA6410A9FF7E3AB9DF07F816A89DABF77BBA5ED7ED490A30
+        1DC195FDAFA1215507AC4164A950911C0A48074BBF31AC22B69831FFDE1B9B0E
+        D73E7DF46C4D558E4C1009EE06807BF3C0FC9C0465C475AABDB5E8D5A480C217
+        F17EF92B78ABD60CE8552A68492134288012067050514008AB921F7727962FF4
+        5C3D1238F49CD91AA136DE9A031CD49E39B720098EAE83DD1F58BE4D0A30EE40
+        31B707C32F1C8272BBD1001D79043A14238542786A53044B58C614FCAB2EA9B3
+        6DBA65EBD68EE3C6BC4D465780C1D86408E3D747FB6E7E6C6EA0ADC4071EB482
+        67F0AEBC1A6F3F7F309FD4955452150514B28D9EDD4C6AD00202B84D6302EE59
+        D7F4D0572DEF1456B59CBE391663BEBBE274AF38CFEC15864E3A36BA8BF8CD16
+        7CC697A1B5A4F86166FF63FBF044F64EA4297210639621C466E05E1EC788F72A
+        06CF797687B94B565BE7520EA6DA5A317BFE870DEFA25F1757508F2675198E29
+        8CC857EA18A2D768A0503090D8155A2522EEE57C5E9BD27CFD2C47FF809F1E33
+        849235DAE83D48CDAF40BDA608B57C3AC9E764E01891F184A7994147AFD81DF6
+        C3BD41FD7FFD45FB57007E014C7B6828D2721ED90000000049454E44AE426082}
+      ShowHint = True
+    end
+    object LbVolume: TLabel
+      Left = 216
+      Top = 53
+      Width = 21
+      Height = 13
+      Caption = '10,5'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object LbCraft: TLabel
+      Left = 8
+      Top = 95
+      Width = 258
+      Height = 13
+      AutoSize = False
+      Caption = 'Lame, Pointe'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object LbDesc: TLabel
+      Left = 8
+      Top = 18
+      Width = 258
+      Height = 13
+      AutoSize = False
+      Caption = 'Description'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
+    object LbSheet: TLabel
+      Left = 8
+      Top = 34
+      Width = 258
+      Height = 13
+      AutoSize = False
+      Caption = 'Sheet'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       ParentFont = False
     end
   end
