@@ -17,9 +17,9 @@ object FormRoom: TFormRoom
   PixelsPerInch = 96
   TextHeight = 13
   object PnRoom: TPanel
-    Left = 275
+    Left = 285
     Top = 0
-    Width = 417
+    Width = 407
     Height = 387
     Align = alClient
     BevelOuter = bvNone
@@ -28,7 +28,7 @@ object FormRoom: TFormRoom
     object GuildRoom: TScrollRoom
       Left = 0
       Top = 21
-      Width = 417
+      Width = 407
       Height = 366
       HorzScrollBar.Tracking = True
       VertScrollBar.Increment = 44
@@ -51,19 +51,19 @@ object FormRoom: TFormRoom
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 417
+      Width = 407
       Height = 21
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
-        417
+        407
         21)
       object LbGuildName: TLabel
         Left = 2
         Top = 0
-        Width = 271
+        Width = 261
         Height = 16
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -76,7 +76,7 @@ object FormRoom: TFormRoom
         ParentFont = False
       end
       object LbVolume: TLabel
-        Left = 275
+        Left = 265
         Top = 0
         Width = 136
         Height = 16
@@ -99,7 +99,7 @@ object FormRoom: TFormRoom
   object PnFilter: TPanel
     Left = 0
     Top = 0
-    Width = 275
+    Width = 285
     Height = 387
     Align = alLeft
     BevelOuter = bvNone

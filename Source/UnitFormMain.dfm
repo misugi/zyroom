@@ -1,12 +1,12 @@
 object FormMain: TFormMain
   Left = 382
   Top = 270
-  Width = 788
-  Height = 606
+  Width = 762
+  Height = 490
   Caption = 'zyRoom'
   Color = 12631988
-  Constraints.MinHeight = 606
-  Constraints.MinWidth = 788
+  Constraints.MinHeight = 490
+  Constraints.MinWidth = 762
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -23,8 +23,8 @@ object FormMain: TFormMain
   object PnContainer: TPanel
     Left = 0
     Top = 28
-    Width = 772
-    Height = 540
+    Width = 746
+    Height = 424
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 5
@@ -34,17 +34,17 @@ object FormMain: TFormMain
   object PnHeader: TPanel
     Left = 0
     Top = 0
-    Width = 772
+    Width = 746
     Height = 28
     Align = alTop
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
     DesignSize = (
-      772
+      746
       28)
     object ImgAniro: TImage
-      Left = 564
+      Left = 538
       Top = 8
       Width = 16
       Height = 16
@@ -53,7 +53,7 @@ object FormMain: TFormMain
       ShowHint = True
     end
     object LbAniro: TLabel
-      Left = 585
+      Left = 559
       Top = 10
       Width = 24
       Height = 13
@@ -69,17 +69,17 @@ object FormMain: TFormMain
       OnClick = LbServerClick
     end
     object LbTime: TLabel
-      Left = 330
+      Left = 308
       Top = 10
-      Width = 226
+      Width = 218
       Height = 13
       Alignment = taRightJustify
-      Anchors = [akTop, akRight]
+      Anchors = [akLeft, akTop, akRight]
       AutoSize = False
-      Caption = '-'
+      Caption = '20h - Quinteth, Germinally 30, 4e CA 2546'
     end
     object ImgLeanon: TImage
-      Left = 623
+      Left = 597
       Top = 8
       Width = 16
       Height = 16
@@ -88,7 +88,7 @@ object FormMain: TFormMain
       ShowHint = True
     end
     object LbLeanon: TLabel
-      Left = 644
+      Left = 618
       Top = 10
       Width = 36
       Height = 13
@@ -104,7 +104,7 @@ object FormMain: TFormMain
       OnClick = LbServerClick
     end
     object ImgArispotle: TImage
-      Left = 695
+      Left = 669
       Top = 8
       Width = 16
       Height = 16
@@ -113,7 +113,7 @@ object FormMain: TFormMain
       ShowHint = True
     end
     object LbArispotle: TLabel
-      Left = 717
+      Left = 691
       Top = 10
       Width = 40
       Height = 13

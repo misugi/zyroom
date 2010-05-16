@@ -39,6 +39,8 @@ resourcestring
   RS_COL_COMMENT = 'Commentaire';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
   RS_GUILD_KEY = 'Clé de guilde :';
+  RS_UP = 'Monter';
+  RS_DOWN = 'Descendre';
 
 type
   TPublicStringGrid = class(TCustomGrid); 
@@ -50,6 +52,8 @@ type
     BtUpdate: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
+    ImgUp: TImage;
+    ImgDown: TImage;
     procedure FormCreate(Sender: TObject);
     procedure GridGuildDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -66,12 +70,16 @@ type
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure GridGuildDblClick(Sender: TObject);
+    procedure ImgDownClick(Sender: TObject);
+    procedure ImgUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
+    procedure UpdateGuild(AAuto: Boolean);
   public
+    procedure UpdateLanguage;
   end;
 
 var
@@ -126,7 +134,7 @@ begin
       If gdFixed in State
         then Brush.Color := clBtnFace
         else If gdSelected In State
-          Then Brush.Color := clNavy
+          Then Brush.Color := clHighlight
           Else If Odd(ARow)
             Then Brush.Color := $FFFFFF
             Else Brush.Color := $BBF2F7;
@@ -243,58 +251,8 @@ end;
 Changes the key of a guild
 *******************************************************************************}
 procedure TFormGuild.BtUpdateClick(Sender: TObject);
-var
-  wGuildID: String;
-  wGuildKey: String;
-  wGuildName: String;
-  wComment: String;
-  wServer: String;
-  wGuildIcon: String;
-  wIconFile: String;
-  wInfoFile: String;
-  wStream: TMemoryStream;
-  wXmlDoc: TXpObjModel;
 begin
-  wGuildID := GridGuild.Cells[3, GridGuild.Row];
-  wGuildKey := GGuild.GetGuildKey(wGuildID);
-  wComment := GGuild.GetComment(wGuildID);
-  FormGuildEdit.Caption := RS_CHANGE_KEY;
-  FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
-  FormGuildEdit.EdKey.Text := wGuildKey;
-  FormGuildEdit.EdComment.Text := wComment;
-  if FormGuildEdit.ShowModal = mrOk then begin
-    wGuildKey := FormGuildEdit.EdKey.Text;
-    wComment := FormGuildEdit.EdComment.Text;
-    wGuildName := GridGuild.Cells[1, GridGuild.Row];
-
-    // Updates icon
-    wStream := TMemoryStream.Create;
-    wXmlDoc := TXpObjModel.Create(nil);
-    try
-      GRyzomApi.ApiGuild(wGuildKey, wStream);
-      wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
-      wStream.SaveToFile(wInfoFile);
-      wStream.Clear;
-      wXmlDoc.LoadDataSource(wInfoFile);
-      wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
-      wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
-      wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
-      wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
-      wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
-      wStream := TMemoryStream.Create;
-      GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
-      wStream.SaveToFile(wIconFile);
-      TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
-      GridGuild.Refresh;
-    finally
-      wXmlDoc.Free;
-      wStream.Free;
-    end;
-    
-    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer);
-    GridGuild.Cells[1, GridGuild.Row] := wGuildName;
-    GridGuild.Cells[2, GridGuild.Row] := wComment;
-  end;
+  UpdateGuild(False);
 end;
 
 {*******************************************************************************
@@ -312,10 +270,6 @@ begin
   try
     GridGuild.RowCount := 1;
     GridGuild.Row := 0;
-    GridGuild.Cells[0, 0] := RS_COL_GUILD_LOGO;
-    GridGuild.Cells[1, 0] := RS_COL_GUILD_NAME;
-    GridGuild.Cells[2, 0] := RS_COL_COMMENT;
-    GridGuild.Cells[3, 0] := RS_COL_GUILD_NUMBER;
     GridGuild.ColCount := 4;
     GridGuild.RowHeights[0] := 20;
     GridGuild.ColWidths[0] := 50;
@@ -385,6 +339,8 @@ procedure TFormGuild.GridGuildSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   if ARow = 0 then CanSelect := False;
+  ImgUp.Visible := ARow > 1;
+  ImgDown.Visible := ARow < GridGuild.RowCount - 1;
 end;
 
 {*******************************************************************************
@@ -431,6 +387,7 @@ Displays information of the selected guild
 procedure TFormGuild.BtRoomClick(Sender: TObject);
 begin
   try
+    UpdateGuild(True);
     Synchronize;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
@@ -451,7 +408,7 @@ Double clic on the grid
 *******************************************************************************}
 procedure TFormGuild.GridGuildDblClick(Sender: TObject);
 begin
-  BtRoomClick(BtRoom);
+  if GridGuild.Row > 0 then BtRoomClick(BtRoom);
 end;
 
 {*******************************************************************************
@@ -478,6 +435,119 @@ var
 begin
   wGuildID := GridGuild.Cells[3, GridGuild.Row];
   FormProgress.ShowFormSynchronize(wGuildID);
+end;
+
+{*******************************************************************************
+Updates language
+*******************************************************************************}
+procedure TFormGuild.UpdateLanguage;
+begin
+  GridGuild.Cells[0, 0] := RS_COL_GUILD_LOGO;
+  GridGuild.Cells[1, 0] := RS_COL_GUILD_NAME;
+  GridGuild.Cells[2, 0] := RS_COL_COMMENT;
+  GridGuild.Cells[3, 0] := RS_COL_GUILD_NUMBER;
+  ImgUp.Hint := RS_UP;
+  ImgDown.Hint := RS_DOWN;
+end;
+
+{*******************************************************************************
+Updates guild information
+*******************************************************************************}
+procedure TFormGuild.UpdateGuild(AAuto: Boolean);
+var
+  wGuildID: String;
+  wGuildKey: String;
+  wGuildName: String;
+  wComment: String;
+  wServer: String;
+  wGuildIcon: String;
+  wIconFile: String;
+  wInfoFile: String;
+  wStream: TMemoryStream;
+  wXmlDoc: TXpObjModel;
+  wDoUpdate: Boolean;
+begin
+  wDoUpdate := AAuto;
+
+  wGuildID := GridGuild.Cells[3, GridGuild.Row];
+  wGuildKey := GGuild.GetGuildKey(wGuildID);
+  wComment := GGuild.GetComment(wGuildID);
+
+  if not wDoUpdate then begin
+    FormGuildEdit.Caption := RS_CHANGE_KEY;
+    FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
+    FormGuildEdit.EdKey.Text := wGuildKey;
+    FormGuildEdit.EdComment.Text := wComment;
+    wDoUpdate := FormGuildEdit.ShowModal = mrOk;
+    wGuildKey := FormGuildEdit.EdKey.Text;
+    wComment := FormGuildEdit.EdComment.Text;
+  end;
+
+  if wDoUpdate then begin
+    // Updates icon
+    wStream := TMemoryStream.Create;
+    wXmlDoc := TXpObjModel.Create(nil);
+    try
+      GRyzomApi.ApiGuild(wGuildKey, wStream);
+      wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
+      wStream.SaveToFile(wInfoFile);
+      wStream.Clear;
+      wXmlDoc.LoadDataSource(wInfoFile);
+      wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
+      wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
+      wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
+      wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
+      wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
+      wStream := TMemoryStream.Create;
+      GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
+      wStream.SaveToFile(wIconFile);
+      TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
+      GridGuild.Refresh;
+    finally
+      wXmlDoc.Free;
+      wStream.Free;
+    end;
+    
+    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer);
+    GridGuild.Cells[1, GridGuild.Row] := wGuildName;
+    GridGuild.Cells[2, GridGuild.Row] := wComment;
+  end;
+end;
+
+{*******************************************************************************
+Down
+*******************************************************************************}
+procedure TFormGuild.ImgDownClick(Sender: TObject);
+var
+  wRow: Integer;
+  wGuildID1: String;
+  wGuildID2: String;
+begin
+  wRow := GridGuild.Row;
+  wGuildID1 := GridGuild.Cells[3, wRow];
+  wGuildID2 := GridGuild.Cells[3, wRow + 1];
+  GGuild.SetIndex(wGuildID1, wRow + 1);
+  GGuild.SetIndex(wGuildID2, wRow);
+  LoadGrid;
+  GridGuild.Row := wRow + 1;
+end;
+
+{*******************************************************************************
+Up
+*******************************************************************************}
+procedure TFormGuild.ImgUpClick(Sender: TObject);
+var
+  wRow: Integer;
+  wGuildID1: String;
+  wGuildID2: String;
+begin
+  wRow := GridGuild.Row;
+  wGuildID1 := GridGuild.Cells[3, wRow];
+  wGuildID2 := GridGuild.Cells[3, wRow - 1];
+  GGuild.SetIndex(wGuildID1, wRow - 1);
+  GGuild.SetIndex(wGuildID2, wRow);
+  LoadGrid;
+  GridGuild.Row := wRow - 1;
 end;
 
 end.

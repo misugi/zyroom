@@ -317,6 +317,14 @@ begin
       finally
         wNodeList.Free;
       end;
+
+      // Sales
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/item_in_store/item');
+      try
+        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+      finally
+        wNodeList.Free;
+      end;
     finally
       GStrings.SaveToFile(wIndexFile);
     end;
@@ -480,6 +488,13 @@ Returns a sorting prefix
 *******************************************************************************}
 function TFormProgress.GetSortPrefix(AItemInfo: TItemInfo): String;
 begin
+  // Sales
+  if AItemInfo.ItemPrice > 0 then begin
+    Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
+    Exit;
+  end;
+
+  // Else
   case AItemInfo.ItemType of
     itEquipment: begin
       case AItemInfo.ItemEquip of
@@ -578,6 +593,7 @@ begin
       3: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal2/item');
       4: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal3/item');
       5: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal4/item');
+      6: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/item_in_store/item');
     end;
 
     try

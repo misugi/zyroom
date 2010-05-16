@@ -19,7 +19,7 @@ object FormInvent: TFormInvent
   object PnFilter: TPanel
     Left = 0
     Top = 0
-    Width = 275
+    Width = 285
     Height = 402
     Align = alLeft
     BevelOuter = bvNone
@@ -27,9 +27,9 @@ object FormInvent: TFormInvent
     TabOrder = 0
   end
   object PnInvent: TPanel
-    Left = 275
+    Left = 285
     Top = 0
-    Width = 434
+    Width = 424
     Height = 402
     Align = alClient
     BevelOuter = bvNone
@@ -38,7 +38,7 @@ object FormInvent: TFormInvent
     object TabInvent: TTabControl
       Left = 0
       Top = 21
-      Width = 434
+      Width = 424
       Height = 381
       Align = alClient
       TabOrder = 0
@@ -48,13 +48,14 @@ object FormInvent: TFormInvent
         'Animal 1'
         'Animal 2'
         'Animal 3'
-        'Animal 4')
+        'Animal 4'
+        'Ventes')
       TabIndex = 0
       OnChange = TabInventChange
       object CharInvent: TScrollRoom
         Left = 4
         Top = 24
-        Width = 426
+        Width = 416
         Height = 353
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
@@ -78,19 +79,19 @@ object FormInvent: TFormInvent
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 434
+      Width = 424
       Height = 21
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
-        434
+        424
         21)
       object LbCharName: TLabel
         Left = 2
         Top = 0
-        Width = 288
+        Width = 278
         Height = 16
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -103,7 +104,7 @@ object FormInvent: TFormInvent
         ParentFont = False
       end
       object LbVolume: TLabel
-        Left = 292
+        Left = 282
         Top = 0
         Width = 136
         Height = 16

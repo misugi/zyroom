@@ -1,8 +1,8 @@
 object FormHome: TFormHome
   Left = 345
   Top = 282
-  Width = 788
-  Height = 558
+  Width = 752
+  Height = 452
   Caption = 'Home'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,8 +17,9 @@ object FormHome: TFormHome
   object ImgRoom: TImage
     Left = 0
     Top = 0
-    Width = 772
-    Height = 520
+    Width = 736
+    Height = 414
+    Align = alClient
     Center = True
     Picture.Data = {
       0A54504E474F626A65637489504E470D0A1A0A0000000D49484452000002BC00
@@ -13125,8 +13126,8 @@ object FormHome: TFormHome
       76633776633776E30B3DFE17615D091122AC6ED60000000049454E44AE426082}
   end
   object LbCreatedFor: TLabel
-    Left = 265
-    Top = 208
+    Left = 243
+    Top = 148
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13141,8 +13142,8 @@ object FormHome: TFormHome
     Transparent = True
   end
   object LbContest: TLabel
-    Left = 265
-    Top = 224
+    Left = 243
+    Top = 164
     Width = 250
     Height = 13
     Cursor = crHandPoint
@@ -13161,8 +13162,8 @@ object FormHome: TFormHome
     OnClick = LbContestClick
   end
   object LbCreatedBy: TLabel
-    Left = 265
-    Top = 249
+    Left = 243
+    Top = 189
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13177,8 +13178,8 @@ object FormHome: TFormHome
     Transparent = True
   end
   object LbAuthor: TLabel
-    Left = 265
-    Top = 265
+    Left = 243
+    Top = 205
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13193,8 +13194,8 @@ object FormHome: TFormHome
     Transparent = True
   end
   object LbWebsite: TLabel
-    Left = 265
-    Top = 289
+    Left = 243
+    Top = 229
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13209,8 +13210,8 @@ object FormHome: TFormHome
     Transparent = True
   end
   object LbProjectWebsite: TLabel
-    Left = 265
-    Top = 305
+    Left = 243
+    Top = 245
     Width = 250
     Height = 13
     Cursor = crHandPoint
@@ -13229,8 +13230,8 @@ object FormHome: TFormHome
     OnClick = LbProjectWebsiteClick
   end
   object ImgRyzom: TImage
-    Left = 340
-    Top = 373
+    Left = 318
+    Top = 313
     Width = 100
     Height = 33
     Cursor = crHandPoint
@@ -13496,8 +13497,8 @@ object FormHome: TFormHome
     OnClick = ImgRyzomClick
   end
   object LbVersion: TLabel
-    Left = 265
-    Top = 327
+    Left = 243
+    Top = 267
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13512,8 +13513,8 @@ object FormHome: TFormHome
     Transparent = True
   end
   object LbVersionNum: TLabel
-    Left = 265
-    Top = 343
+    Left = 243
+    Top = 283
     Width = 250
     Height = 13
     Alignment = taCenter
@@ -13530,8 +13531,8 @@ object FormHome: TFormHome
     Transparent = True
   end
   object ImgAgpl: TImage
-    Left = 554
-    Top = 360
+    Left = 533
+    Top = 302
     Width = 112
     Height = 55
     Cursor = crHandPoint

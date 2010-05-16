@@ -1,6 +1,11 @@
 zyRoom - History of changes
 ===========================
 
+# version 1.7.0 (2010-05-16)
+New: display of items for sale with price, continent and time left !!!
+New: new display for item information
+New: it is now possible to sort guilds and characters
+
 # version 1.6.0 (2010-05-14)
 New: volume calculation !!!
 New: special name for the mount

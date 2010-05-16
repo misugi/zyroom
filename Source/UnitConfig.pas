@@ -77,6 +77,7 @@ const
   _KEY_COMMENT = 'Comment';
   _KEY_SERVER = 'Server';
   _KEY_GUILD = 'Guild';
+  _KEY_INDEX = 'Index';
 
   _RES_LOGO = 'logo';
   _RES_CLOSED = 'closed';
@@ -108,6 +109,7 @@ type
     procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
+    procedure SetIndex(AGuildID: String; AIndex: Integer);
   end;
 
   // List of the characters
@@ -128,6 +130,7 @@ type
     procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
     procedure DeleteChar(ACharID: String);
     procedure CharList(ACharIDList: TStrings);
+    procedure SetIndex(ACharID: String; AIndex: Integer);
   end;
 
   // Settings of the application
@@ -538,11 +541,20 @@ begin
 end;
 
 {*******************************************************************************
+Updates index
+*******************************************************************************}
+procedure TGuild.SetIndex(AGuildID: String; AIndex: Integer);
+begin
+  FIniFile.WriteInteger(AGuildID, _KEY_INDEX, AIndex);
+end;
+
+{*******************************************************************************
 Returns the list of the guilds
 *******************************************************************************}
 procedure TGuild.GuildList(AGuildIDList: TStrings);
 var
   wList: TStringList;
+  wIndex: Integer;
   i: Integer;
 begin
   AGuildIDList.Clear;
@@ -550,7 +562,12 @@ begin
 
   wList := TStringList.Create;
   for i := 0 to AGuildIDList.Count - 1 do begin
-    wList.Append(FIniFile.ReadString(AGuildIDList[i], _KEY_NAME, '') + '=' + AGuildIDList[i]);
+    wIndex := FIniFile.ReadInteger(AGuildIDList[i], _KEY_INDEX, -1);
+    if wIndex < 0 then begin
+      wIndex := i+1;
+      FIniFile.WriteInteger(AGuildIDList[i], _KEY_INDEX, wIndex);
+    end;
+    wList.Append(Format('%3.3d=%s', [FIniFile.ReadInteger(AGuildIDList[i], _KEY_INDEX, 999), AGuildIDList[i]]));
   end;
   wList.Sort;
 
@@ -596,11 +613,20 @@ begin
 end;
 
 {*******************************************************************************
+Updates index
+*******************************************************************************}
+procedure TCharacter.SetIndex(ACharID: String; AIndex: Integer);
+begin
+  FIniFile.WriteInteger(ACharID, _KEY_INDEX, AIndex);
+end;
+
+{*******************************************************************************
 Returns the list of the characters
 *******************************************************************************}
 procedure TCharacter.CharList(ACharIDList: TStrings);
 var
   wList: TStringList;
+  wIndex: Integer;
   i: Integer;
 begin
   ACharIDList.Clear;
@@ -608,7 +634,12 @@ begin
 
   wList := TStringList.Create;
   for i := 0 to ACharIDList.Count - 1 do begin
-    wList.Append(FIniFile.ReadString(ACharIDList[i], _KEY_NAME, '') + '=' + ACharIDList[i]);
+    wIndex := FIniFile.ReadInteger(ACharIDList[i], _KEY_INDEX, -1);
+    if wIndex < 0 then begin
+      wIndex := i+1;
+      FIniFile.WriteInteger(ACharIDList[i], _KEY_INDEX, wIndex);
+    end;
+    wList.Append(Format('%3.3d=%s', [FIniFile.ReadInteger(ACharIDList[i], _KEY_INDEX, 999), ACharIDList[i]]));
   end;
   wList.Sort;
 

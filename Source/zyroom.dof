@@ -117,9 +117,9 @@ RootDir=
 IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=1
-MinorVer=6
+MinorVer=7
 Release=0
-Build=61
+Build=88
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=1.6.0.61
+FileVersion=1.7.0.88
 InternalName=
 LegalCopyright=(C) 2009 Misugi
 LegalTrademarks=
@@ -138,3 +138,9 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=..\Bin

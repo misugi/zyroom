@@ -26,7 +26,7 @@ unit UnitRyzom;
 interface
 
 uses
-  Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig, StrUtils;
+  Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig, StrUtils, DateUtils;
 
 const
   _ITEM_CATEGORY : array [0..20] of String = ('Blade', 'Hammer', 'Point', 'Shaft', 'Grip', 'Counterweight',
@@ -95,6 +95,9 @@ type
     ItemStb: Integer;
     ItemFob: Integer;
     ItemVolume: Double;
+    ItemPrice: Integer;
+    ItemContinent: String;
+    ItemTime: TDateTime;
   end;
 
   TRyzom = class(TRyzomApi)
@@ -173,6 +176,7 @@ begin
   AItemInfo.ItemDestroyed := False;
   AItemInfo.ItemClass := icUnknown;
   AItemInfo.ItemHp := 0;
+  AItemInfo.ItemPrice := 0;
   
   // Name
   AItemInfo.ItemName := ANode.Text;
@@ -231,6 +235,20 @@ begin
       115: AItemInfo.ItemClass := icSupreme; {s = supreme}
     end;
   end;
+
+  // Continent
+  wNode := ANode.Attributes.GetNamedItem('continent');
+  if Assigned(wNode) then AItemInfo.ItemContinent := wNode.NodeValue;
+  AItemInfo.ItemContinent := UpperCase(LeftStr(AItemInfo.ItemContinent, 1)) +
+    RightStr(AItemInfo.ItemContinent, Length(AItemInfo.ItemContinent)-1);
+
+  // Price
+  wNode := ANode.Attributes.GetNamedItem('price');
+  if Assigned(wNode) then AItemInfo.ItemPrice := StrToInt(wNode.NodeValue);
+
+  // Since
+  wNode := ANode.Attributes.GetNamedItem('in_sell_since');
+  if Assigned(wNode) then AItemInfo.ItemTime := IncHour(IncDay(UnixToDateTime(StrToInt64(wNode.NodeValue)), 7), 2);
 
   // Image filename
   AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s',

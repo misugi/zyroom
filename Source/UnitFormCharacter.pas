@@ -41,6 +41,8 @@ resourcestring
   RS_CHAR_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer le personnage sélectionné ?';
   RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
   RS_CHAR_KEY = 'Clé de personnage :';
+  RS_UP = 'Monter';
+  RS_DOWN = 'Descendre';
 
 const
   _EXPR_MOUNT = '^ias[dfjl]\.sitem';
@@ -55,6 +57,8 @@ type
     BtUpdate: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
+    ImgDown: TImage;
+    ImgUp: TImage;
     procedure FormCreate(Sender: TObject);
     procedure GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -71,14 +75,18 @@ type
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure GridCharDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ImgDownClick(Sender: TObject);
+    procedure ImgUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
     procedure GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
-    procedure UpdateInfos;
+    procedure UpdateCharacter(AAuto: Boolean);
   public
+    procedure UpdateLanguage;
   end;
 
 var
@@ -134,7 +142,7 @@ begin
       If gdFixed in State
         then Brush.Color := clBtnFace
         else If gdSelected In State
-          Then Brush.Color := clNavy
+          Then Brush.Color := clHighlight
           Else If Odd(ARow)
             Then Brush.Color := $FFFFFF
             Else Brush.Color := $BBF2F7;
@@ -231,6 +239,7 @@ begin
         wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
         wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
         GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
+        GCharacter.SetIndex(wCharID, GridChar.RowCount - 1);
 
         ForceDirectories(GConfig.GetCharRoomPath(wCharID));
         wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
@@ -266,63 +275,8 @@ end;
 Changes the key of a guild
 *******************************************************************************}
 procedure TFormCharacter.BtUpdateClick(Sender: TObject);
-var
-  wCharID: String;
-  wCharKey: String;
-  wCharName: String;
-  wCharServer: String;
-  wComment: String;
-  wCharGuild: String;
-  wStream: TMemoryStream;
-  wXmlDoc: TXpObjModel;
-  wInfoFile: String;
-  wIconFile: String;
 begin
-  wCharID := GridChar.Cells[3, GridChar.Row];
-  wCharKey := GCharacter.GetCharKey(wCharID);
-  wComment := GGuild.GetComment(wCharID);
-  FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
-  FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
-  FormGuildEdit.EdKey.Text := wCharKey;
-  FormGuildEdit.EdComment.Text := wComment;
-  if FormGuildEdit.ShowModal = mrOk then begin
-    wCharKey := FormGuildEdit.EdKey.Text;
-    wComment := FormGuildEdit.EdComment.Text;
-
-    // Updates icon
-    wStream := TMemoryStream.Create;
-    wXmlDoc := TXpObjModel.Create(nil);
-    try
-      GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
-      wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
-      wStream.SaveToFile(wInfoFile);
-      wStream.Clear;
-      wXmlDoc.LoadDataSource(wInfoFile);
-      wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
-      wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
-      wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
-      wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
-      wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
-      GRyzomApi.ApiBallisticMystix(
-          wXmlDoc.DocumentElement.SelectString('/character/race'),
-          wXmlDoc.DocumentElement.SelectString('/character/gender'),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_type')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_color')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/tattoo')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/eyes_color')),
-          wStream);
-      wStream.SaveToFile(wIconFile);
-      TPNGObject(FIconList.Items[GridChar.Row-1]).LoadFromFile(wIconFile);
-      GridChar.Refresh;
-    finally
-      wXmlDoc.Free;
-      wStream.Free;
-    end;
-
-    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
-    GridChar.Cells[1, GridChar.Row] := wCharName;
-    GridChar.Cells[2, GridChar.Row] := wComment;
-  end;
+  UpdateCharacter(False);
 end;
 
 {*******************************************************************************
@@ -340,10 +294,6 @@ begin
   try
     GridChar.RowCount := 1;
     GridChar.Row := 0;
-    GridChar.Cells[0, 0] := RS_CHAR_COL_CHAR_HEAD;
-    GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
-    GridChar.Cells[2, 0] := RS_CHAR_COL_COMMENT;
-    GridChar.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
     GridChar.ColCount := 4;
     GridChar.RowHeights[0] := 20;
     GridChar.ColWidths[0] := 60;
@@ -413,6 +363,8 @@ procedure TFormCharacter.GridCharSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   if ARow = 0 then CanSelect := False;
+  ImgUp.Visible := ARow > 1;
+  ImgDown.Visible := ARow < GridChar.RowCount - 1;
 end;
 
 {*******************************************************************************
@@ -459,7 +411,7 @@ Displays information of the selected guild
 procedure TFormCharacter.BtRoomClick(Sender: TObject);
 begin
   try
-    UpdateInfos;
+    UpdateCharacter(True);
     Synchronize;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
@@ -480,7 +432,7 @@ Double clic on the grid
 *******************************************************************************}
 procedure TFormCharacter.GridCharDblClick(Sender: TObject);
 begin
-  BtRoomClick(BtRoom);
+  if GridChar.Row > 0 then BtRoomClick(BtRoom);
 end;
 
 {*******************************************************************************
@@ -556,45 +508,145 @@ begin
 end;
 
 {*******************************************************************************
-Update information about character
+Displays the form
 *******************************************************************************}
-procedure TFormCharacter.UpdateInfos;
+procedure TFormCharacter.FormShow(Sender: TObject);
+begin
+  UpdateLanguage;
+end;
+
+{*******************************************************************************
+Updates language
+*******************************************************************************}
+procedure TFormCharacter.UpdateLanguage;
+begin
+  GridChar.Cells[0, 0] := RS_CHAR_COL_CHAR_HEAD;
+  GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
+  GridChar.Cells[2, 0] := RS_CHAR_COL_COMMENT;
+  GridChar.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
+  ImgUp.Hint := RS_UP;
+  ImgDown.Hint := RS_DOWN;
+end;
+
+{*******************************************************************************
+Updates character information
+*******************************************************************************}
+procedure TFormCharacter.UpdateCharacter(AAuto: Boolean);
 var
   wCharID: String;
   wCharKey: String;
+  wCharName: String;
+  wCharServer: String;
+  wComment: String;
+  wCharGuild: String;
   wStream: TMemoryStream;
-//  wInfoFile: String;
+  wXmlDoc: TXpObjModel;
+  wInfoFile: String;
+  wIconFile: String;
+  wDoUpdate: Boolean;
   wPetList: TXpNodeList;
   wPetSheet: String;
-  wXmlDoc: TXpObjModel;
   i: Integer;
 begin
+  wDoUpdate := AAuto;
+
   wCharID := GridChar.Cells[3, GridChar.Row];
   wCharKey := GCharacter.GetCharKey(wCharID);
+  wComment := GGuild.GetComment(wCharID);
 
-  wStream := TMemoryStream.Create;
-  wXmlDoc := TXpObjModel.Create(nil);
-  try
-    GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
-//    wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
-//    wStream.SaveToFile(wInfoFile);
-//    wXmlDoc.LoadDataSource(wInfoFile);
-    wXmlDoc.LoadStream(wStream);
-    wPetList := wXmlDoc.DocumentElement.SelectNodes('/character/pets/pet');
-
-    FormInvent.MountID := -1;
-    for i := 0 to wPetList.Length - 1 do begin
-      wPetSheet := wPetList.Item(i).Attributes.GetNamedItem('sheet').NodeValue;
-      GRegExpr.Expression := _EXPR_MOUNT;
-      if GRegExpr.Exec(wPetSheet) then begin
-        FormInvent.MountID := i;
-        Break;
-      end;
-    end;
-  finally
-    wXmlDoc.Free;
-    wStream.Free;
+  if not wDoUpdate then begin
+    FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
+    FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
+    FormGuildEdit.EdKey.Text := wCharKey;
+    FormGuildEdit.EdComment.Text := wComment;
+    wDoUpdate := FormGuildEdit.ShowModal = mrOk;
+    wCharKey := FormGuildEdit.EdKey.Text;
+    wComment := FormGuildEdit.EdComment.Text;
   end;
+
+  if wDoUpdate then begin
+    // Updates icon
+    wStream := TMemoryStream.Create;
+    wXmlDoc := TXpObjModel.Create(nil);
+    try
+      GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
+      wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
+      wStream.SaveToFile(wInfoFile);
+      wStream.Clear;
+      wXmlDoc.LoadDataSource(wInfoFile);
+
+      wPetList := wXmlDoc.DocumentElement.SelectNodes('/character/pets/pet');
+      FormInvent.MountID := -1;
+      for i := 0 to wPetList.Length - 1 do begin
+        wPetSheet := wPetList.Item(i).Attributes.GetNamedItem('sheet').NodeValue;
+        GRegExpr.Expression := _EXPR_MOUNT;
+        if GRegExpr.Exec(wPetSheet) then begin
+          FormInvent.MountID := i;
+          Break;
+        end;
+      end;
+
+      wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
+      wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
+      wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
+      wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
+      wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
+      GRyzomApi.ApiBallisticMystix(
+          wXmlDoc.DocumentElement.SelectString('/character/race'),
+          wXmlDoc.DocumentElement.SelectString('/character/gender'),
+          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_type')),
+          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_color')),
+          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/tattoo')),
+          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/eyes_color')),
+          wStream);
+      wStream.SaveToFile(wIconFile);
+      TPNGObject(FIconList.Items[GridChar.Row-1]).LoadFromFile(wIconFile);
+      GridChar.Refresh;
+    finally
+      wXmlDoc.Free;
+      wStream.Free;
+    end;
+
+    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
+    GridChar.Cells[1, GridChar.Row] := wCharName;
+    GridChar.Cells[2, GridChar.Row] := wComment;
+  end;
+end;
+
+{*******************************************************************************
+Down
+*******************************************************************************}
+procedure TFormCharacter.ImgDownClick(Sender: TObject);
+var
+  wRow: Integer;
+  wCharID1: String;
+  wCharID2: String;
+begin
+  wRow := GridChar.Row;
+  wCharID1 := GridChar.Cells[3, wRow];
+  wCharID2 := GridChar.Cells[3, wRow + 1];
+  GCharacter.SetIndex(wCharID1, wRow + 1);
+  GCharacter.SetIndex(wCharID2, wRow);
+  LoadGrid;
+  GridChar.Row := wRow + 1;
+end;
+
+{*******************************************************************************
+Up
+*******************************************************************************}
+procedure TFormCharacter.ImgUpClick(Sender: TObject);
+var
+  wRow: Integer;
+  wCharID1: String;
+  wCharID2: String;
+begin
+  wRow := GridChar.Row;
+  wCharID1 := GridChar.Cells[3, wRow];
+  wCharID2 := GridChar.Cells[3, wRow - 1];
+  GCharacter.SetIndex(wCharID1, wRow - 1);
+  GCharacter.SetIndex(wCharID2, wRow);
+  LoadGrid;
+  GridChar.Row := wRow - 1;
 end;
 
 end.

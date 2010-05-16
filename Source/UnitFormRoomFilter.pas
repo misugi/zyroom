@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
-  ItemImage, StrUtils;
+  ItemImage, StrUtils, ComCtrls, DateUtils;
 
 resourcestring
   RS_SKIN = 'Skin';
@@ -37,15 +37,29 @@ resourcestring
   RS_SAB = 'Bonus sève';
   RS_STB = 'Bonus endurance';
   RS_FOB = 'Bonus concentration';
+  RS_VOLUME = 'Volume';
+  RS_PRICE = 'Prix';
+  RS_TIME = 'Temps restant';
+  RS_CLASS = 'Classe';
+  RS_CONTINENT = 'Continent';
+  RS_TIME_DAYS = 'jours';
+  RS_TIME_HOURS = 'heures';
+  RS_TIME_MINUTES = 'minutes';
+  RS_TIME_AND = 'et';
+  RS_CRAFT = 'Composant pour l''artisanat';
 
 type
   TFormRoomFilter = class(TForm)
+    PageControl: TPageControl;
+    TabFilter: TTabSheet;
+    TabInfo: TTabSheet;
     BtOK: TButton;
     GbType: TGroupBox;
     CbTypeNaturalMat: TCheckBox;
     CbTypeAnimalMat: TCheckBox;
     CbTypeCata: TCheckBox;
     CbTypeOthers: TCheckBox;
+    CbTypeEquipment: TCheckBox;
     GbQuality: TGroupBox;
     LbQualityMin: TLabel;
     LbQualityMax: TLabel;
@@ -63,16 +77,30 @@ type
     CbEcoForest: TCheckBox;
     CbEcoLakes: TCheckBox;
     CbEcoJungle: TCheckBox;
-    CbTypeEquipment: TCheckBox;
     BtDefault: TButton;
     GbName: TGroupBox;
     EdName: TEdit;
     RbAllWords: TRadioButton;
     RbOneWord: TRadioButton;
     GbEquipment: TGroupBox;
+    CbEqHeavyArmors: TCheckBox;
+    CbEqWeaponsMelee: TCheckBox;
+    CbEqMediumArmors: TCheckBox;
+    CbEqLightArmors: TCheckBox;
+    CbEqAmplifier: TCheckBox;
+    CbEqWeaponsRange: TCheckBox;
+    CbEqOthers: TCheckBox;
+    CbEqJewels: TCheckBox;
     GbCategory: TGroupBox;
     EdCategory: TComboBox;
-    GroupBox1: TGroupBox;
+    GroupSale: TGroupBox;
+    ImgTime: TImage;
+    ImgPrice: TImage;
+    ImgContinent: TImage;
+    LbTime: TLabel;
+    LbPrice: TLabel;
+    LbContinent: TLabel;
+    GroupGeneral: TGroupBox;
     ImgItem: TItemImage;
     ImgHpb: TImage;
     ImgFob: TImage;
@@ -82,28 +110,19 @@ type
     LbSab: TLabel;
     LbStb: TLabel;
     LbFob: TLabel;
-    ImgSkin1: TImage;
-    ImgSkin2: TImage;
-    ImgSkin3: TImage;
     ImgDura: TImage;
     LbDura: TLabel;
     LbClass: TLabel;
-    LbQuality: TLabel;
-    CbEqHeavyArmors: TCheckBox;
-    CbEqWeaponsMelee: TCheckBox;
-    CbEqMediumArmors: TCheckBox;
-    CbEqLightArmors: TCheckBox;
-    CbEqAmplifier: TCheckBox;
-    CbEqWeaponsRange: TCheckBox;
-    CbEqOthers: TCheckBox;
-    CbEqJewels: TCheckBox;
-    LbDesc: TLabel;
     ImgVolume: TImage;
     LbVolume: TLabel;
     LbCraft: TLabel;
-    LbSheet: TLabel;
+    LbDesc: TLabel;
+    ImgCraft: TImage;
+    ImgSkin1: TImage;
+    ImgSkin2: TImage;
+    ImgSkin3: TImage;
+    ImgClass: TImage;
     procedure BtOKClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure CbTypeAnimalMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -118,6 +137,7 @@ type
   public
     procedure InitInfo;
     procedure UpdateInfo(AItemImage: TItemImage);
+    procedure UpdateLanguage;
   end;
 
 var
@@ -131,9 +151,9 @@ uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
 {$R *.dfm}
 
 {*******************************************************************************
-Creates the form
+Updates language
 *******************************************************************************}
-procedure TFormRoomFilter.FormCreate(Sender: TObject);
+procedure TFormRoomFilter.UpdateLanguage;
 begin
   ImgSkin1.Hint := RS_SKIN;
   ImgSkin2.Hint := RS_SKIN;
@@ -143,6 +163,12 @@ begin
   ImgSab.Hint := RS_SAB;
   ImgStb.Hint := RS_STB;
   ImgFob.Hint := RS_FOB;
+  ImgVolume.Hint := RS_VOLUME;
+  ImgPrice.Hint := RS_PRICE;
+  ImgTime.Hint := RS_TIME;
+  ImgContinent.Hint := RS_CONTINENT;
+  ImgCraft.Hint := RS_CRAFT;
+  ImgClass.Hint := RS_CLASS;
 end;
 
 {*******************************************************************************
@@ -159,6 +185,7 @@ Shows the form
 procedure TFormRoomFilter.FormShow(Sender: TObject);
 begin
   LoadCurrentFilter;
+  PageControl.TabIndex := 0; // filter by default
   InitInfo;
 end;
 
@@ -334,6 +361,10 @@ Displays info of the selected item
 procedure TFormRoomFilter.UpdateInfo(AItemImage: TItemImage);
 var
   wIndex1, wIndex2: Integer;
+  wNow: TDateTime;
+  wDays: Integer;
+  wHours: Integer;
+  wMinutes: Integer;
 begin
   if FCurrentItem = AItemImage then Exit;
   InitInfo;
@@ -343,8 +374,8 @@ begin
     ImgItem.Assign(AItemImage);
     ImgItem.Visible := True;
     LbDesc.Caption := ItemDesc;
-    LbSheet.Caption := Format('(%s)', [ItemName]);
-    LbQuality.Caption := 'Q' + IntToStr(ItemQuality);
+//    LbSheet.Caption := Format('(%s)', [ItemName]);
+//    LbQuality.Caption := 'Q' + IntToStr(ItemQuality);
     LbVolume.Caption := FormatFloat('####0.##', ItemVolume);
     if (ItemType = itAnimalMat) or (ItemType = itNaturalMat) then begin
       if Pos('m0312', ItemName) = 1 then begin {larva}
@@ -367,8 +398,22 @@ begin
     if ItemStb > 0 then LbStb.Caption := IntToStr(ItemStb);
     if ItemFob > 0 then LbFob.Caption := IntToStr(ItemFob);
 
-    // Skin image
-    case ItemSkin of
+    // Sale
+    if ItemPrice > 0 then begin
+      LbContinent.Caption := ItemContinent;
+      LbPrice.Caption := IntToStr(ItemPrice);
+      wNow := Now;
+      wDays := DaysBetween(wNow, ItemTime);
+      wNow := IncDay(wNow, wDays);
+      wHours := HoursBetween(wNow, ItemTime);
+      wNow := IncHour(wNow, wHours);
+      wMinutes := MinutesBetween(wNow, ItemTime);
+      LbTime.Caption := Format('%d %s, %d %s %s %d %s',
+        [wDays, RS_TIME_DAYS, wHours, RS_TIME_HOURS, RS_TIME_AND, wMinutes, RS_TIME_MINUTES]);
+    end;
+
+     // Skin image
+     case ItemSkin of
       isSkin1: ImgSkin1.Visible := True;
       isSkin2: begin
         ImgSkin1.Visible := True;
@@ -379,7 +424,7 @@ begin
         ImgSkin2.Visible := True;
         ImgSkin3.Visible := True;
       end;
-    end;
+     end;
   end;
 end;
 
@@ -389,11 +434,10 @@ Initialize info
 procedure TFormRoomFilter.InitInfo;
 begin
   FCurrentItem := nil;
+  ImgItem.Visible := False;
   ImgSkin1.Visible := False;
   ImgSkin2.Visible := False;
   ImgSkin3.Visible := False;
-  ImgItem.Visible := False;
-  LbQuality.Caption := '-';
   LbClass.Caption := '-';
   LbHpb.Caption := '-';
   LbSab.Caption := '-';
@@ -403,7 +447,9 @@ begin
   LbDesc.Caption := '-';
   LbCraft.Caption := '-';
   LbVolume.Caption := '-';
-  LbSheet.Caption := '-';
+  LbPrice.Caption := '-';
+  LbTime.Caption := '-';
+  LbContinent.Caption := '-';
 end;
 
 end.

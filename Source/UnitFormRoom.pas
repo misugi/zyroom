@@ -109,7 +109,7 @@ begin
   if Sender is TItemImage then begin
     FormRoomFilter.UpdateInfo(TItemImage(Sender));
   end else begin
-    FormRoomFilter.InitInfo;
+    FormRoomFilter.PageControl.TabIndex := 1;
   end;
 end;
 

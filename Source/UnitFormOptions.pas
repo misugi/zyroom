@@ -90,6 +90,7 @@ Creates the form
 procedure TFormOptions.FormCreate(Sender: TObject);
 begin
   LoadConfig;
+  LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
 end;
 
 {*******************************************************************************
@@ -242,6 +243,9 @@ begin
   TranslateComponent(FormRoomFilter);
   TranslateComponent(FormInvent);
   FormInvent.UpdateTabNames;
+  FormCharacter.UpdateLanguage;
+  FormGuild.UpdateLanguage;
+  FormRoomFilter.UpdateLanguage;
 
   // Color of the interface
   FormOptions.Color := GConfig.InterfaceColor;

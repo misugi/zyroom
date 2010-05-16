@@ -120,7 +120,7 @@ begin
   if Sender is TItemImage then begin
     FormRoomFilter.UpdateInfo(TItemImage(Sender));
   end else begin
-    FormRoomFilter.InitInfo;
+    FormRoomFilter.PageControl.TabIndex := 1;
   end;
 end;
 
@@ -146,7 +146,7 @@ Tab change
 *******************************************************************************}
 procedure TFormInvent.TabInventChange(Sender: TObject);
 begin
-  UpdateRoom
+  UpdateRoom;
 end;
 
 {*******************************************************************************
@@ -182,13 +182,16 @@ begin
     if TabInvent.TabIndex = 1 then
       wMaxVolume := '/300' // bag
     else
-      if FMountID < 2 then
-        wMaxVolume := '/?' // mount unfound
+      if TabInvent.TabIndex = 6 then
+        wMaxVolume := '' // sales
       else
-        if TabInvent.TabIndex = FMountID then
-          wMaxVolume := '/100' // mount
+        if FMountID < 2 then
+          wMaxVolume := '/?' // mount unfound
         else
-          wMaxVolume := '/500'; // pack
+          if TabInvent.TabIndex = FMountID then
+            wMaxVolume := '/100' // mount
+          else
+            wMaxVolume := '/500'; // pack
 
   LbCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
   LbVolume.Caption :=  FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
@@ -201,7 +204,7 @@ procedure TFormInvent.UpdateTabNames;
 var
   i: Integer;
 begin
-  for i := 2 to TabInvent.Tabs.Count - 1 do begin
+  for i := 2 to 5 do begin // animals
     if i = FMountID then begin
       TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_MOUNT, i-1]);
     end else begin
