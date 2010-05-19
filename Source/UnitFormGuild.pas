@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils;
+  LcUnit, StrUtils, Buttons;
 
 resourcestring
   RS_NEW_GUILD = 'Nouvelle guilde';
@@ -52,8 +52,8 @@ type
     BtUpdate: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
-    ImgUp: TImage;
-    ImgDown: TImage;
+    BtDown: TSpeedButton;
+    BtUp: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure GridGuildDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -70,14 +70,15 @@ type
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure GridGuildDblClick(Sender: TObject);
-    procedure ImgDownClick(Sender: TObject);
-    procedure ImgUpClick(Sender: TObject);
+    procedure BtDownClick(Sender: TObject);
+    procedure BtUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
     procedure UpdateGuild(AAuto: Boolean);
+    procedure MoveRow(AIndex: Integer);
   public
     procedure UpdateLanguage;
   end;
@@ -339,8 +340,8 @@ procedure TFormGuild.GridGuildSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   if ARow = 0 then CanSelect := False;
-  ImgUp.Visible := ARow > 1;
-  ImgDown.Visible := ARow < GridGuild.RowCount - 1;
+  BtUp.Enabled := ARow > 1;
+  BtDown.Enabled := ARow < GridGuild.RowCount - 1;
 end;
 
 {*******************************************************************************
@@ -446,8 +447,8 @@ begin
   GridGuild.Cells[1, 0] := RS_COL_GUILD_NAME;
   GridGuild.Cells[2, 0] := RS_COL_COMMENT;
   GridGuild.Cells[3, 0] := RS_COL_GUILD_NUMBER;
-  ImgUp.Hint := RS_UP;
-  ImgDown.Hint := RS_DOWN;
+  BtUp.Hint := RS_UP;
+  BtDown.Hint := RS_DOWN;
 end;
 
 {*******************************************************************************
@@ -515,39 +516,36 @@ begin
 end;
 
 {*******************************************************************************
-Down
+Up/Down
 *******************************************************************************}
-procedure TFormGuild.ImgDownClick(Sender: TObject);
+procedure TFormGuild.MoveRow(AIndex: Integer);
 var
   wRow: Integer;
-  wGuildID1: String;
-  wGuildID2: String;
+  wID1, wID2: String;
 begin
   wRow := GridGuild.Row;
-  wGuildID1 := GridGuild.Cells[3, wRow];
-  wGuildID2 := GridGuild.Cells[3, wRow + 1];
-  GGuild.SetIndex(wGuildID1, wRow + 1);
-  GGuild.SetIndex(wGuildID2, wRow);
+  wID1 := GridGuild.Cells[3, wRow];
+  wID2 := GridGuild.Cells[3, wRow + AIndex];
+  GGuild.SetIndex(wID1, wRow + AIndex);
+  GGuild.SetIndex(wID2, wRow);
   LoadGrid;
-  GridGuild.Row := wRow + 1;
+  GridGuild.Row := wRow + AIndex;
+end;
+
+{*******************************************************************************
+Down
+*******************************************************************************}
+procedure TFormGuild.BtDownClick(Sender: TObject);
+begin
+  MoveRow(+1);
 end;
 
 {*******************************************************************************
 Up
 *******************************************************************************}
-procedure TFormGuild.ImgUpClick(Sender: TObject);
-var
-  wRow: Integer;
-  wGuildID1: String;
-  wGuildID2: String;
+procedure TFormGuild.BtUpClick(Sender: TObject);
 begin
-  wRow := GridGuild.Row;
-  wGuildID1 := GridGuild.Cells[3, wRow];
-  wGuildID2 := GridGuild.Cells[3, wRow - 1];
-  GGuild.SetIndex(wGuildID1, wRow - 1);
-  GGuild.SetIndex(wGuildID2, wRow);
-  LoadGrid;
-  GridGuild.Row := wRow - 1;
+  MoveRow(-1);
 end;
 
 end.

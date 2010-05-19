@@ -1,8 +1,8 @@
 object FormRoomFilter: TFormRoomFilter
   Left = 340
   Top = 184
-  Width = 322
-  Height = 503
+  Width = 325
+  Height = 506
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object FormRoomFilter: TFormRoomFilter
     Left = 0
     Top = 0
     Width = 280
-    Height = 465
+    Height = 468
     ActivePage = TabFilter
     Align = alLeft
     TabOrder = 0

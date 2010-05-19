@@ -28,14 +28,19 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, UnitRyzom, UnitConfig, pngimage, RyzomApi,
-  ShellApi, regexpr;
+  ShellApi, regexpr, ComCtrls, XpDOM;
 
 resourcestring
   RS_STATUS_CLOSED = 'Fermé';
   RS_STATUS_OPEN = 'Ouvert';
   RS_STATUS_RESTRICTED = 'Limité';
   RS_NEW_VERSION = 'Nouvelle version disponible !';
-  
+  RS_SEASON_SPRING = 'Printemps';
+  RS_SEASON_SUMMER = 'Eté';
+  RS_SEASON_AUTUMN = 'Automne';
+  RS_SEASON_WINTER = 'Hiver';
+  RS_VERSION = 'Version';
+
 type
   TFormMain = class(TForm)
     PnContainer: TPanel;
@@ -43,7 +48,6 @@ type
     PnHeader: TPanel;
     ImgAniro: TImage;
     LbAniro: TLabel;
-    LbTime: TLabel;
     ImgLeanon: TImage;
     LbLeanon: TLabel;
     ImgArispotle: TImage;
@@ -51,8 +55,9 @@ type
     BtOptions: TButton;
     BtGuild: TButton;
     BtCharacter: TButton;
-    ImgUpdate: TImage;
     TimerUpdate: TTimer;
+    StatusBar: TStatusBar;
+    ImgUpdate: TImage;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -74,6 +79,7 @@ type
     FFileUrl: String;
 
     procedure UpdateStatusAndTime(AOnlyTime: Boolean);
+    procedure GetSeasonInfo(AServerID: String);
   public
     procedure ShowMenuForm(AForm: TForm);
   end;
@@ -84,7 +90,7 @@ var
 implementation
 
 uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
-  UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter;
+  UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter, DateUtils;
 
 {$R *.dfm}
 
@@ -129,6 +135,7 @@ begin
   FServerLabelSelected.Font.Style := [fsBold];
   FServerLabelSelected.Cursor := crDefault;
   FServerLabelSelected.OnClick := nil;
+  StatusBar.Panels.Items[0].Text := FServerLabelSelected.Caption;
 
   // Prepare all the project forms
   FormHome.BorderStyle := bsNone;
@@ -164,6 +171,8 @@ begin
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
 
   // Check version
+  Self.Caption := 'zyRoom by Misugi';
+  StatusBar.Panels.Items[5].Text := RS_VERSION + ' ' + GConfig.Version + '   ';
   ImgUpdate.Hint := RS_NEW_VERSION;
   if GConfig.CheckVersion(FFileUrl) then begin
     ImgUpdate.Visible := True;
@@ -285,12 +294,13 @@ begin
       if FServerLabelSelected = LbArispotle then wServerID := _SHARD_ARIPOTLE_ID;
    
       GRyzomApi.ApiTime(wServerID, _FORMAT_TXT, wStream);
-      LbTime.Caption := wStream.DataString;
+      StatusBar.Panels.Items[1].Text := wStream.DataString;
+      GetSeasonInfo(wServerID);
     finally
       wStream.Free;
     end;
   except
-    LbTime.Caption := '-';
+    StatusBar.Panels.Items[1].Text := '-';
   end;
 end;
 
@@ -338,6 +348,7 @@ begin
   FServerLabelSelected.Font.Style := [fsBold];
   FServerLabelSelected.Cursor := crDefault;
   FServerLabelSelected.OnClick := nil;
+  StatusBar.Panels.Items[0].Text := FServerLabelSelected.Caption;
 
   // Update only the time
   UpdateStatusAndTime(True);
@@ -371,6 +382,53 @@ begin
   Application.ProcessMessages;
   Sleep(200);
   ImgUpdate.Visible := True;
+end;
+
+{*******************************************************************************
+Get season information
+*******************************************************************************}
+procedure TFormMain.GetSeasonInfo(AServerID: String);
+var
+  wStream: TMemoryStream;
+  wXmlDoc: TXpObjModel;
+  wSeasonIndex: Integer;
+  wSeason: String;
+  wDayOfSeason: Integer;
+  wTimeOfDay: Integer;
+  wDays, wHours, wMinutes: Integer;
+  wNextSeason: TDateTime;
+begin
+  wStream := TMemoryStream.Create;
+  wXmlDoc := TXpObjModel.Create(nil);
+  try
+    GRyzomApi.ApiTime(AServerID, _FORMAT_XML, wStream);
+    wXmlDoc.LoadStream(wStream);
+    wSeasonIndex := StrToIntDef(wXmlDoc.DocumentElement.SelectString('/shard_time/season'), -1);
+    case wSeasonIndex of
+      0: wSeason := RS_SEASON_SPRING;
+      1: wSeason := RS_SEASON_SUMMER;
+      2: wSeason := RS_SEASON_AUTUMN;
+      3: wSeason := RS_SEASON_WINTER;
+    else
+      wSeason := '-';
+    end;
+    StatusBar.Panels.Items[2].Text := wSeason;
+
+    // Calculation of next season
+    wDayOfSeason := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/day_of_season'));
+    wTimeOfDay := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/time_of_day'));
+    wMinutes := ( (89-wDayOfSeason)*24 + (23-wTimeOfDay) )*3;
+    wDays := wMinutes div 1440;
+    wMinutes := wMinutes - (wDays*1440);
+    wHours := wMinutes div 60;
+    wMinutes := wMinutes - (wHours*60);
+    StatusBar.Panels.Items[3].Text := Format('%d''%.2d:%.2d', [wDays, wHours, wMinutes]);
+    wNextSeason := IncDay(IncHour(IncMinute(Now, wMinutes), wHours), wDays);
+    StatusBar.Panels.Items[4].Text := DateTimeToStr(wNextSeason);
+  finally
+    wXmlDoc.Free;
+    wStream.Free;
+  end;
 end;
 
 end.

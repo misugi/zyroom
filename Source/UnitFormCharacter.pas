@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils;
+  LcUnit, StrUtils, ComCtrls, Buttons;
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
@@ -57,8 +57,8 @@ type
     BtUpdate: TButton;
     BtDelete: TButton;
     BtRoom: TButton;
-    ImgDown: TImage;
-    ImgUp: TImage;
+    BtDown: TSpeedButton;
+    BtUp: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -76,8 +76,8 @@ type
     procedure FormResize(Sender: TObject);
     procedure GridCharDblClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ImgDownClick(Sender: TObject);
-    procedure ImgUpClick(Sender: TObject);
+    procedure BtDownClick(Sender: TObject);
+    procedure BtUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
     procedure LoadGrid;
@@ -85,6 +85,7 @@ type
     procedure ShowRoom;
     procedure GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
     procedure UpdateCharacter(AAuto: Boolean);
+    procedure MoveRow(AIndex: Integer);
   public
     procedure UpdateLanguage;
   end;
@@ -363,8 +364,8 @@ procedure TFormCharacter.GridCharSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   if ARow = 0 then CanSelect := False;
-  ImgUp.Visible := ARow > 1;
-  ImgDown.Visible := ARow < GridChar.RowCount - 1;
+  BtUp.Enabled := ARow > 1;
+  BtDown.Enabled := ARow < GridChar.RowCount - 1;
 end;
 
 {*******************************************************************************
@@ -524,8 +525,8 @@ begin
   GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
   GridChar.Cells[2, 0] := RS_CHAR_COL_COMMENT;
   GridChar.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
-  ImgUp.Hint := RS_UP;
-  ImgDown.Hint := RS_DOWN;
+  BtUp.Hint := RS_UP;
+  BtDown.Hint := RS_DOWN;
 end;
 
 {*******************************************************************************
@@ -614,39 +615,36 @@ begin
 end;
 
 {*******************************************************************************
-Down
+Up/Down
 *******************************************************************************}
-procedure TFormCharacter.ImgDownClick(Sender: TObject);
+procedure TFormCharacter.MoveRow(AIndex: Integer);
 var
   wRow: Integer;
-  wCharID1: String;
-  wCharID2: String;
+  wID1, wID2: String;
 begin
   wRow := GridChar.Row;
-  wCharID1 := GridChar.Cells[3, wRow];
-  wCharID2 := GridChar.Cells[3, wRow + 1];
-  GCharacter.SetIndex(wCharID1, wRow + 1);
-  GCharacter.SetIndex(wCharID2, wRow);
+  wID1 := GridChar.Cells[3, wRow];
+  wID2 := GridChar.Cells[3, wRow + AIndex];
+  GCharacter.SetIndex(wID1, wRow + AIndex);
+  GCharacter.SetIndex(wID2, wRow);
   LoadGrid;
-  GridChar.Row := wRow + 1;
+  GridChar.Row := wRow + AIndex;
+end;
+
+{*******************************************************************************
+Down
+*******************************************************************************}
+procedure TFormCharacter.BtDownClick(Sender: TObject);
+begin
+  MoveRow(+1);
 end;
 
 {*******************************************************************************
 Up
 *******************************************************************************}
-procedure TFormCharacter.ImgUpClick(Sender: TObject);
-var
-  wRow: Integer;
-  wCharID1: String;
-  wCharID2: String;
+procedure TFormCharacter.BtUpClick(Sender: TObject);
 begin
-  wRow := GridChar.Row;
-  wCharID1 := GridChar.Cells[3, wRow];
-  wCharID2 := GridChar.Cells[3, wRow - 1];
-  GCharacter.SetIndex(wCharID1, wRow - 1);
-  GCharacter.SetIndex(wCharID2, wRow);
-  LoadGrid;
-  GridChar.Row := wRow - 1;
+  MoveRow(-1);
 end;
 
 end.

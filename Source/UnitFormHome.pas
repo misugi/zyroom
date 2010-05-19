@@ -28,9 +28,6 @@ interface
 uses
   Controls, Forms, StdCtrls, pngimage, Classes, ExtCtrls, ShellAPI, Windows;
 
-resourcestring
-  RS_VERSION = 'Version';
-
 const
   _URL_CONTEST_SITE = 'http://dev.ryzom.com/projects/ryzom-api/wiki/Contest';
   _URL_PROJECT_SITE = 'http://zyroom.misulud.fr';

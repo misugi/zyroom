@@ -95,7 +95,7 @@ type
     ItemStb: Integer;
     ItemFob: Integer;
     ItemVolume: Double;
-    ItemPrice: Integer;
+    ItemPrice: Double;
     ItemContinent: String;
     ItemTime: TDateTime;
   end;
@@ -244,7 +244,7 @@ begin
 
   // Price
   wNode := ANode.Attributes.GetNamedItem('price');
-  if Assigned(wNode) then AItemInfo.ItemPrice := StrToInt(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemPrice := StrToFloat(wNode.NodeValue);
 
   // Since
   wNode := ANode.Attributes.GetNamedItem('in_sell_since');

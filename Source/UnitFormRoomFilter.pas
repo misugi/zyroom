@@ -42,10 +42,6 @@ resourcestring
   RS_TIME = 'Temps restant';
   RS_CLASS = 'Classe';
   RS_CONTINENT = 'Continent';
-  RS_TIME_DAYS = 'jours';
-  RS_TIME_HOURS = 'heures';
-  RS_TIME_MINUTES = 'minutes';
-  RS_TIME_AND = 'et';
   RS_CRAFT = 'Composant pour l''artisanat';
 
 type
@@ -401,15 +397,14 @@ begin
     // Sale
     if ItemPrice > 0 then begin
       LbContinent.Caption := ItemContinent;
-      LbPrice.Caption := IntToStr(ItemPrice);
+      LbPrice.Caption := FormatFloat('###,###,###,##0', ItemPrice);
       wNow := Now;
       wDays := DaysBetween(wNow, ItemTime);
       wNow := IncDay(wNow, wDays);
       wHours := HoursBetween(wNow, ItemTime);
       wNow := IncHour(wNow, wHours);
       wMinutes := MinutesBetween(wNow, ItemTime);
-      LbTime.Caption := Format('%d %s, %d %s %s %d %s',
-        [wDays, RS_TIME_DAYS, wHours, RS_TIME_HOURS, RS_TIME_AND, wMinutes, RS_TIME_MINUTES]);
+      LbTime.Caption := Format('%d''%.2d:%.2d', [wDays, wHours, wMinutes]);
     end;
 
      // Skin image

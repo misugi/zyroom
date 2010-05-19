@@ -859,11 +859,14 @@ var
   wStream: TStringStream;
 begin
   Result := False;
-  wStream := TStringStream.Create('');
-  GRyzomApi.SendRequest('http://zyroom.misulud.fr/version/version.txt', wStream);
-  if FVersion <> wStream.DataString then begin
-    AFileUrl := Format('http://zyroom.misulud.fr/version/zyroom-%s.zip', [wStream.DataString]);
-    Result := True;
+  try
+    wStream := TStringStream.Create('');
+    GRyzomApi.SendRequest('http://zyroom.misulud.fr/version/version.txt', wStream);
+    if FVersion <> wStream.DataString then begin
+      AFileUrl := Format('http://zyroom.misulud.fr/version/zyroom-%s.zip', [wStream.DataString]);
+      Result := True;
+    end;
+  except
   end;
 end;
 
