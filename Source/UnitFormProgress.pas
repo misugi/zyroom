@@ -489,10 +489,12 @@ Returns a sorting prefix
 function TFormProgress.GetSortPrefix(AItemInfo: TItemInfo): String;
 begin
   // Sales
+(*
   if AItemInfo.ItemPrice > 0 then begin
     Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
     Exit;
   end;
+*)
 
   // Else
   case AItemInfo.ItemType of
@@ -522,8 +524,7 @@ begin
       end;
     end;
     itNaturalMat, itAnimalMat: begin
-      Result := '10' + Format('%2.2d', [Min(AnsiIndexText(AItemInfo.ItemCategory1, _ITEM_CATEGORY),
-                                                 AnsiIndexText(AItemInfo.ItemCategory2, _ITEM_CATEGORY))]);
+      Result := '10' + Format('%.2d', [AItemInfo.ItemCategory1]);
       if Pos('m0312', AItemInfo.ItemName) = 1 then Result := '1099'; {larva}
     end;
     itTool: Result := '14';

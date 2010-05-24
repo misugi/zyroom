@@ -242,7 +242,7 @@ begin
   TranslateComponent(FormCharacter);
   TranslateComponent(FormRoomFilter);
   TranslateComponent(FormInvent);
-  FormInvent.UpdateTabNames;
+  FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;
   FormGuild.UpdateLanguage;
   FormRoomFilter.UpdateLanguage;

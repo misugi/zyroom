@@ -35,8 +35,8 @@ type
     PnFilter: TPanel;
     GuildRoom: TScrollRoom;
     Panel1: TPanel;
-    LbGuildName: TLabel;
-    LbVolume: TLabel;
+    LbValueGuildName: TLabel;
+    LbValueVolume: TLabel;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -50,6 +50,7 @@ type
     procedure GuildRoomResize(Sender: TObject);
   private
   public
+    procedure UpdateRoom;
   end;
 
 var
@@ -108,8 +109,6 @@ procedure TFormRoom.GuildRoomMouseMove(Sender: TObject;
 begin
   if Sender is TItemImage then begin
     FormRoomFilter.UpdateInfo(TItemImage(Sender));
-  end else begin
-    FormRoomFilter.PageControl.TabIndex := 1;
   end;
 end;
 
@@ -136,6 +135,19 @@ Adjust items in the scroll box
 procedure TFormRoom.GuildRoomResize(Sender: TObject);
 begin
   GuildRoom.Adjust;
+end;
+
+{*******************************************************************************
+Hall
+*******************************************************************************}
+procedure TFormRoom.UpdateRoom;
+var
+  wGuildID: String;
+begin
+  wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
+  FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  LbValueGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
+  LbValueVolume.Caption := RS_VOLUME + ' : ' + FormatFloat('####0.##',FormProgress.TotalVolume) + '/10000';
 end;
 
 end.

@@ -8,14 +8,14 @@ object FormInvent: TFormInvent
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object PnFilter: TPanel
     Left = 0
     Top = 0
@@ -23,7 +23,13 @@ object FormInvent: TFormInvent
     Height = 402
     Align = alLeft
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 0
   end
   object PnInvent: TPanel
@@ -33,7 +39,13 @@ object FormInvent: TFormInvent
     Height = 402
     Align = alClient
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 1
     object TabInvent: TTabControl
       Left = 0
@@ -51,12 +63,13 @@ object FormInvent: TFormInvent
         'Animal 4'
         'Ventes')
       TabIndex = 0
+      TabStop = False
       OnChange = TabInventChange
       object CharInvent: TScrollRoom
         Left = 4
-        Top = 24
+        Top = 25
         Width = 416
-        Height = 353
+        Height = 352
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
         VertScrollBar.Tracking = True
@@ -88,10 +101,10 @@ object FormInvent: TFormInvent
       DesignSize = (
         424
         21)
-      object LbCharName: TLabel
+      object LbValueCharName: TLabel
         Left = 2
         Top = 0
-        Width = 278
+        Width = 243
         Height = 16
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -99,16 +112,15 @@ object FormInvent: TFormInvent
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object LbVolume: TLabel
-        Left = 282
-        Top = 0
-        Width = 136
+      object LbValueVolume: TLabel
+        Left = 243
+        Top = 5
+        Width = 180
         Height = 16
-        Hint = 'Volume'
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
@@ -116,11 +128,11 @@ object FormInvent: TFormInvent
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         ParentShowHint = False
-        ShowHint = True
+        ShowHint = False
       end
     end
   end

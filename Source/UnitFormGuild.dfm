@@ -8,14 +8,14 @@ object FormGuild: TFormGuild
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object GridGuild: TStringGrid
     Left = 0
     Top = 28
@@ -28,7 +28,13 @@ object FormGuild: TFormGuild
     DefaultDrawing = False
     FixedCols = 0
     RowCount = 2
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
+    ParentFont = False
     TabOrder = 0
     OnDblClick = GridGuildDblClick
     OnDrawCell = GridGuildDrawCell
@@ -47,7 +53,13 @@ object FormGuild: TFormGuild
     Height = 28
     Align = alTop
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 1
     object BtDown: TSpeedButton
       Left = 332

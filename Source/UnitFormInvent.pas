@@ -40,8 +40,8 @@ type
     TabInvent: TTabControl;
     CharInvent: TScrollRoom;
     Panel1: TPanel;
-    LbCharName: TLabel;
-    LbVolume: TLabel;
+    LbValueCharName: TLabel;
+    LbValueVolume: TLabel;
     procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -59,7 +59,7 @@ type
     procedure SetFMountID(const Value: Integer);
   public
     procedure UpdateRoom;
-    procedure UpdateTabNames;
+    procedure UpdateLanguage;
     property MountID: Integer read FMountID write SetFMountID;
   end;
 
@@ -79,6 +79,8 @@ Creates the form
 procedure TFormInvent.FormCreate(Sender: TObject);
 begin
   CharInvent.DoubleBuffered := True;
+  TabInvent.DoubleBuffered := True;
+  DoubleBuffered := True;
 end;
 
 {*******************************************************************************
@@ -88,7 +90,7 @@ procedure TFormInvent.FormShow(Sender: TObject);
 begin
   FormRoomFilter.Parent := PnFilter;
   FormRoomFilter.Show;
-  UpdateTabNames;
+  UpdateLanguage;
 end;
 
 {*******************************************************************************
@@ -119,8 +121,6 @@ procedure TFormInvent.CharInventMouseMove(Sender: TObject;
 begin
   if Sender is TItemImage then begin
     FormRoomFilter.UpdateInfo(TItemImage(Sender));
-  end else begin
-    FormRoomFilter.PageControl.TabIndex := 1;
   end;
 end;
 
@@ -186,21 +186,21 @@ begin
         wMaxVolume := '' // sales
       else
         if FMountID < 2 then
-          wMaxVolume := '/?' // mount unfound
+          wMaxVolume := '/-' // mount unfound
         else
           if TabInvent.TabIndex = FMountID then
             wMaxVolume := '/100' // mount
           else
             wMaxVolume := '/500'; // pack
 
-  LbCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
-  LbVolume.Caption :=  FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
+  LbValueCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
+  LbValueVolume.Caption := RS_VOLUME + ' : ' + FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
 end;
 
 {*******************************************************************************
 Updates names of tab
 *******************************************************************************}
-procedure TFormInvent.UpdateTabNames;
+procedure TFormInvent.UpdateLanguage;
 var
   i: Integer;
 begin

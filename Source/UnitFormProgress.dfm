@@ -9,7 +9,7 @@ object FormProgress: TFormProgress
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -18,7 +18,7 @@ object FormProgress: TFormProgress
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object LbProgress: TLabel
     Left = 4
     Top = 5
@@ -29,7 +29,7 @@ object FormProgress: TFormProgress
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
   end
@@ -52,7 +52,13 @@ object FormProgress: TFormProgress
     Height = 23
     Cancel = True
     Caption = 'Annuler'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ModalResult = 2
+    ParentFont = False
     TabOrder = 1
   end
   object TimerStart: TTimer

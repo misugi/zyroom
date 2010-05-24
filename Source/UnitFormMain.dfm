@@ -10,7 +10,7 @@ object FormMain: TFormMain
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
@@ -19,7 +19,7 @@ object FormMain: TFormMain
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object PnContainer: TPanel
     Left = 0
     Top = 28
@@ -28,7 +28,13 @@ object FormMain: TFormMain
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 5
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 0
   end
   object PnHeader: TPanel
@@ -38,7 +44,13 @@ object FormMain: TFormMain
     Height = 28
     Align = alTop
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 1
     DesignSize = (
       746
@@ -86,15 +98,15 @@ object FormMain: TFormMain
     object LbAniro: TLabel
       Left = 559
       Top = 8
-      Width = 24
-      Height = 13
+      Width = 26
+      Height = 14
       Cursor = crHandPoint
       Anchors = [akTop, akRight]
       Caption = 'Aniro'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
-      Font.Name = 'MS Sans Serif'
+      Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
       OnClick = LbServerClick
@@ -143,14 +155,14 @@ object FormMain: TFormMain
       Left = 618
       Top = 8
       Width = 36
-      Height = 13
+      Height = 14
       Cursor = crHandPoint
       Anchors = [akTop, akRight]
       Caption = 'Leanon'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
-      Font.Name = 'MS Sans Serif'
+      Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
       OnClick = LbServerClick
@@ -198,15 +210,15 @@ object FormMain: TFormMain
     object LbArispotle: TLabel
       Left = 691
       Top = 8
-      Width = 40
-      Height = 13
+      Width = 43
+      Height = 14
       Cursor = crHandPoint
       Anchors = [akTop, akRight]
       Caption = 'Arispotle'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
-      Font.Name = 'MS Sans Serif'
+      Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
       OnClick = LbServerClick
@@ -266,6 +278,12 @@ object FormMain: TFormMain
       Width = 75
       Height = 23
       Caption = 'Options'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 0
       OnClick = BtOptionsClick
     end
@@ -284,6 +302,12 @@ object FormMain: TFormMain
       Width = 94
       Height = 23
       Caption = 'Personnages'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
       ParentShowHint = False
       ShowHint = False
       TabOrder = 2
@@ -299,31 +323,26 @@ object FormMain: TFormMain
       item
         Alignment = taCenter
         Text = 'Arispotle'
-        Width = 70
-      end
-      item
-        Alignment = taCenter
-        Text = '20h - Quinteth, Germinally 30, 4e CA 2546'
-        Width = 250
-      end
-      item
-        Alignment = taCenter
-        Text = 'Printemps'
-        Width = 80
-      end
-      item
-        Alignment = taCenter
-        Text = '3'#39'23:46'
         Width = 60
       end
       item
         Alignment = taCenter
-        Text = '24/05/2010 12:56'
-        Width = 130
+        Text = '20h - Quinteth, Germinally 30, 4e CA 2546'
+        Width = 235
+      end
+      item
+        Alignment = taCenter
+        Text = 'Printemps'
+        Width = 70
+      end
+      item
+        Alignment = taCenter
+        Text = 'Prochain changement de saison le 24/05/2010 '#224' 12:56'
+        Width = 305
       end
       item
         Alignment = taRightJustify
-        Text = 'Version 1.7.0   '
+        Text = 'Version 2.7.0'
         Width = 50
       end>
     ParentColor = True

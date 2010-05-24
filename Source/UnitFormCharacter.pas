@@ -135,6 +135,7 @@ begin
       Font.Size := 8;
       Font.Color := clBlack;
       Font.Style := [];
+      Font.Name := 'Arial';
       Rect.Left := Rect.Left + 2;
       DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
               DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
@@ -153,7 +154,7 @@ begin
 
       // Font color
       If gdSelected In State
-        Then Font.Color:=clWhite
+        Then Font.Color:=clHighlightText
         Else Font.Color:=clBlack;
 
       // Name

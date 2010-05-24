@@ -41,6 +41,7 @@ uses
   UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter};
 
 {$R *.res}
+{$R cat.res}
 
 begin
   Application.Initialize;

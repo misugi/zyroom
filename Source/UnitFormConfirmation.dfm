@@ -9,7 +9,7 @@ object FormConfirm: TFormConfirm
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -18,7 +18,7 @@ object FormConfirm: TFormConfirm
     350
     71)
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object LbMessage: TLabel
     Left = 5
     Top = 12
@@ -26,6 +26,12 @@ object FormConfirm: TFormConfirm
     Height = 13
     Alignment = taCenter
     AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
   end
   object BtYes: TButton
     Left = 97
@@ -35,7 +41,13 @@ object FormConfirm: TFormConfirm
     Anchors = [akLeft, akBottom]
     Caption = 'Oui'
     Default = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ModalResult = 6
+    ParentFont = False
     TabOrder = 0
   end
   object BtNo: TButton
@@ -46,7 +58,13 @@ object FormConfirm: TFormConfirm
     Anchors = [akLeft, akBottom]
     Cancel = True
     Caption = 'Non'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ModalResult = 7
+    ParentFont = False
     TabOrder = 1
   end
 end

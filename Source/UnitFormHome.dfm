@@ -8,12 +8,12 @@ object FormHome: TFormHome
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object ImgRoom: TImage
     Left = 0
     Top = 0
@@ -13135,7 +13135,7 @@ object FormHome: TFormHome
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
     Transparent = True
@@ -13144,15 +13144,15 @@ object FormHome: TFormHome
     Left = 243
     Top = 164
     Width = 250
-    Height = 13
+    Height = 15
     Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
     Caption = 'Ryzom Summer Coding Contest 2009'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Height = -12
+    Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
@@ -13171,7 +13171,7 @@ object FormHome: TFormHome
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
     Transparent = True
@@ -13180,14 +13180,14 @@ object FormHome: TFormHome
     Left = 243
     Top = 205
     Width = 250
-    Height = 13
+    Height = 15
     Alignment = taCenter
     AutoSize = False
     Caption = 'Misugi'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Height = -12
+    Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
     Transparent = True
@@ -13203,7 +13203,7 @@ object FormHome: TFormHome
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
     Transparent = True
@@ -13212,15 +13212,15 @@ object FormHome: TFormHome
     Left = 243
     Top = 245
     Width = 250
-    Height = 13
+    Height = 15
     Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
     Caption = 'http://zyroom.misulud.fr'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Height = -12
+    Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
@@ -13506,23 +13506,23 @@ object FormHome: TFormHome
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
     Transparent = True
   end
-  object LbVersionNum: TLabel
+  object LbValueVersion: TLabel
     Left = 243
     Top = 283
     Width = 250
-    Height = 13
+    Height = 15
     Alignment = taCenter
     AutoSize = False
     Caption = '-'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Height = -12
+    Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False

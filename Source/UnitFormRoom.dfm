@@ -8,14 +8,14 @@ object FormRoom: TFormRoom
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object PnRoom: TPanel
     Left = 285
     Top = 0
@@ -23,7 +23,13 @@ object FormRoom: TFormRoom
     Height = 387
     Align = alClient
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 0
     object GuildRoom: TScrollRoom
       Left = 0
@@ -60,10 +66,10 @@ object FormRoom: TFormRoom
       DesignSize = (
         407
         21)
-      object LbGuildName: TLabel
+      object LbValueGuildName: TLabel
         Left = 2
         Top = 0
-        Width = 261
+        Width = 223
         Height = 16
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -71,16 +77,15 @@ object FormRoom: TFormRoom
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object LbVolume: TLabel
-        Left = 265
-        Top = 0
-        Width = 136
+      object LbValueVolume: TLabel
+        Left = 226
+        Top = 5
+        Width = 180
         Height = 16
-        Hint = 'Volume'
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
@@ -88,11 +93,11 @@ object FormRoom: TFormRoom
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         ParentShowHint = False
-        ShowHint = True
+        ShowHint = False
       end
     end
   end
@@ -103,7 +108,13 @@ object FormRoom: TFormRoom
     Height = 387
     Align = alLeft
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 1
   end
 end

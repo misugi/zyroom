@@ -45,7 +45,7 @@ type
     LbProjectWebsite: TLabel;
     ImgRyzom: TImage;
     LbVersion: TLabel;
-    LbVersionNum: TLabel;
+    LbValueVersion: TLabel;
     ImgAgpl: TImage;
     procedure LbContestClick(Sender: TObject);
     procedure LbProjectWebsiteClick(Sender: TObject);
@@ -74,7 +74,7 @@ begin
   ImgAgpl.Hint := _URL_AGPL;
   LbProjectWebsite.Hint := _URL_PROJECT_SITE;
   LbContest.Hint := _URL_CONTEST_SITE;
-  LbVersionNum.Caption := GConfig.Version;
+  LbValueVersion.Caption := GConfig.Version;
 end;
 
 {*******************************************************************************

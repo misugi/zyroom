@@ -8,7 +8,7 @@ object FormGuildEdit: TFormGuildEdit
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -17,13 +17,19 @@ object FormGuildEdit: TFormGuildEdit
     320
     92)
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object LbKey: TLabel
     Left = 8
     Top = 16
-    Width = 95
-    Height = 13
+    Width = 97
+    Height = 14
     Caption = 'Cl'#233' de personnage :'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
   end
   object ImgProfilePage: TImage
     Left = 292
@@ -73,16 +79,28 @@ object FormGuildEdit: TFormGuildEdit
   object LbComment: TLabel
     Left = 8
     Top = 40
-    Width = 67
-    Height = 13
+    Width = 68
+    Height = 14
     Caption = 'Commentaire :'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
   end
   object EdKey: TEdit
     Left = 112
     Top = 12
     Width = 176
-    Height = 21
+    Height = 22
     Anchors = [akLeft, akTop, akRight]
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
   end
   object BtOK: TButton
@@ -93,7 +111,13 @@ object FormGuildEdit: TFormGuildEdit
     Anchors = [akRight, akBottom]
     Caption = 'OK'
     Default = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ModalResult = 1
+    ParentFont = False
     TabOrder = 2
   end
   object BtCancel: TButton
@@ -104,15 +128,27 @@ object FormGuildEdit: TFormGuildEdit
     Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Annuler'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ModalResult = 2
+    ParentFont = False
     TabOrder = 3
   end
   object EdComment: TEdit
     Left = 112
     Top = 36
     Width = 176
-    Height = 21
+    Height = 22
     Anchors = [akLeft, akTop, akRight]
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
   end
 end

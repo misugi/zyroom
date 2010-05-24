@@ -1,6 +1,15 @@
 zyRoom - History of changes
 ===========================
 
+# version 2.0.0 (2010-05-XX)
+New: characteristics of craft materials !!!
+Change: Arial font for the entire application
+Change: traduction of some texts in english and german
+Change: display of the date of the next change of season
+Change: display of the item information
+Fixed: price for items in sale
+Fixed: quantity for items in sale
+
 # version 1.7.1 (2010-05-19)
 New: display the season and the date of the next change !!!
 Change: thousand separator for the item price

@@ -40,6 +40,8 @@ resourcestring
   RS_SEASON_AUTUMN = 'Automne';
   RS_SEASON_WINTER = 'Hiver';
   RS_VERSION = 'Version';
+  RS_NEXT_SEASON = 'Prochain changement de saison le';
+  RS_AT = 'à';
 
 type
   TFormMain = class(TForm)
@@ -99,6 +101,11 @@ Creates the form
 *******************************************************************************}
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  DoubleBuffered := True;
+  StatusBar.DoubleBuffered := True;
+  PnHeader.DoubleBuffered := True;
+  PnContainer.DoubleBuffered := True;
+  
   GConfig := TConfig.Create;
   GRyzomApi := TRyzom.Create;
   GGuild := TGuild.Create;
@@ -172,7 +179,7 @@ begin
 
   // Check version
   Self.Caption := 'zyRoom by Misugi';
-  StatusBar.Panels.Items[5].Text := RS_VERSION + ' ' + GConfig.Version + '   ';
+  StatusBar.Panels.Items[4].Text := RS_VERSION + ' ' + GConfig.Version;
   ImgUpdate.Hint := RS_NEW_VERSION;
   if GConfig.CheckVersion(FFileUrl) then begin
     ImgUpdate.Visible := True;
@@ -301,6 +308,8 @@ begin
     end;
   except
     StatusBar.Panels.Items[1].Text := '-';
+    StatusBar.Panels.Items[2].Text := '-';
+    StatusBar.Panels.Items[3].Text := '-';
   end;
 end;
 
@@ -418,6 +427,10 @@ begin
     wDayOfSeason := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/day_of_season'));
     wTimeOfDay := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/time_of_day'));
     wMinutes := ( (89-wDayOfSeason)*24 + (23-wTimeOfDay) )*3;
+    wNextSeason := IncMinute(Now, wMinutes);
+    StatusBar.Panels.Items[3].Text := Format('%s %s %s %s', [
+      RS_NEXT_SEASON, DateToStr(wNextSeason), RS_AT, FormatDateTime('hh:nn', wNextSeason)]);
+(*
     wDays := wMinutes div 1440;
     wMinutes := wMinutes - (wDays*1440);
     wHours := wMinutes div 60;
@@ -425,6 +438,7 @@ begin
     StatusBar.Panels.Items[3].Text := Format('%d''%.2d:%.2d', [wDays, wHours, wMinutes]);
     wNextSeason := IncDay(IncHour(IncMinute(Now, wMinutes), wHours), wDays);
     StatusBar.Panels.Items[4].Text := DateTimeToStr(wNextSeason);
+*)
   finally
     wXmlDoc.Free;
     wStream.Free;

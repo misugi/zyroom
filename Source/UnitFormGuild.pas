@@ -127,6 +127,7 @@ begin
       Font.Size := 8;
       Font.Color := clBlack;
       Font.Style := [];
+      Font.Name := 'Arial';
       Rect.Left := Rect.Left + 2;
       DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
               DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
@@ -145,7 +146,7 @@ begin
 
       // Font color
       If gdSelected In State
-        Then Font.Color:=clWhite
+        Then Font.Color:=clHighlightText
         Else Font.Color:=clBlack;
 
       // Name
@@ -416,15 +417,10 @@ end;
 Display room
 *******************************************************************************}
 procedure TFormGuild.ShowRoom;
-var
-  wGuildID: String;
 begin
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormMain.ShowMenuForm(FormRoom);
-  wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
-  FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
-  FormRoom.LbGuildName.Caption := GridGuild.Cells[1, GridGuild.Row];
-  FormRoom.LbVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume) + '/10000';
+  FormRoom.UpdateRoom;
 end;
 
 {*******************************************************************************

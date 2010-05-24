@@ -8,7 +8,7 @@ object FormCharacter: TFormCharacter
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Arial'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
@@ -16,7 +16,7 @@ object FormCharacter: TFormCharacter
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object GridChar: TStringGrid
     Left = 0
     Top = 28
@@ -29,7 +29,13 @@ object FormCharacter: TFormCharacter
     DefaultDrawing = False
     FixedCols = 0
     RowCount = 2
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
+    ParentFont = False
     TabOrder = 0
     OnDblClick = GridCharDblClick
     OnDrawCell = GridCharDrawCell
@@ -48,13 +54,24 @@ object FormCharacter: TFormCharacter
     Height = 28
     Align = alTop
     BevelOuter = bvNone
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = []
     ParentColor = True
+    ParentFont = False
     TabOrder = 1
     object BtDown: TSpeedButton
       Left = 332
       Top = 0
       Width = 17
       Height = 23
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
       Glyph.Data = {
         2E030000424D2E0300000000000036000000280000000D000000130000000100
         180000000000F8020000130B0000130B00000000000000000000F0F0F0F0F0F0
@@ -82,6 +99,7 @@ object FormCharacter: TFormCharacter
         F000F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0
         F0F0F0F0F0F0F0F0F000F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0
         F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F000}
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       OnClick = BtDownClick
@@ -91,6 +109,11 @@ object FormCharacter: TFormCharacter
       Top = 0
       Width = 17
       Height = 23
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
       Glyph.Data = {
         2E030000424D2E0300000000000036000000280000000D000000130000000100
         180000000000F8020000130B0000130B00000000000000000000F0F0F0F0F0F0
@@ -118,6 +141,7 @@ object FormCharacter: TFormCharacter
         F000F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0
         F0F0F0F0F0F0F0F0F000F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0
         F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F000}
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       OnClick = BtUpClick
@@ -128,6 +152,12 @@ object FormCharacter: TFormCharacter
       Width = 75
       Height = 23
       Caption = 'Ajouter'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 0
       OnClick = BtNewClick
     end
@@ -138,6 +168,12 @@ object FormCharacter: TFormCharacter
       Height = 23
       Caption = 'Modifier'
       Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 1
       OnClick = BtUpdateClick
     end
@@ -148,6 +184,12 @@ object FormCharacter: TFormCharacter
       Height = 23
       Caption = 'Supprimer'
       Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 2
       OnClick = BtDeleteClick
     end
@@ -158,6 +200,12 @@ object FormCharacter: TFormCharacter
       Height = 23
       Caption = 'Inventaire'
       Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 3
       OnClick = BtRoomClick
     end

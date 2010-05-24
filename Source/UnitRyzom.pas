@@ -28,10 +28,103 @@ interface
 uses
   Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig, StrUtils, DateUtils;
 
+resourcestring
+  RS_SPEC_DURABILITY = 'Durabilité';
+  RS_SPEC_LIGHTNESS = 'Légereté';
+  RS_SPEC_SAPLOAD = 'Charge en sève';
+  RS_SPEC_DAMAGE = 'Dégâts';
+  RS_SPEC_SPEED = 'Vitesse';
+  RS_SPEC_RANGE = 'Portée';
+  RS_SPEC_DODGE_MODIFIER = 'Modif. esquives';
+  RS_SPEC_PARRY_MODIFIER = 'Modif. parades';
+  RS_SPEC_ADV_DODGE_MODIFIER = 'Modif. esquives adversaire';
+  RS_SPEC_ADV_PARRY_MODIFIER = 'Modif. parades adversaire';
+  RS_SPEC_PROTEC_FACTOR = 'Facteur de protection';
+  RS_SPEC_MAX_SLASH_PROTEC = 'Protect. max/cp tranchant';
+  RS_SPEC_MAX_SMASH_PROTEC = 'Protect. max/cp contondant';
+  RS_SPEC_MAX_PIERC_PROTEC = 'Protect. max/cp perforant';
+  RS_SPEC_ACID_PROTEC = 'Protection acide';
+  RS_SPEC_COLD_PROTEC = 'Protection froid';
+  RS_SPEC_ROT_PROTEC = 'Protection pourriture';
+  RS_SPEC_FIRE_PROTEC = 'Protection feu';
+  RS_SPEC_SHOCK_PROTEC = 'Protection ondes de choc';
+  RS_SPEC_POISON_PROTEC = 'Protection poison';
+  RS_SPEC_ELEC_PROTEC = 'Protection électricité';
+  RS_SPEC_ELE_CAST_SPEED = 'Vitesse magie élémentaire';
+  RS_SPEC_ELE_POWER = 'Puissance magie élémentaire';
+  RS_SPEC_OFFAFF_CAST_SPEED = 'Vitesse magie débilitante';
+  RS_SPEC_OFFAFF_POWER = 'Puissance magie débilitante';
+  RS_SPEC_DEFAFF_CAST_SPEED = 'Vitesse magie neutralisante';
+  RS_SPEC_DEFAFF_POWER = 'Puissance magie neutralisante';
+  RS_SPEC_HEAL_CAST_SPEED = 'Vitesse magie curative';
+  RS_SPEC_HEAL_POWER = 'Puissance magie curative';
+  RS_SPEC_DESERT_RESIST = 'Résistance désert';
+  RS_SPEC_FOREST_RESIST = 'Résistance forêt';
+  RS_SPEC_LAKES_RESIST = 'Résistance lacs';
+  RS_SPEC_JUNGLE_RESIST = 'Résistance jungle';
+  RS_SPEC_PRIME_RESIST = 'Résistance primes racines';
+
+  RS_CAT_BLADE = 'Lame';
+  RS_CAT_POINT = 'Pointe';
+  RS_CAT_HAMMER = 'Marteau';
+  RS_CAT_COUNTERWEIGHT = 'Contrepoids';
+  RS_CAT_SHAFT = 'Flèche';
+  RS_CAT_AMMOBULLET = 'Balle de munitions';
+  RS_CAT_BARREL = 'Canon';
+  RS_CAT_ARMORSHELL = 'Carapace pour armures';
+  RS_CAT_AMMOJACKET = 'Cartouche de munitions';
+  RS_CAT_LINING = 'Doublure';
+  RS_CAT_EXPLOSIVE = 'Explosif';
+  RS_CAT_STUFFING = 'Rembourrage';
+  RS_CAT_FIRINGPIN = 'Percuteur';
+  RS_CAT_ARMORCLIP = 'Fixation pour armures';
+  RS_CAT_TRIGGER = 'Détente';
+  RS_CAT_JEWELSETTING = 'Configuration des bijoux';
+  RS_CAT_GRIP = 'Prise';
+  RS_CAT_CLOTHES = 'Vêtements';
+  RS_CAT_JEWEL = 'Bijou';
+  RS_CAT_MAGICFOCUS = 'Concentration magique';
+
+  RS_COLOR_BEIGE = 'Beige';
+  RS_COLOR_BLACK = 'Noir';
+  RS_COLOR_BLUE = 'Bleu';
+  RS_COLOR_GREEN = 'Vert';
+  RS_COLOR_PURPLE = 'Violet';
+  RS_COLOR_RED = 'Rouge';
+  RS_COLOR_TURQUOISE = 'Turquoise';
+  RS_COLOR_WHITE = 'Blanc';
+
+  RS_CLASS_BASE = 'Base';
+  RS_CLASS_FINE = 'Fin';
+  RS_CLASS_CHOICE = 'Choix';
+  RS_CLASS_EXCELLENT = 'Excellent';
+  RS_CLASS_SUPREME = 'Suprême';
+
+  RS_RACE_ALL = 'Toutes les races';
+  RS_RACE_FYROS = 'Fyros';
+  RS_RACE_ZORAI = 'Zoraï';
+  RS_RACE_TRYKER = 'Tryker';
+  RS_RACE_MATIS = 'Matis';
+
+  RS_VOLUME = 'Volume';
+
 const
-  _ITEM_CATEGORY : array [0..20] of String = ('Blade', 'Hammer', 'Point', 'Shaft', 'Grip', 'Counterweight',
-    'MagicFokus', 'Trigger', 'FiringPin', 'Barrel', 'Explosive', 'Jacket', 'Bullet',
-    'Cloth', 'ArmorShell', 'Lining', 'Stuffing', 'ArmorClip', 'JewelSetting', 'Jewels', 'Unknown');
+  _MAT_CATEGORY : array [0..20] of String = ('Unknown', 'Blade', 'Point', 'Hammer', 'Counterweight',
+    'Shaft', 'AmmoBullet', 'Barrel', 'ArmorShell', 'AmmoJacket', 'Lining', 'Explosive', 'Stuffing',
+    'FiringPin', 'ArmorClip', 'Trigger', 'JewelSettings', 'Grip', 'Clothes', 'Jewel', 'MagicFocus');
+
+  _MAT_SPEC : array [0..34] of String =
+  ('Unknown', 'Durability', 'Lightness', 'Sap Load', 'Damage', 'Speed', 'Range', 'Dodge Modifier', 'Parry Modifier',
+  'Adversary Dodge Modifier', 'Adversary Parry Modifier', 'Protection Factor', 'Max. Slashing Protection',
+  'Max. Smashing Protection', 'Max. Piercing Protection', 'Acid Protection', 'Cold Protection',
+  'Rot Protection', 'Fire Protection', 'Shockwave Protection', 'Poison Protection', 'Electricity Protection',
+  'Elemental Cast Speed', 'Elemental Power', 'Off. Affliction Cast Speed', 'Off. Affliction Power',
+  'Def. Affliction Cast Speed', 'Def. Affliction Power', 'Healing Cast Speed', 'Healing Power',
+  'Desert Resistance', 'Forest Resistance', 'Lakes Resistance', 'Jungle Resistance', 'Prime Roots Resistance');
+
+  _MAT_COLOR : array [0..8] of String = ('unknown', 'beige', 'black', 'blue', 'green', 'purple', 'red', 'turquoise', 'white');
+
+  _ITEM_CLASS : array [0..4] of String = ('base', 'fine', 'choice', 'excellent', 'supreme');
 
   _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([b-f])01\.sitem';
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-e])01\.sitem';
@@ -83,8 +176,8 @@ type
     ItemType: TItemType;
     ItemEcosys: TItemEcosystem;
     ItemEquip: TItemEquip;
-    ItemCategory1: String;
-    ItemCategory2: String;
+    ItemCategory1: Integer;
+    ItemCategory2: Integer;
     ItemWeapon: TItemWeapon;
     ItemSkin: TItemSkin;
     ItemDesc: String;
@@ -96,14 +189,23 @@ type
     ItemFob: Integer;
     ItemVolume: Double;
     ItemPrice: Double;
+    ItemQuantity: Integer;
     ItemContinent: String;
     ItemTime: TDateTime;
+    MatColor1: Integer;
+    MatColor2: Integer;
+    MatColor3: Integer;
+    MatSpec1: array of array [0..1] of Integer;
+    MatSpec2: array of array [0..1] of Integer;
+
+    destructor Destroy; override;
   end;
 
   TRyzom = class(TRyzomApi)
   private
     FXmlDocument: TXpObjModel;
     FCatStrings: TStringList;
+    FRegExpr: TRegExpr;
 
     FAniroStatus: Integer;
     FArispotleStatus: Integer;
@@ -123,6 +225,10 @@ type
     property ArispotleStatus: Integer read FArispotleStatus;
   end;
 
+  function GetSpecName(AIndex: Integer): String;
+  function GetCatName(AIndex: Integer): String;
+  function GetColorName(AIndex: Integer): String;
+  function GetClassName(AIndex: Integer): String;
 
 var
   GRyzomApi: TRyzom;
@@ -133,6 +239,112 @@ var
 implementation
 
 uses MisuDevKit, Math;
+
+{*******************************************************************************
+Returns the specification name
+*******************************************************************************}
+function GetSpecName(AIndex: Integer): String;
+begin
+  case AIndex of
+    0: Result := '-';
+    1: Result := RS_SPEC_DURABILITY;
+    2: Result := RS_SPEC_LIGHTNESS;
+    3: Result := RS_SPEC_SAPLOAD;
+    4: Result := RS_SPEC_DAMAGE;
+    5: Result := RS_SPEC_SPEED;
+    6: Result := RS_SPEC_RANGE;
+    7: Result := RS_SPEC_DODGE_MODIFIER;
+    8: Result := RS_SPEC_PARRY_MODIFIER;
+    9: Result := RS_SPEC_ADV_DODGE_MODIFIER;
+    10: Result := RS_SPEC_ADV_PARRY_MODIFIER;
+    11: Result := RS_SPEC_PROTEC_FACTOR;
+    12: Result := RS_SPEC_MAX_SLASH_PROTEC;
+    13: Result := RS_SPEC_MAX_SMASH_PROTEC;
+    14: Result := RS_SPEC_MAX_PIERC_PROTEC;
+    15: Result := RS_SPEC_ACID_PROTEC;
+    16: Result := RS_SPEC_COLD_PROTEC;
+    17: Result := RS_SPEC_ROT_PROTEC;
+    18: Result := RS_SPEC_FIRE_PROTEC;
+    19: Result := RS_SPEC_SHOCK_PROTEC;
+    20: Result := RS_SPEC_POISON_PROTEC;
+    21: Result := RS_SPEC_ELEC_PROTEC;
+    22: Result := RS_SPEC_ELE_CAST_SPEED;
+    23: Result := RS_SPEC_ELE_POWER;
+    24: Result := RS_SPEC_OFFAFF_CAST_SPEED;
+    25: Result := RS_SPEC_OFFAFF_POWER;
+    26: Result := RS_SPEC_DEFAFF_CAST_SPEED;
+    27: Result := RS_SPEC_DEFAFF_POWER;
+    28: Result := RS_SPEC_HEAL_CAST_SPEED;
+    29: Result := RS_SPEC_HEAL_POWER;
+    30: Result := RS_SPEC_DESERT_RESIST;
+    31: Result := RS_SPEC_FOREST_RESIST;
+    32: Result := RS_SPEC_LAKES_RESIST;
+    33: Result := RS_SPEC_JUNGLE_RESIST;
+    34: Result := RS_SPEC_PRIME_RESIST;
+  end;
+end;
+
+{*******************************************************************************
+Returns the category name
+*******************************************************************************}
+function GetCatName(AIndex: Integer): String;
+begin
+  case AIndex of
+    0: Result := '-';
+    1: Result := RS_CAT_BLADE;
+    2: Result := RS_CAT_POINT;
+    3: Result := RS_CAT_HAMMER;
+    4: Result := RS_CAT_COUNTERWEIGHT;
+    5: Result := RS_CAT_SHAFT;
+    6: Result := RS_CAT_AMMOBULLET;
+    7: Result := RS_CAT_BARREL;
+    8: Result := RS_CAT_ARMORSHELL;
+    9: Result := RS_CAT_AMMOJACKET;
+    10: Result := RS_CAT_LINING;
+    11: Result := RS_CAT_EXPLOSIVE;
+    12: Result := RS_CAT_STUFFING;
+    13: Result := RS_CAT_FIRINGPIN;
+    14: Result := RS_CAT_ARMORCLIP;
+    15: Result := RS_CAT_TRIGGER;
+    16: Result := RS_CAT_JEWELSETTING;
+    17: Result := RS_CAT_GRIP;
+    18: Result := RS_CAT_CLOTHES;
+    19: Result := RS_CAT_JEWEL;
+    20: Result := RS_CAT_MAGICFOCUS;
+  end;
+end;
+
+{*******************************************************************************
+Returns the color name
+*******************************************************************************}
+function GetColorName(AIndex: Integer): String;
+begin
+  case AIndex of
+    0: Result := '-';
+    1: Result := RS_COLOR_BEIGE;
+    2: Result := RS_COLOR_BLACK;
+    3: Result := RS_COLOR_BLUE;
+    4: Result := RS_COLOR_GREEN;
+    5: Result := RS_COLOR_PURPLE;
+    6: Result := RS_COLOR_RED;
+    7: Result := RS_COLOR_TURQUOISE;
+    8: Result := RS_COLOR_WHITE;
+  end;
+end;
+
+{*******************************************************************************
+Returns the class name
+*******************************************************************************}
+function GetClassName(AIndex: Integer): String;
+begin
+  case AIndex of
+    0: Result := RS_CLASS_BASE;
+    1: Result := RS_CLASS_FINE;
+    2: Result := RS_CLASS_CHOICE;
+    3: Result := RS_CLASS_EXCELLENT;
+    4: Result := RS_CLASS_SUPREME;
+  end;
+end;
 
 { TRyzom }
 
@@ -149,6 +361,8 @@ begin
   wCatFile := GConfig.CurrentPath + 'category.csv';
   if FileExists(wCatFile) then
     FCatStrings.LoadFromFile(wCatFile);
+  FRegExpr := TRegExpr.Create;
+  FRegExpr.ModifierG := False;
 end;
 
 {*******************************************************************************
@@ -156,6 +370,7 @@ Destroys the interface object
 *******************************************************************************}
 destructor TRyzom.Destroy;
 begin
+  FRegExpr.Free;
   FCatStrings.Free;
   FXmlDocument.Free;
   inherited;
@@ -177,6 +392,7 @@ begin
   AItemInfo.ItemClass := icUnknown;
   AItemInfo.ItemHp := 0;
   AItemInfo.ItemPrice := 0;
+  AItemInfo.ItemQuantity := 1;
   
   // Name
   AItemInfo.ItemName := ANode.Text;
@@ -246,6 +462,13 @@ begin
   wNode := ANode.Attributes.GetNamedItem('price');
   if Assigned(wNode) then AItemInfo.ItemPrice := StrToFloat(wNode.NodeValue);
 
+  // Quantity
+  wNode := ANode.Attributes.GetNamedItem('quantity');
+  if Assigned(wNode) then begin
+    AItemInfo.ItemQuantity := StrToInt(wNode.NodeValue);
+    AItemInfo.ItemSize := AItemInfo.ItemQuantity;
+  end;
+
   // Since
   wNode := ANode.Attributes.GetNamedItem('in_sell_since');
   if Assigned(wNode) then AItemInfo.ItemTime := IncHour(IncDay(UnixToDateTime(StrToInt64(wNode.NodeValue)), 7), 2);
@@ -303,6 +526,8 @@ procedure TRyzom.GetItemInfoFromName(AItemInfo: TItemInfo);
 var
   wIndex: Integer;
   wCoef: Double;
+  wFound: Boolean;
+  i: Integer;
 begin
   wCoef := 0.0;
   AItemInfo.ItemType := itOthers;
@@ -487,12 +712,44 @@ begin
   // Natural and Animal
   if (AItemInfo.ItemType = itNaturalMat) or (AItemInfo.ItemType = itAnimalMat) then begin
     // Categories
-    AItemInfo.ItemCategory1 := 'Unknown';
-    AItemInfo.ItemCategory2 := 'Unknown';
+    AItemInfo.ItemCategory1 := 0;
+    AItemInfo.ItemCategory2 := 0;
+    AItemInfo.MatColor1 := 0;
+    AItemInfo.MatColor2 := 0;
+    AItemInfo.MatColor3 := 0;
     wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
     if wIndex >= 0 then begin
-      AItemInfo.ItemCategory1 := FCatStrings.ValueFromIndex[wIndex];
-      AItemInfo.ItemCategory2 := FCatStrings.ValueFromIndex[wIndex+1];
+      AItemInfo.ItemCategory1 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex], 1, 2));
+      AItemInfo.ItemCategory2 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex+1], 1, 2));
+      AItemInfo.MatColor1 := StrToInt(FCatStrings.ValueFromIndex[wIndex][3]);
+      AItemInfo.MatColor2 := StrToInt(FCatStrings.ValueFromIndex[wIndex][4]);
+      AItemInfo.MatColor3 := StrToInt(FCatStrings.ValueFromIndex[wIndex][5]);
+
+      // Specifications for category 1
+      FRegExpr.InputString := FCatStrings.ValueFromIndex[wIndex];
+      FRegExpr.Expression := '(\d\d)(\d)';
+      i := 0;
+      wFound := FRegExpr.Exec(6);
+      while wFound do begin
+        Inc(i);
+        SetLength(AItemInfo.MatSpec1, i);
+        AItemInfo.MatSpec1[i-1][0] := StrToInt(FRegExpr.Match[1]);
+        AItemInfo.MatSpec1[i-1][1] := StrToInt(FRegExpr.Match[2]);
+        wFound := FRegExpr.ExecNext;
+      end;
+
+      // Specifications for category 2
+      FRegExpr.InputString := FCatStrings.ValueFromIndex[wIndex+1];
+      FRegExpr.Expression := '(\d\d)(\d)';
+      i := 0;
+      wFound := FRegExpr.Exec(6);
+      while wFound do begin
+        Inc(i);
+        SetLength(AItemInfo.MatSpec2, i);
+        AItemInfo.MatSpec2[i-1][0] := StrToInt(FRegExpr.Match[1]);
+        AItemInfo.MatSpec2[i-1][1] := StrToInt(FRegExpr.Match[2]);
+        wFound := FRegExpr.ExecNext;
+      end;
     end;
 
     // Ecosystem
@@ -547,7 +804,6 @@ begin
       AItemInfo.ItemType := itEquipment;
       AItemInfo.ItemEquip := iqLightArmor;
       AItemInfo.ItemEcosys := ieCommon;
-      AItemInfo.ItemSkin := isSkin3;
       wCoef := 7.0;
     end;
   end;
@@ -612,8 +868,8 @@ begin
   // Item category (only materials)
   if AItemInfo.ItemType in [itAnimalMat, itNaturalMat] then begin
     if (AFilter.CategoryIndex > 0) and (Pos('m0312', AItemInfo.ItemName) = 0) {larva} then begin
-      wCatIndex1 := AnsiIndexText(AItemInfo.ItemCategory1, _ITEM_CATEGORY)+1;
-      wCatIndex2 := AnsiIndexText(AItemInfo.ItemCategory2, _ITEM_CATEGORY)+1;
+      wCatIndex1 := AItemInfo.ItemCategory1;
+      wCatIndex2 := AItemInfo.ItemCategory2;
       if (wCatIndex1 <> AFilter.CategoryIndex) and (wCatIndex2 <> AFilter.CategoryIndex) then Exit;
     end;
   end;
@@ -625,6 +881,15 @@ begin
   end;
 
   Result := True;
+end;
+
+{ TItemInfo }
+
+destructor TItemInfo.Destroy;
+begin
+  SetLength(MatSpec1, 0);
+  SetLength(MatSpec2, 0);
+  inherited;
 end;
 
 end.
