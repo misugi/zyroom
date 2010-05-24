@@ -1,7 +1,7 @@
 zyRoom - History of changes
 ===========================
 
-# version 2.0.0 (2010-05-XX)
+# version 2.0.0 (2010-05-24)
 New: characteristics of craft materials !!!
 Change: Arial font for the entire application
 Change: traduction of some texts in english and german
