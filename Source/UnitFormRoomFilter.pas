@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
-  ItemImage, StrUtils, ComCtrls, DateUtils, Gauges;
+  ItemImage, StrUtils, ComCtrls, DateUtils, Gauges, Contnrs, RyzomApi;
 
 resourcestring
   RS_SKIN = 'Skin';
@@ -36,7 +36,6 @@ resourcestring
   RS_SAB = 'Bonus sève';
   RS_STB = 'Bonus endurance';
   RS_FOB = 'Bonus concentration';
-  RS_ALL = 'Tous';
   RS_DAYS = 'jours';
   RS_HOURS = 'heures';
   RS_MINUTES = 'minutes';
@@ -49,11 +48,6 @@ type
     TabInfo: TTabSheet;
     BtOK: TButton;
     GbType: TGroupBox;
-    CbTypeNaturalMat: TCheckBox;
-    CbTypeAnimalMat: TCheckBox;
-    CbTypeCata: TCheckBox;
-    CbTypeOthers: TCheckBox;
-    CbTypeEquipment: TCheckBox;
     GbQuality: TGroupBox;
     LbQualityMin: TLabel;
     LbQualityMax: TLabel;
@@ -77,17 +71,80 @@ type
     RbAllWords: TRadioButton;
     RbOneWord: TRadioButton;
     GbEquipment: TGroupBox;
-    CbEqHeavyArmors: TCheckBox;
-    CbEqWeaponsMelee: TCheckBox;
-    CbEqMediumArmors: TCheckBox;
-    CbEqLightArmors: TCheckBox;
-    CbEqAmplifier: TCheckBox;
-    CbEqWeaponsRange: TCheckBox;
-    CbEqOthers: TCheckBox;
-    CbEqJewels: TCheckBox;
     GbCategory: TGroupBox;
     EdCategory: TComboBox;
-    TabCraft: TTabSheet;
+    PnTitle: TPanel;
+    PnInfo: TPanel;
+    LbQuality: TLabel;
+    LbVolume: TLabel;
+    LbCraft: TLabel;
+    ImgItem: TItemImage;
+    LbValueQuality: TLabel;
+    LbValueVolume: TLabel;
+    LbValueCraft: TLabel;
+    LbClass: TLabel;
+    LbValueClass: TLabel;
+    LbDura: TLabel;
+    LbValueDura: TLabel;
+    ImgSkin1: TImage;
+    ImgSkin2: TImage;
+    ImgSkin3: TImage;
+    LbColor: TLabel;
+    LbValueColor: TLabel;
+    LbRace: TLabel;
+    LbValueRace: TLabel;
+    EdEquipment: TComboBox;
+    GbSorting: TGroupBox;
+    EdSorting: TComboBox;
+    GbSales: TGroupBox;
+    LbPriceMin: TLabel;
+    LbPriceMax: TLabel;
+    EdContinent: TComboBox;
+    EdPriceMin: TSpinEdit;
+    EdPriceMax: TSpinEdit;
+    GbBonus: TGroupBox;
+    ImgHpbF: TImage;
+    ImgSabF: TImage;
+    ImgStbF: TImage;
+    ImgFobF: TImage;
+    CbHpb: TCheckBox;
+    CbSab: TCheckBox;
+    CbStb: TCheckBox;
+    CbFob: TCheckBox;
+    PnInfo2: TPanel;
+    LbAutoSpeed: TLabel;
+    LbValueSpeed: TLabel;
+    LbValueDodge: TLabel;
+    LbAutoRange: TLabel;
+    LbValueRange: TLabel;
+    LbWeight: TLabel;
+    LbValueWeight: TLabel;
+    LbValueParry: TLabel;
+    LbValueAdvDodge: TLabel;
+    LbValueAdvParry: TLabel;
+    LbAutoSlashingProt: TLabel;
+    LbValueSlashingProt: TLabel;
+    LbAutoSmashingProt: TLabel;
+    LbValueSmashingProt: TLabel;
+    LbAutoPiercingProt: TLabel;
+    LbValuePiercingProt: TLabel;
+    LbEcosys: TLabel;
+    LbValueEcosys: TLabel;
+    ImgHpb: TImage;
+    ImgFob: TImage;
+    ImgStb: TImage;
+    ImgSab: TImage;
+    LbValueHpb: TLabel;
+    LbValueSab: TLabel;
+    LbValueStb: TLabel;
+    LbValueFob: TLabel;
+    LbAutoDodge: TLabel;
+    LbAutoParry: TLabel;
+    LbAutoAdvDodge: TLabel;
+    LbAutoAdvParry: TLabel;
+    LbAutoFactorProt: TLabel;
+    LbValueFactorProt: TLabel;
+    TabTemp: TTabSheet;
     PnCat1: TPanel;
     LbCat1Spec1: TLabel;
     LbCat1Spec2: TLabel;
@@ -113,13 +170,6 @@ type
     GaugeCat1Spec9: TGauge;
     ImgCat1: TImage;
     LbCat1: TLabel;
-    PnCraftInfo: TPanel;
-    LbQuality: TLabel;
-    LbColor: TLabel;
-    LbRace: TLabel;
-    ImgMat: TItemImage;
-    PnTitle: TPanel;
-    LbEcosys: TLabel;
     PnCat2: TPanel;
     LbCat2Spec1: TLabel;
     LbCat2Spec2: TLabel;
@@ -145,48 +195,22 @@ type
     GaugeCat2Spec9: TGauge;
     ImgCat2: TImage;
     LbCat2: TLabel;
-    LbValueQuality: TLabel;
-    LbValueColor: TLabel;
-    LbValueRace: TLabel;
-    LbValueEcosys: TLabel;
-    LbClass: TLabel;
-    LbValueClass: TLabel;
-    PnTitle2: TPanel;
-    PnInfo: TPanel;
-    LbQuality2: TLabel;
-    LbVolume: TLabel;
-    LbCraft: TLabel;
-    ImgItem: TItemImage;
-    LbEcosys2: TLabel;
-    LbValueQuality2: TLabel;
-    LbValueVolume: TLabel;
-    LbValueCraft: TLabel;
-    LbValueEcosys2: TLabel;
-    LbClass2: TLabel;
-    LbValueClass2: TLabel;
-    ImgHpb: TImage;
-    ImgFob: TImage;
-    ImgStb: TImage;
-    ImgSab: TImage;
-    LbValueHpb: TLabel;
-    LbValueSab: TLabel;
-    LbValueStb: TLabel;
-    LbValueFob: TLabel;
     PnSales: TPanel;
     LbPrice: TLabel;
-    ItemImage1: TItemImage;
     LbContinent: TLabel;
     LbValuePrice: TLabel;
     LbValueContinent: TLabel;
     LbTime: TLabel;
     LbValueTime: TLabel;
-    LbDura: TLabel;
-    LbValueDura: TLabel;
-    ImgSkin1: TImage;
-    ImgSkin2: TImage;
-    ImgSkin3: TImage;
+    Image1: TImage;
+    LbSale: TLabel;
+    CbTypeMat: TCheckBox;
+    CbTypeCata: TCheckBox;
+    CbTypeOthers: TCheckBox;
+    CbTypeEquipment: TCheckBox;
+    CbTypeTeleporter: TCheckBox;
     procedure BtOKClick(Sender: TObject);
-    procedure CbTypeAnimalMatClick(Sender: TObject);
+    procedure CbTypeMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtDefaultClick(Sender: TObject);
@@ -196,7 +220,9 @@ type
   private
     FCurrentItem: TItemImage;
     FPngObject: TPNGObject;
-    
+    FLbList: TObjectList;
+    FLbList2: TObjectList;
+   
     procedure EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
     procedure LoadCurrentFilter;
     procedure SaveCurrentFilter;
@@ -236,8 +262,7 @@ begin
   // Category
   wIndex := EdCategory.ItemIndex;
   EdCategory.Clear;
-  EdCategory.Items.Append(RS_ALL);
-  for i := 1 to High(_MAT_CATEGORY) do begin
+  for i := 0 to High(_MAT_CATEGORY) do begin
     EdCategory.Items.Append(GetCatName(i));
   end;
   EdCategory.ItemIndex := wIndex;
@@ -257,6 +282,18 @@ begin
     EdClassMax.Items.Append(GetClassName(i));
   end;
   EdClassMax.ItemIndex := wIndex;
+
+  // Specifications
+  LbAutoSpeed.Caption := RS_SPEC_SPEED;
+  LbAutoRange.Caption := RS_SPEC_RANGE;
+  LbAutoDodge.Caption := RS_SPEC_DODGE_MODIFIER;
+  LbAutoParry.Caption := RS_SPEC_PARRY_MODIFIER;
+  LbAutoAdvDodge.Caption := RS_SPEC_ADV_DODGE_MODIFIER;
+  LbAutoAdvParry.Caption := RS_SPEC_ADV_PARRY_MODIFIER;
+  LbAutoFactorProt.Caption := RS_SPEC_PROTEC_FACTOR;
+  LbAutoSlashingProt.Caption := RS_SPEC_MAX_SLASH_PROTEC;
+  LbAutoSmashingProt.Caption := RS_SPEC_MAX_SMASH_PROTEC;
+  LbAutoPiercingProt.Caption := RS_SPEC_MAX_PIERC_PROTEC;
 end;
 
 {*******************************************************************************
@@ -288,12 +325,13 @@ end;
 {*******************************************************************************
 Changes the checkbox for natural or animal materials
 *******************************************************************************}
-procedure TFormRoomFilter.CbTypeAnimalMatClick(Sender: TObject);
+procedure TFormRoomFilter.CbTypeMatClick(Sender: TObject);
 begin
-  EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
-  EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbEcosys, CbTypeMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbClass, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
-  EnabledGroup(GbCategory, FileExists(GConfig.CurrentPath + 'category.csv') and (CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked));
+  EnabledGroup(GbCategory, FileExists(GConfig.CurrentPath + 'category.csv') and CbTypeMat.Checked);
+  EnabledGroup(GbBonus, CbTypeEquipment.Checked);
 end;
 
 {*******************************************************************************
@@ -313,21 +351,17 @@ Loads the current filter
 *******************************************************************************}
 procedure TFormRoomFilter.LoadCurrentFilter;
 begin
+  // Sorting
+  EdSorting.ItemIndex := Ord(GCurrentFilter.Sorting);
+  
   // Type
-  CbTypeNaturalMat.Checked := (itNaturalMat in GCurrentFilter.Type_);
-  CbTypeAnimalMat.Checked := (itAnimalMat in GCurrentFilter.Type_);
-  CbTypeCata.Checked := (itCata in GCurrentFilter.Type_);
-  CbTypeOthers.Checked := (itTool in GCurrentFilter.Type_) or
-                          (itOthers in GCurrentFilter.Type_);
+  CbTypeMat.Checked := (itNaturalMat in GCurrentFilter.Type_) or
+                       (itAnimalMat in GCurrentFilter.Type_) or
+                       (itSystemMat in GCurrentFilter.Type_);
   CbTypeEquipment.Checked := (itEquipment in GCurrentFilter.Type_);
-
-  // Quality
-  EdQualityMin.Value := GCurrentFilter.QualityMin;
-  EdQualityMax.Value := GCurrentFilter.QualityMax;
-
-  // Class
-  EdClassMin.ItemIndex := Ord(GCurrentFilter.ClassMin);
-  EdClassMax.ItemIndex := Ord(GCurrentFilter.ClassMax);
+  CbTypeCata.Checked := (itCata in GCurrentFilter.Type_);
+  CbTypeTeleporter.Checked := (itTeleporter in GCurrentFilter.Type_);
+  CbTypeOthers.Checked := (itOther in GCurrentFilter.Type_);
 
   // Ecosystem
   CbEcoPrime.Checked := (iePrime in GCurrentFilter.Ecosystem);
@@ -337,29 +371,54 @@ begin
   CbEcoLakes.Checked := (ieLakes in GCurrentFilter.Ecosystem);
   CbEcoJungle.Checked := (ieJungle in GCurrentFilter.Ecosystem);
 
-  // Item name
-  EdName.Text := GCurrentFilter.ItemName;
-  RbAllWords.Checked := GCurrentFilter.AllWords;
+  // Class
+  EdClassMin.ItemIndex := Ord(GCurrentFilter.ClassMin);
+  EdClassMax.ItemIndex := Ord(GCurrentFilter.ClassMax);
+
+  // Quality
+  EdQualityMin.Value := GCurrentFilter.QualityMin;
+  EdQualityMax.Value := GCurrentFilter.QualityMax;
 
   // Item equipment
-  CbEqLightArmors.Checked := (iqLightArmor in GCurrentFilter.Equipment);
-  CbEqMediumArmors.Checked := (iqMediumArmor in GCurrentFilter.Equipment);
-  CbEqHeavyArmors.Checked := (iqHeavyArmor in GCurrentFilter.Equipment);
-  CbEqWeaponsMelee.Checked := (iqWeaponMelee in GCurrentFilter.Equipment);
-  CbEqWeaponsRange.Checked := (iqWeaponRange in GCurrentFilter.Equipment);
-  CbEqJewels.Checked := (iqJewel in GCurrentFilter.Equipment);
-  CbEqOthers.Checked := (iqShield in GCurrentFilter.Equipment) or
-                        (iqBuckler in GCurrentFilter.Equipment) or
-                        (iqAmmo in GCurrentFilter.Equipment) or
-                        (iqOthers in GCurrentFilter.Equipment);
-  CbEqAmplifier.Checked := (iqAmplifier in GCurrentFilter.Equipment);
+  EdEquipment.ItemIndex := 0;
+  if iqLightArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 1;
+  if iqMediumArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 2;
+  if iqHeavyArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 3;
+  if iqWeaponMelee in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 4;
+  if iqWeaponRange in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 5;
+  if iqAmplifier in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 6;
+  if iqJewel in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 7;
+  if (iqBuckler in GCurrentFilter.Equipment) or
+     (iqShield in GCurrentFilter.Equipment) then EdEquipment.ItemIndex := 8;
+  if iqTool in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 9;
+  if (iqAmmo in GCurrentFilter.Equipment) or
+     (iqOther in GCurrentFilter.Equipment) then EdEquipment.ItemIndex := 10;
 
   // Item category
   EdCategory.ItemIndex := GCurrentFilter.CategoryIndex;
 
-  EnabledGroup(GbEcosys, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
-  EnabledGroup(GbClass, CbTypeNaturalMat.Checked or CbTypeAnimalMat.Checked or CbTypeEquipment.Checked);
+  // Sales
+  EdContinent.ItemIndex := 0;
+  if GCurrentFilter.Continent <> '' then
+    EdContinent.ItemIndex := EdContinent.Items.IndexOf(GCurrentFilter.Continent);
+  EdPriceMin.Value := GCurrentFilter.PriceMin;
+  EdPriceMax.Value := GCurrentFilter.PriceMax;
+
+  // Bonus
+  CbHpb.Checked := ibHp in GCurrentFilter.Bonus;
+  CbSab.Checked := ibSab in GCurrentFilter.Bonus;
+  CbStb.Checked := ibStamina in GCurrentFilter.Bonus;
+  CbFob.Checked := ibFocus in GCurrentFilter.Bonus;
+
+  // Item name
+  EdName.Text := GCurrentFilter.ItemName;
+  RbAllWords.Checked := GCurrentFilter.AllWords;
+
+  EnabledGroup(GbEcosys, CbTypeMat.Checked or CbTypeEquipment.Checked);
+  EnabledGroup(GbClass, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
+  EnabledGroup(GbCategory, FileExists(GConfig.CurrentPath + 'category.csv') and CbTypeMat.Checked);
+  EnabledGroup(GbBonus, CbTypeEquipment.Checked);
 end;
 
 {*******************************************************************************
@@ -367,18 +426,24 @@ Saves the current filter
 *******************************************************************************}
 procedure TFormRoomFilter.SaveCurrentFilter;
 begin
+  // Sorting
+  case EdSorting.ItemIndex of
+    0: GCurrentFilter.Sorting := ioType;
+    1: GCurrentFilter.Sorting := ioEcosys;
+    2: GCurrentFilter.Sorting := ioClass;
+    3: GCurrentFilter.Sorting := ioQuality;
+    4: GCurrentFilter.Sorting := ioVolume;
+    5: GCurrentFilter.Sorting := ioPrice;
+    6: GCurrentFilter.Sorting := ioTime;
+  end;
+  
   // Item type
   GCurrentFilter.Type_ := [];
-  if CbTypeAnimalMat.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itAnimalMat];
-  if CbTypeNaturalMat.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itNaturalMat];
-  if CbTypeCata.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itCata];
+  if CbTypeMat.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itAnimalMat,itNaturalMat,itSystemMat];
   if CbTypeEquipment.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itEquipment];
-  if CbTypeOthers.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itTool, itOthers];
-
-  // Item quality
-  if EdQualityMax.Value < EdQualityMin.Value then EdQualityMax.Value := EdQualityMin.Value;
-  GCurrentFilter.QualityMin := EdQualityMin.Value;
-  GCurrentFilter.QualityMax := EdQualityMax.Value;
+  if CbTypeCata.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itCata];
+  if CbTypeTeleporter.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itTeleporter];
+  if CbTypeOthers.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itOther];
 
   // Item ecosystem
   GCurrentFilter.Ecosystem := [];
@@ -394,23 +459,46 @@ begin
   GCurrentFilter.ClassMin := TItemClass(EdClassMin.ItemIndex);
   GCurrentFilter.ClassMax := TItemClass(EdClassMax.ItemIndex);
 
+  // Item quality
+  if EdQualityMax.Value < EdQualityMin.Value then EdQualityMax.Value := EdQualityMin.Value;
+  GCurrentFilter.QualityMin := EdQualityMin.Value;
+  GCurrentFilter.QualityMax := EdQualityMax.Value;
+
   // Item equipment
   GCurrentFilter.Equipment := [];
-  if CbEqLightArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqLightArmor];
-  if CbEqMediumArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqMediumArmor];
-  if CbEqHeavyArmors.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqHeavyArmor];
-  if CbEqWeaponsMelee.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeaponMelee];
-  if CbEqWeaponsRange.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqWeaponRange];
-  if CbEqJewels.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqJewel];
-  if CbEqOthers.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqAmmo, iqShield, iqBuckler, iqOthers];
-  if CbEqAmplifier.Checked then GCurrentFilter.Equipment := GCurrentFilter.Equipment + [iqAmplifier];
+  case EdEquipment.ItemIndex of
+    1: GCurrentFilter.Equipment := [iqLightArmor];
+    2: GCurrentFilter.Equipment := [iqMediumArmor];
+    3: GCurrentFilter.Equipment := [iqHeavyArmor];
+    4: GCurrentFilter.Equipment := [iqWeaponMelee];
+    5: GCurrentFilter.Equipment := [iqWeaponRange];
+    6: GCurrentFilter.Equipment := [iqAmplifier];
+    7: GCurrentFilter.Equipment := [iqJewel];
+    8: GCurrentFilter.Equipment := [iqBuckler, iqShield];
+    9: GCurrentFilter.Equipment := [iqTool];
+    10: GCurrentFilter.Equipment := [iqAmmo, iqOther];
+  end;
+
+  // Item Category
+  GCurrentFilter.CategoryIndex := EdCategory.ItemIndex;
+
+  // Sales
+  GCurrentFilter.Continent := '';
+  if EdContinent.ItemIndex > 0 then
+    GCurrentFilter.Continent := EdContinent.Items[EdContinent.ItemIndex];
+  GCurrentFilter.PriceMin := EdPriceMin.Value;
+  GCurrentFilter.PriceMax := EdPriceMax.Value;
+
+  // Bonus
+  GCurrentFilter.Bonus := [];
+  if CbHpb.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibHp];
+  if CbSab.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibSab];
+  if CbStb.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibStamina];
+  if CbFob.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibFocus];
 
   // Item name
   GCurrentFilter.ItemName := Trim(EdName.Text);
   GCurrentFilter.AllWords := RbAllWords.Checked;
-
-  // Item Category
-  GCurrentFilter.CategoryIndex := EdCategory.ItemIndex;
 end;
 
 {*******************************************************************************
@@ -420,6 +508,7 @@ procedure TFormRoomFilter.BtDefaultClick(Sender: TObject);
 begin
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
   LoadCurrentFilter;
+  ApplyFilter;
 end;
 
 {*******************************************************************************
@@ -446,111 +535,29 @@ var
   wMinutes: Integer;
   wMatColor: Integer;
   wResName: String;
+  wTop, wLeft: Integer;
   i: Integer;
 begin
-  if FCurrentItem = AItemImage then Exit;
-  FCurrentItem := AItemImage;
-  
-  with AItemImage.Data as TItemInfo do begin
-    // Information
-    if PageControl.TabIndex = 0 then begin
-      ImgItem.Assign(AItemImage);
-      ImgItem.Visible := True;
+  try
+    if FCurrentItem = AItemImage then Exit;
+    if PageControl.TabIndex <> 0 then Exit;
+    FCurrentItem := AItemImage;
 
+    with AItemImage.Data as TItemInfo do begin
       // Name
-      PnTitle2.Caption := ItemDesc;
-
-      // Quality
-      LbValueQuality2.Caption := IntToStr(ItemQuality);
-
-      // Class
-      if ItemClass <> icUnknown then begin
-        LbValueClass2.Caption := GetClassName(Ord(ItemClass));
-      end else begin
-        LbValueClass2.Caption := '-';
-      end;
-
-      // Ecosystem
+      PnTitle.Caption := ItemDesc;
       case ItemEcosys of
-        ieCommon: LbValueEcosys2.Caption := CbEcoCommon.Caption;
-        iePrime: LbValueEcosys2.Caption := CbEcoPrime.Caption;
-        ieDesert: LbValueEcosys2.Caption := CbEcoDesert.Caption;
-        ieJungle: LbValueEcosys2.Caption := CbEcoJungle.Caption;
-        ieForest: LbValueEcosys2.Caption := CbEcoForest.Caption;
-        ieLakes: LbValueEcosys2.Caption := CbEcoLakes.Caption;
-        ieUnknown: LbValueEcosys2.Caption := '-';
+        ieCommon, iePrime, ieUnknown: PnTitle.Color := $434B4F;
+        ieDesert: PnTitle.Color := $18436F;
+        ieJungle: PnTitle.Color := $824B7F;
+        ieForest: PnTitle.Color := $2D6053;
+        ieLakes: PnTitle.Color := $706237;
       end;
 
-      // Volume
-      LbValueVolume.Caption := FormatFloat('####0.##', ItemVolume);
+      // Image
+      ImgItem.Assign(AItemImage);
 
-      // Durability
-      LbValueDura.Caption := '-';
-      if ItemHp > 0 then LbValueDura.Caption := Format('%d/%d', [ItemHp, ItemDur]);
-
-      // Craft
-      LbValueCraft.Caption := '-';
-      if (ItemType = itAnimalMat) or (ItemType = itNaturalMat) then begin
-        if Pos('m0312', ItemName) = 1 then begin {larva}
-          LbValueCraft.Caption := RS_ALL;
-        end else begin
-          if ItemCategory1 > 0 then
-            LbValueCraft.Caption :=  GetCatName(ItemCategory1) + ', ' + GetCatName(ItemCategory2);
-        end;
-      end;
-
-      // Bonus
-      LbValueHpb.Caption := '';
-      ImgHpb.Visible := ItemHpb > 0;
-      if ItemHpb > 0 then LbValueHpb.Caption := IntToStr(ItemHpb);
-
-      LbValueSab.Caption := '';
-      ImgSab.Visible := ItemSab > 0;
-      if ItemSab > 0 then LbValueSab.Caption := IntToStr(ItemSab);
-
-      LbValueStb.Caption := '';
-      ImgStb.Visible := ItemStb > 0;
-      if ItemStb > 0 then LbValueStb.Caption := IntToStr(ItemStb);
-
-      LbValueFob.Caption := '';
-      ImgFob.Visible := ItemFob > 0;
-      if ItemFob > 0 then LbValueFob.Caption := IntToStr(ItemFob);
-
-      // Height
-      if (ItemHpb + ItemSab + ItemStb + ItemFob) = 0 then
-        PnInfo.Height := 100
-      else
-        PnInfo.Height := 128;
-
-      // Sales
-      PnSales.Visible := ItemPrice > 0;
-      if ItemPrice > 0 then begin
-        LbValueContinent.Caption := ItemContinent;
-        LbValuePrice.Caption := Format('%s (%s)', [
-          FormatFloat('###,###,###,##0', ItemPrice),
-          FormatFloat('###,###,###,##0', ItemPrice*ItemQuantity)]);
-        wNow := Now;
-        wDays := DaysBetween(wNow, ItemTime);
-        wNow := IncDay(wNow, wDays);
-        wHours := HoursBetween(wNow, ItemTime);
-        wNow := IncHour(wNow, wHours);
-        wMinutes := MinutesBetween(wNow, ItemTime);
-        if wDays > 0 then begin
-          if wHours > 0 then
-            LbValueTime.Caption := Format('%d %s, %d %s %s %d %s', [wDays, RS_DAYS, wHours, RS_HOURS, RS_AND, wMinutes, RS_MINUTES])
-          else
-            LbValueTime.Caption := Format('%d %s %s %d %s', [wDays, RS_DAYS, RS_AND, wMinutes, RS_MINUTES]);
-        end else begin
-          if wHours > 0 then
-            LbValueTime.Caption := Format('%d %s %s %d %s', [wHours, RS_HOURS, RS_AND, wMinutes, RS_MINUTES])
-          else
-            LbValueTime.Caption := Format('%d %s', [wMinutes, RS_MINUTES]);
-        end;
-        PnSales.Top := PnInfo.Top + PnInfo.Height + 1;
-      end;
-
-
-      // Skin image
+      // Skin
       ImgSkin1.Visible := False;
       ImgSkin2.Visible := False;
       ImgSkin3.Visible := False;
@@ -566,41 +573,121 @@ begin
           ImgSkin3.Visible := True;
         end;
       end;
-    end;
 
-    // Craft
-    if PageControl.TabIndex = 1 then begin
-      TabCraft.Visible := (ItemType = itAnimalMat) or (ItemType = itNaturalMat);
-      if TabCraft.Visible then begin
-        PnCat1.Visible := True;
-        PnCat2.Visible := True;
+      // Ecosystem
+      if ItemEcosys <> ieUnknown then begin
+        LbValueEcosys.Caption := GetEcosysName(Ord(ItemEcosys));
+        FLbList.Add(LbEcosys);
+        FLbList.Add(LbValueEcosys);
+      end;
 
-        // Image
-        ImgMat.Assign(AItemImage);
-        ImgMat.Visible := True;
-
-        // Name
-        PnTitle.Caption := ItemDesc;
-
-        // Quality
+      // Quality
+      if not (ItemQuality < 0) then begin
         LbValueQuality.Caption := IntToStr(ItemQuality);
+        FLbList.Add(LbQuality);
+        FLbList.Add(LbValueQuality);
+      end;
 
-        // Class
-        if ItemClass <> icUnknown then begin
-          LbValueClass.Caption := GetClassName(Ord(ItemClass));
-        end else begin
-          LbValueClass.Caption := '-';
+      // Class
+      if ItemClass <> icUnknown then begin
+        LbValueClass.Caption := GetClassName(Ord(ItemClass));
+        FLbList.Add(LbClass);
+        FLbList.Add(LbValueClass);
+      end;
+
+      // Weight
+      if ItemWeight > 0 then begin
+        LbValueWeight.Caption := FormatFloat('####0.##', ItemWeight) + ' kg';
+        FLbList.Add(LbWeight);
+        FLbList.Add(LbValueWeight);
+      end;
+
+      // Volume
+      LbValueVolume.Caption := FormatFloat('####0.##', ItemVolume);
+      FLbList.Add(LbVolume);
+      FLbList.Add(LbValueVolume);
+
+      // Durability
+      if (ItemHp > 0) and (ItemDur > 0) then begin
+        LbValueDura.Caption := Format('%d/%d', [ItemHp, ItemDur]);
+        FLbList.Add(LbDura);
+        FLbList.Add(LbValueDura);
+      end;
+
+      // Color
+      if ItemColor <> icNone then begin
+        LbValueColor.Caption := GetColorName(ItemColor);
+        FLbList.Add(LbColor);
+        FLbList.Add(LbValueColor);
+      end;
+
+      // Equipements
+      if (ItemType = itEquipment) then begin
+        if CSpeed <> 0 then begin
+          LbValueSpeed.Caption := FloatToStr(CSpeed);
+          FLbList2.Add(LbAutoSpeed);
+          FLbList2.Add(LbValueSpeed);
         end;
+        if CRange <> 0 then begin
+          LbValueRange.Caption := FloatToStr(CRange);
+          FLbList2.Add(LbAutoRange);
+          FLbList2.Add(LbValueRange);
+        end;
+        if CDodgeModifier <> 0 then begin
+          LbValueDodge.Caption := IntToStr(CDodgeModifier);
+          FLbList2.Add(LbAutoDodge);
+          FLbList2.Add(LbValueDodge);
+        end;
+        if CParryModifier <> 0 then begin
+          LbValueParry.Caption := IntToStr(CParryModifier);
+          FLbList2.Add(LbAutoParry);
+          FLbList2.Add(LbValueParry);
+        end;
+        if CAdvDodgeModifier <> 0 then begin
+          LbValueAdvDodge.Caption := IntToStr(CAdvDodgeModifier);
+          FLbList2.Add(LbAutoAdvDodge);
+          FLbList2.Add(LbValueAdvDodge);
+        end;
+        if CAdvParryModifier <> 0 then begin
+          LbValueAdvParry.Caption := IntToStr(CAdvParryModifier);
+          FLbList2.Add(LbAutoAdvParry);
+          FLbList2.Add(LbValueAdvParry);
+        end;
+        if CFactorProt <> 0 then begin
+          LbValueFactorProt.Caption := FloatToStr(CFactorProt);
+          FLbList2.Add(LbAutoFactorProt);
+          FLbList2.Add(LbValueFactorProt);
+        end;
+        if CSlashingProt <> 0 then begin
+          LbValueSlashingProt.Caption := IntToStr(CSlashingProt);
+          FLbList2.Add(LbAutoSlashingProt);
+          FLbList2.Add(LbValueSlashingProt);
+        end;
+        if CSmashingProt <> 0 then begin
+          LbValueSmashingProt.Caption := IntToStr(CSmashingProt);
+          FLbList2.Add(LbAutoSmashingProt);
+          FLbList2.Add(LbValueSmashingProt);
+        end;
+        if CPiercingProt <> 0 then begin
+          LbValuePiercingProt.Caption := IntToStr(CPiercingProt);
+          FLbList2.Add(LbAutoPiercingProt);
+          FLbList2.Add(LbValuePiercingProt);
+        end;
+      end;
 
-        // Ecosystem
-        case ItemEcosys of
-          ieCommon: LbValueEcosys.Caption := CbEcoCommon.Caption;
-          iePrime: LbValueEcosys.Caption := CbEcoPrime.Caption;
-          ieDesert: LbValueEcosys.Caption := CbEcoDesert.Caption;
-          ieJungle: LbValueEcosys.Caption := CbEcoJungle.Caption;
-          ieForest: LbValueEcosys.Caption := CbEcoForest.Caption;
-          ieLakes: LbValueEcosys.Caption := CbEcoLakes.Caption;
-          ieUnknown: LbValueEcosys.Caption := '-';
+      // Materials
+      if (ItemType = itAnimalMat) or (ItemType = itNaturalMat) or (ItemType = itSystemMat) then begin
+        // Craft
+        if (Pos('m0312', ItemName) = 1) or (ItemType = itSystemMat) then begin
+          LbValueCraft.Caption := RS_CAT_ALL;
+          FLbList.Add(LbCraft);
+          FLbList.Add(LbValueCraft);
+        end else begin
+          if (ItemCategory1 > 0) and (ItemCategory2 > 0) then begin
+            LbValueCraft.Caption :=  GetCatName(ItemCategory1) + ', ' + GetCatName(ItemCategory2);
+            FLbList.Add(LbCraft);
+            FLbList.Add(LbValueCraft);
+          end;
         end;
 
         // Color
@@ -613,23 +700,22 @@ begin
             icChoice, icExcellent, icSupreme: wMatColor := MatColor2;
           end;
         end;
-        LbValueColor.Caption := GetColorName(wMatColor);
-
-        // Craft
-        case ItemEcosys of
-          ieCommon, iePrime: LbValueRace.Caption := RS_RACE_ALL;
-          ieDesert: LbValueRace.Caption := RS_RACE_FYROS;
-          ieJungle: LbValueRace.Caption := RS_RACE_ZORAI;
-          ieForest: LbValueRace.Caption := RS_RACE_MATIS;
-          ieLakes: LbValueRace.Caption := RS_RACE_TRYKER;
-          ieUnknown: LbValueRace.Caption := '-';
+      
+        if wMatColor > 0 then begin
+          LbValueColor.Caption := GetColorName(wMatColor);
+          FLbList.Add(LbColor);
+          FLbList.Add(LbValueColor);
         end;
 
-        PnCat1.Visible := (ItemCategory1 > 0);
-        PnCat2.Visible := (ItemCategory2 > 0);
+        // Race
+        if ItemEcosys <> ieUnknown then begin
+          LbValueRace.Caption := GetRaceName(Ord(ItemEcosys));
+          FLbList.Add(LbRace);
+          FLbList.Add(LbValueRace);
+        end;
 
         // Category 1
-        if PnCat1.Visible then begin
+        if ItemCategory1 >= 0 then begin
           wResName := Format('cat_%s', [LowerCase(_MAT_CATEGORY[ItemCategory1])]);
           FPngObject.LoadFromResourceName(HInstance, wResName);
           ImgCat1.Picture.Assign(FPngObject);
@@ -654,10 +740,10 @@ begin
               end;
             end;
           end;
-        end;
+        end; // Cat1
 
         // Category 2
-        if PnCat2.Visible then begin
+        if ItemCategory2 >= 0 then begin
           wResName := Format('cat_%s', [LowerCase(_MAT_CATEGORY[ItemCategory2])]);
           FPngObject.LoadFromResourceName(HInstance, wResName);
           ImgCat2.Picture.Assign(FPngObject);
@@ -667,7 +753,6 @@ begin
             TGauge(FindComponent(Format('GaugeCat2Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat2.Top := PnCat1.Top + PnCat1.Height + 1;
           PnCat2.Height := 35 + Length(MatSpec2)*15;
           for i := 0 to High(MatSpec2) do begin
             with FindComponent(Format('LbCat2Spec%d', [i+1])) as TLabel do begin
@@ -683,9 +768,135 @@ begin
               end;
             end;
           end;
-        end;
+        end; // Cat2
       end;
+
+      // Bonus
+      if ItemHpb > 0 then LbValueHpb.Caption := IntToStr(ItemHpb);
+      if ItemSab > 0 then LbValueSab.Caption := IntToStr(ItemSab);
+      if ItemStb > 0 then LbValueStb.Caption := IntToStr(ItemStb);
+      if ItemFob > 0 then LbValueFob.Caption := IntToStr(ItemFob);
+
+      // Sales
+      if ItemPrice > 0 then begin
+        LbValueContinent.Caption := ItemContinent;
+        LbValuePrice.Caption := Format('%s (%s)', [
+          FormatFloat('###,###,###,##0', ItemPrice),
+          FormatFloat('###,###,###,##0', ItemPrice*ItemQuantity)]);
+        wNow := Now;
+        wDays := DaysBetween(wNow, ItemTime);
+        wNow := IncDay(wNow, wDays);
+        wHours := HoursBetween(wNow, ItemTime);
+        wNow := IncHour(wNow, wHours);
+        wMinutes := MinutesBetween(wNow, ItemTime);
+        LbValueTime.Caption := Format('%d %s, %d %s %s %d %s', [wDays, RS_DAYS, wHours, RS_HOURS, RS_AND, wMinutes, RS_MINUTES]);
+      end;
+
+      //-----------------------------------------------
+
+      // Hide all labels
+      for i := 0 to PnInfo.ControlCount - 1 do begin
+        if PnInfo.Controls[i] is TLabel then TLabel(PnInfo.Controls[i]).Visible := False;
+      end;
+      for i := 0 to PnInfo2.ControlCount - 1 do begin
+        if PnInfo2.Controls[i] is TLabel then TLabel(PnInfo2.Controls[i]).Visible := False;
+      end;
+
+      // Height of info panels
+      PnInfo.Height := 8 + ((FLbList.Count div 2)*15);
+      PnInfo2.Height := 8 + ((FLbList2.Count div 2)*15);
+      if ItemBonus then PnInfo2.Height := PnInfo2.Height + 24;
+
+      // Bonus
+      ImgHpb.Visible := ItemHpb > 0;
+      ImgSab.Visible := ItemSab > 0;
+      ImgStb.Visible := ItemStb > 0;
+      ImgFob.Visible := ItemFob > 0;
+      LbValueHpb.Visible := ItemHpb > 0;
+      LbValueSab.Visible := ItemSab > 0;
+      LbValueStb.Visible := ItemStb > 0;
+      LbValueFob.Visible := ItemFob > 0;
+      ImgHpb.Top := PnInfo2.Height - 28;
+      ImgSab.Top := ImgHpb.Top;
+      ImgStb.Top := ImgHpb.Top;
+      ImgFob.Top := ImgHpb.Top;
+      LbValueHpb.Top := ImgHpb.Top + 6;
+      LbValueSab.Top := LbValueHpb.Top;
+      LbValueStb.Top := LbValueHpb.Top;
+      LbValueFob.Top := LbValueHpb.Top;
+      wLeft := 8;
+      if ItemHpb > 0 then begin
+        ImgHpb.Left := wLeft;
+        LbValueHpb.Left := wLeft + 28;
+        wLeft := wLeft + 68;
+      end;
+      if ItemSab > 0 then begin
+        ImgSab.Left := wLeft;
+        LbValueSab.Left := wLeft + 28;
+        wLeft := wLeft + 68;
+      end;
+      if ItemStb > 0 then begin
+        ImgStb.Left := wLeft;
+        LbValueStb.Left := wLeft + 28;
+        wLeft := wLeft + 68;
+      end;
+      if ItemFob > 0 then begin
+        ImgFob.Left := wLeft;
+        LbValueFob.Left := wLeft + 28;
+      end;
+
+      // Show labels used in panel Info
+      i := 0;
+      wTop := 5;
+      while i < FLbList.Count - 1 do begin
+        TLabel(FLbList.Items[i]).Visible := True;
+        TLabel(FLbList.Items[i+1]).Visible := True;
+        TLabel(FLbList.Items[i]).Top := wTop;
+        TLabel(FLbList.Items[i+1]).Top := wTop;
+        Inc(wTop, 15);
+        Inc(i, 2);
+      end;
+
+      // Show labels used in panel Info2
+      i := 0;
+      wTop := 5;
+      while i < FLbList2.Count - 1 do begin
+        TLabel(FLbList2.Items[i]).Visible := True;
+        TLabel(FLbList2.Items[i+1]).Visible := True;
+        TLabel(FLbList2.Items[i]).Top := wTop;
+        TLabel(FLbList2.Items[i+1]).Top := wTop;
+        Inc(wTop, 15);
+        Inc(i, 2);
+      end;
+
+      // Show panels
+      PnTitle.Visible := True;
+      PnInfo.Visible := True;
+      PnInfo2.Visible := ((FLbList2.Count > 0) or (ItemBonus));
+      PnSales.Visible := (ItemPrice > 0);
+      PnCat1.Visible := (ItemCategory1 >= 0);
+      PnCat2.Visible := (ItemCategory2 >= 0);
+      
+
+      // Changes the top
+      wTop := PnInfo.Top + PnInfo.Height + 2;
+
+      if PnInfo2.Visible then begin
+        PnInfo2.Top := wTop;
+        wTop := wTop + PnInfo2.Height + 2;
+      end;
+      
+      if PnSales.Visible then begin
+        PnSales.Top := wTop;
+        wTop := wTop + PnSales.Height + 2;
+      end;
+
+      PnCat1.Top := wTop;
+      PnCat2.Top := PnCat1.Top + PnCat1.Height + 2;
     end;
+  finally
+    FLbList.Clear;
+    FLbList2.Clear;
   end;
 end;
 
@@ -695,31 +906,12 @@ Initialize info
 procedure TFormRoomFilter.InitInfo;
 begin
   FCurrentItem := nil;
-  ImgItem.Visible := False;
-  ImgMat.Visible := False;
-  LbValueQuality2.Caption := '';
-  LbValueClass2.Caption := '';
-  LbValueEcosys2.Caption := '';
-  LbValueVolume.Caption := '';
-  LbValueDura.Caption := '';
-  LbValueCraft.Caption := '';
-  LbValuePrice.Caption := '';
-  LbValueTime.Caption := '';
-  LbValueContinent.Caption := '';
-  LbValueQuality.Caption := '';
-  LbValueClass.Caption := '';
-  LbValueEcosys.Caption := '';
-  LbValueColor.Caption := '';
-  LbValueRace.Caption := '';
+  PnTitle.Visible := False;
+  PnInfo.Visible := False;
+  PnInfo2.Visible := False;
+  PnSales.Visible := False;
   PnCat1.Visible := False;
   PnCat2.Visible := False;
-  PnInfo.Height := 100;
-  PnSales.Visible := False;
-  ImgSkin1.Visible := False;
-  ImgSkin2.Visible := False;
-  ImgSkin3.Visible := False;
-  PnTitle.Caption := '';
-  PnTitle2.Caption := '';
 end;
 
 {*******************************************************************************
@@ -730,11 +922,12 @@ var
   i: Integer;
 begin
   FPngObject := TPNGObject.Create;
+  FLbList := TObjectList.Create(False);
+  FLbList2 := TObjectList.Create(False);
   DoubleBuffered := True;
   PageControl.DoubleBuffered := True;
   TabFilter.DoubleBuffered := True;
   TabInfo.DoubleBuffered := True;
-  TabCraft.DoubleBuffered := True;
 
   for i := 0 to ComponentCount - 1 do begin
     if Components[i] is TPanel then TPanel(Components[i]).DoubleBuffered := True;
@@ -743,6 +936,11 @@ begin
     if Components[i] is TSpinEdit then TSpinEdit(Components[i]).DoubleBuffered := True;
     if Components[i] is TRadioButton then TRadioButton(Components[i]).DoubleBuffered := True;
   end;
+
+  PnCat1.Parent := TabInfo;
+  PnCat2.Parent := TabInfo;
+  PnSales.Parent := TabInfo;
+  TabTemp.TabVisible := False;
 end;
 
 {*******************************************************************************
@@ -751,6 +949,8 @@ Destroys the form
 procedure TFormRoomFilter.FormDestroy(Sender: TObject);
 begin
   FPngObject.Free;
+  FLbList.Free;
+  FLbList2.Free;
 end;
 
 {*******************************************************************************

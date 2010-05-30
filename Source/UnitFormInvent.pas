@@ -35,7 +35,7 @@ resourcestring
 
 type
   TFormInvent = class(TForm)
-    PnFilter: TPanel;
+    PnFilter1: TPanel;
     PnInvent: TPanel;
     TabInvent: TTabControl;
     CharInvent: TScrollRoom;
@@ -88,7 +88,7 @@ Display the form
 *******************************************************************************}
 procedure TFormInvent.FormShow(Sender: TObject);
 begin
-  FormRoomFilter.Parent := PnFilter;
+  FormRoomFilter.Parent := PnFilter1;
   FormRoomFilter.Show;
   UpdateLanguage;
 end;
@@ -186,7 +186,7 @@ begin
         wMaxVolume := '' // sales
       else
         if FMountID < 2 then
-          wMaxVolume := '/-' // mount unfound
+          wMaxVolume := '' // mount unfound
         else
           if TabInvent.TabIndex = FMountID then
             wMaxVolume := '/100' // mount

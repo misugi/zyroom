@@ -224,7 +224,7 @@ object FormMain: TFormMain
       OnClick = LbServerClick
     end
     object ImgUpdate: TImage
-      Left = 272
+      Left = 270
       Top = 2
       Width = 24
       Height = 24
@@ -273,7 +273,7 @@ object FormMain: TFormMain
       OnClick = ImgUpdateClick
     end
     object BtOptions: TButton
-      Left = 5
+      Left = 3
       Top = 3
       Width = 75
       Height = 23
@@ -288,7 +288,7 @@ object FormMain: TFormMain
       OnClick = BtOptionsClick
     end
     object BtGuild: TButton
-      Left = 88
+      Left = 86
       Top = 3
       Width = 75
       Height = 23
@@ -297,7 +297,7 @@ object FormMain: TFormMain
       OnClick = BtGuildClick
     end
     object BtCharacter: TButton
-      Left = 171
+      Left = 169
       Top = 3
       Width = 94
       Height = 23

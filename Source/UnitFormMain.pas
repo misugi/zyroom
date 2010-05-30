@@ -101,6 +101,7 @@ Creates the form
 *******************************************************************************}
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  DecimalSeparator := '.';
   DoubleBuffered := True;
   StatusBar.DoubleBuffered := True;
   PnHeader.DoubleBuffered := True;
@@ -178,7 +179,6 @@ begin
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
 
   // Check version
-  Self.Caption := 'zyRoom by Misugi';
   StatusBar.Panels.Items[4].Text := RS_VERSION + ' ' + GConfig.Version;
   ImgUpdate.Hint := RS_NEW_VERSION;
   if GConfig.CheckVersion(FFileUrl) then begin
@@ -321,6 +321,7 @@ begin
   ShowMenuForm(FormGuild);
   BtGuild.Font.Style := [fsBold];
   BtCharacter.Font.Style := [];
+  Constraints.MinHeight := 635;
 end;
 
 {*******************************************************************************
@@ -331,6 +332,7 @@ begin
   ShowMenuForm(FormCharacter);
   BtGuild.Font.Style := [];
   BtCharacter.Font.Style := [fsBold];
+  Constraints.MinHeight := 635;
 end;
 
 {*******************************************************************************
@@ -404,7 +406,7 @@ var
   wSeason: String;
   wDayOfSeason: Integer;
   wTimeOfDay: Integer;
-  wDays, wHours, wMinutes: Integer;
+  wMinutes: Integer;
   wNextSeason: TDateTime;
 begin
   wStream := TMemoryStream.Create;
@@ -430,15 +432,6 @@ begin
     wNextSeason := IncMinute(Now, wMinutes);
     StatusBar.Panels.Items[3].Text := Format('%s %s %s %s', [
       RS_NEXT_SEASON, DateToStr(wNextSeason), RS_AT, FormatDateTime('hh:nn', wNextSeason)]);
-(*
-    wDays := wMinutes div 1440;
-    wMinutes := wMinutes - (wDays*1440);
-    wHours := wMinutes div 60;
-    wMinutes := wMinutes - (wHours*60);
-    StatusBar.Panels.Items[3].Text := Format('%d''%.2d:%.2d', [wDays, wHours, wMinutes]);
-    wNextSeason := IncDay(IncHour(IncMinute(Now, wMinutes), wHours), wDays);
-    StatusBar.Panels.Items[4].Text := DateTimeToStr(wNextSeason);
-*)
   finally
     wXmlDoc.Free;
     wStream.Free;

@@ -105,7 +105,7 @@ object FormCharacter: TFormCharacter
       OnClick = BtDownClick
     end
     object BtUp: TSpeedButton
-      Left = 357
+      Left = 353
       Top = 0
       Width = 17
       Height = 23

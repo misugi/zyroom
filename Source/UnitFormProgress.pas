@@ -488,48 +488,51 @@ Returns a sorting prefix
 *******************************************************************************}
 function TFormProgress.GetSortPrefix(AItemInfo: TItemInfo): String;
 begin
-  // Sales
-(*
-  if AItemInfo.ItemPrice > 0 then begin
-    Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
-    Exit;
+  Result := '';
+  case GCurrentFilter.Sorting of
+    ioEcosys: Result := IntToStr(Ord(AItemInfo.ItemEcosys));
+    ioClass: Result := IntToStr(Ord(AItemInfo.ItemClass));
+    ioQuality: Result := Format('%.3d', [AItemInfo.ItemQuality]);
+    ioVolume: Result := FormatFloat('0000.00', AItemInfo.ItemVolume);
+    ioPrice: if AItemInfo.ItemPrice > 0 then Result := FormatFloat('00000000', AItemInfo.ItemPrice);
+    ioTime: if AItemInfo.ItemPrice > 0 then Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
   end;
-*)
-
-  // Else
+    
   case AItemInfo.ItemType of
     itEquipment: begin
       case AItemInfo.ItemEquip of
-        iqLightArmor: Result := '01';
-        iqMediumArmor: Result := '02';
-        iqHeavyArmor: Result := '03';
+        iqLightArmor: Result := Result + '01';
+        iqMediumArmor: Result := Result + '02';
+        iqHeavyArmor: Result := Result + '03';
         iqWeaponMelee: begin
           case AItemInfo.ItemWeapon of
-            iwOneHand: Result := '041';
-            iwTwoHands: Result := '042';
+            iwOneHand: Result := Result + '041';
+            iwTwoHands: Result := Result + '042';
           end;
         end;
-        iqAmplifier: Result := '05';
+        iqAmplifier: Result := Result + '05';
         iqWeaponRange: begin
           case AItemInfo.ItemWeapon of
-            iwOneHand: Result := '061';
-            iwTwoHands: Result := '062';
+            iwOneHand: Result := Result + '061';
+            iwTwoHands: Result := Result + '062';
           end;
         end;
-        iqShield: Result := '070';
-        iqBuckler: Result := '071';
-        iqAmmo: Result := '072';
-        iqOthers: Result := '08';
-        iqJewel: Result := '09';
+        iqShield: Result := Result + '070';
+        iqBuckler: Result := Result + '071';
+        iqAmmo: Result := Result + '072';
+        iqTool: Result := Result + '073';
+        iqOther: Result := Result + '08';
+        iqJewel: Result := Result + '09';
       end;
     end;
-    itNaturalMat, itAnimalMat: begin
-      Result := '10' + Format('%.2d', [AItemInfo.ItemCategory1]);
-      if Pos('m0312', AItemInfo.ItemName) = 1 then Result := '1099'; {larva}
+    itNaturalMat, itAnimalMat, itSystemMat: begin
+      Result := Result + '10' + Format('%.2d', [AItemInfo.ItemCategory1]);
+      if Pos('m0312', AItemInfo.ItemName) = 1 then Result := Result + '1098'; {larva}
+      if Pos('system_mp', AItemInfo.ItemName) = 1 then Result := Result + '1099'; {system mp}
     end;
-    itTool: Result := '14';
-    itOthers: Result := '15';
-    itCata: Result := '16';
+    itTeleporter: Result := Result + '14';
+    itOther: Result := Result + '15';
+    itCata: Result := Result + '16';
   end;
 end;
 

@@ -1,6 +1,16 @@
 zyRoom - History of changes
 ===========================
 
+# version 2.1.0 (2010-05-XX)
+New: new filters for sales, tools, shields and bonus !
+New: it is now possible to change the sorting of items !
+New: additional information for items !
+Change: tabs Information and Craft were merged in one only tab for a better view !
+Change: a background color for the item title to indicate ecosystem of the item
+Change: appearance of the filter window
+Fixed: if expired date is passed for a sale item, the item is not displayed
+Fixed: larva and generic materials are now correctly managed
+
 # version 2.0.0 (2010-05-24)
 New: characteristics of craft materials !!!
 Change: Arial font for the entire application

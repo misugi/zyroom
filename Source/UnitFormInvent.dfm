@@ -16,7 +16,7 @@ object FormInvent: TFormInvent
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
-  object PnFilter: TPanel
+  object PnFilter1: TPanel
     Left = 0
     Top = 0
     Width = 285

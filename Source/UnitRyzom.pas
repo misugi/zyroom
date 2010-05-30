@@ -63,6 +63,7 @@ resourcestring
   RS_SPEC_LAKES_RESIST = 'Résistance lacs';
   RS_SPEC_JUNGLE_RESIST = 'Résistance jungle';
   RS_SPEC_PRIME_RESIST = 'Résistance primes racines';
+  RS_SPEC_ALL = 'Toute caractéristique';
 
   RS_CAT_BLADE = 'Lame';
   RS_CAT_POINT = 'Pointe';
@@ -84,6 +85,7 @@ resourcestring
   RS_CAT_CLOTHES = 'Vêtements';
   RS_CAT_JEWEL = 'Bijou';
   RS_CAT_MAGICFOCUS = 'Concentration magique';
+  RS_CAT_ALL = 'Toute catégorie';
 
   RS_COLOR_BEIGE = 'Beige';
   RS_COLOR_BLACK = 'Noir';
@@ -100,21 +102,28 @@ resourcestring
   RS_CLASS_EXCELLENT = 'Excellent';
   RS_CLASS_SUPREME = 'Suprême';
 
-  RS_RACE_ALL = 'Toutes les races';
+  RS_RACE_ALL = 'Toute race';
   RS_RACE_FYROS = 'Fyros';
   RS_RACE_ZORAI = 'Zoraï';
   RS_RACE_TRYKER = 'Tryker';
   RS_RACE_MATIS = 'Matis';
 
+  RS_ECOSYS_COMMON = 'Commun';
+  RS_ECOSYS_PRIME = 'Primes racines';
+  RS_ECOSYS_DESERT = 'Désert';
+  RS_ECOSYS_JUNGLE = 'Jungle';
+  RS_ECOSYS_FOREST = 'Forêt';
+  RS_ECOSYS_LAKES = 'Lacs';
+
   RS_VOLUME = 'Volume';
 
 const
-  _MAT_CATEGORY : array [0..20] of String = ('Unknown', 'Blade', 'Point', 'Hammer', 'Counterweight',
+  _MAT_CATEGORY : array [0..20] of String = ('All', 'Blade', 'Point', 'Hammer', 'Counterweight',
     'Shaft', 'AmmoBullet', 'Barrel', 'ArmorShell', 'AmmoJacket', 'Lining', 'Explosive', 'Stuffing',
     'FiringPin', 'ArmorClip', 'Trigger', 'JewelSettings', 'Grip', 'Clothes', 'Jewel', 'MagicFocus');
 
   _MAT_SPEC : array [0..34] of String =
-  ('Unknown', 'Durability', 'Lightness', 'Sap Load', 'Damage', 'Speed', 'Range', 'Dodge Modifier', 'Parry Modifier',
+  ('All', 'Durability', 'Lightness', 'Sap Load', 'Damage', 'Speed', 'Range', 'Dodge Modifier', 'Parry Modifier',
   'Adversary Dodge Modifier', 'Adversary Parry Modifier', 'Protection Factor', 'Max. Slashing Protection',
   'Max. Smashing Protection', 'Max. Piercing Protection', 'Acid Protection', 'Cold Protection',
   'Rot Protection', 'Fire Protection', 'Shockwave Protection', 'Poison Protection', 'Electricity Protection',
@@ -128,10 +137,10 @@ const
 
   _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([b-f])01\.sitem';
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-e])01\.sitem';
+  _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_)(\w*)\.sitem';
   _EXPR_TOOL = '^(icoka[rm]t|sfxitforage|it).*\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
   _EXPR_EQUIPMENT_ARMOR = '^ic.a([lmhc]).*';
-  _EXPR_EQUIPMENT_ARMOR_DRESS = 'ika[rm]acp_ep';
   _EXPR_EQUIPMENT_SHIELD = '^ic(.|ka[rm])s([bs]).*';
   _EXPR_EQUIPMENT_AMPLIFIER = '^ic.+m2ms.*';
   _EXPR_EQUIPMENT_WEAPON = '^ic.+([rm])([12])(.{2}).*';
@@ -139,28 +148,36 @@ const
   _EXPR_EQUIPMENT_JEWEL = '^ic.j.*';
   
 type
-  TItemType =(itAnimalMat, itNaturalMat, itCata, itEquipment, itTool, itOthers);
-  TItemTypes = set of TItemType;
+  TItemType =(itAnimalMat, itNaturalMat, itSystemMat, itCata, itEquipment, itTeleporter, itOther);
+  TItemTypeSet = set of TItemType;
   TItemClass = (icBasic, icFine, icChoice, icExcellent, icSupreme, icUnknown);
   TItemEcosystem = (ieCommon, iePrime, ieDesert, ieJungle, ieForest, ieLakes, ieUnknown);
-  TItemEcosystems = set of TItemEcosystem;
-  TItemEquip = (iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqAmplifier, iqJewel, iqBuckler, iqShield, iqAmmo, iqOthers);
+  TItemEcosystemSet = set of TItemEcosystem;
+  TItemEquip = (iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqAmplifier, iqJewel, iqBuckler, iqShield, iqTool, iqAmmo, iqOther);
   TItemWeapon = (iwOneHand, iwTwoHands);
   TItemSkin = (isSkin1, isSkin2, isSkin3, isNoSkin);
-  TItemEquips = set of TItemEquip;
+  TItemEquipSet = set of TItemEquip;
+  TItemSorting = (ioType, ioEcosys, ioClass, ioQuality, ioVolume, ioPrice, ioTime);
+  TItemBonus = (ibHp, ibSab, ibStamina, ibFocus);
+  TItemBonusSet = set of TItemBonus;
 
   TItemFilter = record
     Enabled: Boolean;
-    Type_: TItemTypes;
+    Type_: TItemTypeSet;
     QualityMin: Integer;
     QualityMax: Integer;
     ClassMin: TItemClass;
     ClassMax: TItemClass;
-    Ecosystem: TItemEcosystems;
+    Ecosystem: TItemEcosystemSet;
     ItemName: String;
     AllWords: Boolean;
-    Equipment: TItemEquips;
+    Equipment: TItemEquipSet;
     CategoryIndex: Integer;
+    Continent: String;
+    PriceMin: Integer;
+    PriceMax: Integer;
+    Bonus: TItemBonusSet;
+    Sorting: TItemSorting;
   end;
   
   TItemInfo = class(TObject)
@@ -187,6 +204,8 @@ type
     ItemSab: Integer;
     ItemStb: Integer;
     ItemFob: Integer;
+    ItemBonus: Boolean;
+    ItemWeight: Double;
     ItemVolume: Double;
     ItemPrice: Double;
     ItemQuantity: Integer;
@@ -197,7 +216,18 @@ type
     MatColor3: Integer;
     MatSpec1: array of array [0..1] of Integer;
     MatSpec2: array of array [0..1] of Integer;
+    CSpeed: Double;
+    CRange: Double;
+    CDodgeModifier: Integer;
+    CParryModifier: Integer;
+    CAdvDodgeModifier: Integer;
+    CAdvParryModifier: Integer;
+    CFactorProt: Double;
+    CSlashingProt: Integer;
+    CSmashingProt: Integer;
+    CPiercingProt: Integer;
 
+    constructor Create;
     destructor Destroy; override;
   end;
 
@@ -227,8 +257,11 @@ type
 
   function GetSpecName(AIndex: Integer): String;
   function GetCatName(AIndex: Integer): String;
-  function GetColorName(AIndex: Integer): String;
+  function GetColorName(AIndex: Integer): String; overload;
+  function GetColorName(AColor: TItemColor): String; overload;
   function GetClassName(AIndex: Integer): String;
+  function GetEcosysName(AIndex: Integer): String;
+  function GetRaceName(AIndex: Integer): String;
 
 var
   GRyzomApi: TRyzom;
@@ -246,7 +279,7 @@ Returns the specification name
 function GetSpecName(AIndex: Integer): String;
 begin
   case AIndex of
-    0: Result := '-';
+    0: Result := RS_SPEC_ALL;
     1: Result := RS_SPEC_DURABILITY;
     2: Result := RS_SPEC_LIGHTNESS;
     3: Result := RS_SPEC_SAPLOAD;
@@ -290,7 +323,7 @@ Returns the category name
 function GetCatName(AIndex: Integer): String;
 begin
   case AIndex of
-    0: Result := '-';
+    0: Result := RS_CAT_ALL;
     1: Result := RS_CAT_BLADE;
     2: Result := RS_CAT_POINT;
     3: Result := RS_CAT_HAMMER;
@@ -333,6 +366,24 @@ begin
 end;
 
 {*******************************************************************************
+Returns the color name
+*******************************************************************************}
+function GetColorName(AColor: TItemColor): String;
+begin
+  case AColor of
+    icNone: Result := '-';
+    icBeige: Result := RS_COLOR_BEIGE;
+    icBlack: Result := RS_COLOR_BLACK;
+    icBlue: Result := RS_COLOR_BLUE;
+    icGreen: Result := RS_COLOR_GREEN;
+    icPurple: Result := RS_COLOR_PURPLE;
+    icRed: Result := RS_COLOR_RED;
+    icTurquoise: Result := RS_COLOR_TURQUOISE;
+    icWhite: Result := RS_COLOR_WHITE;
+  end;
+end;
+
+{*******************************************************************************
 Returns the class name
 *******************************************************************************}
 function GetClassName(AIndex: Integer): String;
@@ -343,6 +394,36 @@ begin
     2: Result := RS_CLASS_CHOICE;
     3: Result := RS_CLASS_EXCELLENT;
     4: Result := RS_CLASS_SUPREME;
+  end;
+end;
+
+{*******************************************************************************
+Returns the ecosystem name
+*******************************************************************************}
+function GetEcosysName(AIndex: Integer): String;
+begin
+  case AIndex of
+    0: Result := RS_ECOSYS_COMMON;
+    1: Result := RS_ECOSYS_PRIME;
+    2: Result := RS_ECOSYS_DESERT;
+    3: Result := RS_ECOSYS_JUNGLE;
+    4: Result := RS_ECOSYS_FOREST;
+    5: Result := RS_ECOSYS_LAKES;
+  end;
+end;
+
+{*******************************************************************************
+Returns the race name
+*******************************************************************************}
+function GetRaceName(AIndex: Integer): String;
+begin
+  case AIndex of
+    0: Result := RS_RACE_ALL;
+    1: Result := RS_RACE_ALL;
+    2: Result := RS_RACE_FYROS;
+    3: Result := RS_RACE_ZORAI;
+    4: Result := RS_RACE_MATIS;
+    5: Result := RS_RACE_TRYKER;
   end;
 end;
 
@@ -383,17 +464,6 @@ procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
   wNode: TXpNode;
 begin
-  // Default values
-  AItemInfo.ItemColor := icNone;
-  AItemInfo.ItemQuality := -1;
-  AItemInfo.ItemSize := -1;
-  AItemInfo.ItemSap := -1;
-  AItemInfo.ItemDestroyed := False;
-  AItemInfo.ItemClass := icUnknown;
-  AItemInfo.ItemHp := 0;
-  AItemInfo.ItemPrice := 0;
-  AItemInfo.ItemQuantity := 1;
-  
   // Name
   AItemInfo.ItemName := ANode.Text;
 
@@ -404,6 +474,10 @@ begin
   // Quality
   wNode := ANode.Attributes.GetNamedItem('q');
   if Assigned(wNode) then AItemInfo.ItemQuality := StrToInt(wNode.NodeValue);
+
+  // Weight
+  wNode := ANode.Attributes.GetNamedItem('w');
+  if Assigned(wNode) then AItemInfo.ItemWeight := StrToFloat(wNode.NodeValue);
 
   // Size
   wNode := ANode.Attributes.GetNamedItem('s');
@@ -440,6 +514,8 @@ begin
   wNode := ANode.Attributes.GetNamedItem('fob');
   if Assigned(wNode) then AItemInfo.ItemFob := StrToInt(wNode.NodeValue);
 
+  AItemInfo.ItemBonus := (AItemInfo.ItemHpb+AItemInfo.ItemSab+AItemInfo.ItemStb+AItemInfo.ItemFob) > 0;
+
   // Energy
   wNode := ANode.Attributes.GetNamedItem('e');
   if Assigned(wNode) then begin
@@ -472,6 +548,28 @@ begin
   // Since
   wNode := ANode.Attributes.GetNamedItem('in_sell_since');
   if Assigned(wNode) then AItemInfo.ItemTime := IncHour(IncDay(UnixToDateTime(StrToInt64(wNode.NodeValue)), 7), 2);
+
+  // Specifications
+  wNode := ANode.Attributes.GetNamedItem('hr');
+  if Assigned(wNode) then AItemInfo.CSpeed := StrToFloat(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('r');
+  if Assigned(wNode) then AItemInfo.CRange := StrToFloat(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('dm');
+  if Assigned(wNode) then AItemInfo.CDodgeModifier := StrToInt(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('pm');
+  if Assigned(wNode) then AItemInfo.CParryModifier := StrToInt(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('adm');
+  if Assigned(wNode) then AItemInfo.CAdvDodgeModifier := StrToInt(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('apm');
+  if Assigned(wNode) then AItemInfo.CAdvParryModifier := StrToInt(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('pf');
+  if Assigned(wNode) then AItemInfo.CFactorProt := StrToFloat(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('msp');
+  if Assigned(wNode) then AItemInfo.CSlashingProt := StrToInt(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('mbp');
+  if Assigned(wNode) then AItemInfo.CSmashingProt := StrToInt(wNode.NodeValue);
+  wNode := ANode.Attributes.GetNamedItem('mpp');
+  if Assigned(wNode) then AItemInfo.CPiercingProt := StrToInt(wNode.NodeValue);
 
   // Image filename
   AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s',
@@ -507,7 +605,7 @@ Sets the default filter for items
 procedure TRyzom.SetDefaultFilter(var AFilter: TItemFilter);
 begin
   AFilter.Enabled := True;
-  AFilter.Type_ := [itAnimalMat, itNaturalMat, itCata, itEquipment, itTool, itOthers];
+  AFilter.Type_ := [itAnimalMat, itNaturalMat, itSystemMat, itCata, itEquipment, itTeleporter, itOther];
   AFilter.QualityMin := _MIN_QUALITY;
   AFilter.QualityMax := _MAX_QUALITY;
   AFilter.ClassMin := icBasic;
@@ -515,8 +613,13 @@ begin
   AFilter.Ecosystem := [ieCommon, iePrime, ieDesert, ieJungle, ieForest, ieLakes];
   AFilter.ItemName := '';
   AFilter.AllWords := True;
-  AFilter.Equipment := [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqJewel, iqAmplifier, iqBuckler, iqShield, iqAmmo, iqOthers];
+  AFilter.Equipment := [];
   AFilter.CategoryIndex := 0;
+  AFilter.Continent := '';
+  AFilter.PriceMin := 0;
+  AFilter.PriceMax := 0;
+  AFilter.Bonus := [];
+  AFilter.Sorting := ioType;
 end;
 
 {*******************************************************************************
@@ -530,9 +633,6 @@ var
   i: Integer;
 begin
   wCoef := 0.0;
-  AItemInfo.ItemType := itOthers;
-  AItemInfo.ItemEcosys := ieUnknown;
-  AItemInfo.ItemSkin := isNoSkin;
 
   // Catalyzer
   if Pos('ixpca01', AItemInfo.ItemName) = 1 then begin
@@ -540,17 +640,24 @@ begin
     wCoef := 0.01;
   end;
 
+  // Teleporters
+  if Pos('tp_ka', AItemInfo.ItemName) = 1 then begin
+    AItemInfo.ItemType := itTeleporter;
+    wCoef := 0.2;
+  end;
+
   // Tool
-  if AItemInfo.ItemType = itOthers then begin
+  if AItemInfo.ItemType = itOther then begin
     GRegExpr.Expression := _EXPR_TOOL;
     if GRegExpr.Exec(AItemInfo.ItemName) and (Pos('item_sap_recharge', AItemInfo.ItemName) <> 1) then begin
-      AItemInfo.ItemType := itTool;
+      AItemInfo.ItemType := itEquipment;
+      AItemInfo.ItemEquip := iqTool;
       wCoef := 10.0;
     end;
   end;
   
   // Equipment
-  if AItemInfo.ItemType = itOthers then begin
+  if AItemInfo.ItemType = itOther then begin
     GRegExpr.Expression := _EXPR_EQUIPMENT;
     if GRegExpr.Exec(AItemInfo.ItemName) then begin
       AItemInfo.ItemType := itEquipment;
@@ -569,10 +676,8 @@ begin
         51: AItemInfo.ItemSkin := isSkin3; {3 = skin3}
       end;
 
-      AItemInfo.ItemEquip := iqOthers;
-    
       // Shield
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         GRegExpr.Expression := _EXPR_EQUIPMENT_SHIELD;
         if GRegExpr.Exec(AItemInfo.ItemName) then begin
           case Ord(GRegExpr.Match[2][1]) of
@@ -589,7 +694,7 @@ begin
       end;
 
       // Armor
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         GRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
         if GRegExpr.Exec(AItemInfo.ItemName) then begin
           case Ord(GRegExpr.Match[1][1]) of
@@ -604,7 +709,7 @@ begin
       end;
 
       // Amplifier
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         GRegExpr.Expression := _EXPR_EQUIPMENT_AMPLIFIER;
         if GRegExpr.Exec(AItemInfo.ItemName) then begin
           AItemInfo.ItemEquip := iqAmplifier;
@@ -613,7 +718,7 @@ begin
       end;
 
       // Weapon
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         GRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
         if GRegExpr.Exec(AItemInfo.ItemName) then begin
           case Ord(GRegExpr.Match[1][1]) of
@@ -657,7 +762,7 @@ begin
       end;
 
       // Ammo
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         GRegExpr.Expression := _EXPR_EQUIPMENT_AMMO;
         if GRegExpr.Exec(AItemInfo.ItemName) then begin
           AItemInfo.ItemEquip := iqAmmo;
@@ -675,7 +780,7 @@ begin
       end;
 
       // Jewel
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         GRegExpr.Expression := _EXPR_EQUIPMENT_JEWEL;
         if GRegExpr.Exec(AItemInfo.ItemName) then begin
           AItemInfo.ItemEquip := iqJewel;
@@ -684,7 +789,7 @@ begin
       end;
 
       // Others
-      if AItemInfo.ItemEquip = iqOthers then begin
+      if AItemInfo.ItemEquip = iqOther then begin
         if Pos('icra', AItemInfo.ItemName) = 1 then wCoef := 7.0; // refugee
         if Pos('ic_candy_stick', AItemInfo.ItemName) = 1 then wCoef := 30.0;
       end;
@@ -692,7 +797,7 @@ begin
   end;
 
   // Natural materials
-  if AItemInfo.ItemType = itOthers then begin
+  if AItemInfo.ItemType = itOther then begin
     GRegExpr.Expression := _EXPR_NATURAL_MAT;
     if GRegExpr.Exec(AItemInfo.ItemName) then begin
       AItemInfo.ItemType := itNaturalMat;
@@ -701,7 +806,7 @@ begin
   end;
 
   // Animal materials
-  if AItemInfo.ItemType = itOthers then begin
+  if AItemInfo.ItemType = itOther then begin
     GRegExpr.Expression := _EXPR_ANIMAL_MAT;
     if GRegExpr.Exec(AItemInfo.ItemName) then begin
       AItemInfo.ItemType := itAnimalMat;
@@ -712,15 +817,11 @@ begin
   // Natural and Animal
   if (AItemInfo.ItemType = itNaturalMat) or (AItemInfo.ItemType = itAnimalMat) then begin
     // Categories
-    AItemInfo.ItemCategory1 := 0;
-    AItemInfo.ItemCategory2 := 0;
-    AItemInfo.MatColor1 := 0;
-    AItemInfo.MatColor2 := 0;
-    AItemInfo.MatColor3 := 0;
     wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
     if wIndex >= 0 then begin
       AItemInfo.ItemCategory1 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex], 1, 2));
-      AItemInfo.ItemCategory2 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex+1], 1, 2));
+      if Pos('m0312', AItemInfo.ItemName) = 0 then
+        AItemInfo.ItemCategory2 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex+1], 1, 2));
       AItemInfo.MatColor1 := StrToInt(FCatStrings.ValueFromIndex[wIndex][3]);
       AItemInfo.MatColor2 := StrToInt(FCatStrings.ValueFromIndex[wIndex][4]);
       AItemInfo.MatColor3 := StrToInt(FCatStrings.ValueFromIndex[wIndex][5]);
@@ -739,16 +840,18 @@ begin
       end;
 
       // Specifications for category 2
-      FRegExpr.InputString := FCatStrings.ValueFromIndex[wIndex+1];
-      FRegExpr.Expression := '(\d\d)(\d)';
-      i := 0;
-      wFound := FRegExpr.Exec(6);
-      while wFound do begin
-        Inc(i);
-        SetLength(AItemInfo.MatSpec2, i);
-        AItemInfo.MatSpec2[i-1][0] := StrToInt(FRegExpr.Match[1]);
-        AItemInfo.MatSpec2[i-1][1] := StrToInt(FRegExpr.Match[2]);
-        wFound := FRegExpr.ExecNext;
+      if AItemInfo.ItemCategory2 > 0 then begin
+        FRegExpr.InputString := FCatStrings.ValueFromIndex[wIndex+1];
+        FRegExpr.Expression := '(\d\d)(\d)';
+        i := 0;
+        wFound := FRegExpr.Exec(6);
+        while wFound do begin
+          Inc(i);
+          SetLength(AItemInfo.MatSpec2, i);
+          AItemInfo.MatSpec2[i-1][0] := StrToInt(FRegExpr.Match[1]);
+          AItemInfo.MatSpec2[i-1][1] := StrToInt(FRegExpr.Match[2]);
+          wFound := FRegExpr.ExecNext;
+        end;
       end;
     end;
 
@@ -786,9 +889,8 @@ begin
   end;
 
   // Others
-  if AItemInfo.ItemType = itOthers then begin
+  if AItemInfo.ItemType = itOther then begin
     if Pos('pre_order', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-    if Pos('tp_', AItemInfo.ItemName) = 1 then wCoef := 0.2; // teleporter
     if Pos('teddyubo', AItemInfo.ItemName) = 1 then wCoef := 5.0;
     if Pos('louche', AItemInfo.ItemName) = 1 then wCoef := 5.0;
     if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower
@@ -799,12 +901,40 @@ begin
     if Pos('if3', AItemInfo.ItemName) = 1 then wCoef := 30.0; // food small
 
     // Kara/Kami dress
-    GRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR_DRESS;
-    if GRegExpr.Exec(AItemInfo.ItemName) then begin
+    if (Pos('ikaracp_ep', AItemInfo.ItemName) = 1) or
+       (Pos('ikamacp_ep', AItemInfo.ItemName) = 1) then begin
       AItemInfo.ItemType := itEquipment;
       AItemInfo.ItemEquip := iqLightArmor;
       AItemInfo.ItemEcosys := ieCommon;
+      AItemInfo.ItemClass := icSupreme;
+      AItemInfo.ItemSkin := isSkin3;
       wCoef := 7.0;
+    end;
+
+    // System materials
+    GRegExpr.Expression := _EXPR_SYSTEM_MAT;
+    if GRegExpr.Exec(AItemInfo.ItemName) then begin
+      AItemInfo.ItemType := itSystemMat;
+      AItemInfo.ItemEcosys := ieCommon;
+      AItemInfo.ItemCategory1 := 0;
+      SetLength(AItemInfo.MatSpec1, 1);
+      AItemInfo.MatSpec1[0][0] := 0;
+      AItemInfo.MatColor1 := 1;
+      if CompareText(GRegExpr.Match[1], 'mp_kami_ep2_') = 0 then
+        AItemInfo.MatColor1 := 8;
+
+      AItemInfo.ItemClass := icBasic;
+      if GRegExpr.Match[2] <> '' then begin
+        if Pos('fine', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icFine;
+        if Pos('choice', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icChoice;
+        if Pos('excellent', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icExcellent;
+        if Pos('supreme', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icSupreme;
+        AItemInfo.MatSpec1[0][1] := 2;
+      end else begin
+        AItemInfo.MatSpec1[0][1] := 1;
+      end;
+
+      wCoef := 0;
     end;
   end;
 
@@ -827,6 +957,9 @@ begin
 
   // If not type then Exit
   if AFilter.Type_ = [] then Exit;
+
+  // Item for sale but now > expired date
+  if (AItemInfo.ItemPrice > 0) and (Now > AItemInfo.ItemTime) then Exit;
 
   // Quality
   if (AItemInfo.ItemQuality < AFilter.QualityMin) or (AItemInfo.ItemQuality > AFilter.QualityMax) then Exit;
@@ -856,13 +989,12 @@ begin
   if not (AItemInfo.ItemType in AFilter.Type_) then Exit;
 
   // Materials and equipment
-  if AItemInfo.ItemType in [itAnimalMat, itNaturalMat, itEquipment] then begin
+  if (AItemInfo.ItemEquip <> iqTool) and (AItemInfo.ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then begin
     // Ecosystem
     if not (AItemInfo.ItemEcosys in AFilter.Ecosystem) then Exit;
 
     // Class
     if (Ord(AItemInfo.ItemClass) < Ord(AFilter.ClassMin)) or (Ord(AItemInfo.ItemClass) > Ord(AFilter.ClassMax)) then Exit;
-
   end;
   
   // Item category (only materials)
@@ -876,8 +1008,28 @@ begin
   
   // Item equipment
   if AItemInfo.ItemType = itEquipment then begin
-    if AFilter.Equipment = [] then Exit;
-    if not (AItemInfo.ItemEquip in AFilter.Equipment) then Exit;
+    if AFilter.Equipment <> [] then
+      if not (AItemInfo.ItemEquip in AFilter.Equipment) then Exit;
+  end;
+
+  // Item continent
+  if AItemInfo.ItemContinent <> '' then begin
+    if (AFilter.Continent <> '') and (CompareText(AItemInfo.ItemContinent, AFilter.Continent) <> 0) then Exit;
+  end;
+
+  // Item price
+  if (AItemInfo.ItemPrice > 0) and (AFilter.PriceMax > 0) then begin
+    if (AItemInfo.ItemPrice < AFilter.PriceMin) or
+       (AItemInfo.ItemPrice > AFilter.PriceMax) then Exit;
+  end;
+
+  // Item bonus
+  if (AItemInfo.ItemType = itEquipment) and (AFilter.Bonus <> []) then begin
+    if not AItemInfo.ItemBonus then Exit;
+    if (ibHp in AFilter.Bonus) and (AItemInfo.ItemHpb = 0) then Exit;
+    if (ibSab in AFilter.Bonus) and (AItemInfo.ItemSab = 0) then Exit;
+    if (ibStamina in AFilter.Bonus) and (AItemInfo.ItemStb = 0) then Exit;
+    if (ibFocus in AFilter.Bonus) and (AItemInfo.ItemFob = 0) then Exit;
   end;
 
   Result := True;
@@ -885,6 +1037,57 @@ end;
 
 { TItemInfo }
 
+{*******************************************************************************
+Default values
+*******************************************************************************}
+constructor TItemInfo.Create;
+begin
+  ItemName := '';
+  ItemColor := icNone;
+  ItemQuality := -1;
+  ItemSize := -1;
+  ItemSap := -1;
+  ItemDestroyed := False;
+  ItemFileName := '';
+  ItemClass := icUnknown;
+  ItemType := itOther;
+  ItemEcosys := ieUnknown;
+  ItemEquip := iqOther;
+  ItemCategory1 := -1;
+  ItemCategory2 := -1;
+  ItemSkin := isNoSkin;
+  ItemDesc := '';
+  ItemHp := 0;
+  ItemDur := 0;
+  ItemHpb := 0;
+  ItemSab := 0;
+  ItemStb := 0;
+  ItemFob := 0;
+  ItemBonus := False;
+  ItemWeight := 0;
+  ItemVolume := 0;
+  ItemPrice := 0;
+  ItemQuantity := 1;
+  ItemContinent := '';
+  ItemTime := 0;  
+  MatColor1 := 0;
+  MatColor2 := 0;
+  MatColor3 := 0;
+  CSpeed := 0;
+  CRange := 0;
+  CDodgeModifier := 0;
+  CParryModifier := 0;
+  CAdvDodgeModifier := 0;
+  CAdvParryModifier := 0;
+  CFactorProt := 0;
+  CSlashingProt := 0;
+  CSmashingProt := 0;
+  CPiercingProt := 0;
+end;
+
+{*******************************************************************************
+Free tables
+*******************************************************************************}
 destructor TItemInfo.Destroy;
 begin
   SetLength(MatSpec1, 0);
