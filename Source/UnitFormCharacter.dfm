@@ -25,7 +25,7 @@ object FormCharacter: TFormCharacter
     Align = alClient
     ColCount = 3
     DefaultColWidth = 36
-    DefaultRowHeight = 60
+    DefaultRowHeight = 48
     DefaultDrawing = False
     FixedCols = 0
     RowCount = 2
@@ -63,7 +63,7 @@ object FormCharacter: TFormCharacter
     ParentFont = False
     TabOrder = 1
     object BtDown: TSpeedButton
-      Left = 332
+      Left = 368
       Top = 0
       Width = 17
       Height = 23
@@ -105,7 +105,7 @@ object FormCharacter: TFormCharacter
       OnClick = BtDownClick
     end
     object BtUp: TSpeedButton
-      Left = 353
+      Left = 389
       Top = 0
       Width = 17
       Height = 23
@@ -149,7 +149,7 @@ object FormCharacter: TFormCharacter
     object BtNew: TButton
       Left = 0
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Ajouter'
       Font.Charset = DEFAULT_CHARSET
@@ -162,9 +162,9 @@ object FormCharacter: TFormCharacter
       OnClick = BtNewClick
     end
     object BtUpdate: TButton
-      Left = 83
+      Left = 90
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Modifier'
       Enabled = False
@@ -178,9 +178,9 @@ object FormCharacter: TFormCharacter
       OnClick = BtUpdateClick
     end
     object BtDelete: TButton
-      Left = 166
+      Left = 180
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Supprimer'
       Enabled = False
@@ -194,9 +194,9 @@ object FormCharacter: TFormCharacter
       OnClick = BtDeleteClick
     end
     object BtRoom: TButton
-      Left = 249
+      Left = 270
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Inventaire'
       Enabled = False

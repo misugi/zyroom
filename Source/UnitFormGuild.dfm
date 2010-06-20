@@ -62,7 +62,7 @@ object FormGuild: TFormGuild
     ParentFont = False
     TabOrder = 1
     object BtDown: TSpeedButton
-      Left = 332
+      Left = 368
       Top = 0
       Width = 17
       Height = 23
@@ -98,7 +98,7 @@ object FormGuild: TFormGuild
       OnClick = BtDownClick
     end
     object BtUp: TSpeedButton
-      Left = 353
+      Left = 389
       Top = 0
       Width = 17
       Height = 23
@@ -136,16 +136,16 @@ object FormGuild: TFormGuild
     object BtNew: TButton
       Left = 0
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Ajouter'
       TabOrder = 0
       OnClick = BtNewClick
     end
     object BtUpdate: TButton
-      Left = 83
+      Left = 90
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Modifier'
       Enabled = False
@@ -153,9 +153,9 @@ object FormGuild: TFormGuild
       OnClick = BtUpdateClick
     end
     object BtDelete: TButton
-      Left = 166
+      Left = 180
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Supprimer'
       Enabled = False
@@ -163,9 +163,9 @@ object FormGuild: TFormGuild
       OnClick = BtDeleteClick
     end
     object BtRoom: TButton
-      Left = 249
+      Left = 270
       Top = 0
-      Width = 75
+      Width = 85
       Height = 23
       Caption = 'Coffre'
       Enabled = False

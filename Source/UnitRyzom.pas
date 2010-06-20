@@ -26,7 +26,8 @@ unit UnitRyzom;
 interface
 
 uses
-  Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig, StrUtils, DateUtils;
+  Classes, SysUtils, RyzomApi, XpDOM, regexpr, UnitConfig, StrUtils, DateUtils,
+  Contnrs;
 
 resourcestring
   RS_SPEC_DURABILITY = 'Durabilité';
@@ -116,6 +117,20 @@ resourcestring
   RS_ECOSYS_LAKES = 'Lacs';
 
   RS_VOLUME = 'Volume';
+  RS_MENU_WATCH = 'Surveiller';
+  RS_MENU_UNWATCH = 'Ne plus surveiller';
+
+  RS_TAB_ROOM = 'Pièce';
+  RS_TAB_BAG = 'Sac';
+  RS_TAB_PET = 'Mektoub';
+  RS_TAB_MOUNT = 'Monture';
+  RS_TAB_ANIMAL = 'Animal';
+  RS_TAB_SALES = 'Ventes';
+
+  RS_DAYS = 'jours';
+  RS_HOURS = 'heures';
+  RS_MINUTES = 'minutes';
+  RS_AND = 'et';
 
 const
   _MAT_CATEGORY : array [0..20] of String = ('All', 'Blade', 'Point', 'Hammer', 'Counterweight',
@@ -182,6 +197,7 @@ type
   
   TItemInfo = class(TObject)
   public
+    ItemSlot: Integer;
     ItemName: String;
     ItemColor: TItemColor;
     ItemQuality: Integer;
@@ -211,6 +227,7 @@ type
     ItemQuantity: Integer;
     ItemContinent: String;
     ItemTime: TDateTime;
+    ItemGuarded: Boolean;
     MatColor1: Integer;
     MatColor2: Integer;
     MatColor3: Integer;
@@ -231,11 +248,17 @@ type
     destructor Destroy; override;
   end;
 
+  TItemList = class(TObjectList)
+  public
+    function IndexOf(AItemName: String): Integer; overload;
+    function IndexOf(AItemSlot: Integer; AItemQuality: Integer; AItemName: String): Integer; overload;
+    function GetItem(AItemIndex: Integer): TItemInfo;
+  end;
+
   TRyzom = class(TRyzomApi)
   private
     FXmlDocument: TXpObjModel;
     FCatStrings: TStringList;
-    FRegExpr: TRegExpr;
 
     FAniroStatus: Integer;
     FArispotleStatus: Integer;
@@ -266,7 +289,6 @@ type
 var
   GRyzomApi: TRyzom;
   GRyzomStringPack: TStringClient;
-  GRegExpr: TRegExpr;
   GCurrentFilter: TItemFilter;
 
 implementation
@@ -442,8 +464,6 @@ begin
   wCatFile := GConfig.CurrentPath + 'category.csv';
   if FileExists(wCatFile) then
     FCatStrings.LoadFromFile(wCatFile);
-  FRegExpr := TRegExpr.Create;
-  FRegExpr.ModifierG := False;
 end;
 
 {*******************************************************************************
@@ -451,7 +471,6 @@ Destroys the interface object
 *******************************************************************************}
 destructor TRyzom.Destroy;
 begin
-  FRegExpr.Free;
   FCatStrings.Free;
   FXmlDocument.Free;
   inherited;
@@ -466,6 +485,10 @@ var
 begin
   // Name
   AItemInfo.ItemName := ANode.Text;
+
+  // Slot
+  wNode := ANode.Attributes.GetNamedItem('slot');
+  if Assigned(wNode) then AItemInfo.ItemSlot := StrToInt(wNode.NodeValue);
 
   // Color
   wNode := ANode.Attributes.GetNamedItem('c');
@@ -630,316 +653,325 @@ var
   wIndex: Integer;
   wCoef: Double;
   wFound: Boolean;
+  wRegExpr: TRegExpr;
+  wRegExpr2: TRegExpr;
   i: Integer;
 begin
-  wCoef := 0.0;
+  wRegExpr := TRegExpr.Create;
+  wRegExpr2 := TRegExpr.Create;
+  try
+    wCoef := 0.0;
 
-  // Catalyzer
-  if Pos('ixpca01', AItemInfo.ItemName) = 1 then begin
-    AItemInfo.ItemType := itCata;
-    wCoef := 0.01;
-  end;
-
-  // Teleporters
-  if Pos('tp_ka', AItemInfo.ItemName) = 1 then begin
-    AItemInfo.ItemType := itTeleporter;
-    wCoef := 0.2;
-  end;
-
-  // Tool
-  if AItemInfo.ItemType = itOther then begin
-    GRegExpr.Expression := _EXPR_TOOL;
-    if GRegExpr.Exec(AItemInfo.ItemName) and (Pos('item_sap_recharge', AItemInfo.ItemName) <> 1) then begin
-      AItemInfo.ItemType := itEquipment;
-      AItemInfo.ItemEquip := iqTool;
-      wCoef := 10.0;
+    // Catalyzer
+    if Pos('ixpca01', AItemInfo.ItemName) = 1 then begin
+      AItemInfo.ItemType := itCata;
+      wCoef := 0.01;
     end;
-  end;
+
+    // Teleporters
+    if Pos('tp_ka', AItemInfo.ItemName) = 1 then begin
+      AItemInfo.ItemType := itTeleporter;
+      wCoef := 0.2;
+    end;
+
+    // Tool
+    if AItemInfo.ItemType = itOther then begin
+      wRegExpr.Expression := _EXPR_TOOL;
+      if wRegExpr.Exec(AItemInfo.ItemName) and (Pos('item_sap_recharge', AItemInfo.ItemName) <> 1) then begin
+        AItemInfo.ItemType := itEquipment;
+        AItemInfo.ItemEquip := iqTool;
+        wCoef := 10.0;
+      end;
+    end;
   
-  // Equipment
-  if AItemInfo.ItemType = itOther then begin
-    GRegExpr.Expression := _EXPR_EQUIPMENT;
-    if GRegExpr.Exec(AItemInfo.ItemName) then begin
-      AItemInfo.ItemType := itEquipment;
-      case Ord(GRegExpr.Match[1][1]) of
-        116: AItemInfo.ItemEcosys := ieLakes; {t = tryker}
-        102: AItemInfo.ItemEcosys := ieDesert; {f = fyros}
-        109: AItemInfo.ItemEcosys := ieForest; {m = matis}
-        122: AItemInfo.ItemEcosys := ieJungle; {z = zorai}
-      else
-        AItemInfo.ItemEcosys := ieCommon;
-      end;
-
-      AItemInfo.ItemSkin := isSkin1;
-      case Ord(GRegExpr.Match[2][2]) of
-        50: AItemInfo.ItemSkin := isSkin2; {2 = skin2}
-        51: AItemInfo.ItemSkin := isSkin3; {3 = skin3}
-      end;
-
-      // Shield
-      if AItemInfo.ItemEquip = iqOther then begin
-        GRegExpr.Expression := _EXPR_EQUIPMENT_SHIELD;
-        if GRegExpr.Exec(AItemInfo.ItemName) then begin
-          case Ord(GRegExpr.Match[2][1]) of
-            98: begin {b = buckler}
-              AItemInfo.ItemEquip := iqBuckler;
-              wCoef := 5.0;
-            end;
-            115: begin {s = shield}
-              AItemInfo.ItemEquip := iqShield;
-              wCoef := 10.0;
-            end;
-          end;
+    // Equipment
+    if AItemInfo.ItemType = itOther then begin
+      wRegExpr.Expression := _EXPR_EQUIPMENT;
+      if wRegExpr.Exec(AItemInfo.ItemName) then begin
+        AItemInfo.ItemType := itEquipment;
+        case Ord(wRegExpr.Match[1][1]) of
+          116: AItemInfo.ItemEcosys := ieLakes; {t = tryker}
+          102: AItemInfo.ItemEcosys := ieDesert; {f = fyros}
+          109: AItemInfo.ItemEcosys := ieForest; {m = matis}
+          122: AItemInfo.ItemEcosys := ieJungle; {z = zorai}
+        else
+          AItemInfo.ItemEcosys := ieCommon;
         end;
-      end;
 
-      // Armor
-      if AItemInfo.ItemEquip = iqOther then begin
-        GRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
-        if GRegExpr.Exec(AItemInfo.ItemName) then begin
-          case Ord(GRegExpr.Match[1][1]) of
-            108: AItemInfo.ItemEquip := iqLightArmor; {l = light}
-            99: AItemInfo.ItemEquip := iqLightArmor; {c = light}
-            109: AItemInfo.ItemEquip := iqMediumArmor; {m = medium}
-            104: AItemInfo.ItemEquip := iqHeavyArmor; {h = heavy}
-          end;
-          wCoef := 7.0;
-          if Pos('iccah', AItemInfo.ItemName) = 1 then wCoef := 20.0 // boss
+        AItemInfo.ItemSkin := isSkin1;
+        case Ord(wRegExpr.Match[2][2]) of
+          50: AItemInfo.ItemSkin := isSkin2; {2 = skin2}
+          51: AItemInfo.ItemSkin := isSkin3; {3 = skin3}
         end;
-      end;
 
-      // Amplifier
-      if AItemInfo.ItemEquip = iqOther then begin
-        GRegExpr.Expression := _EXPR_EQUIPMENT_AMPLIFIER;
-        if GRegExpr.Exec(AItemInfo.ItemName) then begin
-          AItemInfo.ItemEquip := iqAmplifier;
-          wCoef := 10;
-        end;
-      end;
-
-      // Weapon
-      if AItemInfo.ItemEquip = iqOther then begin
-        GRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
-        if GRegExpr.Exec(AItemInfo.ItemName) then begin
-          case Ord(GRegExpr.Match[1][1]) of
-            109: begin {m = melee}
-              AItemInfo.ItemEquip := iqWeaponMelee;
-              case Ord(GRegExpr.Match[2][1]) of
-                // 1 = 1 hand
-                49: begin
-                  AItemInfo.ItemWeapon := iwOneHand;
-                  wCoef := 10.0;
-                  if GRegExpr.Match[3] = 'pd' then wCoef := 5.0; // dagger
-                end;
-                // 2 = 2 hands
-                50: begin
-                  AItemInfo.ItemWeapon := iwTwoHands; 
-                  wCoef := 15.0;
-                end;
+        // Shield
+        if AItemInfo.ItemEquip = iqOther then begin
+          wRegExpr.Expression := _EXPR_EQUIPMENT_SHIELD;
+          if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            case Ord(wRegExpr.Match[2][1]) of
+              98: begin {b = buckler}
+                AItemInfo.ItemEquip := iqBuckler;
+                wCoef := 5.0;
+              end;
+              115: begin {s = shield}
+                AItemInfo.ItemEquip := iqShield;
+                wCoef := 10.0;
               end;
             end;
-            114: begin {r = range}
-              AItemInfo.ItemEquip := iqWeaponRange;
-              case Ord(GRegExpr.Match[2][1]) of
-                // 1 = 1 hand
-                49: begin
-                  AItemInfo.ItemWeapon := iwOneHand;
-                  wCoef := 10.0;
+          end;
+        end;
+
+        // Armor
+        if AItemInfo.ItemEquip = iqOther then begin
+          wRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
+          if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            case Ord(wRegExpr.Match[1][1]) of
+              108: AItemInfo.ItemEquip := iqLightArmor; {l = light}
+              99: AItemInfo.ItemEquip := iqLightArmor; {c = light}
+              109: AItemInfo.ItemEquip := iqMediumArmor; {m = medium}
+              104: AItemInfo.ItemEquip := iqHeavyArmor; {h = heavy}
+            end;
+            wCoef := 7.0;
+            if Pos('iccah', AItemInfo.ItemName) = 1 then wCoef := 20.0 // boss
+          end;
+        end;
+
+        // Amplifier
+        if AItemInfo.ItemEquip = iqOther then begin
+          wRegExpr.Expression := _EXPR_EQUIPMENT_AMPLIFIER;
+          if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            AItemInfo.ItemEquip := iqAmplifier;
+            wCoef := 10;
+          end;
+        end;
+
+        // Weapon
+        if AItemInfo.ItemEquip = iqOther then begin
+          wRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
+          if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            case Ord(wRegExpr.Match[1][1]) of
+              109: begin {m = melee}
+                AItemInfo.ItemEquip := iqWeaponMelee;
+                case Ord(wRegExpr.Match[2][1]) of
+                  // 1 = 1 hand
+                  49: begin
+                    AItemInfo.ItemWeapon := iwOneHand;
+                    wCoef := 10.0;
+                    if wRegExpr.Match[3] = 'pd' then wCoef := 5.0; // dagger
+                  end;
+                  // 2 = 2 hands
+                  50: begin
+                    AItemInfo.ItemWeapon := iwTwoHands; 
+                    wCoef := 15.0;
+                  end;
                 end;
-                // 2 = 2 hands
-                50: begin
-                  AItemInfo.ItemWeapon := iwTwoHands;
-                  case Ord(GRegExpr.Match[3][1]) of
-                    97: wCoef := 30.0; // machine gun
-                    98, 114: wCoef := 15.0; // rifles
-                    108: wCoef := 30.0; // grenade launcher
+              end;
+              114: begin {r = range}
+                AItemInfo.ItemEquip := iqWeaponRange;
+                case Ord(wRegExpr.Match[2][1]) of
+                  // 1 = 1 hand
+                  49: begin
+                    AItemInfo.ItemWeapon := iwOneHand;
+                    wCoef := 10.0;
+                  end;
+                  // 2 = 2 hands
+                  50: begin
+                    AItemInfo.ItemWeapon := iwTwoHands;
+                    case Ord(wRegExpr.Match[3][1]) of
+                      97: wCoef := 30.0; // machine gun
+                      98, 114: wCoef := 15.0; // rifles
+                      108: wCoef := 30.0; // grenade launcher
+                    end;
                   end;
                 end;
               end;
             end;
           end;
         end;
-      end;
 
-      // Ammo
-      if AItemInfo.ItemEquip = iqOther then begin
-        GRegExpr.Expression := _EXPR_EQUIPMENT_AMMO;
-        if GRegExpr.Exec(AItemInfo.ItemName) then begin
-          AItemInfo.ItemEquip := iqAmmo;
-          case Ord(GRegExpr.Match[1][1]) of
-            49: wCoef := 0.04; // pistols
-            50: begin
-              case Ord(GRegExpr.Match[1][2]) of
-                97: wCoef := 5.0; // machine gun
-                98, 114: wCoef := 0.1; // rifles
-                108: wCoef := 15.0; // grenade launcher
+        // Ammo
+        if AItemInfo.ItemEquip = iqOther then begin
+          wRegExpr.Expression := _EXPR_EQUIPMENT_AMMO;
+          if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            AItemInfo.ItemEquip := iqAmmo;
+            case Ord(wRegExpr.Match[1][1]) of
+              49: wCoef := 0.04; // pistols
+              50: begin
+                case Ord(wRegExpr.Match[1][2]) of
+                  97: wCoef := 5.0; // machine gun
+                  98, 114: wCoef := 0.1; // rifles
+                  108: wCoef := 15.0; // grenade launcher
+                end;
               end;
             end;
           end;
         end;
-      end;
 
-      // Jewel
-      if AItemInfo.ItemEquip = iqOther then begin
-        GRegExpr.Expression := _EXPR_EQUIPMENT_JEWEL;
-        if GRegExpr.Exec(AItemInfo.ItemName) then begin
-          AItemInfo.ItemEquip := iqJewel;
-          wCoef := 2.0;
+        // Jewel
+        if AItemInfo.ItemEquip = iqOther then begin
+          wRegExpr.Expression := _EXPR_EQUIPMENT_JEWEL;
+          if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            AItemInfo.ItemEquip := iqJewel;
+            wCoef := 2.0;
+          end;
+        end;
+
+        // Others
+        if AItemInfo.ItemEquip = iqOther then begin
+          if Pos('icra', AItemInfo.ItemName) = 1 then wCoef := 7.0; // refugee
+          if Pos('ic_candy_stick', AItemInfo.ItemName) = 1 then wCoef := 30.0;
         end;
       end;
+    end;
 
-      // Others
-      if AItemInfo.ItemEquip = iqOther then begin
-        if Pos('icra', AItemInfo.ItemName) = 1 then wCoef := 7.0; // refugee
-        if Pos('ic_candy_stick', AItemInfo.ItemName) = 1 then wCoef := 30.0;
+    // Natural materials
+    if AItemInfo.ItemType = itOther then begin
+      wRegExpr.Expression := _EXPR_NATURAL_MAT;
+      if wRegExpr.Exec(AItemInfo.ItemName) then begin
+        AItemInfo.ItemType := itNaturalMat;
+        wCoef := 0.5;
       end;
     end;
-  end;
 
-  // Natural materials
-  if AItemInfo.ItemType = itOther then begin
-    GRegExpr.Expression := _EXPR_NATURAL_MAT;
-    if GRegExpr.Exec(AItemInfo.ItemName) then begin
-      AItemInfo.ItemType := itNaturalMat;
-      wCoef := 0.5;
-    end;
-  end;
-
-  // Animal materials
-  if AItemInfo.ItemType = itOther then begin
-    GRegExpr.Expression := _EXPR_ANIMAL_MAT;
-    if GRegExpr.Exec(AItemInfo.ItemName) then begin
-      AItemInfo.ItemType := itAnimalMat;
-      wCoef := 0.5;
-    end;
-  end;
-
-  // Natural and Animal
-  if (AItemInfo.ItemType = itNaturalMat) or (AItemInfo.ItemType = itAnimalMat) then begin
-    // Categories
-    wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
-    if wIndex >= 0 then begin
-      AItemInfo.ItemCategory1 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex], 1, 2));
-      if Pos('m0312', AItemInfo.ItemName) = 0 then
-        AItemInfo.ItemCategory2 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex+1], 1, 2));
-      AItemInfo.MatColor1 := StrToInt(FCatStrings.ValueFromIndex[wIndex][3]);
-      AItemInfo.MatColor2 := StrToInt(FCatStrings.ValueFromIndex[wIndex][4]);
-      AItemInfo.MatColor3 := StrToInt(FCatStrings.ValueFromIndex[wIndex][5]);
-
-      // Specifications for category 1
-      FRegExpr.InputString := FCatStrings.ValueFromIndex[wIndex];
-      FRegExpr.Expression := '(\d\d)(\d)';
-      i := 0;
-      wFound := FRegExpr.Exec(6);
-      while wFound do begin
-        Inc(i);
-        SetLength(AItemInfo.MatSpec1, i);
-        AItemInfo.MatSpec1[i-1][0] := StrToInt(FRegExpr.Match[1]);
-        AItemInfo.MatSpec1[i-1][1] := StrToInt(FRegExpr.Match[2]);
-        wFound := FRegExpr.ExecNext;
+    // Animal materials
+    if AItemInfo.ItemType = itOther then begin
+      wRegExpr.Expression := _EXPR_ANIMAL_MAT;
+      if wRegExpr.Exec(AItemInfo.ItemName) then begin
+        AItemInfo.ItemType := itAnimalMat;
+        wCoef := 0.5;
       end;
+    end;
 
-      // Specifications for category 2
-      if AItemInfo.ItemCategory2 > 0 then begin
-        FRegExpr.InputString := FCatStrings.ValueFromIndex[wIndex+1];
-        FRegExpr.Expression := '(\d\d)(\d)';
+    // Natural and Animal
+    if (AItemInfo.ItemType = itNaturalMat) or (AItemInfo.ItemType = itAnimalMat) then begin
+      // Categories
+      wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
+      if wIndex >= 0 then begin
+        AItemInfo.ItemCategory1 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex], 1, 2));
+        if Pos('m0312', AItemInfo.ItemName) = 0 then
+          AItemInfo.ItemCategory2 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex+1], 1, 2));
+        AItemInfo.MatColor1 := StrToInt(FCatStrings.ValueFromIndex[wIndex][3]);
+        AItemInfo.MatColor2 := StrToInt(FCatStrings.ValueFromIndex[wIndex][4]);
+        AItemInfo.MatColor3 := StrToInt(FCatStrings.ValueFromIndex[wIndex][5]);
+
+        // Specifications for category 1
+        wRegExpr2.InputString := FCatStrings.ValueFromIndex[wIndex];
+        wRegExpr2.Expression := '(\d\d)(\d)';
         i := 0;
-        wFound := FRegExpr.Exec(6);
+        wFound := wRegExpr2.Exec(6);
         while wFound do begin
           Inc(i);
-          SetLength(AItemInfo.MatSpec2, i);
-          AItemInfo.MatSpec2[i-1][0] := StrToInt(FRegExpr.Match[1]);
-          AItemInfo.MatSpec2[i-1][1] := StrToInt(FRegExpr.Match[2]);
-          wFound := FRegExpr.ExecNext;
+          SetLength(AItemInfo.MatSpec1, i);
+          AItemInfo.MatSpec1[i-1][0] := StrToInt(wRegExpr2.Match[1]);
+          AItemInfo.MatSpec1[i-1][1] := StrToInt(wRegExpr2.Match[2]);
+          wFound := wRegExpr2.ExecNext;
+        end;
+
+        // Specifications for category 2
+        if AItemInfo.ItemCategory2 > 0 then begin
+          wRegExpr2.InputString := FCatStrings.ValueFromIndex[wIndex+1];
+          wRegExpr2.Expression := '(\d\d)(\d)';
+          i := 0;
+          wFound := wRegExpr2.Exec(6);
+          while wFound do begin
+            Inc(i);
+            SetLength(AItemInfo.MatSpec2, i);
+            AItemInfo.MatSpec2[i-1][0] := StrToInt(wRegExpr2.Match[1]);
+            AItemInfo.MatSpec2[i-1][1] := StrToInt(wRegExpr2.Match[2]);
+            wFound := wRegExpr2.ExecNext;
+          end;
         end;
       end;
+
+      // Ecosystem
+      case Ord(wRegExpr.Match[1][1]) of
+        99: AItemInfo.ItemEcosys := ieCommon; {c}
+        112: AItemInfo.ItemEcosys := iePrime; {p}
+        100: AItemInfo.ItemEcosys := ieDesert; {d}
+        102: AItemInfo.ItemEcosys := ieForest; {f}
+        108: AItemInfo.ItemEcosys := ieLakes; {l}
+        106: AItemInfo.ItemEcosys := ieJungle; {j}
+      end;
     end;
 
-    // Ecosystem
-    case Ord(GRegExpr.Match[1][1]) of
-      99: AItemInfo.ItemEcosys := ieCommon; {c}
-      112: AItemInfo.ItemEcosys := iePrime; {p}
-      100: AItemInfo.ItemEcosys := ieDesert; {d}
-      102: AItemInfo.ItemEcosys := ieForest; {f}
-      108: AItemInfo.ItemEcosys := ieLakes; {l}
-      106: AItemInfo.ItemEcosys := ieJungle; {j}
-    end;
-  end;
-
-  // Natural
-  if AItemInfo.ItemType = itNaturalMat then begin
-    case Ord(GRegExpr.Match[2][1]) of
-      98: AItemInfo.ItemClass := icBasic; {b}
-      99: AItemInfo.ItemClass := icFine; {c}
-      100: AItemInfo.ItemClass := icChoice; {d}
-      101: AItemInfo.ItemClass := icExcellent; {e}
-      102: AItemInfo.ItemClass := icSupreme; {f}
-    end;
-  end;
-
-  // Animal
-  if AItemInfo.ItemType = itAnimalMat then begin
-    case Ord(GRegExpr.Match[2][1]) of
-      97: AItemInfo.ItemClass := icBasic; {a}
-      98: AItemInfo.ItemClass := icFine; {b}
-      99: AItemInfo.ItemClass := icChoice; {c}
-      100: AItemInfo.ItemClass := icExcellent; {d}
-      101: AItemInfo.ItemClass := icSupreme; {e}
-    end;
-  end;
-
-  // Others
-  if AItemInfo.ItemType = itOther then begin
-    if Pos('pre_order', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-    if Pos('teddyubo', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-    if Pos('louche', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-    if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower
-    if Pos('ipm', AItemInfo.ItemName) = 1 then wCoef := 1.0; // egg
-    if Pos('ipk_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // potion
-    if Pos('if1', AItemInfo.ItemName) = 1 then wCoef := 50.0; // food basic
-    if Pos('if2', AItemInfo.ItemName) = 1 then wCoef := 20.0; // food concentrated
-    if Pos('if3', AItemInfo.ItemName) = 1 then wCoef := 30.0; // food small
-
-    // Kara/Kami dress
-    if (Pos('ikaracp_ep', AItemInfo.ItemName) = 1) or
-       (Pos('ikamacp_ep', AItemInfo.ItemName) = 1) then begin
-      AItemInfo.ItemType := itEquipment;
-      AItemInfo.ItemEquip := iqLightArmor;
-      AItemInfo.ItemEcosys := ieCommon;
-      AItemInfo.ItemClass := icSupreme;
-      AItemInfo.ItemSkin := isSkin3;
-      wCoef := 7.0;
+    // Natural
+    if AItemInfo.ItemType = itNaturalMat then begin
+      case Ord(wRegExpr.Match[2][1]) of
+        98: AItemInfo.ItemClass := icBasic; {b}
+        99: AItemInfo.ItemClass := icFine; {c}
+        100: AItemInfo.ItemClass := icChoice; {d}
+        101: AItemInfo.ItemClass := icExcellent; {e}
+        102: AItemInfo.ItemClass := icSupreme; {f}
+      end;
     end;
 
-    // System materials
-    GRegExpr.Expression := _EXPR_SYSTEM_MAT;
-    if GRegExpr.Exec(AItemInfo.ItemName) then begin
-      AItemInfo.ItemType := itSystemMat;
-      AItemInfo.ItemEcosys := ieCommon;
-      AItemInfo.ItemCategory1 := 0;
-      SetLength(AItemInfo.MatSpec1, 1);
-      AItemInfo.MatSpec1[0][0] := 0;
-      AItemInfo.MatColor1 := 1;
-      if CompareText(GRegExpr.Match[1], 'mp_kami_ep2_') = 0 then
-        AItemInfo.MatColor1 := 8;
+    // Animal
+    if AItemInfo.ItemType = itAnimalMat then begin
+      case Ord(wRegExpr.Match[2][1]) of
+        97: AItemInfo.ItemClass := icBasic; {a}
+        98: AItemInfo.ItemClass := icFine; {b}
+        99: AItemInfo.ItemClass := icChoice; {c}
+        100: AItemInfo.ItemClass := icExcellent; {d}
+        101: AItemInfo.ItemClass := icSupreme; {e}
+      end;
+    end;
 
-      AItemInfo.ItemClass := icBasic;
-      if GRegExpr.Match[2] <> '' then begin
-        if Pos('fine', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icFine;
-        if Pos('choice', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icChoice;
-        if Pos('excellent', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icExcellent;
-        if Pos('supreme', GRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icSupreme;
-        AItemInfo.MatSpec1[0][1] := 2;
-      end else begin
-        AItemInfo.MatSpec1[0][1] := 1;
+    // Others
+    if AItemInfo.ItemType = itOther then begin
+      if Pos('pre_order', AItemInfo.ItemName) = 1 then wCoef := 5.0;
+      if Pos('teddyubo', AItemInfo.ItemName) = 1 then wCoef := 5.0;
+      if Pos('louche', AItemInfo.ItemName) = 1 then wCoef := 5.0;
+      if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower
+      if Pos('ipm', AItemInfo.ItemName) = 1 then wCoef := 1.0; // egg
+      if Pos('ipk_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // potion
+      if Pos('if1', AItemInfo.ItemName) = 1 then wCoef := 50.0; // food basic
+      if Pos('if2', AItemInfo.ItemName) = 1 then wCoef := 20.0; // food concentrated
+      if Pos('if3', AItemInfo.ItemName) = 1 then wCoef := 30.0; // food small
+
+      // Kara/Kami dress
+      if (Pos('ikaracp_ep', AItemInfo.ItemName) = 1) or
+         (Pos('ikamacp_ep', AItemInfo.ItemName) = 1) then begin
+        AItemInfo.ItemType := itEquipment;
+        AItemInfo.ItemEquip := iqLightArmor;
+        AItemInfo.ItemEcosys := ieCommon;
+        AItemInfo.ItemClass := icSupreme;
+        AItemInfo.ItemSkin := isSkin3;
+        wCoef := 7.0;
       end;
 
-      wCoef := 0;
-    end;
-  end;
+      // System materials
+      wRegExpr.Expression := _EXPR_SYSTEM_MAT;
+      if wRegExpr.Exec(AItemInfo.ItemName) then begin
+        AItemInfo.ItemType := itSystemMat;
+        AItemInfo.ItemEcosys := ieCommon;
+        AItemInfo.ItemCategory1 := 0;
+        SetLength(AItemInfo.MatSpec1, 1);
+        AItemInfo.MatSpec1[0][0] := 0;
+        AItemInfo.MatColor1 := 1;
+        if CompareText(wRegExpr.Match[1], 'mp_kami_ep2_') = 0 then
+          AItemInfo.MatColor1 := 8;
 
-  // Volume
-  AItemInfo.ItemVolume := wCoef * Abs(AItemInfo.ItemSize);
+        AItemInfo.ItemClass := icBasic;
+        if wRegExpr.Match[2] <> '' then begin
+          if Pos('fine', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icFine;
+          if Pos('choice', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icChoice;
+          if Pos('excellent', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icExcellent;
+          if Pos('supreme', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icSupreme;
+          AItemInfo.MatSpec1[0][1] := 2;
+        end else begin
+          AItemInfo.MatSpec1[0][1] := 1;
+        end;
+
+        wCoef := 0;
+      end;
+    end;
+
+    // Volume
+    AItemInfo.ItemVolume := wCoef * Abs(AItemInfo.ItemSize);
+  finally
+    wRegExpr.Free;
+    wRegExpr2.Free;
+  end;
 end;
 
 {*******************************************************************************
@@ -1042,6 +1074,7 @@ Default values
 *******************************************************************************}
 constructor TItemInfo.Create;
 begin
+  ItemSlot := -1;
   ItemName := '';
   ItemColor := icNone;
   ItemQuality := -1;
@@ -1070,6 +1103,7 @@ begin
   ItemQuantity := 1;
   ItemContinent := '';
   ItemTime := 0;  
+  ItemGuarded := False;
   MatColor1 := 0;
   MatColor2 := 0;
   MatColor3 := 0;
@@ -1093,6 +1127,41 @@ begin
   SetLength(MatSpec1, 0);
   SetLength(MatSpec2, 0);
   inherited;
+end;
+
+{ TItemList }
+
+function TItemList.IndexOf(AItemName: String): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to Self.Count - 1 do begin
+    if CompareText(AItemName, TItemInfo(Self.Items[i]).ItemName) = 0 then begin
+      Result := i;
+      Break;
+    end;
+  end;
+end;
+
+function TItemList.IndexOf(AItemSlot: Integer; AItemQuality: Integer; AItemName: String): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to Self.Count - 1 do begin
+    if (AItemSlot = GetItem(i).ItemSlot) and
+       (CompareText(AItemName, GetItem(i).ItemName) = 0) and
+       (AItemQuality = GetItem(i).ItemQuality) then begin
+      Result := i;
+      Break;
+    end;
+  end;
+end;
+
+function TItemList.GetItem(AItemIndex: Integer): TItemInfo;
+begin
+  Result := TItemInfo(Self.Items[AItemIndex]);
 end;
 
 end.

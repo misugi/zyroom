@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, XpDOM, ExtCtrls, ScrollRoom, ItemImage,
-  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils;
+  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils, IniFiles;
 
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
@@ -77,16 +77,18 @@ type
     FRoom: TScrollRoom;
     FFilter: TItemFilter;
     FTotalVolume: Double;
+    FEyes: TPNGObject;
+    FGuardFile: TIniFile;
 
-    procedure SynchronizeGuild(AGuildID: String);
-    procedure SynchronizeChar(ACharID: String);
     procedure FillRoom(AGuildID: String);
     procedure FillInvent(ACharID: String);
     procedure GetItem(ANodeList: TXpNodeList; AStoragePath: String);
-    procedure ShowItem(ANodeList: TXpNodeList; AStoragePath: String);
+    procedure ShowItem(ANodeList: TXpNodeList; ANodeName: String; AStoragePath: String);
     function  GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
   public
+    procedure SynchronizeGuild(AGuildID: String);
+    procedure SynchronizeChar(ACharID: String);
     procedure ShowFormSynchronize(AGuildID: String);
     procedure ShowFormSynchronizeChar(ACharID: String);
     procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
@@ -100,6 +102,7 @@ var
   GEvent: TEvent;
   GThreadCount: Integer;
   GStrings: TStringList;
+  GGuarded: TStringList;
 
 implementation
 
@@ -113,9 +116,13 @@ Creates the form
 procedure TFormProgress.FormCreate(Sender: TObject);
 begin
   GStrings := TStringList.Create;
+  GGuarded := TStringList.Create;
   GSection := TCriticalSection.Create;
   GEvent := TEvent.Create(nil, True, False, 'synchronization');
   GEvent.ResetEvent;
+  FEyes := TPNGObject.Create;
+  FEyes.LoadFromResourceName(HInstance, _RES_CLOSED);
+  FGuardFile := nil;
 end;
 
 {*******************************************************************************
@@ -123,7 +130,10 @@ Destroys the form
 *******************************************************************************}
 procedure TFormProgress.FormDestroy(Sender: TObject);
 begin
+  FGuardFile.Free;
+  FEyes.Free;
   GStrings.Free;
+  GGuarded.Free;
   GSection.Free;
   GEvent.Free;
 end;
@@ -211,22 +221,29 @@ var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wIndexFile: String;
+  wGuardFile: String;
 begin
   wGuildKey := GGuild.GetGuildKey(AGuildID);
   wXmlDoc := TXpObjModel.Create(nil);
   wXmlFile := TMemoryStream.Create;
   try
+    // Prepare the index file for name search
+    wIndexFile := GConfig.GetGuildPath(AGuildID) + _INDEX_FILENAME;
+    if FileExists(wIndexFile) then
+      GStrings.LoadFromFile(wIndexFile)
+    else
+      GStrings.Clear;
+
+    // Load the file with guarded items
+    wGuardFile := GConfig.GetGuildPath(AGuildID) + _GUARD_FILENAME;
+    FreeAndNil(FGuardFile);
+    FGuardFile := TIniFile.Create(wGuardFile);
+
     GRyzomApi.ApiGuild(wGuildKey, wXmlFile);
     wXmlFile.SaveToFile(GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME);
     wXmlFile.Position := 0;
     wXmlDoc.LoadStream(wXmlFile);
 
-    // Prepare the index file for name search
-    wIndexFile := GConfig.GetGuildPath(AGuildID) + 'index.dat';
-    if FileExists(wIndexFile) then
-      GStrings.LoadFromFile(wIndexFile)
-    else
-      GStrings.Clear;
     try
       wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
       try
@@ -253,22 +270,28 @@ var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wIndexFile: String;
+  wGuardFile: String;
 begin
   wCharKey := GCharacter.GetCharKey(ACharID);
   wXmlDoc := TXpObjModel.Create(nil);
   wXmlFile := TMemoryStream.Create;
   try
-    GRyzomApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
-    wXmlFile.SaveToFile(GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME);
-    wXmlFile.Position := 0;
-    wXmlDoc.LoadStream(wXmlFile);
-
     // Prepare the index file for name search
-    wIndexFile := GConfig.GetCharPath(ACharID) + 'index.dat';
+    wIndexFile := GConfig.GetCharPath(ACharID) + _INDEX_FILENAME;
     if FileExists(wIndexFile) then
       GStrings.LoadFromFile(wIndexFile)
     else
       GStrings.Clear;
+
+    // Load the file with guarded items
+    wGuardFile := GConfig.GetCharPath(ACharID) + _GUARD_FILENAME;
+    FreeAndNil(FGuardFile);
+    FGuardFile := TIniFile.Create(wGuardFile);
+
+    GRyzomApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
+    wXmlFile.SaveToFile(GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME);
+    wXmlFile.Position := 0;
+    wXmlDoc.LoadStream(wXmlFile);
     try
       // Room
       wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item');
@@ -404,7 +427,7 @@ end;
 {*******************************************************************************
 Show items
 *******************************************************************************}
-procedure TFormProgress.ShowItem(ANodeList: TXpNodeList; AStoragePath: String);
+procedure TFormProgress.ShowItem(ANodeList: TXpNodeList; ANodeName: String; AStoragePath: String);
 var
   i: Integer;
   wItemImage: TItemImage;
@@ -436,6 +459,10 @@ begin
         // Item description
         wItemInfo.ItemDesc := GStrings.Values[wItemInfo.ItemName];
 
+        // Item guarded
+        if GGuarded.IndexOf(Format('%d.%d.%s', [wItemInfo.ItemSlot, wItemInfo.ItemQuality, wItemInfo.ItemName])) >= 0 then
+          wItemInfo.ItemGuarded := True;
+
         // Check filter
         if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemInfo, FFilter) then begin
           wItemList.Add(wItemInfo);
@@ -458,6 +485,8 @@ begin
         FTotalVolume := FTotalVolume + wItemInfo.ItemVolume;
 
         wItemImage := TItemImage.Create(nil);
+        wItemImage.StickerPosX := 9;
+        wItemImage.StickerPosY := 9;
         wItemImage.Hint := wItemInfo.ItemDesc;
         wItemImage.Data := wItemInfo;
         if FileExists(AStoragePath + wItemInfo.ItemFileName) then begin
@@ -469,6 +498,10 @@ begin
         end else begin
           wItemImage.LoadFromResourceName(_RES_NOICON);
         end;
+
+        if wItemInfo.ItemGuarded then
+          wItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
+
         FRoom.AddControl(wItemImage);
         ProgressBar.Position := Trunc( ((i+1) / ANodeList.Length) * 100);
         Application.ProcessMessages;
@@ -545,7 +578,6 @@ var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wInfoFile: String;
-  wIndexFile: String;
 begin
   FRoom.Clear;
   wInfoFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
@@ -553,16 +585,15 @@ begin
   wXmlDoc := TXpObjModel.Create(nil);
   wXmlFile := TFileStream.Create(wInfoFile, fmOpenRead);
   try
-    wIndexFile := GConfig.GetGuildPath(AGuildID) + 'index.dat';
-    if FileExists(wIndexFile) then
-      GStrings.LoadFromFile(wIndexFile)
-    else
-      GStrings.Clear;
-    
     wXmlDoc.LoadStream(wXmlFile);
     wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
+
+    GGuarded.Clear;
+    if FGuardFile <> nil then
+      FGuardFile.ReadSection('room', GGuarded);
+
     try
-      ShowItem(wNodeList, GConfig.GetGuildRoomPath(AGuildID));
+      ShowItem(wNodeList, 'room', GConfig.GetGuildRoomPath(AGuildID));
     finally
       wNodeList.Free;
     end;
@@ -581,6 +612,7 @@ var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wItemsFile: String;
+  wNodeName: String;
 begin
   FRoom.Clear;
   wItemsFile := GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME;
@@ -589,20 +621,25 @@ begin
   wXmlFile := TFileStream.Create(wItemsFile, fmOpenRead);
   try
     wXmlDoc.LoadStream(wXmlFile);
+    wNodeName := '';
     wNodeList := nil;
     case FInventPart of
-      0: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item');
-      1: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/bag/item');
-      2: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal1/item');
-      3: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal2/item');
-      4: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal3/item');
-      5: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal4/item');
-      6: wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/item_in_store/item');
+      0: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item'); wNodeName := 'room'; end;
+      1: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/bag/item');  wNodeName := 'bag'; end;
+      2: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal1/item');  wNodeName := 'pet_animal1'; end;
+      3: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal2/item');  wNodeName := 'pet_animal2'; end;
+      4: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal3/item');  wNodeName := 'pet_animal3'; end;
+      5: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal4/item');  wNodeName := 'pet_animal4'; end;
+      6: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/item_in_store/item');  wNodeName := 'item_in_store'; end;
     end;
+
+    GGuarded.Clear;
+    if FGuardFile <> nil then
+      FGuardFile.ReadSection(wNodeName, GGuarded);
 
     try
       if wNodeList <> nil then
-        ShowItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+        ShowItem(wNodeList, wNodeName, GConfig.GetCharRoomPath(ACharID));
     finally
       wNodeList.Free;
     end;

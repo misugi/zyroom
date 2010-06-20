@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, ComCtrls, Buttons;
+  LcUnit, StrUtils, ComCtrls, Buttons, RegExpr;
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
@@ -41,6 +41,7 @@ resourcestring
   RS_CHAR_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer le personnage sélectionné ?';
   RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
   RS_CHAR_KEY = 'Clé de personnage :';
+  RS_CHECK_SALES = 'Surveiller les ventes';
   RS_UP = 'Monter';
   RS_DOWN = 'Descendre';
 
@@ -161,7 +162,7 @@ begin
       if (ACol = 1) then begin
         Font.Size := 10;
         Font.Style := [fsBold];
-        Rect.Top := Rect.Top - 35;
+        Rect.Top := Rect.Top - 25;
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
           DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
@@ -169,13 +170,13 @@ begin
         // Guild
         Font.Size := 8;
         Font.Style := [];
-        Rect.Top := Rect.Top + 35;
+        Rect.Top := Rect.Top + 30;
         wGuild := GCharacter.GetGuildName(Cells[3,ARow]);
         DrawText(Handle, PChar(wGuild), -1, Rect ,
           DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
 
         // Server
-        Rect.Top := Rect.Top + 35;
+        Rect.Top := Rect.Top + 28;
         wServer := GCharacter.GetServerName(Cells[3,ARow]);
         DrawText(Handle, PChar(wServer), -1, Rect ,
           DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
@@ -217,18 +218,25 @@ var
   wCharGuild: String;
   wStream: TMemoryStream;
   wComment: String;
+  wCheckVolume: Boolean;
+  wCheckSales: Boolean;
   wXmlDoc: TXpObjModel;
   wIconFile: String;
   wInfoFile: String;
   i: Integer;
 begin
   FormGuildEdit.Caption := RS_CHAR_NEW_CHARACTER;
-  FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
+  FormGuildEdit.LbAutoKey.Caption := RS_CHAR_KEY;
   FormGuildEdit.EdKey.Text := '';
   FormGuildEdit.EdComment.Text := '';
+  FormGuildEdit.CbCheckChange.Caption := RS_CHECK_SALES;
+  FormGuildEdit.CbCheckVolume.Checked := False;
+  FormGuildEdit.CbCheckChange.Checked := False;
   if FormGuildEdit.ShowModal = mrOk then begin
     wCharKey := FormGuildEdit.EdKey.Text;
     wComment := FormGuildEdit.EdComment.Text;
+    wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
+    wCheckSales := FormGuildEdit.CbCheckChange.Checked;
     wStream := TMemoryStream.Create;
     try
       GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
@@ -240,7 +248,7 @@ begin
         wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
         wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
         wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
-        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
+        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild, wCheckVolume, wCheckSales);
         GCharacter.SetIndex(wCharID, GridChar.RowCount - 1);
 
         ForceDirectories(GConfig.GetCharRoomPath(wCharID));
@@ -298,8 +306,8 @@ begin
     GridChar.Row := 0;
     GridChar.ColCount := 4;
     GridChar.RowHeights[0] := 20;
-    GridChar.ColWidths[0] := 60;
-    GridChar.ColWidths[1] := 200;
+    GridChar.ColWidths[0] := 48;
+    GridChar.ColWidths[1] := 250;
     GridChar.ColWidths[3] := 70;
   
     FIconList.Clear;
@@ -413,7 +421,7 @@ Displays information of the selected guild
 procedure TFormCharacter.BtRoomClick(Sender: TObject);
 begin
   try
-    UpdateCharacter(True);
+    try UpdateCharacter(True); except end;
     Synchronize;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
@@ -470,6 +478,7 @@ var
   x, y: Integer;
   wRectSrc: TRect;
   wBmp: TBitmap;
+  wHead: TBitmap;
   wRect: TRect;
 begin
   if AIcon.Width = 0 then Exit;
@@ -505,7 +514,17 @@ begin
   wRect.Bottom := wBmp.Height;
   wBmp.Canvas.FillRect(wRect);
   wBmp.Canvas.Draw(0, 0, AIcon);
-  ACanvas.CopyRect(ARect, wBmp.Canvas, wRectSrc);
+
+  wHead := TBitmap.Create;
+  wHead.Width := _HEAD_WIDTH;
+  wHead.Height := _HEAD_HEIGHT;
+  wRect.Left := 0;
+  wRect.Right := wHead.Width;
+  wRect.Top := 0;
+  wRect.Bottom := wHead.Height;
+  wHead.Canvas.CopyRect(wRect, wBmp.Canvas, wRectSrc);
+
+  ACanvas.StretchDraw(ARect, wHead);
   wBmp.Free;
 end;
 
@@ -540,6 +559,8 @@ var
   wCharName: String;
   wCharServer: String;
   wComment: String;
+  wCheckVolume: Boolean;
+  wCheckSales: Boolean;
   wCharGuild: String;
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
@@ -548,70 +569,83 @@ var
   wDoUpdate: Boolean;
   wPetList: TXpNodeList;
   wPetSheet: String;
+  wRegExpr: TRegExpr;
   i: Integer;
 begin
-  wDoUpdate := AAuto;
+  wRegExpr := TRegExpr.Create;
+  try
+    wDoUpdate := AAuto;
 
-  wCharID := GridChar.Cells[3, GridChar.Row];
-  wCharKey := GCharacter.GetCharKey(wCharID);
-  wComment := GGuild.GetComment(wCharID);
+    wCharID := GridChar.Cells[3, GridChar.Row];
+    wCharKey := GCharacter.GetCharKey(wCharID);
+    wComment := GCharacter.GetComment(wCharID);
+    wCheckVolume := GCharacter.GetCheckVolume(wCharID);
+    wCheckSales := GCharacter.GetCheckSales(wCharID);
 
-  if not wDoUpdate then begin
-    FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
-    FormGuildEdit.LbKey.Caption := RS_CHAR_KEY;
-    FormGuildEdit.EdKey.Text := wCharKey;
-    FormGuildEdit.EdComment.Text := wComment;
-    wDoUpdate := FormGuildEdit.ShowModal = mrOk;
-    wCharKey := FormGuildEdit.EdKey.Text;
-    wComment := FormGuildEdit.EdComment.Text;
-  end;
-
-  if wDoUpdate then begin
-    // Updates icon
-    wStream := TMemoryStream.Create;
-    wXmlDoc := TXpObjModel.Create(nil);
-    try
-      GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
-      wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
-      wStream.SaveToFile(wInfoFile);
-      wStream.Clear;
-      wXmlDoc.LoadDataSource(wInfoFile);
-
-      wPetList := wXmlDoc.DocumentElement.SelectNodes('/character/pets/pet');
-      FormInvent.MountID := -1;
-      for i := 0 to wPetList.Length - 1 do begin
-        wPetSheet := wPetList.Item(i).Attributes.GetNamedItem('sheet').NodeValue;
-        GRegExpr.Expression := _EXPR_MOUNT;
-        if GRegExpr.Exec(wPetSheet) then begin
-          FormInvent.MountID := i;
-          Break;
-        end;
-      end;
-
-      wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
-      wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
-      wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
-      wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
-      wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
-      GRyzomApi.ApiBallisticMystix(
-          wXmlDoc.DocumentElement.SelectString('/character/race'),
-          wXmlDoc.DocumentElement.SelectString('/character/gender'),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_type')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_color')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/tattoo')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/eyes_color')),
-          wStream);
-      wStream.SaveToFile(wIconFile);
-      TPNGObject(FIconList.Items[GridChar.Row-1]).LoadFromFile(wIconFile);
-      GridChar.Refresh;
-    finally
-      wXmlDoc.Free;
-      wStream.Free;
+    if not wDoUpdate then begin
+      FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
+      FormGuildEdit.LbAutoKey.Caption := RS_CHAR_KEY;
+      FormGuildEdit.EdKey.Text := wCharKey;
+      FormGuildEdit.EdComment.Text := wComment;
+      FormGuildEdit.CbCheckChange.Caption := RS_CHECK_SALES;
+      FormGuildEdit.CbCheckVolume.Checked := wCheckVolume;
+      FormGuildEdit.CbCheckChange.Checked := wCheckSales;
+      wDoUpdate := FormGuildEdit.ShowModal = mrOk;
+      wCharKey := FormGuildEdit.EdKey.Text;
+      wComment := FormGuildEdit.EdComment.Text;
+      wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
+      wCheckSales := FormGuildEdit.CbCheckChange.Checked;
     end;
 
-    GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild);
-    GridChar.Cells[1, GridChar.Row] := wCharName;
-    GridChar.Cells[2, GridChar.Row] := wComment;
+    if wDoUpdate then begin
+      // Updates icon
+      wStream := TMemoryStream.Create;
+      wXmlDoc := TXpObjModel.Create(nil);
+      try
+        GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
+        wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
+        wStream.SaveToFile(wInfoFile);
+        wStream.Clear;
+        wXmlDoc.LoadDataSource(wInfoFile);
+
+        wPetList := wXmlDoc.DocumentElement.SelectNodes('/character/pets/pet');
+        FormInvent.MountID := -1;
+        for i := 0 to wPetList.Length - 1 do begin
+          wPetSheet := wPetList.Item(i).Attributes.GetNamedItem('sheet').NodeValue;
+          wRegExpr.Expression := _EXPR_MOUNT;
+          if wRegExpr.Exec(wPetSheet) then begin
+            FormInvent.MountID := i;
+            Break;
+          end;
+        end;
+
+        wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
+        wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
+        wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
+        wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
+        wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
+        GRyzomApi.ApiBallisticMystix(
+            wXmlDoc.DocumentElement.SelectString('/character/race'),
+            wXmlDoc.DocumentElement.SelectString('/character/gender'),
+            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_type')),
+            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_color')),
+            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/tattoo')),
+            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/eyes_color')),
+            wStream);
+        wStream.SaveToFile(wIconFile);
+        TPNGObject(FIconList.Items[GridChar.Row-1]).LoadFromFile(wIconFile);
+        GridChar.Refresh;
+      finally
+        wXmlDoc.Free;
+        wStream.Free;
+      end;
+
+      GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild, wCheckVolume, wCheckSales);
+      GridChar.Cells[1, GridChar.Row] := wCharName;
+      GridChar.Cells[2, GridChar.Row] := wComment;
+    end;
+  finally
+    wRegExpr.Free;
   end;
 end;
 

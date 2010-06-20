@@ -1,7 +1,16 @@
 zyRoom - History of changes
 ===========================
 
-# version 2.1.0 (2010-05-XX)
+# version 3.0.0 (2010-06-20)
+New: trayicon to change some options and show information bubble for alerts
+New: button to see the alerts
+New: monitoring system for volume, durability, quantity, sales, change of season and all objects of a guild vault !!!
+Change: time synchronization is now every 3 minutes
+Change: decrease the height of a row in the grid of characters
+Change: new look for the options window
+Fixed: information that has a value of 0 are now displayed
+
+# version 2.1.0 (2010-05-30)
 New: new filters for sales, tools, shields and bonus !
 New: it is now possible to change the sorting of items !
 New: additional information for items !

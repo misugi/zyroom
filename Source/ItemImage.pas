@@ -12,8 +12,11 @@ type
   TItemImage = class(TGraphicControl)
   private
     FPngImage: TPNGObject;
+    FPngSticker: TPNGObject;
     FData: TObject;
     FItemName: String;
+    FStickerPosX: Integer;
+    FStickerPosY: Integer;
   protected
     procedure Paint; override;
   public
@@ -24,9 +27,11 @@ type
     procedure LoadFromFile(AFileName: String);
     procedure LoadFromResourceName(AResourceName: String);
     procedure Assign(Source: TPersistent); override;
+    procedure RemoveSticker;
 
     property Data: TObject read FData write FData;
     property PngObject: TPNGObject read FPngImage write FPngImage;
+    property PngSticker: TPNGObject read FPngSticker write FPngSticker;
   published
     property Width;
     property Height;
@@ -35,6 +40,8 @@ type
     property OnClick;
     property OnMouseMove;
     property ItemName: String read FItemName write FItemName;
+    property StickerPosX: Integer read FStickerPosX write FStickerPosX;
+    property StickerPosY: Integer read FStickerPosY write FStickerPosY;
   end;
 
 procedure Register;
@@ -58,6 +65,9 @@ begin
   FItemName := '';
   ShowHint := True;
   FPngImage := TPNGObject.Create;
+  FPngSticker := TPNGObject.Create;
+  FStickerPosX := 0;
+  FStickerPosY := 0;
 end;
 
 {*******************************************************************************
@@ -67,6 +77,7 @@ destructor TItemImage.Destroy;
 begin
   if Assigned(FData) then FData.Free;
   FPngImage.Free;
+  FPngSticker.Free;
   inherited;
 end;
 
@@ -104,6 +115,7 @@ begin
   
   with Canvas do begin
     if FPngImage.Width > 0 then Draw(0, 0, FPngImage);
+    if PngSticker.Width > 0 then Draw(FStickerPosX, FStickerPosY, PngSticker);
   end;
 end;
 
@@ -114,6 +126,16 @@ procedure TItemImage.Assign(Source: TPersistent);
 begin
   FPngImage.Assign(TItemImage(Source).PngObject);
   Hint := TItemImage(Source).Hint;
+  Refresh;
+end;
+
+{*******************************************************************************
+Remove sticker
+*******************************************************************************}
+procedure TItemImage.RemoveSticker;
+begin
+  FPngSticker.Free;
+  FPngSticker := TPNGObject.Create;
   Refresh;
 end;
 

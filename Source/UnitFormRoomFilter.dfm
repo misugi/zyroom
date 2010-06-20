@@ -1,7 +1,7 @@
 object FormRoomFilter: TFormRoomFilter
   Left = 287
   Top = 121
-  Width = 535
+  Width = 325
   Height = 576
   Caption = 'Filtre'
   Color = 12631988
@@ -22,7 +22,7 @@ object FormRoomFilter: TFormRoomFilter
     Top = 0
     Width = 280
     Height = 538
-    ActivePage = TabFilter
+    ActivePage = TabTemp
     Align = alLeft
     MultiLine = True
     TabOrder = 0

@@ -27,11 +27,7 @@ interface
 
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
-  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls;
-
-resourcestring
-  RS_TAB_PET = 'Mektoub';
-  RS_TAB_MOUNT = 'Monture';
+  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles;
 
 type
   TFormInvent = class(TForm)
@@ -42,6 +38,8 @@ type
     Panel1: TPanel;
     LbValueCharName: TLabel;
     LbValueVolume: TLabel;
+    PopupWatch: TPopupMenu;
+    MenuGuard: TMenuItem;
     procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -54,8 +52,15 @@ type
     procedure CharInventClick(Sender: TObject);
     procedure TabInventChange(Sender: TObject);
     procedure CharInventResize(Sender: TObject);
+    procedure CharInventContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure MenuGuardClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FMountID: Integer;
+    FCharID: String;
+    FItemImage: TItemImage;
+    FGuardFile: TIniFile;
     procedure SetFMountID(const Value: Integer);
   public
     procedure UpdateRoom;
@@ -69,7 +74,7 @@ var
 implementation
 
 uses UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
-  UnitFormRoomFilter, UnitFormCharacter;
+  UnitFormRoomFilter, UnitFormCharacter, UnitFormWatch, Spin;
 
 {$R *.dfm}
 
@@ -81,6 +86,15 @@ begin
   CharInvent.DoubleBuffered := True;
   TabInvent.DoubleBuffered := True;
   DoubleBuffered := True;
+  FGuardFile := nil;
+end;
+
+{*******************************************************************************
+Destroys the form
+*******************************************************************************}
+procedure TFormInvent.FormDestroy(Sender: TObject);
+begin
+  FGuardFile.Free;
 end;
 
 {*******************************************************************************
@@ -170,11 +184,10 @@ room/bag/pet1/pet2/pet3/pet4
 *******************************************************************************}
 procedure TFormInvent.UpdateRoom;
 var
-  wCharID: String;
   wMaxVolume: String;
 begin
-  wCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
-  FormProgress.ShowFormInvent(wCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
+  FCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
+  FormProgress.ShowFormInvent(FCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
 
   if TabInvent.TabIndex = 0 then
     wMaxVolume := '/2000' // room
@@ -211,6 +224,78 @@ begin
       TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_PET, i-1]);
     end;
   end;
+end;
+
+{*******************************************************************************
+Popup menu Watch/Unwatch
+*******************************************************************************}
+procedure TFormInvent.CharInventContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+  Handled := True;
+
+  if Sender is TItemImage then begin
+    with TItemImage(Sender).Data as TItemInfo do begin
+      if TabInvent.TabIndex > 5 then Exit;
+//      if not(ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then Exit;
+      
+      if ItemGuarded then
+        MenuGuard.Caption := RS_MENU_UNWATCH
+      else
+        MenuGuard.Caption := RS_MENU_WATCH;
+
+      FItemImage := TItemImage(Sender);
+      PopupWatch.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+    end;
+  end;
+end;
+
+{*******************************************************************************
+Watch item
+*******************************************************************************}
+procedure TFormInvent.MenuGuardClick(Sender: TObject);
+var
+  wGuardFile: String;
+  wSection: String;
+  wIdent: String;
+  wValue: Integer;
+begin
+  with FItemImage.Data as TItemInfo do begin
+    wGuardFile := GConfig.GetCharPath(FCharID) + 'guard.dat';
+    FreeAndNil(FGuardFile);
+    FGuardFile := TIniFile.Create(wGuardFile);
+    case TabInvent.TabIndex of
+      0: wSection := 'room';
+      1: wSection := 'bag';
+      2: wSection := 'pet_animal1';
+      3: wSection := 'pet_animal2';
+      4: wSection := 'pet_animal3';
+      5: wSection := 'pet_animal4';
+    end;
+    wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
+
+    if not ItemGuarded then begin
+      if ItemType = itEquipment then
+        FormWatch.LbAutoValue.Caption := RS_DURABILITY_MIN
+      else
+        FormWatch.LbAutoValue.Caption := RS_QUANTITY_MIN;
+
+      FormWatch.EdValue.Text := '999';
+      if FormWatch.ShowModal = mrOk then begin
+        wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
+        if wValue <= 1 then wValue := 999;
+        FGuardFile.WriteInteger(wSection, wIdent, wValue);
+        FItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
+        ItemGuarded := True;
+      end;
+    end else begin
+      FGuardFile.DeleteKey(wSection, wIdent);
+      FItemImage.RemoveSticker;
+      ItemGuarded := False;
+    end;
+  end;
+
+  FItemImage.Refresh;
 end;
 
 end.

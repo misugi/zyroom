@@ -31,15 +31,18 @@ uses
 
 type
   TFormOptions = class(TForm)
-    LbPackFile: TLabel;
-    LbLanguage: TLabel;
-    CmbLanguage: TComboBox;
-    EdPackFile: TEdit;
-    CbProxyEnabled: TCheckBox;
     OdBrowsePackFile: TOpenDialog;
-    BtBrowsePackFile: TButton;
     BtOK: TButton;
     BtCancel: TButton;
+    OdColor: TColorDialog;
+    BtApply: TButton;
+    GbAlert: TGroupBox;
+    LbVolumeMax: TLabel;
+    LbVolumeGuild: TLabel;
+    LbVolumeRoom: TLabel;
+    EdVolumeRoom: TSpinEdit;
+    EdVolumeGuild: TSpinEdit;
+    GbProxy: TGroupBox;
     PnProxy: TPanel;
     LbProxyPassword: TLabel;
     LbProxyAddress: TLabel;
@@ -49,15 +52,26 @@ type
     EdProxyPassword: TEdit;
     EdProxyAddress: TEdit;
     EdProxyPort: TSpinEdit;
-    OdColor: TColorDialog;
-    PnColor: TPanel;
+    CbProxyEnabled: TCheckBox;
+    GbGeneral: TGroupBox;
+    LbLanguage: TLabel;
+    LbPackFile: TLabel;
     Label1: TLabel;
-    BtApply: TButton;
-    EdThreadCount: TSpinEdit;
     Label2: TLabel;
+    CmbLanguage: TComboBox;
+    EdPackFile: TEdit;
+    BtAutoBrowsePackFile: TButton;
+    PnColor: TPanel;
+    EdThreadCount: TSpinEdit;
     CbKeepFilter: TCheckBox;
+    CbSaveAlertFile: TCheckBox;
+    LbSalesCount: TLabel;
+    LbSeasonCount: TLabel;
+    EdSalesCount: TSpinEdit;
+    EdSeasonCount: TSpinEdit;
+    CbShowHint: TCheckBox;
     procedure CbProxyEnabledClick(Sender: TObject);
-    procedure BtBrowsePackFileClick(Sender: TObject);
+    procedure BtAutoBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BtOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -71,6 +85,8 @@ type
   public
     procedure ApplyConfig;
   end;
+
+  function LcCallBack( iLCID : integer; pUd : pointer ) : integer; stdcall;
 
 var
   FormOptions: TFormOptions;
@@ -89,8 +105,8 @@ Creates the form
 *******************************************************************************}
 procedure TFormOptions.FormCreate(Sender: TObject);
 begin
-  LoadConfig;
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
+  LoadLcf(GConfig.LanguageFileName, 0, Addr(LcCallBack), CmbLanguage);
 end;
 
 {*******************************************************************************
@@ -98,6 +114,7 @@ Displays the form
 *******************************************************************************}
 procedure TFormOptions.FormShow(Sender: TObject);
 begin
+  LoadConfig;
   BtOK.SetFocus;
   BtApply.Enabled := False;
 end;
@@ -139,7 +156,7 @@ end;
 {*******************************************************************************
 Selects the string resource file
 *******************************************************************************}
-procedure TFormOptions.BtBrowsePackFileClick(Sender: TObject);
+procedure TFormOptions.BtAutoBrowsePackFileClick(Sender: TObject);
 begin
   if OdBrowsePackFile.Execute then
     EdPackFile.Text := OdBrowsePackFile.FileName;
@@ -151,7 +168,6 @@ Laods the settings of the appliaction
 procedure TFormOptions.LoadConfig;
 begin
   // Supported languages
-  LoadLcf(GConfig.LanguageFileName, 0, Addr(LcCallBack), CmbLanguage);
   CmbLanguage.ItemIndex := CmbLanguage.Items.IndexOfObject(Pointer(GConfig.Language));
 
   // Color of the interface
@@ -174,6 +190,14 @@ begin
 
   // Save filter
   CbKeepFilter.Checked := GConfig.SaveFilter;
+
+  // Alert
+  CbSaveAlertFile.Checked := GConfig.SaveAlert;
+  CbShowHint.Checked := GConfig.ShowHint;
+  EdVolumeRoom.Value := GConfig.VolumeRoom;
+  EdVolumeGuild.Value := GConfig.VolumeGuild;
+  EdSalesCount.Value := GConfig.SalesCount;
+  EdSeasonCount.Value := GConfig.SeasonCount;
 end;
 
 {*******************************************************************************
@@ -202,6 +226,14 @@ begin
 
   // Save filter
   GConfig.SaveFilter := CbKeepFilter.Checked;
+
+  // Alert
+  GConfig.SaveAlert := CbSaveAlertFile.Checked;
+  GConfig.ShowHint := CbShowHint.Checked;
+  GConfig.VolumeRoom := EdVolumeRoom.Value;
+  GConfig.VolumeGuild := EdVolumeGuild.Value;
+  GConfig.SalesCount := EdSalesCount.Value;
+  GConfig.SeasonCount := EdSeasonCount.Value;
 end;
 
 {*******************************************************************************

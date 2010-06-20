@@ -27,7 +27,7 @@ interface
 
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
-  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls;
+  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles;
 
 type
   TFormRoom = class(TForm)
@@ -37,6 +37,8 @@ type
     Panel1: TPanel;
     LbValueGuildName: TLabel;
     LbValueVolume: TLabel;
+    PopupWatch: TPopupMenu;
+    MenuGuard: TMenuItem;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -48,7 +50,14 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GuildRoomClick(Sender: TObject);
     procedure GuildRoomResize(Sender: TObject);
+    procedure GuildRoomContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure MenuGuardClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
+    FItemImage: TItemImage;
+    FGuardFile: TIniFile;
+    FGuildID: String;
   public
     procedure UpdateRoom;
   end;
@@ -59,7 +68,7 @@ var
 implementation
 
 uses UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
-  UnitFormRoomFilter;
+  UnitFormRoomFilter, UnitFormWatch;
 
 {$R *.dfm}
 
@@ -70,6 +79,15 @@ procedure TFormRoom.FormCreate(Sender: TObject);
 begin
   GuildRoom.DoubleBuffered := True;
   DoubleBuffered := True;
+  FGuardFile := nil;
+end;
+
+{*******************************************************************************
+Destroys the form
+*******************************************************************************}
+procedure TFormRoom.FormDestroy(Sender: TObject);
+begin
+  FGuardFile.Free;
 end;
 
 {*******************************************************************************
@@ -141,13 +159,69 @@ end;
 Hall
 *******************************************************************************}
 procedure TFormRoom.UpdateRoom;
-var
-  wGuildID: String;
 begin
-  wGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
-  FormProgress.ShowFormRoom(wGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  FGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
+  FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
   LbValueGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
   LbValueVolume.Caption := RS_VOLUME + ' : ' + FormatFloat('####0.##',FormProgress.TotalVolume) + '/10000';
+end;
+
+procedure TFormRoom.GuildRoomContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+  Handled := True;
+
+  if Sender is TItemImage then begin
+    with TItemImage(Sender).Data as TItemInfo do begin
+//      if not(ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then Exit;
+      
+      if ItemGuarded then
+        MenuGuard.Caption := RS_MENU_UNWATCH
+      else
+        MenuGuard.Caption := RS_MENU_WATCH;
+
+      FItemImage := TItemImage(Sender);
+      PopupWatch.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+    end;
+  end;
+end;
+
+procedure TFormRoom.MenuGuardClick(Sender: TObject);
+var
+  wGuardFile: String;
+  wSection: String;
+  wIdent: String;
+  wValue: Integer;
+begin
+  with FItemImage.Data as TItemInfo do begin
+    wGuardFile := GConfig.GetGuildPath(FGuildID) + 'guard.dat';
+    FreeAndNil(FGuardFile);
+    FGuardFile := TIniFile.Create(wGuardFile);
+    wSection := 'room';
+    wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
+
+    if not ItemGuarded then begin
+      if ItemType = itEquipment then
+        FormWatch.LbAutoValue.Caption := RS_DURABILITY_MIN
+      else
+        FormWatch.LbAutoValue.Caption := RS_QUANTITY_MIN;
+
+      FormWatch.EdValue.Text := '999';
+      if FormWatch.ShowModal = mrOk then begin
+        wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
+        if wValue <= 1 then wValue := 999;
+        FGuardFile.WriteInteger(wSection, wIdent, wValue);
+        FItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
+        ItemGuarded := True;
+      end;
+    end else begin
+      FGuardFile.DeleteKey(wSection, wIdent);
+      FItemImage.RemoveSticker;
+      ItemGuarded := False;
+    end;
+  end;
+
+  FItemImage.Refresh;
 end;
 
 end.

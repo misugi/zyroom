@@ -34,14 +34,18 @@ uses
   UnitFormConfirmation in 'UnitFormConfirmation.pas' {FormConfirm},
   UnitFormHome in 'UnitFormHome.pas' {FormHome},
   RyzomApi in 'RyzomApi.pas',
-  UnitFormCharacter in 'UnitFormCharacter.pas' {FormCharacter},
-  UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit},
+  UnitFormAlert in 'UnitFormAlert.pas' {FormAlert},
+  UnitFormWatch in 'UnitFormWatch.pas' {FormWatch},
   UnitFormGuild in 'UnitFormGuild.pas' {FormGuild},
   UnitFormRoom in 'UnitFormRoom.pas' {FormRoom},
-  UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter};
+  UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter},
+  UnitFormCharacter in 'UnitFormCharacter.pas' {FormCharacter},
+  UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit},
+  UnitThreadAlert in 'UnitThreadAlert.pas';
 
 {$R *.res}
 {$R cat.res}
+{$R other.res}
 
 begin
   Application.Initialize;
@@ -52,10 +56,12 @@ begin
   Application.CreateForm(TFormConfirm, FormConfirm);
   Application.CreateForm(TFormInvent, FormInvent);
   Application.CreateForm(TFormHome, FormHome);
-  Application.CreateForm(TFormCharacter, FormCharacter);
-  Application.CreateForm(TFormGuildEdit, FormGuildEdit);
+  Application.CreateForm(TFormAlert, FormAlert);
+  Application.CreateForm(TFormWatch, FormWatch);
   Application.CreateForm(TFormGuild, FormGuild);
   Application.CreateForm(TFormRoom, FormRoom);
   Application.CreateForm(TFormRoomFilter, FormRoomFilter);
+  Application.CreateForm(TFormCharacter, FormCharacter);
+  Application.CreateForm(TFormGuildEdit, FormGuildEdit);
   Application.Run;
 end.

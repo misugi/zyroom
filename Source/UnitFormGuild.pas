@@ -39,6 +39,7 @@ resourcestring
   RS_COL_COMMENT = 'Commentaire';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
   RS_GUILD_KEY = 'Clé de guilde :';
+  RS_CHECK_CHANGE = 'Surveiller les objets';
   RS_UP = 'Monter';
   RS_DOWN = 'Descendre';
 
@@ -203,18 +204,26 @@ var
   wGuildIcon: String;
   wStream: TMemoryStream;
   wComment: String;
+  wCheckVolume: Boolean;
+  wCheckChange: Boolean;
   wServer: String;
   wXmlDoc: TXpObjModel;
   wIconFile: String;
+  wWatchFile: String;
   i: Integer;
 begin
   FormGuildEdit.Caption := RS_NEW_GUILD;
-  FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
+  FormGuildEdit.LbAutoKey.Caption := RS_GUILD_KEY;
   FormGuildEdit.EdKey.Text := '';
   FormGuildEdit.EdComment.Text := '';
+  FormGuildEdit.CbCheckVolume.Checked := False;
+  FormGuildEdit.CbCheckChange.Checked := False;
+  FormGuildEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
   if FormGuildEdit.ShowModal = mrOk then begin
     wGuildKey := FormGuildEdit.EdKey.Text;
     wComment := FormGuildEdit.EdComment.Text;
+    wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
+    wCheckChange := FormGuildEdit.CbCheckChange.Checked;
     wStream := TMemoryStream.Create;
     try
       GRyzomApi.ApiGuild(wGuildKey, wStream);
@@ -226,7 +235,7 @@ begin
         wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
         wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
         wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
-        GGuild.AddGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer);
+        GGuild.AddGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer, wCheckVolume, wCheckChange);
 
         ForceDirectories(GConfig.GetGuildRoomPath(wGuildID));
         wStream.Clear;
@@ -240,6 +249,10 @@ begin
             Break;
           end;
         end;
+
+        // Delete watch file if exists
+        wWatchFile := GConfig.GetGuildPath(wGuildID) + _WATCH_FILENAME;
+        if FileExists(wWatchFile) then DeleteFile(wWatchFile);
       finally
         wXmlDoc.Free;
       end;
@@ -274,7 +287,7 @@ begin
     GridGuild.Row := 0;
     GridGuild.ColCount := 4;
     GridGuild.RowHeights[0] := 20;
-    GridGuild.ColWidths[0] := 50;
+    GridGuild.ColWidths[0] := 48;
     GridGuild.ColWidths[1] := 250;
     GridGuild.ColWidths[3] := 70;
 
@@ -389,7 +402,7 @@ Displays information of the selected guild
 procedure TFormGuild.BtRoomClick(Sender: TObject);
 begin
   try
-    UpdateGuild(True);
+    try UpdateGuild(True); except end;
     Synchronize;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
@@ -456,10 +469,13 @@ var
   wGuildKey: String;
   wGuildName: String;
   wComment: String;
+  wCheckVolume: Boolean;
+  wCheckChange: Boolean;
   wServer: String;
   wGuildIcon: String;
   wIconFile: String;
   wInfoFile: String;
+  wWatchFile: String;
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
   wDoUpdate: Boolean;
@@ -469,15 +485,26 @@ begin
   wGuildID := GridGuild.Cells[3, GridGuild.Row];
   wGuildKey := GGuild.GetGuildKey(wGuildID);
   wComment := GGuild.GetComment(wGuildID);
+  wCheckVolume := GGuild.GetCheckVolume(wGuildID);
+  wCheckChange := GGuild.GetCheckChange(wGuildID);
 
   if not wDoUpdate then begin
     FormGuildEdit.Caption := RS_CHANGE_KEY;
-    FormGuildEdit.LbKey.Caption := RS_GUILD_KEY;
+    FormGuildEdit.LbAutoKey.Caption := RS_GUILD_KEY;
     FormGuildEdit.EdKey.Text := wGuildKey;
     FormGuildEdit.EdComment.Text := wComment;
+    FormGuildEdit.CbCheckVolume.Checked := wCheckVolume;
+    FormGuildEdit.CbCheckChange.Checked := wCheckChange;
+    FormGuildEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
     wDoUpdate := FormGuildEdit.ShowModal = mrOk;
     wGuildKey := FormGuildEdit.EdKey.Text;
     wComment := FormGuildEdit.EdComment.Text;
+    wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
+    wCheckChange := FormGuildEdit.CbCheckChange.Checked;
+
+    // Delete watch file if exists
+    wWatchFile := GConfig.GetGuildPath(wGuildID) + _WATCH_FILENAME;
+    if (not wCheckChange) and (FileExists(wWatchFile)) then DeleteFile(wWatchFile);
   end;
 
   if wDoUpdate then begin
@@ -505,7 +532,7 @@ begin
       wStream.Free;
     end;
     
-    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer);
+    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer, wCheckVolume, wCheckChange);
     GridGuild.Cells[1, GridGuild.Row] := wGuildName;
     GridGuild.Cells[2, GridGuild.Row] := wComment;
   end;

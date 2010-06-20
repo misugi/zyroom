@@ -2,7 +2,7 @@ object FormGuildEdit: TFormGuildEdit
   Left = 505
   Top = 457
   BorderStyle = bsDialog
-  ClientHeight = 92
+  ClientHeight = 125
   ClientWidth = 320
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -15,12 +15,12 @@ object FormGuildEdit: TFormGuildEdit
   OnShow = FormShow
   DesignSize = (
     320
-    92)
+    125)
   PixelsPerInch = 96
   TextHeight = 14
-  object LbKey: TLabel
+  object LbAutoKey: TLabel
     Left = 8
-    Top = 16
+    Top = 12
     Width = 97
     Height = 14
     Caption = 'Cl'#233' de personnage :'
@@ -33,7 +33,7 @@ object FormGuildEdit: TFormGuildEdit
   end
   object ImgProfilePage: TImage
     Left = 292
-    Top = 10
+    Top = 6
     Width = 24
     Height = 24
     Cursor = crHandPoint
@@ -78,7 +78,7 @@ object FormGuildEdit: TFormGuildEdit
   end
   object LbComment: TLabel
     Left = 8
-    Top = 40
+    Top = 36
     Width = 68
     Height = 14
     Caption = 'Commentaire :'
@@ -91,7 +91,7 @@ object FormGuildEdit: TFormGuildEdit
   end
   object EdKey: TEdit
     Left = 112
-    Top = 12
+    Top = 8
     Width = 176
     Height = 22
     Anchors = [akLeft, akTop, akRight]
@@ -105,7 +105,7 @@ object FormGuildEdit: TFormGuildEdit
   end
   object BtOK: TButton
     Left = 159
-    Top = 64
+    Top = 97
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
@@ -122,7 +122,7 @@ object FormGuildEdit: TFormGuildEdit
   end
   object BtCancel: TButton
     Left = 241
-    Top = 64
+    Top = 97
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
@@ -139,7 +139,7 @@ object FormGuildEdit: TFormGuildEdit
   end
   object EdComment: TEdit
     Left = 112
-    Top = 36
+    Top = 32
     Width = 176
     Height = 22
     Anchors = [akLeft, akTop, akRight]
@@ -150,5 +150,21 @@ object FormGuildEdit: TFormGuildEdit
     Font.Style = []
     ParentFont = False
     TabOrder = 1
+  end
+  object CbCheckVolume: TCheckBox
+    Left = 112
+    Top = 56
+    Width = 197
+    Height = 17
+    Caption = 'Surveiller le volume'
+    TabOrder = 4
+  end
+  object CbCheckChange: TCheckBox
+    Left = 112
+    Top = 73
+    Width = 197
+    Height = 17
+    Caption = 'Surveiller tout changement'
+    TabOrder = 5
   end
 end

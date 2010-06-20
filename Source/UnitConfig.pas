@@ -43,6 +43,7 @@ const
   _CONFIG_FILENAME = 'config.ini';
   _GUILD_DIR = 'guild';
   _ROOM_DIR = 'room';
+  _ALERT_DIR = 'alert';
   _CHARACTER_DIR = 'character';
   _PACK_FILEPATH = '\save\string_client.pack';
   _LANGUAGE_FILENAME = 'languages.lcf';
@@ -53,6 +54,8 @@ const
   _SECTION_GENERAL = 'GENERAL';
   _SECTION_PROXY = 'PROXY';
   _SECTION_POSITION = 'POSITION';
+  _SECTION_ALERT = 'ALERT';
+  _SECTION_ROOM = 'room';
   _KEY_LANGUAGE = 'Language';
   _KEY_PACKFILE = 'PackFile';
   _KEY_PROXY_ENABLED = 'Enabled';
@@ -69,6 +72,12 @@ const
   _KEY_POS_FILTER_TOP = 'FilterTop';
   _KEY_THREAD_COUNT = 'ThreadCount';
   _KEY_SAVE_FILTER = 'SaveFilter';
+  _KEY_ALERT_SAVEFILE = 'SaveFile';
+  _KEY_ALERT_VOLUME_ROOM = 'VolumeRoom';
+  _KEY_ALERT_VOLUME_GUILD = 'VolumeGuild';
+  _KEY_ALERT_SHOW_HINT = 'ShowHint';
+  _KEY_ALERT_SALES_COUNT = 'SalesCount';
+  _KEY_ALERT_SEASON_COUNT = 'SeasonCount';
 
   _GUILD_FILENAME = 'guild.ini';
   _CHARACTER_FILENAME = 'character.ini';
@@ -78,16 +87,23 @@ const
   _KEY_SERVER = 'Server';
   _KEY_GUILD = 'Guild';
   _KEY_INDEX = 'Index';
+  _KEY_CHECK_VOLUME = 'CheckVolume';
+  _KEY_CHECK_CHANGE = 'CheckChange';
+  _KEY_CHECK_SALES = 'CheckSales';
 
   _RES_LOGO = 'logo';
   _RES_CLOSED = 'closed';
   _RES_OPEN = 'open';
   _RES_RESTRICTED = 'restricted';
   _RES_NOICON = 'noicon';
+  _RES_EYES = 'eyes';
 
   _ICON_FILENAME = 'icon.png';
   _INFO_FILENAME = 'info.xml';
   _ITEMS_FILENAME = 'items.xml';
+  _INDEX_FILENAME = 'index.dat';
+  _GUARD_FILENAME = 'guard.dat';
+  _WATCH_FILENAME = 'watch.dat';
   _MIN_QUALITY = 0;
   _MAX_QUALITY = 270;
 
@@ -104,9 +120,11 @@ type
     function  GetGuildName(AGuildID: String): String;
     function  GetComment(AID: String): String;
     function  GetServerName(AGuildID: String): String;
+    function  GetCheckVolume(AID: String): Boolean;
+    function  GetCheckChange(AID: String): Boolean;
     function  GuildExists(AGuildID: String): Boolean;
-    procedure AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
-    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
+    procedure AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
+    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
     procedure SetIndex(AGuildID: String; AIndex: Integer);
@@ -125,9 +143,11 @@ type
     function  GetComment(AID: String): String;
     function  GetServerName(ACharID: String): String;
     function  GetGuildName(ACharID: String): String;
+    function  GetCheckVolume(AID: String): Boolean;
+    function  GetCheckSales(AID: String): Boolean;
     function  CharExists(ACharID: String): Boolean;
-    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
-    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
+    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
+    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
     procedure DeleteChar(ACharID: String);
     procedure CharList(ACharIDList: TStrings);
     procedure SetIndex(ACharID: String; AIndex: Integer);
@@ -161,20 +181,22 @@ type
     procedure SetProxyUsername(const Value: String);
     procedure SetProxyBasicAuth(const Value: Boolean);
     procedure SetInterfaceColor(const Value: TColor);
-    function GetFilterLeft: Integer;
-    function GetFilterTop: Integer;
-    function GetMainLeft: Integer;
-    function GetMainTop: Integer;
-    procedure SetFilterLeft(const Value: Integer);
-    procedure SetFilterTop(const Value: Integer);
-    procedure SetMainLeft(const Value: Integer);
-    procedure SetMainTop(const Value: Integer);
-    function GetSavePosition: Boolean;
-    procedure SetSavePosition(const Value: Boolean);
     function GetThreadCount: Integer;
     procedure SetThreadCount(const Value: Integer);
     function GetSaveFilter: Boolean;
     procedure SetSaveFilter(const Value: Boolean);
+    function GetSaveAlert: Boolean;
+    procedure SetSaveAlert(const Value: Boolean);
+    function GetVolumeGuild: Integer;
+    function GetVolumeRoom: Integer;
+    procedure SetVolumeGuild(const Value: Integer);
+    procedure SetVolumeRoom(const Value: Integer);
+    function GetSalesCount: Integer;
+    function GetSeasonCount: Integer;
+    function GetShowHint: Boolean;
+    procedure SetSalesCount(const Value: Integer);
+    procedure SetSeasonCount(const Value: Integer);
+    procedure SetShowHint(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -198,11 +220,12 @@ type
     property ProxyUsername: String read GetProxyUsername write SetProxyUsername;
     property ProxyPassword: String read GetProxyPassword write SetProxyPassword;
 
-    property SavePosition: Boolean read GetSavePosition write SetSavePosition;
-    property PosMainLeft: Integer read GetMainLeft write SetMainLeft;
-    property PosMainTop: Integer read GetMainTop write SetMainTop;
-    property PosFilterLeft: Integer read GetFilterLeft write SetFilterLeft;
-    property PosFilterTop: Integer read GetFilterTop write SetFilterTop;
+    property SaveAlert: Boolean read GetSaveAlert write SetSaveAlert;
+    property VolumeRoom: Integer read GetVolumeRoom write SetVolumeRoom;
+    property VolumeGuild: Integer read GetVolumeGuild write SetVolumeGuild;
+    property ShowHint: Boolean read GetShowHint write SetShowHint;
+    property SalesCount: Integer read GetSalesCount write SetSalesCount;
+    property SeasonCount: Integer read GetSeasonCount write SetSeasonCount;
 
     function GetGuildPath(AGuildID: String): String;
     function GetGuildRoomPath(AGuildID: String): String;
@@ -443,6 +466,132 @@ begin
   FIniFile.WriteString(_SECTION_PROXY, _KEY_PROXY_USER, Value);
 end;
 
+{*******************************************************************************
+Threads count for synchronization
+*******************************************************************************}
+function TConfig.GetThreadCount: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_GENERAL, _KEY_THREAD_COUNT, 10);
+end;
+
+procedure TConfig.SetThreadCount(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_GENERAL, _KEY_THREAD_COUNT, Value);
+end;
+
+{*******************************************************************************
+Save filter
+*******************************************************************************}
+function TConfig.GetSaveFilter: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, False);
+end;
+
+procedure TConfig.SetSaveFilter(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, Value);
+end;
+
+{*******************************************************************************
+Save alert in file
+*******************************************************************************}
+function TConfig.GetSaveAlert: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_ALERT, _KEY_ALERT_SAVEFILE, False);
+end;
+
+procedure TConfig.SetSaveAlert(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_ALERT, _KEY_ALERT_SAVEFILE, Value);
+end;
+
+{*******************************************************************************
+Alert for guild volume
+*******************************************************************************}
+function TConfig.GetVolumeGuild: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_GUILD, 9900);
+end;
+
+procedure TConfig.SetVolumeGuild(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_GUILD, Value);
+end;
+
+{*******************************************************************************
+Alert for room volume
+*******************************************************************************}
+function TConfig.GetVolumeRoom: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_ROOM, 1900);
+end;
+
+procedure TConfig.SetVolumeRoom(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_ROOM, Value);
+end;
+
+{*******************************************************************************
+Alert count for sales
+*******************************************************************************}
+function TConfig.GetSalesCount: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_SALES_COUNT, 12);
+end;
+
+procedure TConfig.SetSalesCount(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_SALES_COUNT, Value);
+end;
+
+{*******************************************************************************
+Alert count for season
+*******************************************************************************}
+function TConfig.GetSeasonCount: Integer;
+begin
+  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_SEASON_COUNT, 12);
+end;
+
+procedure TConfig.SetSeasonCount(const Value: Integer);
+begin
+  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_SEASON_COUNT, Value);
+end;
+
+{*******************************************************************************
+Alert hint
+*******************************************************************************}
+function TConfig.GetShowHint: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_ALERT, _KEY_ALERT_SHOW_HINT, True);
+end;
+
+procedure TConfig.SetShowHint(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_ALERT, _KEY_ALERT_SHOW_HINT, Value);
+end;
+
+{*******************************************************************************
+Check version on Internet
+*******************************************************************************}
+function TConfig.CheckVersion(var AFileUrl: String): Boolean;
+var
+  wStream: TStringStream;
+begin
+  Result := False;
+  try
+    wStream := TStringStream.Create('');
+    GRyzomApi.SendRequest('http://zyroom.misulud.fr/version/version.txt', wStream);
+    if FVersion <> wStream.DataString then begin
+      AFileUrl := Format('http://zyroom.misulud.fr/version/zyroom-%s.zip', [wStream.DataString]);
+      Result := True;
+    end;
+  except
+  end;
+end;
+
+
+
+//------------------------------------------------------------------------------
 { TGuild }
 
 {*******************************************************************************
@@ -466,7 +615,7 @@ end;
 {*******************************************************************************
 Adds a guild
 *******************************************************************************}
-procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
+procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
 var
   wKey: String;
 begin
@@ -477,12 +626,14 @@ begin
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
   FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
   FIniFile.WriteString(AGuildID, _KEY_SERVER, AServer);
+  FIniFile.WriteBool(AGuildID, _KEY_CHECK_VOLUME, ACheckVolume);
+  FIniFile.WriteBool(AGuildID, _KEY_CHECK_CHANGE, ACheckChange);
 end;
 
 {*******************************************************************************
 Updates a guild
 *******************************************************************************}
-procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String);
+procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
 var
   wKey: String;
 begin
@@ -493,6 +644,8 @@ begin
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
   FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
   FIniFile.WriteString(AGuildID, _KEY_SERVER, AServer);
+  FIniFile.WriteBool(AGuildID, _KEY_CHECK_VOLUME, ACheckVolume);
+  FIniFile.WriteBool(AGuildID, _KEY_CHECK_CHANGE, ACheckChange);
 end;
 
 {*******************************************************************************
@@ -585,12 +738,31 @@ begin
   Result := FIniFile.ReadString(AGuildID, _KEY_SERVER, '');
 end;
 
+{*******************************************************************************
+Returns the check change state
+*******************************************************************************}
+function TGuild.GetCheckChange(AID: String): Boolean;
+begin
+  Result := FIniFile.ReadBool(AID, _KEY_CHECK_CHANGE, False);
+end;
+
+{*******************************************************************************
+Returns the check volume state
+*******************************************************************************}
+function TGuild.GetCheckVolume(AID: String): Boolean;
+begin
+  Result := FIniFile.ReadBool(AID, _KEY_CHECK_VOLUME, False);
+end;
+
+
+
+//------------------------------------------------------------------------------
 { TCharacter }
 
 {*******************************************************************************
 Adds a character
 *******************************************************************************}
-procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
+procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
 var
   wKey: String;
 begin
@@ -602,6 +774,27 @@ begin
   FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
   FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
   FIniFile.WriteString(ACharID, _KEY_GUILD, AGuild);
+  FIniFile.WriteBool(ACharID, _KEY_CHECK_VOLUME, ACheckVolume);
+  FIniFile.WriteBool(ACharID, _KEY_CHECK_SALES, ACheckSales);
+end;
+
+{*******************************************************************************
+Updates a character
+*******************************************************************************}
+procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
+var
+  wKey: String;
+begin
+  if not FIniFile.SectionExists(ACharID) then
+    raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
+  wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
+  FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
+  FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
+  FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
+  FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
+  FIniFile.WriteString(ACharID, _KEY_GUILD, AGuild);
+  FIniFile.WriteBool(ACharID, _KEY_CHECK_VOLUME, ACheckVolume);
+  FIniFile.WriteBool(ACharID, _KEY_CHECK_SALES, ACheckSales);
 end;
 
 {*******************************************************************************
@@ -715,159 +908,27 @@ begin
 end;
 
 {*******************************************************************************
+Returns the check volume state
+*******************************************************************************}
+function TCharacter.GetCheckVolume(AID: String): Boolean;
+begin
+  Result := FIniFile.ReadBool(AID, _KEY_CHECK_VOLUME, False);
+end;
+
+{*******************************************************************************
+Returns the check sales state
+*******************************************************************************}
+function TCharacter.GetCheckSales(AID: String): Boolean;
+begin
+  Result := FIniFile.ReadBool(AID, _KEY_CHECK_SALES, False);
+end;
+
+{*******************************************************************************
 Returns the comment
 *******************************************************************************}
 function TCharacter.GetComment(AID: String): String;
 begin
   Result := FIniFile.ReadString(AID, _KEY_COMMENT, '');
-end;
-
-{*******************************************************************************
-Updates a character
-*******************************************************************************}
-procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String);
-var
-  wKey: String;
-begin
-  if not FIniFile.SectionExists(ACharID) then
-    raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
-  wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
-  FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
-  FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
-  FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
-  FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
-  FIniFile.WriteString(ACharID, _KEY_GUILD, AGuild);
-end;
-
-{*******************************************************************************
-Returns the left position of the Filter window
-*******************************************************************************}
-function TConfig.GetFilterLeft: Integer;
-begin
-  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_FILTER_LEFT, 0);
-end;
-
-{*******************************************************************************
-Returns the top position of the Filter window
-*******************************************************************************}
-function TConfig.GetFilterTop: Integer;
-begin
-  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_FILTER_TOP, 0);
-end;
-
-{*******************************************************************************
-Returns the left position of the Main window
-*******************************************************************************}
-function TConfig.GetMainLeft: Integer;
-begin
-  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_MAIN_LEFT, 0);
-end;
-
-{*******************************************************************************
-Returns the top position of the Main window
-*******************************************************************************}
-function TConfig.GetMainTop: Integer;
-begin
-  Result := FIniFile.ReadInteger(_SECTION_POSITION, _KEY_POS_MAIN_TOP, 0);
-end;
-
-{*******************************************************************************
-Saves the left position of the Filter window
-*******************************************************************************}
-procedure TConfig.SetFilterLeft(const Value: Integer);
-begin
-  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_FILTER_LEFT, Value);
-end;
-
-{*******************************************************************************
-Saves the top position of the Filter window
-*******************************************************************************}
-procedure TConfig.SetFilterTop(const Value: Integer);
-begin
-  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_FILTER_TOP, Value);
-end;
-
-{*******************************************************************************
-Saves the left position of the Main window
-*******************************************************************************}
-procedure TConfig.SetMainLeft(const Value: Integer);
-begin
-  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_MAIN_LEFT, Value);
-end;
-
-{*******************************************************************************
-Saves the top position of the Main window
-*******************************************************************************}
-procedure TConfig.SetMainTop(const Value: Integer);
-begin
-  FIniFile.WriteInteger(_SECTION_POSITION, _KEY_POS_MAIN_TOP, Value);
-end;
-
-{*******************************************************************************
-Returns the save position option
-*******************************************************************************}
-function TConfig.GetSavePosition: Boolean;
-begin
-  Result := FIniFile.ReadBool(_SECTION_POSITION, _KEY_POS_AUTOSAVE, False);
-end;
-
-{*******************************************************************************
-Changes the save position option
-*******************************************************************************}
-procedure TConfig.SetSavePosition(const Value: Boolean);
-begin
-  FIniFile.WriteBool(_SECTION_POSITION, _KEY_POS_AUTOSAVE, Value);
-end;
-
-{*******************************************************************************
-Returns the thread count for synchronization
-*******************************************************************************}
-function TConfig.GetThreadCount: Integer;
-begin
-  Result := FIniFile.ReadInteger(_SECTION_GENERAL, _KEY_THREAD_COUNT, 10);
-end;
-
-{*******************************************************************************
-Changes the thread count for synchronization
-*******************************************************************************}
-procedure TConfig.SetThreadCount(const Value: Integer);
-begin
-  FIniFile.WriteInteger(_SECTION_GENERAL, _KEY_THREAD_COUNT, Value);
-end;
-
-{*******************************************************************************
-Returns the option to save filter
-*******************************************************************************}
-function TConfig.GetSaveFilter: Boolean;
-begin
-  Result := FIniFile.ReadBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, False);
-end;
-
-{*******************************************************************************
-Changes the option to save filter
-*******************************************************************************}
-procedure TConfig.SetSaveFilter(const Value: Boolean);
-begin
-  FIniFile.WriteBool(_SECTION_GENERAL, _KEY_SAVE_FILTER, Value);
-end;
-
-{*******************************************************************************
-Check version on Internet
-*******************************************************************************}
-function TConfig.CheckVersion(var AFileUrl: String): Boolean;
-var
-  wStream: TStringStream;
-begin
-  Result := False;
-  try
-    wStream := TStringStream.Create('');
-    GRyzomApi.SendRequest('http://zyroom.misulud.fr/version/version.txt', wStream);
-    if FVersion <> wStream.DataString then begin
-      AFileUrl := Format('http://zyroom.misulud.fr/version/zyroom-%s.zip', [wStream.DataString]);
-      Result := True;
-    end;
-  except
-  end;
 end;
 
 end.

@@ -34,13 +34,15 @@ const
   
 type
   TFormGuildEdit = class(TForm)
-    LbKey: TLabel;
+    LbAutoKey: TLabel;
     EdKey: TEdit;
     BtOK: TButton;
     BtCancel: TButton;
     ImgProfilePage: TImage;
     LbComment: TLabel;
     EdComment: TEdit;
+    CbCheckVolume: TCheckBox;
+    CbCheckChange: TCheckBox;
     procedure FormShow(Sender: TObject);
     procedure ImgProfilePageClick(Sender: TObject);
   private

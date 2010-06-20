@@ -13,6 +13,7 @@ object FormInvent: TFormInvent
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
@@ -79,6 +80,7 @@ object FormInvent: TFormInvent
         TabOrder = 0
         TabStop = True
         OnClick = CharInventClick
+        OnContextPopup = CharInventContextPopup
         OnMouseMove = CharInventMouseMove
         OnMouseWheelDown = CharInventMouseWheelDown
         OnMouseWheelUp = CharInventMouseWheelUp
@@ -134,6 +136,14 @@ object FormInvent: TFormInvent
         ParentShowHint = False
         ShowHint = False
       end
+    end
+  end
+  object PopupWatch: TPopupMenu
+    Left = 297
+    Top = 58
+    object MenuGuard: TMenuItem
+      Caption = 'Surveiller'
+      OnClick = MenuGuardClick
     end
   end
 end

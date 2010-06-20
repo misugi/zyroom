@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, UnitRyzom, UnitConfig, pngimage, RyzomApi,
-  ShellApi, regexpr, ComCtrls, XpDOM;
+  ShellApi, regexpr, ComCtrls, XpDOM, UnitThreadAlert, CoolTrayIcon, Menus;
 
 resourcestring
   RS_STATUS_CLOSED = 'Fermé';
@@ -60,6 +60,16 @@ type
     TimerUpdate: TTimer;
     StatusBar: TStatusBar;
     ImgUpdate: TImage;
+    BtAlert: TButton;
+    TrayIcon: TCoolTrayIcon;
+    PopupMenuTray: TPopupMenu;
+    MenuClose: TMenuItem;
+    MenuOpen: TMenuItem;
+    N1: TMenuItem;
+    MenuShowHint: TMenuItem;
+    N2: TMenuItem;
+    MenuKeepFilter: TMenuItem;
+    MenuSaveAlert: TMenuItem;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -72,6 +82,13 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ImgUpdateClick(Sender: TObject);
     procedure TimerUpdateTimer(Sender: TObject);
+    procedure BtAlertClick(Sender: TObject);
+    procedure TrayIconDblClick(Sender: TObject);
+    procedure MenuCloseClick(Sender: TObject);
+    procedure MenuOpenClick(Sender: TObject);
+    procedure ChangeOptions(Sender: TObject);
+    procedure PopupMenuTrayPopup(Sender: TObject);
+    procedure TrayIconBalloonHintClick(Sender: TObject);
   private
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
@@ -79,10 +96,14 @@ type
     FServerLabelSelected: TLabel;
     FCurrentForm: TForm;
     FFileUrl: String;
+    FAlert: TAlert;
+    FVisible: Boolean;
+    FServerID: String;
 
     procedure UpdateStatusAndTime(AOnlyTime: Boolean);
     procedure GetSeasonInfo(AServerID: String);
   public
+    property ServerID: String read FServerID;
     procedure ShowMenuForm(AForm: TForm);
   end;
 
@@ -92,7 +113,8 @@ var
 implementation
 
 uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
-  UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter, DateUtils;
+  UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter, DateUtils,
+  UnitFormAlert, SyncObjs, Contnrs;
 
 {$R *.dfm}
 
@@ -106,13 +128,13 @@ begin
   StatusBar.DoubleBuffered := True;
   PnHeader.DoubleBuffered := True;
   PnContainer.DoubleBuffered := True;
+  FVisible := False;
   
   GConfig := TConfig.Create;
   GRyzomApi := TRyzom.Create;
   GGuild := TGuild.Create;
   GCharacter := TCharacter.Create;
   GRyzomStringPack := TStringClient.Create;
-  GRegExpr := TRegExpr.Create;
 
   FPngClosed := TPNGObject.Create;
   FPngOpen := TPNGObject.Create;
@@ -124,6 +146,11 @@ begin
   FPngRestricted.LoadFromResourceName(HInstance, _RES_RESTRICTED);
 
   FCurrentForm := nil;
+  GAlertCS := TCriticalSection.Create;
+  GMsgList := TObjectList.Create(True);
+
+  // Start thread for alerts
+  FAlert := TAlert.Create;
 end;
 
 {*******************************************************************************
@@ -131,6 +158,8 @@ Displays the form
 *******************************************************************************}
 procedure TFormMain.FormShow(Sender: TObject);
 begin
+  if FVisible then Exit;
+  
   // Load the settings
   FormOptions.ApplyConfig;
 
@@ -166,6 +195,10 @@ begin
   FormInvent.Parent := PnContainer;
   FormInvent.Align := alClient;
 
+  FormAlert.BorderStyle := bsNone;
+  FormAlert.Parent := PnContainer;
+  FormAlert.Align := alClient;
+
   FormRoomFilter.BorderStyle := bsNone;
   FormRoomFilter.Align := alClient;
 
@@ -185,6 +218,8 @@ begin
     ImgUpdate.Visible := True;
     TimerUpdate.Enabled := True;
   end;
+
+  FVisible := True;
 end;
 
 {*******************************************************************************
@@ -192,10 +227,6 @@ Closes the window
 *******************************************************************************}
 procedure TFormMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  GConfig.PosMainLeft := FormMain.Left;
-  GConfig.PosMainTop := FormMain.Top;
-  GConfig.PosFilterLeft := FormRoomFilter.Left;
-  GConfig.PosFilterTop := FormRoomFilter.Top;
 end;
 
 {*******************************************************************************
@@ -203,12 +234,17 @@ Destroys the form
 *******************************************************************************}
 procedure TFormMain.FormDestroy(Sender: TObject);
 begin
+  FAlert.Terminate;
+  WaitForSingleObject(FAlert.Handle, 10000);
+
+  GAlertCS.Free;
+  GMsgList.Free;
+    
   GRyzomStringPack.Free;
   GGuild.Free;
   GCharacter.Free;
   GRyzomApi.Free;
   GConfig.Free;
-  GRegExpr.Free;
 
   FPngClosed.Free;
   FPngOpen.Free;
@@ -238,7 +274,6 @@ Update status and time
 procedure TFormMain.UpdateStatusAndTime(AOnlyTime: Boolean);
 var
   wStream: TStringStream;
-  wServerID: String;
 begin
   try
     if not AOnlyTime then begin
@@ -296,13 +331,13 @@ begin
     // Time
     wStream := TStringStream.Create('');
     try
-      if FServerLabelSelected = LbAniro then wServerID := _SHARD_ANIRO_ID;
-      if FServerLabelSelected = LbLeanon then wServerID := _SHARD_LEANON_ID;
-      if FServerLabelSelected = LbArispotle then wServerID := _SHARD_ARIPOTLE_ID;
+      if FServerLabelSelected = LbAniro then FServerID := _SHARD_ANIRO_ID;
+      if FServerLabelSelected = LbLeanon then FServerID := _SHARD_LEANON_ID;
+      if FServerLabelSelected = LbArispotle then FServerID := _SHARD_ARIPOTLE_ID;
    
-      GRyzomApi.ApiTime(wServerID, _FORMAT_TXT, wStream);
+      GRyzomApi.ApiTime(FServerID, _FORMAT_TXT, wStream);
       StatusBar.Panels.Items[1].Text := wStream.DataString;
-      GetSeasonInfo(wServerID);
+      GetSeasonInfo(FServerID);
     finally
       wStream.Free;
     end;
@@ -321,6 +356,7 @@ begin
   ShowMenuForm(FormGuild);
   BtGuild.Font.Style := [fsBold];
   BtCharacter.Font.Style := [];
+  BtAlert.Font.Style := [];
   Constraints.MinHeight := 635;
 end;
 
@@ -330,8 +366,9 @@ Displays the list of characters
 procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
-  BtGuild.Font.Style := [];
   BtCharacter.Font.Style := [fsBold];
+  BtGuild.Font.Style := [];
+  BtAlert.Font.Style := [];
   Constraints.MinHeight := 635;
 end;
 
@@ -389,10 +426,14 @@ Hide and show image to update version
 *******************************************************************************}
 procedure TFormMain.TimerUpdateTimer(Sender: TObject);
 begin
-  ImgUpdate.Visible := False;
+  if ImgUpdate.Visible then begin
+    ImgUpdate.Visible := False;
+    TimerUpdate.Interval := 200;
+  end else begin
+    ImgUpdate.Visible := True;
+    TimerUpdate.Interval := 1000;
+  end;
   Application.ProcessMessages;
-  Sleep(200);
-  ImgUpdate.Visible := True;
 end;
 
 {*******************************************************************************
@@ -435,6 +476,74 @@ begin
   finally
     wXmlDoc.Free;
     wStream.Free;
+  end;
+end;
+
+{*******************************************************************************
+Show alerts
+*******************************************************************************}
+procedure TFormMain.BtAlertClick(Sender: TObject);
+begin
+  ShowMenuForm(FormAlert);
+  BtAlert.Font.Style := [fsBold];
+  BtGuild.Font.Style := [];
+  BtCharacter.Font.Style := [];
+  Constraints.MinHeight := 635;
+end;
+
+{*******************************************************************************
+Open application
+*******************************************************************************}
+procedure TFormMain.TrayIconDblClick(Sender: TObject);
+begin
+  TrayIcon.ShowMainForm;
+end;
+
+{*******************************************************************************
+Open application
+*******************************************************************************}
+procedure TFormMain.MenuOpenClick(Sender: TObject);
+begin
+  TrayIcon.ShowMainForm;
+end;
+
+{*******************************************************************************
+Close application
+*******************************************************************************}
+procedure TFormMain.MenuCloseClick(Sender: TObject);
+begin
+  Close;
+end;
+
+{*******************************************************************************
+Change options
+*******************************************************************************}
+procedure TFormMain.ChangeOptions(Sender: TObject);
+begin
+  GConfig.SaveFilter := MenuKeepFilter.Checked;
+  GConfig.SaveAlert := MenuSaveAlert.Checked;
+  GConfig.ShowHint := MenuShowHint.Checked;
+end;
+
+{*******************************************************************************
+Show popup menu
+*******************************************************************************}
+procedure TFormMain.PopupMenuTrayPopup(Sender: TObject);
+begin
+  MenuKeepFilter.Checked := GConfig.SaveFilter;
+  MenuSaveAlert.Checked := GConfig.SaveAlert;
+  MenuShowHint.Checked := GConfig.ShowHint;
+end;
+
+{*******************************************************************************
+Show alert window
+*******************************************************************************}
+procedure TFormMain.TrayIconBalloonHintClick(Sender: TObject);
+begin
+  if not FormMain.Visible then begin
+    TrayIcon.ShowMainForm;
+    BtAlert.SetFocus;
+    BtAlertClick(BtAlert);
   end;
 end;
 

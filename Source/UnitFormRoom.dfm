@@ -13,6 +13,7 @@ object FormRoom: TFormRoom
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
@@ -45,6 +46,7 @@ object FormRoom: TFormRoom
       TabOrder = 0
       TabStop = True
       OnClick = GuildRoomClick
+      OnContextPopup = GuildRoomContextPopup
       OnMouseMove = GuildRoomMouseMove
       OnMouseWheelDown = GuildRoomMouseWheelDown
       OnMouseWheelUp = GuildRoomMouseWheelUp
@@ -116,5 +118,13 @@ object FormRoom: TFormRoom
     ParentColor = True
     ParentFont = False
     TabOrder = 1
+  end
+  object PopupWatch: TPopupMenu
+    Left = 297
+    Top = 58
+    object MenuGuard: TMenuItem
+      Caption = 'Surveiller'
+      OnClick = MenuGuardClick
+    end
   end
 end

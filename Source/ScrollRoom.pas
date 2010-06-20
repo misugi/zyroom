@@ -24,6 +24,7 @@ type
     
     procedure EvtMouseMove(Sender: TObject; Shift: TShiftState; X,Y: Integer);
     procedure EvtClick(Sender: TObject);
+    procedure EvtPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
   protected
   public
     constructor Create(AOwner: TComponent); override;
@@ -84,6 +85,7 @@ begin
     AControl.Height := FControlHeight;
     AControl.Cursor := crHandPoint;
     TMyControl(AControl).OnMouseMove := EvtMouseMove;
+    TMyControl(AControl).OnContextPopup := EvtPopup;
     TMyControl(AControl).OnClick := EvtClick;
     AControl.Parent := Self;
   end;
@@ -142,6 +144,13 @@ begin
   finally
     FAdjust := False;
   end;
+end;
+
+procedure TScrollRoom.EvtPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  if Assigned(OnContextPopup) then
+    OnContextPopup(Sender, MousePos, Handled);
 end;
 
 end.

@@ -36,10 +36,6 @@ resourcestring
   RS_SAB = 'Bonus sève';
   RS_STB = 'Bonus endurance';
   RS_FOB = 'Bonus concentration';
-  RS_DAYS = 'jours';
-  RS_HOURS = 'heures';
-  RS_MINUTES = 'minutes';
-  RS_AND = 'et';
 
 type
   TFormRoomFilter = class(TForm)
@@ -623,52 +619,49 @@ begin
 
       // Equipements
       if (ItemType = itEquipment) then begin
-        if CSpeed <> 0 then begin
+        if (ItemEquip in [iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
           LbValueSpeed.Caption := FloatToStr(CSpeed);
           FLbList2.Add(LbAutoSpeed);
           FLbList2.Add(LbValueSpeed);
-        end;
-        if CRange <> 0 then begin
+
           LbValueRange.Caption := FloatToStr(CRange);
           FLbList2.Add(LbAutoRange);
           FLbList2.Add(LbValueRange);
         end;
-        if CDodgeModifier <> 0 then begin
+        
+        if (ItemEquip in [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqShield, iqBuckler, iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
           LbValueDodge.Caption := IntToStr(CDodgeModifier);
           FLbList2.Add(LbAutoDodge);
           FLbList2.Add(LbValueDodge);
-        end;
-        if CParryModifier <> 0 then begin
+
           LbValueParry.Caption := IntToStr(CParryModifier);
           FLbList2.Add(LbAutoParry);
           FLbList2.Add(LbValueParry);
         end;
-        if CAdvDodgeModifier <> 0 then begin
+
+        if (ItemEquip in [iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
           LbValueAdvDodge.Caption := IntToStr(CAdvDodgeModifier);
           FLbList2.Add(LbAutoAdvDodge);
           FLbList2.Add(LbValueAdvDodge);
-        end;
-        if CAdvParryModifier <> 0 then begin
+
           LbValueAdvParry.Caption := IntToStr(CAdvParryModifier);
           FLbList2.Add(LbAutoAdvParry);
           FLbList2.Add(LbValueAdvParry);
         end;
-        if CFactorProt <> 0 then begin
+
+        if (ItemEquip in [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqShield, iqBuckler]) then begin
           LbValueFactorProt.Caption := FloatToStr(CFactorProt);
           FLbList2.Add(LbAutoFactorProt);
           FLbList2.Add(LbValueFactorProt);
-        end;
-        if CSlashingProt <> 0 then begin
+
           LbValueSlashingProt.Caption := IntToStr(CSlashingProt);
           FLbList2.Add(LbAutoSlashingProt);
           FLbList2.Add(LbValueSlashingProt);
-        end;
-        if CSmashingProt <> 0 then begin
+
           LbValueSmashingProt.Caption := IntToStr(CSmashingProt);
           FLbList2.Add(LbAutoSmashingProt);
           FLbList2.Add(LbValueSmashingProt);
-        end;
-        if CPiercingProt <> 0 then begin
+
           LbValuePiercingProt.Caption := IntToStr(CPiercingProt);
           FLbList2.Add(LbAutoPiercingProt);
           FLbList2.Add(LbValuePiercingProt);
