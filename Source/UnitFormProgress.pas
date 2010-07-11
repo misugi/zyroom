@@ -28,7 +28,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, XpDOM, ExtCtrls, ScrollRoom, ItemImage,
-  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils, IniFiles;
+  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils, IniFiles,
+  SevenButton;
 
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
@@ -62,7 +63,7 @@ type
     ProgressBar: TProgressBar;
     LbProgress: TLabel;
     TimerStart: TTimer;
-    BtCancel: TButton;
+    BtCancel: TSevenButton;
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure TimerStartTimer(Sender: TObject);

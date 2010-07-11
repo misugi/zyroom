@@ -27,15 +27,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, LcUnit, Spin, ExtCtrls, ShlObj;
+  Dialogs, StdCtrls, LcUnit, Spin, ExtCtrls, ShlObj, SevenButton;
 
 type
   TFormOptions = class(TForm)
     OdBrowsePackFile: TOpenDialog;
-    BtOK: TButton;
-    BtCancel: TButton;
     OdColor: TColorDialog;
-    BtApply: TButton;
     GbAlert: TGroupBox;
     LbVolumeMax: TLabel;
     LbVolumeGuild: TLabel;
@@ -60,7 +57,6 @@ type
     Label2: TLabel;
     CmbLanguage: TComboBox;
     EdPackFile: TEdit;
-    BtAutoBrowsePackFile: TButton;
     PnColor: TPanel;
     EdThreadCount: TSpinEdit;
     CbKeepFilter: TCheckBox;
@@ -70,6 +66,10 @@ type
     EdSalesCount: TSpinEdit;
     EdSeasonCount: TSpinEdit;
     CbShowHint: TCheckBox;
+    BtOK: TSevenButton;
+    BtCancel: TSevenButton;
+    BtApply: TSevenButton;
+    BtAutoBrowsePackFile: TSevenButton;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtAutoBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

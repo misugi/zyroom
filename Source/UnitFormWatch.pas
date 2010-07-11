@@ -27,7 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin;
+  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, SevenButton;
 
 resourcestring
   RS_QUANTITY_MIN = 'Quantité minimum :';
@@ -36,9 +36,9 @@ resourcestring
 type
   TFormWatch = class(TForm)
     LbAutoValue: TLabel;
-    BtOK: TButton;
-    BtCancel: TButton;
     EdValue: TEdit;
+    BtOK: TSevenButton;
+    BtCancel: TSevenButton;
     procedure FormShow(Sender: TObject);
   private
   public

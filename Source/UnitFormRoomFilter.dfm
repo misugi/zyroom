@@ -1,6 +1,6 @@
 object FormRoomFilter: TFormRoomFilter
-  Left = 287
-  Top = 121
+  Left = 401
+  Top = 263
   Width = 325
   Height = 576
   Caption = 'Filtre'
@@ -22,7 +22,7 @@ object FormRoomFilter: TFormRoomFilter
     Top = 0
     Width = 280
     Height = 538
-    ActivePage = TabTemp
+    ActivePage = TabFilter
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -911,22 +911,6 @@ object FormRoomFilter: TFormRoomFilter
     end
     object TabFilter: TTabSheet
       Caption = 'Filtre'
-      object BtOK: TButton
-        Left = 197
-        Top = 15
-        Width = 73
-        Height = 23
-        Caption = 'Appliquer'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ModalResult = 1
-        ParentFont = False
-        TabOrder = 0
-        OnClick = BtOKClick
-      end
       object GbQuality: TGroupBox
         Left = 138
         Top = 172
@@ -939,7 +923,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 1
         object LbQualityMin: TLabel
           Left = 8
           Top = 20
@@ -1011,7 +995,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 2
         object LbClassMin: TLabel
           Left = 8
           Top = 20
@@ -1085,16 +1069,6 @@ object FormRoomFilter: TFormRoomFilter
             'Supr'#234'me')
         end
       end
-      object BtDefault: TButton
-        Left = 138
-        Top = 15
-        Width = 54
-        Height = 23
-        Caption = 'D'#233'faut'
-        ModalResult = 1
-        TabOrder = 5
-        OnClick = BtDefaultClick
-      end
       object GbName: TGroupBox
         Left = 0
         Top = 430
@@ -1107,7 +1081,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 4
         DesignSize = (
           270
           61)
@@ -1170,7 +1144,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 7
+        TabOrder = 5
         object EdEquipment: TComboBox
           Left = 8
           Top = 16
@@ -1213,7 +1187,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 6
         object EdCategory: TComboBox
           Left = 8
           Top = 16
@@ -1266,7 +1240,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 7
         object EdSorting: TComboBox
           Left = 8
           Top = 16
@@ -1305,7 +1279,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 10
+        TabOrder = 8
         object LbPriceMin: TLabel
           Left = 116
           Top = 9
@@ -1404,7 +1378,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 11
+        TabOrder = 9
         object ImgHpbF: TImage
           Left = 8
           Top = 15
@@ -1651,7 +1625,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
         object CbTypeMat: TCheckBox
           Left = 8
           Top = 16
@@ -1737,7 +1711,7 @@ object FormRoomFilter: TFormRoomFilter
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
         object CbEcoPrime: TCheckBox
           Left = 8
           Top = 34
@@ -1828,6 +1802,114 @@ object FormRoomFilter: TFormRoomFilter
           ParentFont = False
           TabOrder = 5
         end
+      end
+      object BtDefault: TSevenButton
+        Left = 138
+        Top = 15
+        Width = 55
+        Height = 23
+        Caption = 'D'#233'faut'
+        TabOrder = 10
+        OnClick = BtDefaultClick
+        Border.ColorNormal = 7368816
+        Border.ColorHot = 11632444
+        Border.ColorDown = 9134636
+        Border.ColorDisabled = 11907757
+        Border.ColorFocused = 11632444
+        Border.WidthNormal = 1
+        Border.WidthHot = 1
+        Border.WidthDown = 1
+        Border.WidthDisabled = 1
+        Border.WidthFocused = 1
+        Colors.ColorNormalFrom = 16579836
+        Colors.ColorNormalTo = 13619151
+        Colors.ColorHotFrom = 16579836
+        Colors.ColorHotTo = 16112039
+        Colors.ColorDownFrom = 16579836
+        Colors.ColorDownTo = 14398312
+        Colors.ColorDisabledFrom = 16053492
+        Colors.ColorDisabledTo = 16053492
+        Colors.ColorFocusedFrom = 16579836
+        Colors.ColorFocusedTo = 13619151
+        Fonts.FontHot.Charset = DEFAULT_CHARSET
+        Fonts.FontHot.Color = clWindowText
+        Fonts.FontHot.Height = -11
+        Fonts.FontHot.Name = 'Arial'
+        Fonts.FontHot.Style = []
+        Fonts.FontDown.Charset = DEFAULT_CHARSET
+        Fonts.FontDown.Color = clWindowText
+        Fonts.FontDown.Height = -11
+        Fonts.FontDown.Name = 'Arial'
+        Fonts.FontDown.Style = []
+        Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+        Fonts.FontDisabled.Color = clGrayText
+        Fonts.FontDisabled.Height = -11
+        Fonts.FontDisabled.Name = 'Arial'
+        Fonts.FontDisabled.Style = []
+        Fonts.FontFocused.Charset = DEFAULT_CHARSET
+        Fonts.FontFocused.Color = clWindowText
+        Fonts.FontFocused.Height = -11
+        Fonts.FontFocused.Name = 'Arial'
+        Fonts.FontFocused.Style = []
+        Spacing = 5
+        Marging = 5
+      end
+      object BtOK: TSevenButton
+        Left = 197
+        Top = 15
+        Width = 73
+        Height = 23
+        Caption = 'Appliquer'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 11
+        OnClick = BtOKClick
+        Border.ColorNormal = 7368816
+        Border.ColorHot = 11632444
+        Border.ColorDown = 9134636
+        Border.ColorDisabled = 11907757
+        Border.ColorFocused = 11632444
+        Border.WidthNormal = 1
+        Border.WidthHot = 1
+        Border.WidthDown = 1
+        Border.WidthDisabled = 1
+        Border.WidthFocused = 1
+        Colors.ColorNormalFrom = 16579836
+        Colors.ColorNormalTo = 13619151
+        Colors.ColorHotFrom = 16579836
+        Colors.ColorHotTo = 16112039
+        Colors.ColorDownFrom = 16579836
+        Colors.ColorDownTo = 14398312
+        Colors.ColorDisabledFrom = 16053492
+        Colors.ColorDisabledTo = 16053492
+        Colors.ColorFocusedFrom = 16579836
+        Colors.ColorFocusedTo = 13619151
+        Fonts.FontHot.Charset = DEFAULT_CHARSET
+        Fonts.FontHot.Color = clWindowText
+        Fonts.FontHot.Height = -11
+        Fonts.FontHot.Name = 'Arial'
+        Fonts.FontHot.Style = [fsBold]
+        Fonts.FontDown.Charset = DEFAULT_CHARSET
+        Fonts.FontDown.Color = clWindowText
+        Fonts.FontDown.Height = -11
+        Fonts.FontDown.Name = 'Arial'
+        Fonts.FontDown.Style = [fsBold]
+        Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+        Fonts.FontDisabled.Color = clGrayText
+        Fonts.FontDisabled.Height = -11
+        Fonts.FontDisabled.Name = 'Arial'
+        Fonts.FontDisabled.Style = [fsBold]
+        Fonts.FontFocused.Charset = DEFAULT_CHARSET
+        Fonts.FontFocused.Color = clWindowText
+        Fonts.FontFocused.Height = -11
+        Fonts.FontFocused.Name = 'Arial'
+        Fonts.FontFocused.Style = [fsBold]
+        Spacing = 5
+        Marging = 5
       end
     end
     object TabTemp: TTabSheet

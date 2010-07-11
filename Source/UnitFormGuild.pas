@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, Buttons;
+  LcUnit, StrUtils, Buttons, SevenButton;
 
 resourcestring
   RS_NEW_GUILD = 'Nouvelle guilde';
@@ -49,12 +49,12 @@ type
   TFormGuild = class(TForm)
     GridGuild: TStringGrid;
     Panel1: TPanel;
-    BtNew: TButton;
-    BtUpdate: TButton;
-    BtDelete: TButton;
-    BtRoom: TButton;
-    BtDown: TSpeedButton;
-    BtUp: TSpeedButton;
+    BtNew: TSevenButton;
+    BtUpdate: TSevenButton;
+    BtDelete: TSevenButton;
+    BtRoom: TSevenButton;
+    BtDown: TSevenButton;
+    BtUp: TSevenButton;
     procedure FormCreate(Sender: TObject);
     procedure GridGuildDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);

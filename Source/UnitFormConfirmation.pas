@@ -27,13 +27,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls;
+  Dialogs, StdCtrls, SevenButton;
 
 type
   TFormConfirm = class(TForm)
     LbMessage: TLabel;
-    BtYes: TButton;
-    BtNo: TButton;
+    BtYes: TSevenButton;
+    BtNo: TSevenButton;
     procedure FormShow(Sender: TObject);
   private
   public

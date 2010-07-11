@@ -28,7 +28,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
-  ItemImage, StrUtils, ComCtrls, DateUtils, Gauges, Contnrs, RyzomApi;
+  ItemImage, StrUtils, ComCtrls, DateUtils, Gauges, Contnrs, RyzomApi,
+  SevenButton;
 
 resourcestring
   RS_SKIN = 'Skin';
@@ -42,7 +43,6 @@ type
     PageControl: TPageControl;
     TabFilter: TTabSheet;
     TabInfo: TTabSheet;
-    BtOK: TButton;
     GbType: TGroupBox;
     GbQuality: TGroupBox;
     LbQualityMin: TLabel;
@@ -61,7 +61,6 @@ type
     CbEcoForest: TCheckBox;
     CbEcoLakes: TCheckBox;
     CbEcoJungle: TCheckBox;
-    BtDefault: TButton;
     GbName: TGroupBox;
     EdName: TEdit;
     RbAllWords: TRadioButton;
@@ -205,6 +204,8 @@ type
     CbTypeOthers: TCheckBox;
     CbTypeEquipment: TCheckBox;
     CbTypeTeleporter: TCheckBox;
+    BtDefault: TSevenButton;
+    BtOK: TSevenButton;
     procedure BtOKClick(Sender: TObject);
     procedure CbTypeMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

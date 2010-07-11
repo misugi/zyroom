@@ -4,7 +4,7 @@ object FormOptions: TFormOptions
   BorderStyle = bsDialog
   Caption = 'Options'
   ClientHeight = 491
-  ClientWidth = 393
+  ClientWidth = 392
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,63 +15,8 @@ object FormOptions: TFormOptions
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
-  DesignSize = (
-    393
-    491)
   PixelsPerInch = 96
   TextHeight = 14
-  object BtOK: TButton
-    Left = 145
-    Top = 464
-    Width = 75
-    Height = 23
-    Anchors = [akBottom]
-    Caption = 'OK'
-    Default = True
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ModalResult = 1
-    ParentFont = False
-    TabOrder = 0
-    OnClick = BtOKClick
-  end
-  object BtCancel: TButton
-    Left = 227
-    Top = 464
-    Width = 75
-    Height = 23
-    Anchors = [akBottom]
-    Cancel = True
-    Caption = 'Annuler'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ModalResult = 2
-    ParentFont = False
-    TabOrder = 1
-  end
-  object BtApply: TButton
-    Left = 309
-    Top = 464
-    Width = 75
-    Height = 23
-    Anchors = [akBottom]
-    Caption = 'Appliquer'
-    Enabled = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 2
-    OnClick = BtApplyClick
-  end
   object GbAlert: TGroupBox
     Left = 5
     Top = 301
@@ -84,7 +29,7 @@ object FormOptions: TFormOptions
     Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 0
     object LbVolumeMax: TLabel
       Left = 8
       Top = 33
@@ -201,6 +146,7 @@ object FormOptions: TFormOptions
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      OnClick = CmbLanguageChange
     end
     object EdSalesCount: TSpinEdit
       Left = 312
@@ -249,6 +195,7 @@ object FormOptions: TFormOptions
       Font.Style = []
       ParentFont = False
       TabOrder = 5
+      OnClick = CmbLanguageChange
     end
   end
   object GbProxy: TGroupBox
@@ -263,7 +210,7 @@ object FormOptions: TFormOptions
     Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 1
     object PnProxy: TPanel
       Left = 26
       Top = 39
@@ -376,7 +323,7 @@ object FormOptions: TFormOptions
     Font.Name = 'Arial'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 2
     object LbLanguage: TLabel
       Left = 8
       Top = 21
@@ -462,21 +409,6 @@ object FormOptions: TFormOptions
       TabOrder = 1
       OnChange = CmbLanguageChange
     end
-    object BtAutoBrowsePackFile: TButton
-      Left = 351
-      Top = 61
-      Width = 22
-      Height = 22
-      Caption = '...'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-      OnClick = BtAutoBrowsePackFileClick
-    end
     object PnColor: TPanel
       Left = 351
       Top = 90
@@ -498,7 +430,7 @@ object FormOptions: TFormOptions
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 3
+      TabOrder = 2
       OnClick = PnColorClick
     end
     object EdThreadCount: TSpinEdit
@@ -514,7 +446,7 @@ object FormOptions: TFormOptions
       MaxValue = 25
       MinValue = 1
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 3
       Value = 10
       OnChange = CmbLanguageChange
     end
@@ -530,9 +462,222 @@ object FormOptions: TFormOptions
       Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
-      TabOrder = 5
-      OnClick = CbProxyEnabledClick
+      TabOrder = 4
+      OnClick = CmbLanguageChange
     end
+    object BtAutoBrowsePackFile: TSevenButton
+      Left = 351
+      Top = 61
+      Width = 22
+      Height = 22
+      Caption = '...'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 5
+      OnClick = BtAutoBrowsePackFileClick
+      Border.ColorNormal = 7368816
+      Border.ColorHot = 11632444
+      Border.ColorDown = 9134636
+      Border.ColorDisabled = 11907757
+      Border.ColorFocused = 11632444
+      Border.WidthNormal = 1
+      Border.WidthHot = 1
+      Border.WidthDown = 1
+      Border.WidthDisabled = 1
+      Border.WidthFocused = 1
+      Colors.ColorNormalFrom = 16579836
+      Colors.ColorNormalTo = 13619151
+      Colors.ColorHotFrom = 16579836
+      Colors.ColorHotTo = 16112039
+      Colors.ColorDownFrom = 16579836
+      Colors.ColorDownTo = 14398312
+      Colors.ColorDisabledFrom = 16053492
+      Colors.ColorDisabledTo = 16053492
+      Colors.ColorFocusedFrom = 16579836
+      Colors.ColorFocusedTo = 13619151
+      Fonts.FontHot.Charset = DEFAULT_CHARSET
+      Fonts.FontHot.Color = clWindowText
+      Fonts.FontHot.Height = -11
+      Fonts.FontHot.Name = 'Arial'
+      Fonts.FontHot.Style = []
+      Fonts.FontDown.Charset = DEFAULT_CHARSET
+      Fonts.FontDown.Color = clWindowText
+      Fonts.FontDown.Height = -11
+      Fonts.FontDown.Name = 'Arial'
+      Fonts.FontDown.Style = []
+      Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+      Fonts.FontDisabled.Color = clGrayText
+      Fonts.FontDisabled.Height = -11
+      Fonts.FontDisabled.Name = 'Arial'
+      Fonts.FontDisabled.Style = []
+      Fonts.FontFocused.Charset = DEFAULT_CHARSET
+      Fonts.FontFocused.Color = clWindowText
+      Fonts.FontFocused.Height = -11
+      Fonts.FontFocused.Name = 'Arial'
+      Fonts.FontFocused.Style = []
+      Spacing = 5
+      Marging = 5
+    end
+  end
+  object BtOK: TSevenButton
+    Left = 146
+    Top = 464
+    Width = 75
+    Height = 23
+    Caption = 'OK'
+    TabOrder = 3
+    OnClick = BtOKClick
+    Border.ColorNormal = 7368816
+    Border.ColorHot = 11632444
+    Border.ColorDown = 9134636
+    Border.ColorDisabled = 11907757
+    Border.ColorFocused = 11632444
+    Border.WidthNormal = 1
+    Border.WidthHot = 1
+    Border.WidthDown = 1
+    Border.WidthDisabled = 1
+    Border.WidthFocused = 1
+    Colors.ColorNormalFrom = 16579836
+    Colors.ColorNormalTo = 13619151
+    Colors.ColorHotFrom = 16579836
+    Colors.ColorHotTo = 16112039
+    Colors.ColorDownFrom = 16579836
+    Colors.ColorDownTo = 14398312
+    Colors.ColorDisabledFrom = 16053492
+    Colors.ColorDisabledTo = 16053492
+    Colors.ColorFocusedFrom = 16579836
+    Colors.ColorFocusedTo = 13619151
+    Fonts.FontHot.Charset = DEFAULT_CHARSET
+    Fonts.FontHot.Color = clWindowText
+    Fonts.FontHot.Height = -11
+    Fonts.FontHot.Name = 'Arial'
+    Fonts.FontHot.Style = []
+    Fonts.FontDown.Charset = DEFAULT_CHARSET
+    Fonts.FontDown.Color = clWindowText
+    Fonts.FontDown.Height = -11
+    Fonts.FontDown.Name = 'Arial'
+    Fonts.FontDown.Style = []
+    Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+    Fonts.FontDisabled.Color = clGrayText
+    Fonts.FontDisabled.Height = -11
+    Fonts.FontDisabled.Name = 'Arial'
+    Fonts.FontDisabled.Style = []
+    Fonts.FontFocused.Charset = DEFAULT_CHARSET
+    Fonts.FontFocused.Color = clWindowText
+    Fonts.FontFocused.Height = -11
+    Fonts.FontFocused.Name = 'Arial'
+    Fonts.FontFocused.Style = []
+    ModalResult = 1
+    Default = True
+    Spacing = 5
+    Marging = 5
+  end
+  object BtCancel: TSevenButton
+    Left = 227
+    Top = 464
+    Width = 75
+    Height = 23
+    Caption = 'Annuler'
+    TabOrder = 4
+    Border.ColorNormal = 7368816
+    Border.ColorHot = 11632444
+    Border.ColorDown = 9134636
+    Border.ColorDisabled = 11907757
+    Border.ColorFocused = 11632444
+    Border.WidthNormal = 1
+    Border.WidthHot = 1
+    Border.WidthDown = 1
+    Border.WidthDisabled = 1
+    Border.WidthFocused = 1
+    Colors.ColorNormalFrom = 16579836
+    Colors.ColorNormalTo = 13619151
+    Colors.ColorHotFrom = 16579836
+    Colors.ColorHotTo = 16112039
+    Colors.ColorDownFrom = 16579836
+    Colors.ColorDownTo = 14398312
+    Colors.ColorDisabledFrom = 16053492
+    Colors.ColorDisabledTo = 16053492
+    Colors.ColorFocusedFrom = 16579836
+    Colors.ColorFocusedTo = 13619151
+    Fonts.FontHot.Charset = DEFAULT_CHARSET
+    Fonts.FontHot.Color = clWindowText
+    Fonts.FontHot.Height = -11
+    Fonts.FontHot.Name = 'Arial'
+    Fonts.FontHot.Style = []
+    Fonts.FontDown.Charset = DEFAULT_CHARSET
+    Fonts.FontDown.Color = clWindowText
+    Fonts.FontDown.Height = -11
+    Fonts.FontDown.Name = 'Arial'
+    Fonts.FontDown.Style = []
+    Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+    Fonts.FontDisabled.Color = clGrayText
+    Fonts.FontDisabled.Height = -11
+    Fonts.FontDisabled.Name = 'Arial'
+    Fonts.FontDisabled.Style = []
+    Fonts.FontFocused.Charset = DEFAULT_CHARSET
+    Fonts.FontFocused.Color = clWindowText
+    Fonts.FontFocused.Height = -11
+    Fonts.FontFocused.Name = 'Arial'
+    Fonts.FontFocused.Style = []
+    ModalResult = 2
+    Cancel = True
+    Spacing = 5
+    Marging = 5
+  end
+  object BtApply: TSevenButton
+    Left = 308
+    Top = 464
+    Width = 75
+    Height = 23
+    Caption = 'Appliquer'
+    TabOrder = 5
+    OnClick = BtApplyClick
+    Border.ColorNormal = 7368816
+    Border.ColorHot = 11632444
+    Border.ColorDown = 9134636
+    Border.ColorDisabled = 11907757
+    Border.ColorFocused = 11632444
+    Border.WidthNormal = 1
+    Border.WidthHot = 1
+    Border.WidthDown = 1
+    Border.WidthDisabled = 1
+    Border.WidthFocused = 1
+    Colors.ColorNormalFrom = 16579836
+    Colors.ColorNormalTo = 13619151
+    Colors.ColorHotFrom = 16579836
+    Colors.ColorHotTo = 16112039
+    Colors.ColorDownFrom = 16579836
+    Colors.ColorDownTo = 14398312
+    Colors.ColorDisabledFrom = 16053492
+    Colors.ColorDisabledTo = 16053492
+    Colors.ColorFocusedFrom = 16579836
+    Colors.ColorFocusedTo = 13619151
+    Fonts.FontHot.Charset = DEFAULT_CHARSET
+    Fonts.FontHot.Color = clWindowText
+    Fonts.FontHot.Height = -11
+    Fonts.FontHot.Name = 'Arial'
+    Fonts.FontHot.Style = []
+    Fonts.FontDown.Charset = DEFAULT_CHARSET
+    Fonts.FontDown.Color = clWindowText
+    Fonts.FontDown.Height = -11
+    Fonts.FontDown.Name = 'Arial'
+    Fonts.FontDown.Style = []
+    Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+    Fonts.FontDisabled.Color = clGrayText
+    Fonts.FontDisabled.Height = -11
+    Fonts.FontDisabled.Name = 'Arial'
+    Fonts.FontDisabled.Style = []
+    Fonts.FontFocused.Charset = DEFAULT_CHARSET
+    Fonts.FontFocused.Color = clWindowText
+    Fonts.FontFocused.Height = -11
+    Fonts.FontFocused.Name = 'Arial'
+    Fonts.FontFocused.Style = []
+    Spacing = 5
+    Marging = 5
   end
   object OdBrowsePackFile: TOpenDialog
     Filter = 'Fichiers pack (*.pack)|*.pack|Tous les fichiers (*.*)|*.*'

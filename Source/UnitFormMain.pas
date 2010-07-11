@@ -28,7 +28,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, UnitRyzom, UnitConfig, pngimage, RyzomApi,
-  ShellApi, regexpr, ComCtrls, XpDOM, UnitThreadAlert, CoolTrayIcon, Menus;
+  ShellApi, regexpr, ComCtrls, XpDOM, UnitThreadAlert, CoolTrayIcon, Menus,
+  SevenButton;
 
 resourcestring
   RS_STATUS_CLOSED = 'Fermé';
@@ -54,13 +55,9 @@ type
     LbLeanon: TLabel;
     ImgArispotle: TImage;
     LbArispotle: TLabel;
-    BtOptions: TButton;
-    BtGuild: TButton;
-    BtCharacter: TButton;
     TimerUpdate: TTimer;
     StatusBar: TStatusBar;
     ImgUpdate: TImage;
-    BtAlert: TButton;
     TrayIcon: TCoolTrayIcon;
     PopupMenuTray: TPopupMenu;
     MenuClose: TMenuItem;
@@ -70,6 +67,10 @@ type
     N2: TMenuItem;
     MenuKeepFilter: TMenuItem;
     MenuSaveAlert: TMenuItem;
+    BtOptions: TSevenButton;
+    BtGuild: TSevenButton;
+    BtCharacter: TSevenButton;
+    BtAlert: TSevenButton;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -354,9 +355,6 @@ Displays the list of guilds
 procedure TFormMain.BtGuildClick(Sender: TObject);
 begin
   ShowMenuForm(FormGuild);
-  BtGuild.Font.Style := [fsBold];
-  BtCharacter.Font.Style := [];
-  BtAlert.Font.Style := [];
   Constraints.MinHeight := 635;
 end;
 
@@ -366,9 +364,6 @@ Displays the list of characters
 procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
-  BtCharacter.Font.Style := [fsBold];
-  BtGuild.Font.Style := [];
-  BtAlert.Font.Style := [];
   Constraints.MinHeight := 635;
 end;
 
@@ -485,9 +480,6 @@ Show alerts
 procedure TFormMain.BtAlertClick(Sender: TObject);
 begin
   ShowMenuForm(FormAlert);
-  BtAlert.Font.Style := [fsBold];
-  BtGuild.Font.Style := [];
-  BtCharacter.Font.Style := [];
   Constraints.MinHeight := 635;
 end;
 

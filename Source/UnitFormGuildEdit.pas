@@ -27,7 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI;
+  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, SevenButton;
 
 const
   _URL_PROFILE_PAGE = 'https://secure.ryzom.com/payment_profile/account.php';
@@ -36,13 +36,13 @@ type
   TFormGuildEdit = class(TForm)
     LbAutoKey: TLabel;
     EdKey: TEdit;
-    BtOK: TButton;
-    BtCancel: TButton;
     ImgProfilePage: TImage;
     LbComment: TLabel;
     EdComment: TEdit;
     CbCheckVolume: TCheckBox;
     CbCheckChange: TCheckBox;
+    BtOK: TSevenButton;
+    BtCancel: TSevenButton;
     procedure FormShow(Sender: TObject);
     procedure ImgProfilePageClick(Sender: TObject);
   private

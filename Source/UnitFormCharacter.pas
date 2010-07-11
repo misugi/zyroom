@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, ComCtrls, Buttons, RegExpr;
+  LcUnit, StrUtils, ComCtrls, Buttons, RegExpr, SevenButton;
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
@@ -54,12 +54,12 @@ type
   TFormCharacter = class(TForm)
     GridChar: TStringGrid;
     Panel1: TPanel;
-    BtNew: TButton;
-    BtUpdate: TButton;
-    BtDelete: TButton;
-    BtRoom: TButton;
-    BtDown: TSpeedButton;
-    BtUp: TSpeedButton;
+    BtNew: TSevenButton;
+    BtUpdate: TSevenButton;
+    BtDelete: TSevenButton;
+    BtRoom: TSevenButton;
+    BtDown: TSevenButton;
+    BtUp: TSevenButton;
     procedure FormCreate(Sender: TObject);
     procedure GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);

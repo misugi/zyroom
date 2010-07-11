@@ -1,6 +1,10 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.1.0 (2010-07-11)
+New: buttons are now the look of Windows Seven
+Fixed: button Apply was not enabled when the 2 filter options are checked
+
 # version 3.0.0 (2010-06-20)
 New: trayicon to change some options and show information bubble for alerts
 New: button to see the alerts

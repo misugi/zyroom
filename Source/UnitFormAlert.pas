@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, ComCtrls, Buttons, SyncObjs, CoolTrayIcon;
+  LcUnit, StrUtils, ComCtrls, Buttons, SyncObjs, CoolTrayIcon, SevenButton;
 
 resourcestring
   RS_ALERT_DURABILITY = 'la durabilité de l''objet %s Q%d est en dessous du seuil de surveillance (%d/%d)';
@@ -64,10 +64,10 @@ type
   TFormAlert = class(TForm)
     RichEditAlert: TRichEdit;
     Panel1: TPanel;
-    BtClear: TButton;
-    BtSave: TButton;
     TimerUpdate: TTimer;
     SaveAlert: TSaveDialog;
+    BtClear: TSevenButton;
+    BtSave: TSevenButton;
     procedure TimerUpdateTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
