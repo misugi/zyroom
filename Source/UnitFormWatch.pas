@@ -56,6 +56,7 @@ Displays the form
 *******************************************************************************}
 procedure TFormWatch.FormShow(Sender: TObject);
 begin
+  EdValue.SelectAll;
   EdValue.SetFocus;
 end;
 

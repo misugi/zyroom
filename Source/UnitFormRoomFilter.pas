@@ -29,7 +29,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
   ItemImage, StrUtils, ComCtrls, DateUtils, Gauges, Contnrs, RyzomApi,
-  SevenButton;
+  SevenButton, IniFiles;
 
 resourcestring
   RS_SKIN = 'Skin';
@@ -206,6 +206,8 @@ type
     CbTypeTeleporter: TCheckBox;
     BtDefault: TSevenButton;
     BtOK: TSevenButton;
+    LbGuard: TLabel;
+    LbValueGuard: TLabel;
     procedure BtOKClick(Sender: TObject);
     procedure CbTypeMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -763,6 +765,13 @@ begin
             end;
           end;
         end; // Cat2
+      end;
+
+      // Guard
+      if ItemGuarded then begin
+        LbValueGuard.Caption := IntToStr(ItemGuardValue);
+        FLbList.Add(LbGuard);
+        FLbList.Add(LbValueGuard);
       end;
 
       // Bonus

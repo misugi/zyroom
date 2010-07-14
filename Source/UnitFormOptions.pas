@@ -70,6 +70,7 @@ type
     BtCancel: TSevenButton;
     BtApply: TSevenButton;
     BtAutoBrowsePackFile: TSevenButton;
+    CbIgnoreCata: TCheckBox;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtAutoBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -198,6 +199,7 @@ begin
   EdVolumeGuild.Value := GConfig.VolumeGuild;
   EdSalesCount.Value := GConfig.SalesCount;
   EdSeasonCount.Value := GConfig.SeasonCount;
+  CbIgnoreCata.Checked := GConfig.IgnoreCata;
 end;
 
 {*******************************************************************************
@@ -234,6 +236,7 @@ begin
   GConfig.VolumeGuild := EdVolumeGuild.Value;
   GConfig.SalesCount := EdSalesCount.Value;
   GConfig.SeasonCount := EdSeasonCount.Value;
+  GConfig.IgnoreCata := CbIgnoreCata.Checked;
 end;
 
 {*******************************************************************************

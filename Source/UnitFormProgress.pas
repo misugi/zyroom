@@ -436,6 +436,8 @@ var
   wItemList: TObjectList;
   wItemSort: TStringList;
   wSortPrefix: String;
+  wIndex: Integer;
+  wIdent: String;
 begin
   wItemList := TObjectList.Create(False);
   wItemSort := TStringList.Create;
@@ -461,8 +463,12 @@ begin
         wItemInfo.ItemDesc := GStrings.Values[wItemInfo.ItemName];
 
         // Item guarded
-        if GGuarded.IndexOf(Format('%d.%d.%s', [wItemInfo.ItemSlot, wItemInfo.ItemQuality, wItemInfo.ItemName])) >= 0 then
+        wIdent := Format('%d.%d.%s', [wItemInfo.ItemSlot, wItemInfo.ItemQuality, wItemInfo.ItemName]);
+        wIndex := GGuarded.IndexOf(wIdent);
+        if wIndex >= 0 then begin
           wItemInfo.ItemGuarded := True;
+          wItemInfo.ItemGuardValue := FGuardFile.ReadInteger(ANodeName, wIdent, -1);
+        end;
 
         // Check filter
         if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemInfo, FFilter) then begin

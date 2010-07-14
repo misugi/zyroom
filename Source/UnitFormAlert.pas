@@ -58,6 +58,7 @@ type
     MsgValue2: Integer;
     MsgValue3: Integer;
     MsgInfo: String;
+    ItemName: String;
   end;
 
   
@@ -111,6 +112,7 @@ procedure TFormAlert.ReadMessage;
 var
   wExpiration: String;
   wShowHint: Boolean;
+  wStart, wPos: Integer;
 begin
   GAlertCS.Enter;
   try
@@ -125,6 +127,11 @@ begin
       wShowHint := True;
       try
         with GMsgList.Items[0] as TAlertMessage do begin
+          // Ignore cata
+          if GConfig.IgnoreCata and (Pos('ixpca01', ItemName) = 1) then
+            Continue;
+
+          wStart := Length(RichEditAlert.Text);
           case MsgType of
             atDurability: begin
               RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_DURABILITY,
@@ -179,6 +186,50 @@ begin
                 wExpiration, MsgInfo]));
             end;
           end;
+
+          // Change styles
+          if MsgName <> '' then begin
+            wPos := PosEx(MsgName, RichEditAlert.Text, wStart);
+            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelLength := Length(MsgName);
+            RichEditAlert.SelAttributes.Style := [fsBold];
+            RichEditAlert.SelAttributes.Color := clBlack;
+          end;
+
+          if MsgObject <> '' then begin
+            wPos := PosEx(MsgObject, RichEditAlert.Text, wStart);
+            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelLength := Length(MsgObject);
+            RichEditAlert.SelAttributes.Style := [fsBold];
+            RichEditAlert.SelAttributes.Color := $007D491F;
+          end;
+
+          if MsgQuality > 0 then begin
+            wPos := PosEx('Q'+IntToStr(MsgQuality), RichEditAlert.Text, wStart);
+            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelLength := Length('Q'+IntToStr(MsgQuality));
+            RichEditAlert.SelAttributes.Style := [fsBold];
+            RichEditAlert.SelAttributes.Color := $000000CC;
+          end;
+
+          if MsgLocation <> '' then begin
+            wPos := PosEx(MsgLocation, RichEditAlert.Text, wStart);
+            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelLength := Length(MsgLocation);
+            RichEditAlert.SelAttributes.Style := [];
+            RichEditAlert.SelAttributes.Color := $00008000;
+          end;
+
+          if MsgInfo <> '' then begin
+            wPos := PosEx(MsgInfo, RichEditAlert.Text, wStart);
+            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelLength := Length(MsgInfo);
+            RichEditAlert.SelAttributes.Style := [];
+            RichEditAlert.SelAttributes.Color := $00008000;
+          end;
+
+          RichEditAlert.SelLength := 0;
+          RichEditAlert.Perform(EM_SCROLLCARET, 0 ,0);
         end;
       finally
         GMsgList.Delete(0);
@@ -198,7 +249,12 @@ Update alert
 *******************************************************************************}
 procedure TFormAlert.TimerUpdateTimer(Sender: TObject);
 begin
-  ReadMessage;
+  TimerUpdate.Enabled := False;
+  try
+    ReadMessage;
+  finally
+    TimerUpdate.Enabled := True;
+  end;
 end;
 
 {*******************************************************************************

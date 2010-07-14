@@ -78,6 +78,7 @@ const
   _KEY_ALERT_SHOW_HINT = 'ShowHint';
   _KEY_ALERT_SALES_COUNT = 'SalesCount';
   _KEY_ALERT_SEASON_COUNT = 'SeasonCount';
+  _KEY_ALERT_IGNORE_CATA = 'IgnoreCata';
 
   _GUILD_FILENAME = 'guild.ini';
   _CHARACTER_FILENAME = 'character.ini';
@@ -197,6 +198,8 @@ type
     procedure SetSalesCount(const Value: Integer);
     procedure SetSeasonCount(const Value: Integer);
     procedure SetShowHint(const Value: Boolean);
+    function GetIgnoreCata: Boolean;
+    procedure SetIgnoreCata(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -226,6 +229,7 @@ type
     property ShowHint: Boolean read GetShowHint write SetShowHint;
     property SalesCount: Integer read GetSalesCount write SetSalesCount;
     property SeasonCount: Integer read GetSeasonCount write SetSeasonCount;
+    property IgnoreCata: Boolean read GetIgnoreCata write SetIgnoreCata;
 
     function GetGuildPath(AGuildID: String): String;
     function GetGuildRoomPath(AGuildID: String): String;
@@ -568,6 +572,19 @@ end;
 procedure TConfig.SetShowHint(const Value: Boolean);
 begin
   FIniFile.WriteBool(_SECTION_ALERT, _KEY_ALERT_SHOW_HINT, Value);
+end;
+
+{*******************************************************************************
+Ignore alerts for cata
+*******************************************************************************}
+function TConfig.GetIgnoreCata: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_ALERT, _KEY_ALERT_IGNORE_CATA, False);
+end;
+
+procedure TConfig.SetIgnoreCata(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_ALERT, _KEY_ALERT_IGNORE_CATA, Value);
 end;
 
 {*******************************************************************************

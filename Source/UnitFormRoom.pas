@@ -39,6 +39,7 @@ type
     LbValueVolume: TLabel;
     PopupWatch: TPopupMenu;
     MenuGuard: TMenuItem;
+    MenuEdit: TMenuItem;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -175,10 +176,13 @@ begin
     with TItemImage(Sender).Data as TItemInfo do begin
 //      if not(ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then Exit;
       
-      if ItemGuarded then
-        MenuGuard.Caption := RS_MENU_UNWATCH
-      else
+      if ItemGuarded then begin
+        MenuEdit.Visible := True;
+        MenuGuard.Caption := RS_MENU_UNWATCH;
+      end else begin
+        MenuEdit.Visible := False;
         MenuGuard.Caption := RS_MENU_WATCH;
+      end;
 
       FItemImage := TItemImage(Sender);
       PopupWatch.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
@@ -199,13 +203,12 @@ begin
     FGuardFile := TIniFile.Create(wGuardFile);
     wSection := 'room';
     wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
+    if ItemType = itEquipment then
+      FormWatch.LbAutoValue.Caption := RS_DURABILITY_MIN
+    else
+      FormWatch.LbAutoValue.Caption := RS_QUANTITY_MIN;
 
     if not ItemGuarded then begin
-      if ItemType = itEquipment then
-        FormWatch.LbAutoValue.Caption := RS_DURABILITY_MIN
-      else
-        FormWatch.LbAutoValue.Caption := RS_QUANTITY_MIN;
-
       FormWatch.EdValue.Text := '999';
       if FormWatch.ShowModal = mrOk then begin
         wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
@@ -213,11 +216,22 @@ begin
         FGuardFile.WriteInteger(wSection, wIdent, wValue);
         FItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
         ItemGuarded := True;
+        ItemGuardValue := wValue;
       end;
     end else begin
-      FGuardFile.DeleteKey(wSection, wIdent);
-      FItemImage.RemoveSticker;
-      ItemGuarded := False;
+      if Sender = MenuEdit then begin
+        FormWatch.EdValue.Text := IntToStr(ItemGuardValue);
+        if FormWatch.ShowModal = mrOk then begin
+          wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
+          if wValue <= 1 then wValue := 999;
+          FGuardFile.WriteInteger(wSection, wIdent, wValue);
+          ItemGuardValue := wValue;
+        end;
+      end else begin
+        FGuardFile.DeleteKey(wSection, wIdent);
+        FItemImage.RemoveSticker;
+        ItemGuarded := False;
+      end;
     end;
   end;
 

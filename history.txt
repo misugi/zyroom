@@ -1,9 +1,14 @@
 zyRoom - History of changes
 ===========================
 
-# version 3.1.0 (2010-07-11)
-New: buttons are now the look of Windows Seven
-Fixed: button Apply was not enabled when the 2 filter options are checked
+# version 3.1.0 (2010-07-14)
+New: buttons have now the look Windows Seven !
+New: colors for alert messages !
+New: option to ignore alerts for catalyser
+New: it is now possible to edit value for a monitored object with menu
+New: display value in red for a monitored object in the information
+Fixed: monitoring objects for a guild had a limit of approximately 650 objects
+Fixed: activation of button Apply in the options
 
 # version 3.0.0 (2010-06-20)
 New: trayicon to change some options and show information bubble for alerts

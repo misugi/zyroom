@@ -22,7 +22,7 @@ object FormRoomFilter: TFormRoomFilter
     Top = 0
     Width = 280
     Height = 538
-    ActivePage = TabFilter
+    ActivePage = TabInfo
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -62,7 +62,7 @@ object FormRoomFilter: TFormRoomFilter
         Left = 0
         Top = 22
         Width = 270
-        Height = 151
+        Height = 167
         BevelInner = bvRaised
         BevelOuter = bvLowered
         Constraints.MinHeight = 53
@@ -384,10 +384,36 @@ object FormRoomFilter: TFormRoomFilter
           Font.Style = [fsBold]
           ParentFont = False
         end
+        object LbGuard: TLabel
+          Left = 5
+          Top = 146
+          Width = 65
+          Height = 14
+          Caption = 'Surveillance :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueGuard: TLabel
+          Left = 76
+          Top = 146
+          Width = 92
+          Height = 14
+          Caption = 'Toutes les races'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 204
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
       end
       object PnInfo2: TPanel
         Left = 0
-        Top = 178
+        Top = 194
         Width = 270
         Height = 199
         BevelInner = bvRaised

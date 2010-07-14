@@ -49,6 +49,7 @@ begin
   FPause := TEvent.Create(nil, True, False, IntToStr(Self.ThreadID));
   FPause.ResetEvent;
   FTimeout := 3600000; // 1h
+//  FTimeout := 10000; // Debug
 
   FApi := TRyzomApi.Create;
   // Set proxy parameters
@@ -225,6 +226,7 @@ begin
               wMsg.MsgQuality := wItemFound.ItemQuality;
               wMsg.MsgValue1 := wItemFound.ItemDur;
               wMsg.MsgValue2 := wValue;
+              wMsg.ItemName := wItemName;
               FormAlert.NewMessage(wMsg);
             end;
           end else begin
@@ -239,6 +241,7 @@ begin
               wMsg.MsgQuality := wItemFound.ItemQuality;
               wMsg.MsgValue1 := wItemFound.ItemSize;
               wMsg.MsgValue2 := wValue;
+              wMsg.ItemName := wItemName;
               FormAlert.NewMessage(wMsg);
             end;
           end;
@@ -252,6 +255,7 @@ begin
           wMsg.MsgLocation := ASection;
           wMsg.MsgObject := GRyzomStringPack.GetString(wItemName);
           wMsg.MsgQuality := wItemQuality;
+          wMsg.ItemName := wItemName;
           FormAlert.NewMessage(wMsg);
         end;
       end;
@@ -414,7 +418,6 @@ var
   wGuildName: String;
   wIdent: String;
   wMsg: TAlertMessage;
-  wWatch: TIniFile;
   wItemList: TItemList;
   wRegExpr: TRegExpr;
   wValue: Integer;
@@ -444,7 +447,6 @@ begin
       wItemList := TItemList.Create(True);
       wRegExpr := TRegExpr.Create;
       wKeys := TStringList.Create;
-      wWatch := TIniFile.Create(wWatchFile);
       try
         if not FileExists(wWatchFile) then begin
           // Create file
@@ -453,7 +455,7 @@ begin
             GRyzomApi.GetItemInfoFromXML(wNodeList.Item(i), wItemInfo);
             GRyzomApi.GetItemInfoFromName(wItemInfo);
             wIdent := Format('%d.%d.%s', [wItemInfo.ItemSlot, wItemInfo.ItemQuality, wItemInfo.ItemName]);
-            wWatch.WriteInteger(_SECTION_ROOM, wIdent, wItemInfo.ItemSize);
+            wKeys.Append(wIdent + '=' + IntToStr(wItemInfo.ItemSize));
             wItemInfo.Free;
           end;
         end else begin
@@ -473,23 +475,25 @@ begin
           end;
 
           // Compare file
-          wWatch.ReadSection(_SECTION_ROOM, wKeys);
-          for i := 0 to wKeys.Count - 1 do begin
+          wKeys.LoadFromFile(wWatchFile);
+          if wKeys[0] = '[room]' then wKeys.Delete(0); // Compatibility
+          i := 0;
+          while i < wKeys.Count - 1 do begin
             if Terminated then Exit;
 
             wRegExpr.Expression := '(\d+)\.(\d+)\.(.*)';
-            wRegExpr.Exec(wKeys[i]);
+            wRegExpr.Exec(wKeys.Names[i]);
             wItemSlot := StrToInt(wRegExpr.Match[1]);
             wItemQuality := StrToInt(wRegExpr.Match[2]);
             wItemName := wRegExpr.Match[3];
-            wValue := wWatch.ReadInteger(_SECTION_ROOM, wKeys[i], -1);
+            wValue := StrToIntDef(wKeys.ValueFromIndex[i], -1);
 
             wItemIndex := wItemList.IndexOf(wItemSlot, wItemQuality, wItemName);
             if wItemIndex >= 0 then begin
               wItemFound := wItemList.GetItem(wItemIndex); 
               // Object modified
               if wItemFound.ItemSize <> wValue then begin
-                wWatch.WriteInteger(_SECTION_ROOM, wKeys[i], wItemFound.ItemSize);
+                wKeys.ValueFromIndex[i] := IntToStr(wItemFound.ItemSize);
 
                 wMsg := TAlertMessage.Create;
                 wMsg.MsgType := atModified;
@@ -500,11 +504,13 @@ begin
                 wMsg.MsgQuality := wItemFound.ItemQuality;
                 wMsg.MsgValue1 := wValue;
                 wMsg.MsgValue2 := wItemFound.ItemSize;
+                wMsg.ItemName := wItemName;
                 FormAlert.NewMessage(wMsg);
               end;
+              Inc(i);
             end else begin
               // Object removed
-              wWatch.DeleteKey(_SECTION_ROOM, wKeys[i]);
+              wKeys.Delete(i);
 
               wMsg := TAlertMessage.Create;
               wMsg.MsgType := atRemoved;
@@ -514,6 +520,7 @@ begin
               wMsg.MsgObject := GRyzomStringPack.GetString(wItemName);
               wMsg.MsgQuality := wItemQuality;
               wMsg.MsgValue1 := Abs(wValue);
+              wMsg.ItemName := wItemName;
               FormAlert.NewMessage(wMsg);
             end;
           end;
@@ -521,10 +528,10 @@ begin
           // new objects
           for i := 0 to wItemList.Count - 1 do begin
             wIdent := Format('%d.%d.%s', [wItemList.GetItem(i).ItemSlot, wItemList.GetItem(i).ItemQuality, wItemList.GetItem(i).ItemName]);
-            if wKeys.IndexOf(wIdent) < 0 then begin
+            if wKeys.IndexOfName(wIdent) < 0 then begin
               wValue := wItemList.GetItem(i).ItemSize;
-              wWatch.WriteInteger(_SECTION_ROOM, wIdent, wValue);
-
+              wKeys.Append(wIdent + '=' + IntToStr(wValue));
+              
               wMsg := TAlertMessage.Create;
               wMsg.MsgType := atAdded;
               wMsg.MsgDate := Now;
@@ -533,12 +540,15 @@ begin
               wMsg.MsgObject := GRyzomStringPack.GetString(wItemList.GetItem(i).ItemName);
               wMsg.MsgQuality := wItemList.GetItem(i).ItemQuality;
               wMsg.MsgValue1 := Abs(wItemList.GetItem(i).ItemSize);
+              wMsg.ItemName := wItemList.GetItem(i).ItemName;
               FormAlert.NewMessage(wMsg);
             end;
           end;
         end;
+
+        // Save file
+        wKeys.SaveToFile(wWatchFile);
       finally
-        wWatch.Free;
         wRegExpr.Free;
         wKeys.Free;
         wItemList.Free;
@@ -610,6 +620,7 @@ begin
           wMsg.MsgValue2 := wHours;
           wMsg.MsgValue3 := wMinutes;
           wMsg.MsgInfo := wItemInfo.ItemContinent;
+          wMsg.ItemName := wItemInfo.ItemName;
           FormAlert.NewMessage(wMsg);
         end;
       end;
@@ -672,7 +683,7 @@ begin
 
         wMsg := TAlertMessage.Create;
         wMsg.MsgType := atSeason;
-        wMsg.MsgDate := wNow;
+        wMsg.MsgDate := Now;
         wMsg.MsgValue1 := 0;
         wMsg.MsgValue2 := wHours;
         wMsg.MsgValue3 := wMinutes;

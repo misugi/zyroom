@@ -141,6 +141,10 @@ object FormInvent: TFormInvent
   object PopupWatch: TPopupMenu
     Left = 297
     Top = 58
+    object MenuEdit: TMenuItem
+      Caption = 'Modifier'
+      OnClick = MenuGuardClick
+    end
     object MenuGuard: TMenuItem
       Caption = 'Surveiller'
       OnClick = MenuGuardClick

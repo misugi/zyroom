@@ -228,6 +228,7 @@ type
     ItemContinent: String;
     ItemTime: TDateTime;
     ItemGuarded: Boolean;
+    ItemGuardValue: Integer;
     MatColor1: Integer;
     MatColor2: Integer;
     MatColor3: Integer;
@@ -1104,6 +1105,7 @@ begin
   ItemContinent := '';
   ItemTime := 0;  
   ItemGuarded := False;
+  ItemGuardValue := -1;
   MatColor1 := 0;
   MatColor2 := 0;
   MatColor3 := 0;

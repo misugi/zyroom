@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 491
+  ClientHeight = 510
   ClientWidth = 392
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -15,13 +15,16 @@ object FormOptions: TFormOptions
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
+  DesignSize = (
+    392
+    510)
   PixelsPerInch = 96
   TextHeight = 14
   object GbAlert: TGroupBox
     Left = 5
     Top = 301
     Width = 381
-    Height = 157
+    Height = 176
     Caption = 'Alertes'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -135,7 +138,7 @@ object FormOptions: TFormOptions
     end
     object CbSaveAlertFile: TCheckBox
       Left = 8
-      Top = 132
+      Top = 152
       Width = 365
       Height = 17
       Caption = 'Sauvegarder automatiquement les alertes dans un fichier'
@@ -184,7 +187,7 @@ object FormOptions: TFormOptions
     end
     object CbShowHint: TCheckBox
       Left = 8
-      Top = 112
+      Top = 132
       Width = 365
       Height = 17
       Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
@@ -195,6 +198,21 @@ object FormOptions: TFormOptions
       Font.Style = []
       ParentFont = False
       TabOrder = 5
+      OnClick = CmbLanguageChange
+    end
+    object CbIgnoreCata: TCheckBox
+      Left = 8
+      Top = 112
+      Width = 365
+      Height = 17
+      Caption = 'Ignorer les alertes sur les cristaux'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 6
       OnClick = CmbLanguageChange
     end
   end
@@ -525,9 +543,10 @@ object FormOptions: TFormOptions
   end
   object BtOK: TSevenButton
     Left = 146
-    Top = 464
+    Top = 483
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 3
     OnClick = BtOKClick
@@ -578,9 +597,10 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TSevenButton
     Left = 227
-    Top = 464
+    Top = 483
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'Annuler'
     TabOrder = 4
     Border.ColorNormal = 7368816
@@ -630,9 +650,10 @@ object FormOptions: TFormOptions
   end
   object BtApply: TSevenButton
     Left = 308
-    Top = 464
+    Top = 483
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'Appliquer'
     TabOrder = 5
     OnClick = BtApplyClick
