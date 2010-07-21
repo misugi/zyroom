@@ -358,9 +358,9 @@ object FormOptions: TFormOptions
     object LbPackFile: TLabel
       Left = 8
       Top = 45
-      Width = 263
+      Width = 306
       Height = 14
-      Caption = 'Fichier des cha'#238'nes de ressource (string_client.pack) :'
+      Caption = 'Fichier de ressources "string_client.pack" install'#233' avec Ryzom :'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

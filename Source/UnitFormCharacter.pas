@@ -331,6 +331,9 @@ begin
         GridChar.Cells[3, GridChar.RowCount-1] := wCharList[i];
       end;
 
+      BtUpdate.Enabled := False;
+      BtDelete.Enabled := False;
+      BtRoom.Enabled := False;
       if GridChar.RowCount > 1 then begin
         GridChar.Row := 1;
         BtUpdate.Enabled := True;

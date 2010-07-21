@@ -119,7 +119,7 @@ AutoIncBuild=1
 MajorVer=3
 MinorVer=1
 Release=0
-Build=157
+Build=163
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=3.1.0.157
+FileVersion=3.1.0.163
 InternalName=
 LegalCopyright=(C) 2010 Misugi
 LegalTrademarks=

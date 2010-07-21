@@ -177,6 +177,7 @@ begin
   // String resource file
   EdPackFile.Text := GConfig.PackFile;
   OdBrowsePackFile.InitialDir := ExtractFileDir(GConfig.PackFile);
+  OdBrowsePackFile.FileName := GConfig.PackFile;
 
   // Options of the proxy server
   CbProxyEnabled.Checked := GConfig.ProxyEnabled;
@@ -208,7 +209,8 @@ Saves the settings of the appliaction
 procedure TFormOptions.SaveConfig;
 begin
   // Selected language
-  GConfig.Language := LCID(CmbLanguage.Items.Objects[CmbLanguage.ItemIndex]);
+  if CmbLanguage.ItemIndex >= 0 then
+    GConfig.Language := LCID(CmbLanguage.Items.Objects[CmbLanguage.ItemIndex]);
 
   // String resource file
   GConfig.PackFile := EdPackFile.Text;

@@ -312,6 +312,9 @@ begin
         GridGuild.Cells[3, GridGuild.RowCount-1] := wGuildList[i];
       end;
 
+      BtUpdate.Enabled := False;
+      BtDelete.Enabled := False;
+      BtRoom.Enabled := False;
       if GridGuild.RowCount > 1 then begin
         GridGuild.Row := 1;
         BtUpdate.Enabled := True;

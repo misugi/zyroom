@@ -77,10 +77,13 @@ begin
   FPause.WaitFor(10000);
   while not Terminated do begin
     try
-      SynchroChars;
-      SynchroGuilds;
-      CheckSeason(FormMain.ServerID);
-      FPause.WaitFor(FTimeout);
+      try
+        SynchroChars;
+        SynchroGuilds;
+        CheckSeason(FormMain.ServerID);
+      finally
+        FPause.WaitFor(FTimeout);
+      end;
     except
     end;
   end;
@@ -111,14 +114,17 @@ begin
   try
     GCharacter.CharList(wList);
     for i := 0 to wList.Count - 1 do begin
-      if Terminated then Exit;
-      wCharID := wList[i];
-      wCharKey := GCharacter.GetCharKey(wCharID);
-      wXmlFile.Clear;
-      FApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
-      wXmlFile.SaveToFile(GConfig.GetCharPath(wCharID) + _ITEMS_FILENAME);
-      CheckInvent(wCharID);
-      if GConfig.SalesCount > 0 then CheckSales(wCharID);
+      try
+        if Terminated then Exit;
+        wCharID := wList[i];
+        wCharKey := GCharacter.GetCharKey(wCharID);
+        wXmlFile.Clear;
+        FApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
+        wXmlFile.SaveToFile(GConfig.GetCharPath(wCharID) + _ITEMS_FILENAME);
+        CheckInvent(wCharID);
+        if GConfig.SalesCount > 0 then CheckSales(wCharID);
+      except
+      end;
     end;
   finally
     wXmlFile.Free;
@@ -142,14 +148,17 @@ begin
   try
     GGuild.GuildList(wList);
     for i := 0 to wList.Count - 1 do begin
-      if Terminated then Exit;
-      wGuildID := wList[i];
-      wGuildKey := GGuild.GetGuildKey(wGuildID);
-      wXmlFile.Clear;
-      FApi.ApiGuild(wGuildKey, wXmlFile);
-      wXmlFile.SaveToFile(GConfig.GetGuildPath(wGuildID) + _ITEMS_FILENAME);
-      CheckRoom(wGuildID);
-      CheckObjects(wGuildID);
+      try
+        if Terminated then Exit;
+        wGuildID := wList[i];
+        wGuildKey := GGuild.GetGuildKey(wGuildID);
+        wXmlFile.Clear;
+        FApi.ApiGuild(wGuildKey, wXmlFile);
+        wXmlFile.SaveToFile(GConfig.GetGuildPath(wGuildID) + _ITEMS_FILENAME);
+        CheckRoom(wGuildID);
+        CheckObjects(wGuildID);
+      except
+      end;
     end;
   finally
     wXmlFile.Free;

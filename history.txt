@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.1.1 (2010-07-21)
+Change: new text for resource file "string_client.pack"
+Fixed: buttons not disabled when the list is empty
+Fixed: language file not up to date
+Fixed: error in the options window when the language file "languages.lcf" does not exists
+Fixed: exception handling for alerts
+
 # version 3.1.0 (2010-07-14)
 New: buttons have now the look Windows Seven !
 New: colors for alert messages !
