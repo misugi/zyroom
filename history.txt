@@ -1,6 +1,9 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.1.2 (2010-07-23)
+Fixed: get supported languages in the options window
+
 # version 3.1.1 (2010-07-21)
 Change: new text for resource file "string_client.pack"
 Fixed: buttons not disabled when the list is empty
