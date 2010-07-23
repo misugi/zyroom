@@ -87,8 +87,6 @@ type
     procedure ApplyConfig;
   end;
 
-  function LcCallBack( iLCID : integer; pUd : pointer ) : integer; stdcall;
-
 var
   FormOptions: TFormOptions;
 
@@ -102,12 +100,39 @@ uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
 {$R *.dfm}
 
 {*******************************************************************************
+Available languages
+*******************************************************************************}
+function LocalesCallback(Name: PChar): Integer; stdcall;
+  function GetLocaleData(ID: LCID; Flag: DWORD): string;
+  var
+    BufSize: Integer;
+  begin
+    BufSize := GetLocaleInfo(ID, Flag, nil, 0);
+    SetLength(Result, BufSize);
+    GetLocaleinfo(ID, Flag, PChar(Result), BufSize);
+    SetLength(Result, BufSize - 1);
+  end;
+const
+  _SUPPORTED_LANGUAGES: array[0..2] of Integer = (1031, 1036, 2057);
+var
+  i: Integer;
+  LCID: Integer;
+begin
+  LCID := StrToInt('$' + Name);
+  for i := Low(_SUPPORTED_LANGUAGES) to High(_SUPPORTED_LANGUAGES) do begin
+    if LCID = _SUPPORTED_LANGUAGES[i] then
+      FormOptions.CmbLanguage.Items.AddObject(GetLocaleData(LCID, LOCALE_SLANGUAGE), Pointer(LCID));
+  end;
+  Result := 1;
+end;
+
+{*******************************************************************************
 Creates the form
 *******************************************************************************}
 procedure TFormOptions.FormCreate(Sender: TObject);
 begin
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
-  LoadLcf(GConfig.LanguageFileName, 0, Addr(LcCallBack), CmbLanguage);
+  EnumSystemLocales(@LocalesCallback, LCID_SUPPORTED);
 end;
 
 {*******************************************************************************
@@ -118,19 +143,6 @@ begin
   LoadConfig;
   BtOK.SetFocus;
   BtApply.Enabled := False;
-end;
-
-{*******************************************************************************
-Available languages
-*******************************************************************************}
-function LcCallBack( iLCID : integer; pUd : pointer ) : integer; stdcall;
-var
-  wLanguages: TLanguages;
-begin
-  Result := 1;
-  wLanguages := TLanguages.Create;
-  TComboBox(pUd).Items.AddObject(wLanguages.NameFromLocaleID[iLCID], Pointer(iLCID));
-  wLanguages.Free;
 end;
 
 {*******************************************************************************
