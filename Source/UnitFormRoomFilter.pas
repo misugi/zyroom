@@ -784,10 +784,10 @@ begin
       end;
 
       // Bonus
-      if ItemHpb > 0 then LbValueHpb.Caption := IntToStr(ItemHpb);
-      if ItemSab > 0 then LbValueSab.Caption := IntToStr(ItemSab);
-      if ItemStb > 0 then LbValueStb.Caption := IntToStr(ItemStb);
-      if ItemFob > 0 then LbValueFob.Caption := IntToStr(ItemFob);
+      if ItemHpb <> 0 then LbValueHpb.Caption := IntToStr(ItemHpb);
+      if ItemSab <> 0 then LbValueSab.Caption := IntToStr(ItemSab);
+      if ItemStb <> 0 then LbValueStb.Caption := IntToStr(ItemStb);
+      if ItemFob <> 0 then LbValueFob.Caption := IntToStr(ItemFob);
 
       // Sales
       if ItemPrice > 0 then begin
@@ -820,14 +820,14 @@ begin
       if ItemBonus then PnInfo2.Height := PnInfo2.Height + 24;
 
       // Bonus
-      ImgHpb.Visible := ItemHpb > 0;
-      ImgSab.Visible := ItemSab > 0;
-      ImgStb.Visible := ItemStb > 0;
-      ImgFob.Visible := ItemFob > 0;
-      LbValueHpb.Visible := ItemHpb > 0;
-      LbValueSab.Visible := ItemSab > 0;
-      LbValueStb.Visible := ItemStb > 0;
-      LbValueFob.Visible := ItemFob > 0;
+      ImgHpb.Visible := ItemHpb <> 0;
+      ImgSab.Visible := ItemSab <> 0;
+      ImgStb.Visible := ItemStb <> 0;
+      ImgFob.Visible := ItemFob <> 0;
+      LbValueHpb.Visible := ItemHpb <> 0;
+      LbValueSab.Visible := ItemSab <> 0;
+      LbValueStb.Visible := ItemStb <> 0;
+      LbValueFob.Visible := ItemFob <> 0;
       ImgHpb.Top := PnInfo2.Height - 28;
       ImgSab.Top := ImgHpb.Top;
       ImgStb.Top := ImgHpb.Top;
@@ -837,22 +837,22 @@ begin
       LbValueStb.Top := LbValueHpb.Top;
       LbValueFob.Top := LbValueHpb.Top;
       wLeft := 8;
-      if ItemHpb > 0 then begin
+      if ItemHpb <> 0 then begin
         ImgHpb.Left := wLeft;
         LbValueHpb.Left := wLeft + 28;
         wLeft := wLeft + 68;
       end;
-      if ItemSab > 0 then begin
+      if ItemSab <> 0 then begin
         ImgSab.Left := wLeft;
         LbValueSab.Left := wLeft + 28;
         wLeft := wLeft + 68;
       end;
-      if ItemStb > 0 then begin
+      if ItemStb <> 0 then begin
         ImgStb.Left := wLeft;
         LbValueStb.Left := wLeft + 28;
         wLeft := wLeft + 68;
       end;
-      if ItemFob > 0 then begin
+      if ItemFob <> 0 then begin
         ImgFob.Left := wLeft;
         LbValueFob.Left := wLeft + 28;
       end;

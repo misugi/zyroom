@@ -538,7 +538,8 @@ begin
   wNode := ANode.Attributes.GetNamedItem('fob');
   if Assigned(wNode) then AItemInfo.ItemFob := StrToInt(wNode.NodeValue);
 
-  AItemInfo.ItemBonus := (AItemInfo.ItemHpb+AItemInfo.ItemSab+AItemInfo.ItemStb+AItemInfo.ItemFob) > 0;
+  AItemInfo.ItemBonus := (AItemInfo.ItemHpb <> 0) or (AItemInfo.ItemSab <> 0)
+                      or (AItemInfo.ItemStb <> 0) or (AItemInfo.ItemFob <> 0);
 
   // Energy
   wNode := ANode.Attributes.GetNamedItem('e');

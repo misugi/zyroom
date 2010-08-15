@@ -1,6 +1,9 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.1.5 (2010-08-15)
+Fixed: negative bonus were not displayed
+
 # version 3.1.4 (2010-08-15)
 Fixed: characteristics for some items were reversed
 Fixed: translation of the interface
