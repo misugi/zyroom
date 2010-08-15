@@ -95,7 +95,7 @@ implementation
 uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
   UnitFormGuild, UnitFormGuildEdit, UnitFormMain, UnitFormProgress,
   UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormRoomFilter,
-  UnitFormInvent;
+  UnitFormInvent, UnitFormAlert, UnitFormWatch;
 
 {$R *.dfm}
 
@@ -289,8 +289,12 @@ begin
   TranslateComponent(FormRoom);
   TranslateComponent(FormGuild);
   TranslateComponent(FormCharacter);
+  FormRoomFilter.BackupComboIndex;
   TranslateComponent(FormRoomFilter);
+  FormRoomFilter.RestoreComboIndex;
   TranslateComponent(FormInvent);
+  TranslateComponent(FormAlert);
+  TranslateComponent(FormWatch);
   FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;
   FormGuild.UpdateLanguage;

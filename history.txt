@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.1.4 (2010-08-15)
+Fixed: characteristics for some items were reversed
+Fixed: translation of the interface
+
+# version 3.1.3 (2010-07-27)
+Fixed: two windows were not translated
+
 # version 3.1.2 (2010-07-23)
 Fixed: get supported languages in the options window
 

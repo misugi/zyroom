@@ -221,6 +221,13 @@ type
     FPngObject: TPNGObject;
     FLbList: TObjectList;
     FLbList2: TObjectList;
+
+    FComboIndexSorting: Integer;
+    FComboIndexClassMin: Integer;
+    FComboIndexClassMax: Integer;
+    FComboIndexEquipment: Integer;
+    FComboIndexCategory: Integer;
+    FComboIndexContinent: Integer;
    
     procedure EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
     procedure LoadCurrentFilter;
@@ -229,6 +236,8 @@ type
   public
     procedure InitInfo;
     procedure UpdateInfo(AItemImage: TItemImage);
+    procedure BackupComboIndex;
+    procedure RestoreComboIndex;
     procedure UpdateLanguage;
   end;
 
@@ -962,6 +971,26 @@ Changes the current page
 procedure TFormRoomFilter.PageControlChange(Sender: TObject);
 begin
   FCurrentItem := nil;
+end;
+
+procedure TFormRoomFilter.BackupComboIndex;
+begin
+  FComboIndexSorting := EdSorting.ItemIndex;
+  FComboIndexClassMin := EdClassMin.ItemIndex;
+  FComboIndexClassMax := EdClassMax.ItemIndex;
+  FComboIndexEquipment := EdEquipment.ItemIndex;
+  FComboIndexCategory := EdCategory.ItemIndex;
+  FComboIndexContinent := EdContinent.ItemIndex;
+end;
+
+procedure TFormRoomFilter.RestoreComboIndex;
+begin
+  EdSorting.ItemIndex := FComboIndexSorting;
+  EdClassMin.ItemIndex := FComboIndexClassMin;
+  EdClassMax.ItemIndex := FComboIndexClassMax;
+  EdEquipment.ItemIndex := FComboIndexEquipment;
+  EdCategory.ItemIndex := FComboIndexCategory;
+  EdContinent.ItemIndex := FComboIndexContinent;
 end;
 
 end.

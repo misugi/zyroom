@@ -118,8 +118,8 @@ IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=3
 MinorVer=1
-Release=2
-Build=165
+Release=4
+Build=170
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=3.1.2.165
+FileVersion=3.1.4.170
 InternalName=
 LegalCopyright=(C) 2010 Misugi
 LegalTrademarks=
@@ -141,6 +141,9 @@ Comments=
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlSearchPath]
+Count=1
+Item0=$(DELPHI)\Lib\Debug
 [HistoryLists\hlOutputDirectorry]
 Count=1
 Item0=..\Bin
