@@ -260,6 +260,7 @@ type
   private
     FXmlDocument: TXpObjModel;
     FCatStrings: TStringList;
+    FSheetId: TStringList;
 
     FAniroStatus: Integer;
     FArispotleStatus: Integer;
@@ -273,6 +274,7 @@ type
     function  CheckItem(AItemInfo: TItemInfo; AFilter: TItemFilter): Boolean;
     procedure GetItemInfoFromName(AItemInfo: TItemInfo);
     procedure SetDefaultFilter(var AFilter: TItemFilter);
+    function  GetSheetName(ASheetId: String): String;
     
     property AniroStatus: Integer read FAniroStatus;
     property LeanonStatus: Integer read FLeanonStatus;
@@ -458,6 +460,7 @@ Creates the interface object
 constructor TRyzom.Create;
 var
   wCatFile: String;
+  wIdFile: String;
 begin
   inherited Create;
   FXmlDocument := TXpObjModel.Create(nil);
@@ -465,6 +468,11 @@ begin
   wCatFile := GConfig.CurrentPath + 'category.csv';
   if FileExists(wCatFile) then
     FCatStrings.LoadFromFile(wCatFile);
+
+  FSheetId := TStringList.Create;
+  wIdFile := GConfig.CurrentPath + 'sheetid.csv';
+  if FileExists(wIdFile) then
+    FSheetId.LoadFromFile(wIdFile);
 end;
 
 {*******************************************************************************
@@ -473,8 +481,17 @@ Destroys the interface object
 destructor TRyzom.Destroy;
 begin
   FCatStrings.Free;
+  FSheetId.Free;
   FXmlDocument.Free;
   inherited;
+end;
+
+{*******************************************************************************
+Returns sheet name from sheet id
+*******************************************************************************}
+function TRyzom.GetSheetName(ASheetId: String): String;
+begin
+  Result := FSheetId.Values[ASheetId]+'.sitem';
 end;
 
 {*******************************************************************************
@@ -486,6 +503,8 @@ var
 begin
   // Name
   AItemInfo.ItemName := ANode.Text;
+  if Pos('#', AItemInfo.ItemName) = 1 then
+    AItemInfo.ItemName := GetSheetName(AItemInfo.ItemName);
 
   // Slot
   wNode := ANode.Attributes.GetNamedItem('slot');

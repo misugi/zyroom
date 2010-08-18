@@ -37,6 +37,7 @@ resourcestring
   RS_SAB = 'Bonus sève';
   RS_STB = 'Bonus endurance';
   RS_FOB = 'Bonus concentration';
+  RS_NEEDED_FILE = 'Fichier "string_client.pack" introuvable !';
 
 type
   TFormRoomFilter = class(TForm)
@@ -216,6 +217,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PageControlChange(Sender: TObject);
+    procedure PnTitleClick(Sender: TObject);
   private
     FCurrentItem: TItemImage;
     FPngObject: TPNGObject;
@@ -247,7 +249,7 @@ var
 implementation
 
 uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
-  UnitFormCharacter, UnitConfig;
+  UnitFormCharacter, UnitConfig, UnitFormOptions;
 
 {$R *.dfm}
 
@@ -338,7 +340,7 @@ begin
   EnabledGroup(GbEcosys, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbClass, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
-  EnabledGroup(GbCategory, FileExists(GConfig.CurrentPath + 'category.csv') and CbTypeMat.Checked);
+  EnabledGroup(GbCategory, CbTypeMat.Checked);
   EnabledGroup(GbBonus, CbTypeEquipment.Checked);
 end;
 
@@ -425,7 +427,7 @@ begin
   EnabledGroup(GbEcosys, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbClass, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbEquipment, CbTypeEquipment.Checked);
-  EnabledGroup(GbCategory, FileExists(GConfig.CurrentPath + 'category.csv') and CbTypeMat.Checked);
+  EnabledGroup(GbCategory, CbTypeMat.Checked);
   EnabledGroup(GbBonus, CbTypeEquipment.Checked);
 end;
 
@@ -553,7 +555,17 @@ begin
 
     with AItemImage.Data as TItemInfo do begin
       // Name
-      PnTitle.Caption := ItemDesc;
+      if FileExists(GConfig.PackFile) then begin
+        PnTitle.OnClick := nil;
+        PnTitle.Cursor := crDefault;
+        PnTitle.Caption := ItemDesc
+      end else begin
+        PnTitle.OnClick := PnTitleClick;
+        PnTitle.Cursor := crHandPoint;
+        PnTitle.Caption := RS_NEEDED_FILE;
+      end;
+
+      // Background color
       case ItemEcosys of
         ieCommon, iePrime, ieUnknown: PnTitle.Color := $434B4F;
         ieDesert: PnTitle.Color := $18436F;
@@ -991,6 +1003,11 @@ begin
   EdEquipment.ItemIndex := FComboIndexEquipment;
   EdCategory.ItemIndex := FComboIndexCategory;
   EdContinent.ItemIndex := FComboIndexContinent;
+end;
+
+procedure TFormRoomFilter.PnTitleClick(Sender: TObject);
+begin
+  FormOptions.ShowModal;
 end;
 
 end.

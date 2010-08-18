@@ -3,7 +3,7 @@ object FormOptions: TFormOptions
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 510
+  ClientHeight = 518
   ClientWidth = 392
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,12 +17,12 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     392
-    510)
+    518)
   PixelsPerInch = 96
   TextHeight = 14
   object GbAlert: TGroupBox
     Left = 5
-    Top = 301
+    Top = 309
     Width = 381
     Height = 176
     Caption = 'Alertes'
@@ -218,7 +218,7 @@ object FormOptions: TFormOptions
   end
   object GbProxy: TGroupBox
     Left = 5
-    Top = 151
+    Top = 159
     Width = 381
     Height = 149
     Caption = 'Proxy'
@@ -333,7 +333,7 @@ object FormOptions: TFormOptions
     Left = 5
     Top = 2
     Width = 381
-    Height = 148
+    Height = 156
     Caption = 'G'#233'n'#233'ral'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -369,10 +369,12 @@ object FormOptions: TFormOptions
       ParentFont = False
     end
     object Label1: TLabel
-      Left = 236
-      Top = 94
-      Width = 108
+      Left = 212
+      Top = 106
+      Width = 140
       Height = 14
+      Alignment = taRightJustify
+      AutoSize = False
       Caption = 'Couleur de l'#39'interface :'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -383,12 +385,25 @@ object FormOptions: TFormOptions
     end
     object Label2: TLabel
       Left = 8
-      Top = 122
+      Top = 130
       Width = 214
       Height = 14
       Caption = 'Nombre de threads pour la synchronisation :'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
+    object LbNeededFile: TLabel
+      Left = 8
+      Top = 85
+      Width = 287
+      Height = 14
+      Caption = '(Ce fichier est n'#233'cessaire pour afficher le nom des objets !)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
       Font.Height = -11
       Font.Name = 'Arial'
       Font.Style = []
@@ -428,10 +443,10 @@ object FormOptions: TFormOptions
       OnChange = CmbLanguageChange
     end
     object PnColor: TPanel
-      Left = 351
-      Top = 90
-      Width = 22
-      Height = 22
+      Left = 355
+      Top = 104
+      Width = 18
+      Height = 18
       Cursor = crHandPoint
       Hint = 'S'#233'lectionner une couleur'
       BevelOuter = bvNone
@@ -453,7 +468,7 @@ object FormOptions: TFormOptions
     end
     object EdThreadCount: TSpinEdit
       Left = 312
-      Top = 117
+      Top = 125
       Width = 61
       Height = 23
       Font.Charset = DEFAULT_CHARSET
@@ -470,7 +485,7 @@ object FormOptions: TFormOptions
     end
     object CbKeepFilter: TCheckBox
       Left = 8
-      Top = 93
+      Top = 105
       Width = 201
       Height = 17
       Caption = 'Garder le filtre actif'
@@ -543,7 +558,7 @@ object FormOptions: TFormOptions
   end
   object BtOK: TSevenButton
     Left = 146
-    Top = 483
+    Top = 491
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -597,7 +612,7 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TSevenButton
     Left = 227
-    Top = 483
+    Top = 491
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -650,7 +665,7 @@ object FormOptions: TFormOptions
   end
   object BtApply: TSevenButton
     Left = 308
-    Top = 483
+    Top = 491
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]

@@ -71,6 +71,7 @@ type
     BtApply: TSevenButton;
     BtAutoBrowsePackFile: TSevenButton;
     CbIgnoreCata: TCheckBox;
+    LbNeededFile: TLabel;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtAutoBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

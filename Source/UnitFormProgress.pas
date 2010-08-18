@@ -117,6 +117,7 @@ Creates the form
 procedure TFormProgress.FormCreate(Sender: TObject);
 begin
   GStrings := TStringList.Create;
+  GStrings.Sorted := True;
   GGuarded := TStringList.Create;
   GSection := TCriticalSection.Create;
   GEvent := TEvent.Create(nil, True, False, 'synchronization');
@@ -176,6 +177,7 @@ var
   i: Integer;
   wThread: TGetItemThread;
   wItemName: String;
+  wItemDesc: String;
 begin
   GThreadCount := 0;
   i := 0;
@@ -183,8 +185,12 @@ begin
     if ModalResult = mrCancel then Break;
 
     wItemName := ANodeList.Item(i).Text;
+    if Pos('#', wItemName) = 1 then
+      wItemName := GRyzomApi.GetSheetName(wItemName);
     if GStrings.IndexOfName(wItemName) < 0 then begin
-      GStrings.Append(wItemName + '=' + GRyzomStringPack.GetString(wItemName));
+      wItemDesc := GRyzomStringPack.GetString(wItemName);
+      if wItemDesc <> '' then
+        GStrings.Append(wItemName + '=' + wItemDesc);
     end;
 
     if GThreadCount < GConfig.ThreadCount then begin
@@ -230,10 +236,13 @@ begin
   try
     // Prepare the index file for name search
     wIndexFile := GConfig.GetGuildPath(AGuildID) + _INDEX_FILENAME;
-    if FileExists(wIndexFile) then
-      GStrings.LoadFromFile(wIndexFile)
-    else
+    if FileExists(wIndexFile) then begin
+      GStrings.LoadFromFile(wIndexFile);
+      if GStrings.ValueFromIndex[0] = '' then GStrings.Clear; // Compatibility code (version 3.1.6)
+      GStrings.Sort;
+    end else begin
       GStrings.Clear;
+    end;
 
     // Load the file with guarded items
     wGuardFile := GConfig.GetGuildPath(AGuildID) + _GUARD_FILENAME;
@@ -279,10 +288,13 @@ begin
   try
     // Prepare the index file for name search
     wIndexFile := GConfig.GetCharPath(ACharID) + _INDEX_FILENAME;
-    if FileExists(wIndexFile) then
-      GStrings.LoadFromFile(wIndexFile)
-    else
+    if FileExists(wIndexFile) then begin
+      GStrings.LoadFromFile(wIndexFile);
+      if GStrings.ValueFromIndex[0] = '' then GStrings.Clear; // Compatibility code (version 3.1.6)
+      GStrings.Sort;
+    end else begin
       GStrings.Clear;
+    end;
 
     // Load the file with guarded items
     wGuardFile := GConfig.GetCharPath(ACharID) + _GUARD_FILENAME;

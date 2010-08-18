@@ -8,41 +8,42 @@
   resources were bound to the produced executable.
 */
 
-#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64864
-#define UnitFormAlert_RS_ALERT_SEASON 64865
-#define UnitFormAlert_RS_ALERT_HINT 64866
-#define UnitFormMain_RS_NEW_VERSION 64880
-#define UnitFormMain_RS_SEASON_SPRING 64881
-#define UnitFormMain_RS_SEASON_SUMMER 64882
-#define UnitFormMain_RS_SEASON_AUTUMN 64883
-#define UnitFormMain_RS_SEASON_WINTER 64884
-#define UnitFormMain_RS_VERSION 64885
-#define UnitFormMain_RS_NEXT_SEASON 64886
-#define UnitFormMain_RS_AT 64887
-#define UnitFormAlert_RS_ALERT_DURABILITY 64888
-#define UnitFormAlert_RS_ALERT_QUANTITY 64889
-#define UnitFormAlert_RS_ALERT_UNFOUND 64890
-#define UnitFormAlert_RS_ALERT_ADDED 64891
-#define UnitFormAlert_RS_ALERT_REMOVED 64892
-#define UnitFormAlert_RS_ALERT_MODIFIED 64893
-#define UnitFormAlert_RS_ALERT_SALES 64894
-#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64895
+#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64864
+#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64865
+#define UnitFormAlert_RS_ALERT_SEASON 64866
+#define UnitFormAlert_RS_ALERT_HINT 64867
+#define UnitFormMain_RS_STATUS_RESTRICTED 64880
+#define UnitFormMain_RS_NEW_VERSION 64881
+#define UnitFormMain_RS_SEASON_SPRING 64882
+#define UnitFormMain_RS_SEASON_SUMMER 64883
+#define UnitFormMain_RS_SEASON_AUTUMN 64884
+#define UnitFormMain_RS_SEASON_WINTER 64885
+#define UnitFormMain_RS_VERSION 64886
+#define UnitFormMain_RS_NEXT_SEASON 64887
+#define UnitFormMain_RS_AT 64888
+#define UnitFormAlert_RS_ALERT_DURABILITY 64889
+#define UnitFormAlert_RS_ALERT_QUANTITY 64890
+#define UnitFormAlert_RS_ALERT_UNFOUND 64891
+#define UnitFormAlert_RS_ALERT_ADDED 64892
+#define UnitFormAlert_RS_ALERT_REMOVED 64893
+#define UnitFormAlert_RS_ALERT_MODIFIED 64894
+#define UnitFormAlert_RS_ALERT_SALES 64895
 #define UnitFormRoomFilter_RS_STB 64896
 #define UnitFormRoomFilter_RS_FOB 64897
-#define UnitFormGuild_RS_NEW_GUILD 64898
-#define UnitFormGuild_RS_CHANGE_KEY 64899
-#define UnitFormGuild_RS_COL_GUILD_LOGO 64900
-#define UnitFormGuild_RS_COL_GUILD_NAME 64901
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 64902
-#define UnitFormGuild_RS_COL_COMMENT 64903
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 64904
-#define UnitFormGuild_RS_GUILD_KEY 64905
-#define UnitFormGuild_RS_CHECK_CHANGE 64906
-#define UnitFormGuild_RS_UP 64907
-#define UnitFormGuild_RS_DOWN 64908
-#define UnitFormMain_RS_STATUS_CLOSED 64909
-#define UnitFormMain_RS_STATUS_OPEN 64910
-#define UnitFormMain_RS_STATUS_RESTRICTED 64911
+#define UnitFormRoomFilter_RS_NEEDED_FILE 64898
+#define UnitFormGuild_RS_NEW_GUILD 64899
+#define UnitFormGuild_RS_CHANGE_KEY 64900
+#define UnitFormGuild_RS_COL_GUILD_LOGO 64901
+#define UnitFormGuild_RS_COL_GUILD_NAME 64902
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 64903
+#define UnitFormGuild_RS_COL_COMMENT 64904
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 64905
+#define UnitFormGuild_RS_GUILD_KEY 64906
+#define UnitFormGuild_RS_CHECK_CHANGE 64907
+#define UnitFormGuild_RS_UP 64908
+#define UnitFormGuild_RS_DOWN 64909
+#define UnitFormMain_RS_STATUS_CLOSED 64910
+#define UnitFormMain_RS_STATUS_OPEN 64911
 #define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64912
 #define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64913
 #define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64914
@@ -669,9 +670,11 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	UnitFormAlert_RS_ALERT_VOLUME_ROOM,	"le volume de la pièce est au dessus du seuil limite (%d/%d)"
 	UnitFormAlert_RS_ALERT_VOLUME_GUILD,	"le volume du coffre est au dessus du seuil limite (%d/%d)"
 	UnitFormAlert_RS_ALERT_SEASON,	"Prochain changement de saison dans %s (%s)"
 	UnitFormAlert_RS_ALERT_HINT,	"Nouvelles alertes !"
+	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
 	UnitFormMain_RS_SEASON_SPRING,	"Printemps"
 	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
@@ -687,9 +690,9 @@ BEGIN
 	UnitFormAlert_RS_ALERT_REMOVED,	"l'objet %s Q%d a été retiré (%d)"
 	UnitFormAlert_RS_ALERT_MODIFIED,	"la quantité de l'objet %s Q%d a changé (%d > %d)"
 	UnitFormAlert_RS_ALERT_SALES,	"l'objet %s Q%d sera automatiquement vendu au marchand dans %s (%s)"
-	UnitFormAlert_RS_ALERT_VOLUME_ROOM,	"le volume de la pièce est au dessus du seuil limite (%d/%d)"
 	UnitFormRoomFilter_RS_STB,	"Bonus endurance"
 	UnitFormRoomFilter_RS_FOB,	"Bonus concentration"
+	UnitFormRoomFilter_RS_NEEDED_FILE,	"Fichier \"string_client.pack\" introuvable !"
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
 	UnitFormGuild_RS_CHANGE_KEY,	"Changement de clé"
 	UnitFormGuild_RS_COL_GUILD_LOGO,	"Blason"
@@ -703,7 +706,6 @@ BEGIN
 	UnitFormGuild_RS_DOWN,	"Descendre"
 	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
-	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
 	UnitFormCharacter_RS_CHAR_NEW_CHARACTER,	"Nouveau personnage"
 	UnitFormCharacter_RS_CHAR_CHANGE_KEY,	"Changement de clé"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD,	"Tête"
