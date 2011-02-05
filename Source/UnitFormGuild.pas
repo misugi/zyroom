@@ -405,12 +405,12 @@ Displays information of the selected guild
 procedure TFormGuild.BtRoomClick(Sender: TObject);
 begin
   try
-    try UpdateGuild(True); except end;
+    UpdateGuild(True);
     Synchronize;
+    ShowRoom;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
   end;
-  ShowRoom;
 end;
 
 {*******************************************************************************

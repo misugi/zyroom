@@ -424,12 +424,12 @@ Displays information of the selected guild
 procedure TFormCharacter.BtRoomClick(Sender: TObject);
 begin
   try
-    try UpdateCharacter(True); except end;
+    UpdateCharacter(True);
     Synchronize;
+    ShowRoom;
   except
     on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
   end;
-  ShowRoom;
 end;
 
 {*******************************************************************************
