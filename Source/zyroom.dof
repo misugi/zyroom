@@ -90,7 +90,7 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=..\Bin
+OutputDir=D:\DEV\zyroom.misulud.fr\Bin
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -118,8 +118,8 @@ IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=3
 MinorVer=1
-Release=7
-Build=5
+Release=8
+Build=7
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=3.1.7.5
+FileVersion=3.1.8.7
 InternalName=
 LegalCopyright=(C) 2010 Misugi
 LegalTrademarks=
@@ -145,5 +145,6 @@ Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 Count=1
 Item0=$(DELPHI)\Lib\Debug
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..\Bin
+Count=2
+Item0=D:\DEV\zyroom.misulud.fr\Bin
+Item1=..\Bin

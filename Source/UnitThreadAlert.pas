@@ -485,7 +485,7 @@ begin
 
           // Compare file
           wKeys.LoadFromFile(wWatchFile);
-          if wKeys[0] = '[room]' then wKeys.Delete(0); // Compatibility
+          if (wKeys.Count > 0) and (wKeys[0] = '[room]') then wKeys.Delete(0); // Compatibility
           i := 0;
           while i < wKeys.Count - 1 do begin
             if Terminated then Exit;

@@ -238,7 +238,7 @@ begin
     wIndexFile := GConfig.GetGuildPath(AGuildID) + _INDEX_FILENAME;
     if FileExists(wIndexFile) then begin
       GStrings.LoadFromFile(wIndexFile);
-      if GStrings.ValueFromIndex[0] = '' then GStrings.Clear; // Compatibility code (version 3.1.6)
+      if (GStrings.Count > 0) and (GStrings.ValueFromIndex[0] = '') then GStrings.Clear; // Compatibility code (version 3.1.6)
       GStrings.Sort;
     end else begin
       GStrings.Clear;
@@ -290,7 +290,7 @@ begin
     wIndexFile := GConfig.GetCharPath(ACharID) + _INDEX_FILENAME;
     if FileExists(wIndexFile) then begin
       GStrings.LoadFromFile(wIndexFile);
-      if GStrings.ValueFromIndex[0] = '' then GStrings.Clear; // Compatibility code (version 3.1.6)
+      if (GStrings.Count > 0) and (GStrings.ValueFromIndex[0] = '') then GStrings.Clear; // Compatibility code (version 3.1.6)
       GStrings.Sort;
     end else begin
       GStrings.Clear;

@@ -152,14 +152,18 @@ Calls the "Guild" API
 *******************************************************************************}
 procedure TRyzomApi.ApiGuild(AKey: String; AResponse: TStream);
 begin
-  FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild.php?key=%s', [AKey]), AResponse);
+  try
+    FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild.php?key=%s', [AKey]), AResponse);
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+  end;
   AResponse.Position := 0;
 
   if not FXmlDocument.LoadStream(AResponse) then
     raise Exception.Create(RS_ERROR_LOADING_XML);
 
   if CompareText(FXmlDocument.DocumentElement.NodeName, _NODE_ERROR) = 0 then
-    raise Exception.Create(FXmlDocument.DocumentElement.FirstChild.NodeValue);
+    raise Exception.Create('[API Result Error] '+FXmlDocument.DocumentElement.FirstChild.NodeValue);
 
   AResponse.Position := 0;
 end;
@@ -169,9 +173,13 @@ Calls the "Character" API
 *******************************************************************************}
 procedure TRyzomApi.ApiCharacter(AKey: String; APart: TCharacterPart; AResponse: TStream);
 begin
-  case APart of
-    cpFull: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=full&key=%s', [AKey]), AResponse);
-    cpItems: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=items&key=%s', [AKey]), AResponse);
+  try
+    case APart of
+      cpFull: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=full&key=%s', [AKey]), AResponse);
+      cpItems: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=items&key=%s', [AKey]), AResponse);
+    end;
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
   end;
   AResponse.Position := 0;
 
@@ -179,7 +187,7 @@ begin
     raise Exception.Create(RS_ERROR_LOADING_XML);
 
   if CompareText(FXmlDocument.DocumentElement.NodeName, _NODE_ERROR) = 0 then
-    raise Exception.Create(FXmlDocument.DocumentElement.FirstChild.NodeValue);
+    raise Exception.Create('[API Result Error] '+FXmlDocument.DocumentElement.FirstChild.NodeValue);
 
   AResponse.Position := 0;
 end;
@@ -189,7 +197,11 @@ Calls the "GuildIcon" API
 *******************************************************************************}
 procedure TRyzomApi.ApiGuildIcon(AIcon, ASize: String; AResponse: TStream);
 begin
-  FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild_icon.php?icon=%s&size=%s', [AIcon, ASize]), AResponse);
+  try
+    FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild_icon.php?icon=%s&size=%s', [AIcon, ASize]), AResponse);
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+  end;
   AResponse.Position := 0;
 end;
 
@@ -209,7 +221,11 @@ begin
   if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);
   if ADestroyed then wOptions := wOptions + '&destroyed=1';
   
-  FHttpRequest.Get('http://atys.ryzom.com/api/item_icon.php' + wOptions, AResponse);
+  try
+    FHttpRequest.Get('http://atys.ryzom.com/api/item_icon.php' + wOptions, AResponse);
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+  end;
   AResponse.Position := 0;
 end;
 
@@ -218,7 +234,11 @@ Calls the "Status" API
 *******************************************************************************}
 procedure TRyzomApi.ApiStatus(AFormat: String; AResponse: TStream);
 begin
-  FHttpRequest.Get(Format('http://atys.ryzom.com/api/status.php?format=%s', [AFormat]), AResponse);
+  try
+    FHttpRequest.Get(Format('http://atys.ryzom.com/api/status.php?format=%s', [AFormat]), AResponse);
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+  end;
   AResponse.Position := 0;
 end;
 
@@ -227,7 +247,11 @@ Calls the "Time" API
 *******************************************************************************}
 procedure TRyzomApi.ApiTime(AShardID: String; AFormat: String; AResponse: TStream);
 begin
-  FHttpRequest.Get(Format('http://atys.ryzom.com/api/time.php?shardid=%s&format=%s', [AShardID, AFormat]), AResponse);
+  try
+    FHttpRequest.Get(Format('http://atys.ryzom.com/api/time.php?shardid=%s&format=%s', [AShardID, AFormat]), AResponse);
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+  end;
   AResponse.Position := 0;
 end;
 
@@ -315,8 +339,12 @@ Get character image
 procedure TRyzomApi.ApiBallisticMystix(ARace, AGender: String; AHairType,
   AHairColor, ATatoo, AEyesColor: Integer; AResponse: TStream);
 begin
-  FHttpRequest.Get(Format('http://ballisticmystix.net/api/dressingroom.php?race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d',
-    [ARace, AGender, AHairType, AHairColor, ATatoo, AEyesColor]), AResponse);
+  try
+    FHttpRequest.Get(Format('http://ballisticmystix.net/api/dressingroom.php?race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d',
+      [ARace, AGender, AHairType, AHairColor, ATatoo, AEyesColor]), AResponse);
+  except
+    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+  end;
   AResponse.Position := 0;
 end;
 
