@@ -8,7 +8,16 @@
   resources were bound to the produced executable.
 */
 
-#define UnitFormProgress_RS_PARSE_LOG 64848
+#define UnitFormMain_RS_SEASON_SUMMER 64848
+#define UnitFormMain_RS_SEASON_AUTUMN 64849
+#define UnitFormMain_RS_SEASON_WINTER 64850
+#define UnitFormMain_RS_VERSION 64851
+#define UnitFormMain_RS_NEXT_SEASON 64852
+#define UnitFormMain_RS_AT 64853
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64854
+#define UnitFormProgress_RS_PROGRESS_ROOM 64855
+#define UnitFormProgress_RS_CONNEXION_ERROR 64856
+#define UnitFormProgress_RS_PARSE_LOG 64857
 #define UnitFormGuild_RS_NEW_GUILD 64864
 #define UnitFormGuild_RS_CHANGE_KEY 64865
 #define UnitFormGuild_RS_COL_GUILD_LOGO 64866
@@ -20,11 +29,11 @@
 #define UnitFormGuild_RS_CHECK_CHANGE 64872
 #define UnitFormGuild_RS_UP 64873
 #define UnitFormGuild_RS_DOWN 64874
-#define UnitFormMain_RS_NEW_VERSION 64875
-#define UnitFormMain_RS_VERSION 64876
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64877
-#define UnitFormProgress_RS_PROGRESS_ROOM 64878
-#define UnitFormProgress_RS_CONNEXION_ERROR 64879
+#define UnitFormMain_RS_STATUS_CLOSED 64875
+#define UnitFormMain_RS_STATUS_OPEN 64876
+#define UnitFormMain_RS_STATUS_RESTRICTED 64877
+#define UnitFormMain_RS_NEW_VERSION 64878
+#define UnitFormMain_RS_SEASON_SPRING 64879
 #define UnitFormAlert_RS_ALERT_QUANTITY 64880
 #define UnitFormAlert_RS_ALERT_UNFOUND 64881
 #define UnitFormAlert_RS_ALERT_ADDED 64882
@@ -683,6 +692,15 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
+	UnitFormMain_RS_SEASON_AUTUMN,	"Automne"
+	UnitFormMain_RS_SEASON_WINTER,	"Hiver"
+	UnitFormMain_RS_VERSION,	"Version"
+	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
+	UnitFormMain_RS_AT,	"à"
+	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
+	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
+	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
 	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
 	UnitFormGuild_RS_CHANGE_KEY,	"Changement de clé"
@@ -695,11 +713,11 @@ BEGIN
 	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
 	UnitFormGuild_RS_UP,	"Monter"
 	UnitFormGuild_RS_DOWN,	"Descendre"
+	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
+	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
+	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
-	UnitFormMain_RS_VERSION,	"Version"
-	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
-	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
-	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
+	UnitFormMain_RS_SEASON_SPRING,	"Printemps"
 	UnitFormAlert_RS_ALERT_QUANTITY,	"la quantité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
 	UnitFormAlert_RS_ALERT_UNFOUND,	"l'objet sous surveillance %s Q%d n'existe plus"
 	UnitFormAlert_RS_ALERT_ADDED,	"l'objet %s Q%d a été ajouté (%d)"
