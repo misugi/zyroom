@@ -557,9 +557,9 @@ object FormOptions: TFormOptions
     end
   end
   object BtOK: TSevenButton
-    Left = 146
+    Left = 120
     Top = 491
-    Width = 75
+    Width = 85
     Height = 23
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
@@ -611,9 +611,9 @@ object FormOptions: TFormOptions
     Marging = 5
   end
   object BtCancel: TSevenButton
-    Left = 227
+    Left = 210
     Top = 491
-    Width = 75
+    Width = 85
     Height = 23
     Anchors = [akLeft, akBottom]
     Caption = 'Annuler'
@@ -664,9 +664,9 @@ object FormOptions: TFormOptions
     Marging = 5
   end
   object BtApply: TSevenButton
-    Left = 308
+    Left = 300
     Top = 491
-    Width = 75
+    Width = 85
     Height = 23
     Anchors = [akLeft, akBottom]
     Caption = 'Appliquer'
@@ -725,6 +725,7 @@ object FormOptions: TFormOptions
     Color = 12631988
     CustomColors.Strings = (
       'ColorA=C0BFB4')
+    Options = [cdFullOpen]
     Left = 348
     Top = 152
   end

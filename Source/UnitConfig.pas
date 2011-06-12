@@ -44,6 +44,7 @@ const
   _GUILD_DIR = 'guild';
   _ROOM_DIR = 'room';
   _ALERT_DIR = 'alert';
+  _LOG_DIR = 'log';
   _CHARACTER_DIR = 'character';
   _PACK_FILEPATH = '\save\string_client.pack';
   _LANGUAGE_FILENAME = 'languages.lcf';

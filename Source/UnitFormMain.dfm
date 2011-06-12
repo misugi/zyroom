@@ -224,7 +224,7 @@ object FormMain: TFormMain
       OnClick = LbServerClick
     end
     object ImgUpdate: TImage
-      Left = 370
+      Left = 455
       Top = 2
       Width = 24
       Height = 24
@@ -433,6 +433,57 @@ object FormMain: TFormMain
       Caption = 'Alertes'
       TabOrder = 3
       OnClick = BtAlertClick
+      Border.ColorNormal = 7368816
+      Border.ColorHot = 11632444
+      Border.ColorDown = 9134636
+      Border.ColorDisabled = 11907757
+      Border.ColorFocused = 11632444
+      Border.WidthNormal = 1
+      Border.WidthHot = 1
+      Border.WidthDown = 1
+      Border.WidthDisabled = 1
+      Border.WidthFocused = 1
+      Colors.ColorNormalFrom = 16579836
+      Colors.ColorNormalTo = 13619151
+      Colors.ColorHotFrom = 16579836
+      Colors.ColorHotTo = 16112039
+      Colors.ColorDownFrom = 16579836
+      Colors.ColorDownTo = 14398312
+      Colors.ColorDisabledFrom = 16053492
+      Colors.ColorDisabledTo = 16053492
+      Colors.ColorFocusedFrom = 16579836
+      Colors.ColorFocusedTo = 13619151
+      Fonts.FontHot.Charset = DEFAULT_CHARSET
+      Fonts.FontHot.Color = clWindowText
+      Fonts.FontHot.Height = -11
+      Fonts.FontHot.Name = 'Arial'
+      Fonts.FontHot.Style = []
+      Fonts.FontDown.Charset = DEFAULT_CHARSET
+      Fonts.FontDown.Color = clWindowText
+      Fonts.FontDown.Height = -11
+      Fonts.FontDown.Name = 'Arial'
+      Fonts.FontDown.Style = []
+      Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+      Fonts.FontDisabled.Color = clGrayText
+      Fonts.FontDisabled.Height = -11
+      Fonts.FontDisabled.Name = 'Arial'
+      Fonts.FontDisabled.Style = []
+      Fonts.FontFocused.Charset = DEFAULT_CHARSET
+      Fonts.FontFocused.Color = clWindowText
+      Fonts.FontFocused.Height = -11
+      Fonts.FontFocused.Name = 'Arial'
+      Fonts.FontFocused.Style = []
+      Spacing = 5
+      Marging = 5
+    end
+    object BtLog: TSevenButton
+      Left = 365
+      Top = 3
+      Width = 85
+      Height = 23
+      Caption = 'Log'
+      TabOrder = 4
+      OnClick = BtLogClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
       Border.ColorDown = 9134636

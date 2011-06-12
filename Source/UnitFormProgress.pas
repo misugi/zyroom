@@ -35,12 +35,14 @@ resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
   RS_PROGRESS_ROOM = 'Affichage en cours, veuillez patienter...';
   RS_CONNEXION_ERROR = 'Trop d''erreurs API, arrêt de la synchronisation';
+  RS_PARSE_LOG = 'Analyse du fichier de log, veuillez patienter...';
 
 const
   _TASK_SYNCHRONIZE = 0;
   _TASK_ROOM = 1;
   _TASK_SYNCHRONIZE_CHAR = 2;
   _TASK_INVENT = 3;
+  _TASK_PARSE_LOG = 4;
 
   _INVENT_ROOM = 0;
   _INVENT_BAG = 1;
@@ -80,6 +82,7 @@ type
     FTotalVolume: Double;
     FEyes: TPNGObject;
     FGuardFile: TIniFile;
+    FLogFile: String;
 
     procedure FillRoom(AGuildID: String);
     procedure FillInvent(ACharID: String);
@@ -87,6 +90,11 @@ type
     procedure ShowItem(ANodeList: TXpNodeList; ANodeName: String; AStoragePath: String);
     function  GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
+
+    procedure ParseLogFile(ALogFile: String);
+    function  DelphiToHtmlColor(ADelphiColor: TColor): String;
+    function  ColorTextHtml(AHtmlColor: String; AText: String): String;
+    function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
   public
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -94,6 +102,11 @@ type
     procedure ShowFormSynchronizeChar(ACharID: String);
     procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
     procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
+    procedure ShowParseLog(ALogFile: String);
+
+    function  LogToHtmlColor(ALogColor: String): String;
+    function  LogToDelphiColor(ALogColor: String): TColor;
+
     property  TotalVolume: Double read FTotalVolume write FTotalVolume;
   end;
 
@@ -107,7 +120,7 @@ var
 
 implementation
 
-uses UnitConfig, RyzomApi, MisuDevKit, Math;
+uses UnitConfig, RyzomApi, MisuDevKit, Math, UnitFormLog, DateUtils;
 
 {$R *.dfm}
 
@@ -381,7 +394,8 @@ begin
       _TASK_SYNCHRONIZE: SynchronizeGuild(FGuildID);
       _TASK_ROOM: FillRoom(FGuildID);
       _TASK_SYNCHRONIZE_CHAR: SynchronizeChar(FCharID);
-      _TASK_INVENT: FillInvent(FCharID)
+      _TASK_INVENT: FillInvent(FCharID);
+      _TASK_PARSE_LOG: ParseLogFile(FLogFile);
     end;
   finally
     CloseForm;
@@ -434,6 +448,17 @@ begin
   FProcessingType := _TASK_INVENT;
   FInventPart := AInventPart;
   LbProgress.Caption := RS_PROGRESS_ROOM;
+  Self.ShowModal;
+end;
+
+{*******************************************************************************
+Parse a log file
+*******************************************************************************}
+procedure TFormProgress.ShowParseLog(ALogFile: String);
+begin
+  FLogFile := ALogFile;
+  FProcessingType := _TASK_PARSE_LOG;
+  LbProgress.Caption := RS_PARSE_LOG;
   Self.ShowModal;
 end;
 
@@ -744,6 +769,268 @@ begin
       GEvent.SetEvent;
     finally
       GSection.Leave;
+    end;
+  end;
+end;
+
+{*******************************************************************************
+Convert a log color to HTML color
+*******************************************************************************}
+function TFormProgress.LogToHtmlColor(ALogColor: String): String;
+var
+  wRed: Integer;
+  wGreen: Integer;
+  wBlue: Integer;
+begin
+  if Length(ALogColor) <> 7 then
+    raise Exception.Create('Invalid color: '+ALogColor);
+
+  wRed := (StrToInt('$'+ALogColor[3]) shl 4);
+  wGreen := (StrToInt('$'+ALogColor[4]) shl 4);
+  wBlue := (StrToInt('$'+ALogColor[5]) shl 4);
+
+  Result := '#' + IntToHex(wRed, 2) + IntToHex(wGreen, 2) + IntToHex(wBlue, 2);
+end;
+
+{*******************************************************************************
+Convert a log color to Delphi color
+*******************************************************************************}
+function TFormProgress.LogToDelphiColor(ALogColor: String): TColor;
+var
+  wColor: String;
+begin
+  wColor := LogToHtmlColor(ALogColor);
+  Result := StrToInt('$00' + Copy(wColor, 6, 2) + Copy(wColor, 4, 2) + Copy(wColor, 2, 2));
+end;
+
+{*******************************************************************************
+Convert a Delphi color to HTML color
+*******************************************************************************}
+function TFormProgress.DelphiToHtmlColor(ADelphiColor: TColor): String;
+var
+  wHex: String;
+begin
+  wHex := IntToHex(ADelphiColor, 6);
+  Result := '#' + Copy(wHex, 5, 2) + Copy(wHex, 3, 2) + Copy(wHex, 1, 2);
+end;
+
+{*******************************************************************************
+Add color to the text in HTML
+*******************************************************************************}
+function TFormProgress.ColorTextHtml(AHtmlColor: String; AText: String): String;
+begin
+  Result := Format('<font color="%s">%s</font>', [AHtmlColor, AText]);
+end;
+
+{*******************************************************************************
+Add color to the text in BBCode
+*******************************************************************************}
+function TFormProgress.ColorTextBbcode(AHtmlColor, AText: String): String;
+begin
+  Result := Format('[color=%s]%s[/color]', [AHtmlColor, AText]);
+end;
+
+{*******************************************************************************
+Parse the log file
+*******************************************************************************}
+procedure TFormProgress.ParseLogFile(ALogFile: String);
+var
+  wReg: TRegExpr;
+  wReg2: TRegExpr;
+  wChatLog: TStringList;
+  wHtmlFile: TStringList;
+  wBbcodeFile: TStringList;
+  wTextFile: TStringList;
+  
+  i: Integer;
+  wDate: String;
+  wText: String;
+  wTextHtml, wTextBbcode, wTextBrut: String;
+  wLine: String;
+  wCharacter: String;
+
+  wSysColor, wBackColor: String;
+  wColorText1, wColorText2: String;
+  wColorPos1, wColorPos2: Integer;
+
+  wDateBegin, wDateEnd, wDateLine: TDateTime;
+  wListChannels, wListCharacters: TStringList;
+
+  wSystemMessage: Boolean;
+begin
+  with FormLog do begin
+    // Colors
+    wSysColor := DelphiToHtmlColor(PnColorSystem.Color);
+    wBackColor := DelphiToHtmlColor(PnColorBackground.Color);
+    wColorText2 := wSysColor;
+
+    // Create objects
+    wReg := TRegExpr.Create;
+    wReg2 := TRegExpr.Create;
+    wChatLog := TStringList.Create;
+    wHtmlFile := TStringList.Create;
+    wBbcodeFile := TStringList.Create;
+    wTextFile := TStringList.Create;
+    wListChannels := TStringList.Create;
+    wListCharacters := TStringList.Create;
+    try
+      wReg.ModifierM := True;
+      wReg.ModifierG := False;
+      wReg2.ModifierG := False;
+
+      // Load and try to decode the log file (UTF-8)
+      wChatLog.LoadFromFile(ALogFile);
+      wText := UTF8Decode(wChatLog.Text); // if function failed, return empty string
+      if Length(wText) > 0 then wChatLog.Text := wText;
+
+      // Header
+      wHtmlFile.Append(Format('<html><head><title></title></head><body bgcolor="%s"><font face="Arial" size=2 color="%s">', [wBackColor, wSysColor]));
+      wBbcodeFile.Append('[quote]');
+
+      // All lines
+      wDateBegin := 0;
+      wDateEnd := 0;
+      wDateLine := 0;
+      for i := 0 to wChatLog.Count - 1 do begin
+        // Empty line ?
+        if Length(wChatLog.Strings[i]) = 0 then Continue;
+        wSystemMessage := False;
+        
+        wReg.Expression := '^(\d{4})/(\d{2})/(\d{2}) (\d{2}:\d{2}:\d{2}) \* (.*)$';
+        if wReg.Exec(wChatLog.Strings[i]) then begin
+          // Date at the beginning of the line
+          wDateLine := EncodeDate(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]));
+          if wDateBegin = 0 then
+            wDateBegin := wDateLine;
+          if CbShowDate.Checked then
+            wDate := Format('%s/%s/%s %s * ', [wReg.Match[3], wReg.Match[2], wReg.Match[1], wReg.Match[4]]);
+
+          // Initialization
+          wTextHtml := '';
+          wTextBbcode := '';
+          wLine := wReg.Match[5];
+          wColorPos1 := 0;
+          wColorPos2 := 0;
+
+          // Find character
+          wReg2.Expression := '@\{\w{4}\}.*(\w+)\s';
+          if wReg2.Exec(wLine) then begin
+            wCharacter := wReg2.Match[1];
+            wCharacter := UpperCase(wCharacter[1]) + RightStr(wCharacter, Length(wCharacter)-1);
+            if wListCharacters.IndexOf(wCharacter) < 0 then
+              wListCharacters.Append(wCharacter);
+          end;
+
+          // Find channels identified by a color code: @{FFFF}
+          wReg2.Expression := '@\{\w{4}\}';
+          if wReg2.Exec(wLine) then begin
+            wColorPos1 := wReg2.MatchPos[0];
+            wColorText1 := wReg2.Match[0];
+            if wReg2.ExecNext then begin
+              wColorPos2 := wReg2.MatchPos[0];
+              wColorText2 := wReg2.Match[0];
+            end;
+          end;
+
+          // First color
+          if wColorPos1 > 0 then begin
+            wText := Copy(wLine, wColorPos1 + 7, wColorPos2-8);
+            wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText1), wText);
+            wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText1), wText);
+            wTextBrut := wText;
+          end else begin
+            // System message
+            wSystemMessage := True;
+            wTextHtml := wLine;
+            wTextBbcode := wLine;
+            wTextBrut := wLine;
+          end;
+
+          // Second color
+          if wColorPos2 > 0 then begin
+            if (wListChannels.IndexOf(wColorText2) < 0) then
+              wListChannels.Append(wColorText2);
+            wText := Copy(wLine, wColorPos2 + 7, Length(wLine)-wColorPos2-6);
+            wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText2), wText);
+            wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText2), wText);
+            wTextBrut := wTextBrut + wText;
+          end;
+        end else begin
+          // No date at the beginning of the line
+          wDate := '';
+          wTextHtml := ColorTextHtml(LogToHtmlColor(wColorText2), wChatLog.Strings[i]);
+          wTextBbcode := ColorTextBbcode(LogToHtmlColor(wColorText2), wChatLog.Strings[i]);
+          wTextBrut := wChatLog.Strings[i];
+        end;
+
+        // Check options
+        if CbShowDate.Checked then begin
+          wTextHtml := wDate + wTextHtml;
+          wTextBbcode := wDate + wTextBbcode;
+          wTextBrut := wDate + wTextBrut;
+        end;
+
+        // Write HTML code
+        if FirstLoading then begin
+          wHtmlFile.Append(wTextHtml + '<br>');
+          wBbcodeFile.Append(wTextBbcode);
+          wTextFile.Append(wTextBrut);
+        end else begin
+          // Check options
+          if (DateOf(wDateLine) >= DatePickerBegin.Date) and
+             (DateOf(wDateLine) <= DatePickerEnd.Date) and
+             ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked)) and
+             ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wColorText2)])) and
+             ((wSystemMessage) or ((ListCharacters.Count > 0) and ListCharacters.Checked[ListCharacters.Items.IndexOf(wCharacter)])) then begin
+            wHtmlFile.Append(wTextHtml + '<br>');
+            wBbcodeFile.Append(wTextBbcode);
+            wTextFile.Append(wTextBrut);
+          end;
+        end;
+
+        // Progression
+        ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
+        Application.ProcessMessages;
+      end;
+
+      // Date end
+      if (wDateBegin > 0) then
+        wDateEnd := EncodeDate(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]));
+
+      // Update available options
+      if FirstLoading then begin
+        DatePickerBegin.DateTime := wDateBegin;
+        DatePickerEnd.DateTime := wDateEnd;
+
+        ListChannels.Items.Assign(wListChannels);
+        ChangeChecked(ListChannels, True);
+
+        wListCharacters.Sort;
+        ListCharacters.Items.Assign(wListCharacters);
+        ChangeChecked(ListCharacters, True);
+      end;
+
+      // Footer
+      wHtmlFile.Append('</font></body></html>');
+      wBbcodeFile.Append('[/quote]');
+
+      // Save files (HTML and BBCode)
+      wHtmlFile.SaveToFile(LogFileHtml);
+      wBbcodeFile.SaveToFile(LogFileBbode);
+      wTextFile.SaveToFile(LogFileText);
+
+      // Load HTML file in the browser
+      WebLog.Navigate(LogFileHtml);
+    finally
+      // Free objects
+      wListCharacters.Free;
+      wListChannels.Free;
+      wBbcodeFile.Free;
+      wHtmlFile.Free;
+      wTextFile.Free;
+      wChatLog.Free;
+      wReg2.Free;
+      wReg.Free;
     end;
   end;
 end;

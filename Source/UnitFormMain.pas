@@ -71,6 +71,7 @@ type
     BtGuild: TSevenButton;
     BtCharacter: TSevenButton;
     BtAlert: TSevenButton;
+    BtLog: TSevenButton;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -90,6 +91,7 @@ type
     procedure ChangeOptions(Sender: TObject);
     procedure PopupMenuTrayPopup(Sender: TObject);
     procedure TrayIconBalloonHintClick(Sender: TObject);
+    procedure BtLogClick(Sender: TObject);
   private
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
@@ -115,7 +117,7 @@ implementation
 
 uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
   UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter, DateUtils,
-  UnitFormAlert, SyncObjs, Contnrs;
+  UnitFormAlert, SyncObjs, Contnrs, UnitFormlog;
 
 {$R *.dfm}
 
@@ -150,8 +152,10 @@ begin
   GAlertCS := TCriticalSection.Create;
   GMsgList := TObjectList.Create(True);
 
+  {$IFNDEF __DEBUG}
   // Start thread for alerts
   FAlert := TAlert.Create;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -200,6 +204,10 @@ begin
   FormAlert.Parent := PnContainer;
   FormAlert.Align := alClient;
 
+  Formlog.BorderStyle := bsNone;
+  Formlog.Parent := PnContainer;
+  Formlog.Align := alClient;
+
   FormRoomFilter.BorderStyle := bsNone;
   FormRoomFilter.Align := alClient;
 
@@ -215,10 +223,12 @@ begin
   // Check version
   StatusBar.Panels.Items[4].Text := RS_VERSION + ' ' + GConfig.Version;
   ImgUpdate.Hint := RS_NEW_VERSION;
+  {$IFNDEF __DEBUG}
   if GConfig.CheckVersion(FFileUrl) then begin
     ImgUpdate.Visible := True;
     TimerUpdate.Enabled := True;
   end;
+  {$ENDIF}
 
   FVisible := True;
 end;
@@ -235,8 +245,10 @@ Destroys the form
 *******************************************************************************}
 procedure TFormMain.FormDestroy(Sender: TObject);
 begin
+  {$IFNDEF __DEBUG}
   FAlert.Terminate;
   WaitForSingleObject(FAlert.Handle, 10000);
+  {$ENDIF}
 
   GAlertCS.Free;
   GMsgList.Free;
@@ -276,6 +288,7 @@ procedure TFormMain.UpdateStatusAndTime(AOnlyTime: Boolean);
 var
   wStream: TStringStream;
 begin
+  {$IFNDEF __DEBUG}
   try
     if not AOnlyTime then begin
       GRyzomApi.UpdateStatus;
@@ -347,6 +360,7 @@ begin
     StatusBar.Panels.Items[2].Text := '-';
     StatusBar.Panels.Items[3].Text := '-';
   end;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -355,7 +369,7 @@ Displays the list of guilds
 procedure TFormMain.BtGuildClick(Sender: TObject);
 begin
   ShowMenuForm(FormGuild);
-  Constraints.MinHeight := 635;
+  Constraints.MinHeight := 645;
 end;
 
 {*******************************************************************************
@@ -364,7 +378,7 @@ Displays the list of characters
 procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
-  Constraints.MinHeight := 635;
+  Constraints.MinHeight := 645;
 end;
 
 {*******************************************************************************
@@ -480,7 +494,7 @@ Show alerts
 procedure TFormMain.BtAlertClick(Sender: TObject);
 begin
   ShowMenuForm(FormAlert);
-  Constraints.MinHeight := 635;
+  Constraints.MinHeight := 645;
 end;
 
 {*******************************************************************************
@@ -537,6 +551,15 @@ begin
     BtAlert.SetFocus;
     BtAlertClick(BtAlert);
   end;
+end;
+
+{*******************************************************************************
+Show log window
+*******************************************************************************}
+procedure TFormMain.BtLogClick(Sender: TObject);
+begin
+  ShowMenuForm(FormLog);
+  Constraints.MinHeight := 645;
 end;
 
 end.

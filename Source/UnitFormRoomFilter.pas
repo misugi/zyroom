@@ -205,10 +205,10 @@ type
     CbTypeOthers: TCheckBox;
     CbTypeEquipment: TCheckBox;
     CbTypeTeleporter: TCheckBox;
-    BtDefault: TSevenButton;
-    BtOK: TSevenButton;
     LbGuard: TLabel;
     LbValueGuard: TLabel;
+    BtDefault: TSevenButton;
+    BtOK: TSevenButton;
     procedure BtOKClick(Sender: TObject);
     procedure CbTypeMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

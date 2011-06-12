@@ -1,6 +1,10 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.2.0 (2011-06-12)
+New: menu "Log" to parse your log file saved with the /chatLog command in the game !
+Change: position of the buttons on the filter window
+
 # version 3.1.8 (2011-02-28)
 Change: if an error occured during the call of the API or if the API returns an error message, the tag "API Error" is added to the message
 Fixed: problem with a guild that was added with an empty room or without room (an error was displayed at the start of the synchronisation)

@@ -2,7 +2,7 @@ object FormRoomFilter: TFormRoomFilter
   Left = 401
   Top = 263
   Width = 325
-  Height = 576
+  Height = 597
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -21,8 +21,8 @@ object FormRoomFilter: TFormRoomFilter
     Left = 0
     Top = 0
     Width = 280
-    Height = 538
-    ActivePage = TabInfo
+    Height = 559
+    ActivePage = TabFilter
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -113,6 +113,8 @@ object FormRoomFilter: TFormRoomFilter
           Width = 40
           Height = 40
           ShowHint = True
+          StickerPosX = 0
+          StickerPosY = 0
         end
         object LbValueQuality: TLabel
           Left = 76
@@ -1257,7 +1259,7 @@ object FormRoomFilter: TFormRoomFilter
       object GbSorting: TGroupBox
         Left = 0
         Top = 0
-        Width = 132
+        Width = 271
         Height = 44
         Caption = 'Tri'
         Font.Charset = DEFAULT_CHARSET
@@ -1270,7 +1272,7 @@ object FormRoomFilter: TFormRoomFilter
         object EdSorting: TComboBox
           Left = 8
           Top = 16
-          Width = 116
+          Width = 254
           Height = 22
           Style = csDropDownList
           Font.Charset = DEFAULT_CHARSET
@@ -1830,9 +1832,9 @@ object FormRoomFilter: TFormRoomFilter
         end
       end
       object BtDefault: TSevenButton
-        Left = 138
-        Top = 15
-        Width = 55
+        Left = 95
+        Top = 495
+        Width = 85
         Height = 23
         Caption = 'D'#233'faut'
         TabOrder = 10
@@ -1881,9 +1883,9 @@ object FormRoomFilter: TFormRoomFilter
         Marging = 5
       end
       object BtOK: TSevenButton
-        Left = 197
-        Top = 15
-        Width = 73
+        Left = 185
+        Top = 495
+        Width = 85
         Height = 23
         Caption = 'Appliquer'
         Font.Charset = DEFAULT_CHARSET
@@ -1934,6 +1936,7 @@ object FormRoomFilter: TFormRoomFilter
         Fonts.FontFocused.Height = -11
         Fonts.FontFocused.Name = 'Arial'
         Fonts.FontFocused.Style = [fsBold]
+        Default = True
         Spacing = 5
         Marging = 5
       end

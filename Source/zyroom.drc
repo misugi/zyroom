@@ -8,522 +8,535 @@
   resources were bound to the produced executable.
 */
 
-#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64864
-#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64865
-#define UnitFormAlert_RS_ALERT_SEASON 64866
-#define UnitFormAlert_RS_ALERT_HINT 64867
-#define UnitFormMain_RS_STATUS_RESTRICTED 64880
-#define UnitFormMain_RS_NEW_VERSION 64881
-#define UnitFormMain_RS_SEASON_SPRING 64882
-#define UnitFormMain_RS_SEASON_SUMMER 64883
-#define UnitFormMain_RS_SEASON_AUTUMN 64884
-#define UnitFormMain_RS_SEASON_WINTER 64885
-#define UnitFormMain_RS_VERSION 64886
-#define UnitFormMain_RS_NEXT_SEASON 64887
-#define UnitFormMain_RS_AT 64888
-#define UnitFormAlert_RS_ALERT_DURABILITY 64889
-#define UnitFormAlert_RS_ALERT_QUANTITY 64890
-#define UnitFormAlert_RS_ALERT_UNFOUND 64891
-#define UnitFormAlert_RS_ALERT_ADDED 64892
-#define UnitFormAlert_RS_ALERT_REMOVED 64893
-#define UnitFormAlert_RS_ALERT_MODIFIED 64894
-#define UnitFormAlert_RS_ALERT_SALES 64895
-#define UnitFormRoomFilter_RS_STB 64896
-#define UnitFormRoomFilter_RS_FOB 64897
-#define UnitFormRoomFilter_RS_NEEDED_FILE 64898
-#define UnitFormGuild_RS_NEW_GUILD 64899
-#define UnitFormGuild_RS_CHANGE_KEY 64900
-#define UnitFormGuild_RS_COL_GUILD_LOGO 64901
-#define UnitFormGuild_RS_COL_GUILD_NAME 64902
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 64903
-#define UnitFormGuild_RS_COL_COMMENT 64904
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 64905
-#define UnitFormGuild_RS_GUILD_KEY 64906
-#define UnitFormGuild_RS_CHECK_CHANGE 64907
-#define UnitFormGuild_RS_UP 64908
-#define UnitFormGuild_RS_DOWN 64909
-#define UnitFormMain_RS_STATUS_CLOSED 64910
-#define UnitFormMain_RS_STATUS_OPEN 64911
-#define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64912
-#define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64913
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64914
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 64915
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 64916
-#define UnitFormCharacter_RS_CHAR_COL_COMMENT 64917
-#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 64918
-#define UnitFormCharacter_RS_CHAR_KEY 64919
-#define UnitFormCharacter_RS_CHECK_SALES 64920
-#define UnitFormCharacter_RS_UP 64921
-#define UnitFormCharacter_RS_DOWN 64922
-#define UnitFormWatch_RS_QUANTITY_MIN 64923
-#define UnitFormWatch_RS_DURABILITY_MIN 64924
-#define UnitFormRoomFilter_RS_SKIN 64925
-#define UnitFormRoomFilter_RS_HPB 64926
-#define UnitFormRoomFilter_RS_SAB 64927
-#define pnglang_EPNGIHDRNotFirstText 64928
-#define pnglang_EPNGSizeExceedsText 64929
-#define pnglang_EPNGUnknownPalEntryText 64930
-#define pnglang_EPNGUnknownCriticalChunkText 64931
-#define pnglang_EPNGUnknownCompressionText 64932
-#define pnglang_EPNGUnknownInterlaceText 64933
-#define pnglang_EPNGCannotAssignChunkText 64934
-#define pnglang_EPNGUnexpectedEndText 64935
-#define pnglang_EPNGNoImageDataText 64936
-#define pnglang_EPNGCouldNotLoadResourceText 64937
-#define pnglang_EPNGOutMemoryText 64938
-#define pnglang_EPNGHeaderNotPresentText 64939
-#define pnglang_EInvalidNewSize 64940
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64941
-#define UnitFormProgress_RS_PROGRESS_ROOM 64942
-#define UnitFormProgress_RS_CONNEXION_ERROR 64943
-#define UnitRyzom_RS_DAYS 64944
-#define UnitRyzom_RS_HOURS 64945
-#define UnitRyzom_RS_MINUTES 64946
-#define UnitRyzom_RS_AND 64947
-#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64948
-#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64949
-#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64950
-#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64951
-#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64952
-#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64953
-#define pnglang_EPngInvalidCRCText 64954
-#define pnglang_EPNGInvalidIHDRText 64955
-#define pnglang_EPNGMissingMultipleIDATText 64956
-#define pnglang_EPNGZLIBErrorText 64957
-#define pnglang_EPNGInvalidPaletteText 64958
-#define pnglang_EPNGInvalidFileHeaderText 64959
-#define UnitRyzom_RS_RACE_ALL 64960
-#define UnitRyzom_RS_RACE_FYROS 64961
-#define UnitRyzom_RS_RACE_ZORAI 64962
-#define UnitRyzom_RS_RACE_TRYKER 64963
-#define UnitRyzom_RS_RACE_MATIS 64964
-#define UnitRyzom_RS_ECOSYS_COMMON 64965
-#define UnitRyzom_RS_ECOSYS_PRIME 64966
-#define UnitRyzom_RS_ECOSYS_DESERT 64967
-#define UnitRyzom_RS_ECOSYS_JUNGLE 64968
-#define UnitRyzom_RS_ECOSYS_FOREST 64969
-#define UnitRyzom_RS_ECOSYS_LAKES 64970
-#define UnitRyzom_RS_VOLUME 64971
-#define UnitRyzom_RS_MENU_WATCH 64972
-#define UnitRyzom_RS_MENU_UNWATCH 64973
-#define UnitRyzom_RS_TAB_PET 64974
-#define UnitRyzom_RS_TAB_MOUNT 64975
-#define UnitRyzom_RS_CAT_JEWEL 64976
-#define UnitRyzom_RS_CAT_MAGICFOCUS 64977
-#define UnitRyzom_RS_CAT_ALL 64978
-#define UnitRyzom_RS_COLOR_BEIGE 64979
-#define UnitRyzom_RS_COLOR_BLACK 64980
-#define UnitRyzom_RS_COLOR_BLUE 64981
-#define UnitRyzom_RS_COLOR_GREEN 64982
-#define UnitRyzom_RS_COLOR_PURPLE 64983
-#define UnitRyzom_RS_COLOR_RED 64984
-#define UnitRyzom_RS_COLOR_TURQUOISE 64985
-#define UnitRyzom_RS_COLOR_WHITE 64986
-#define UnitRyzom_RS_CLASS_BASE 64987
-#define UnitRyzom_RS_CLASS_FINE 64988
-#define UnitRyzom_RS_CLASS_CHOICE 64989
-#define UnitRyzom_RS_CLASS_EXCELLENT 64990
-#define UnitRyzom_RS_CLASS_SUPREME 64991
-#define UnitRyzom_RS_CAT_HAMMER 64992
-#define UnitRyzom_RS_CAT_COUNTERWEIGHT 64993
-#define UnitRyzom_RS_CAT_SHAFT 64994
-#define UnitRyzom_RS_CAT_AMMOBULLET 64995
-#define UnitRyzom_RS_CAT_BARREL 64996
-#define UnitRyzom_RS_CAT_ARMORSHELL 64997
-#define UnitRyzom_RS_CAT_AMMOJACKET 64998
-#define UnitRyzom_RS_CAT_LINING 64999
-#define UnitRyzom_RS_CAT_EXPLOSIVE 65000
-#define UnitRyzom_RS_CAT_STUFFING 65001
-#define UnitRyzom_RS_CAT_FIRINGPIN 65002
-#define UnitRyzom_RS_CAT_ARMORCLIP 65003
-#define UnitRyzom_RS_CAT_TRIGGER 65004
-#define UnitRyzom_RS_CAT_JEWELSETTING 65005
-#define UnitRyzom_RS_CAT_GRIP 65006
-#define UnitRyzom_RS_CAT_CLOTHES 65007
-#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 65008
-#define UnitRyzom_RS_SPEC_ELE_POWER 65009
-#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 65010
-#define UnitRyzom_RS_SPEC_OFFAFF_POWER 65011
-#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 65012
-#define UnitRyzom_RS_SPEC_DEFAFF_POWER 65013
-#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 65014
-#define UnitRyzom_RS_SPEC_HEAL_POWER 65015
-#define UnitRyzom_RS_SPEC_DESERT_RESIST 65016
-#define UnitRyzom_RS_SPEC_FOREST_RESIST 65017
-#define UnitRyzom_RS_SPEC_LAKES_RESIST 65018
-#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65019
-#define UnitRyzom_RS_SPEC_PRIME_RESIST 65020
-#define UnitRyzom_RS_SPEC_ALL 65021
-#define UnitRyzom_RS_CAT_BLADE 65022
-#define UnitRyzom_RS_CAT_POINT 65023
-#define UnitRyzom_RS_SPEC_RANGE 65024
-#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65025
-#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65026
-#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65027
-#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65028
-#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65029
-#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65030
-#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65031
-#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65032
-#define UnitRyzom_RS_SPEC_ACID_PROTEC 65033
-#define UnitRyzom_RS_SPEC_COLD_PROTEC 65034
-#define UnitRyzom_RS_SPEC_ROT_PROTEC 65035
-#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65036
-#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 65037
-#define UnitRyzom_RS_SPEC_POISON_PROTEC 65038
-#define UnitRyzom_RS_SPEC_ELEC_PROTEC 65039
-#define XpExcept_sXPathNoHandler 65040
-#define XpExcept_sXPathExpectedNodeSet 65041
-#define XpExcept_sXPathForDocumentParm2 65042
-#define XpExcept_sXPathNotUnparsedEnt 65043
-#define XpExcept_sXPathUnparsedEntCount 65044
-#define XpExcept_sXPathNoDTD 65045
-#define XpExcept_sInvalidXMLChar 65046
-#define XpExcept_sInvalidBEChar 65047
-#define XpExcept_sInvalidLEChar 65048
-#define XpExcept_sBadUTF8Char 65049
-#define RyzomApi_RS_ERROR_LOADING_XML 65050
-#define UnitRyzom_RS_SPEC_DURABILITY 65051
-#define UnitRyzom_RS_SPEC_LIGHTNESS 65052
-#define UnitRyzom_RS_SPEC_SAPLOAD 65053
-#define UnitRyzom_RS_SPEC_DAMAGE 65054
-#define UnitRyzom_RS_SPEC_SPEED 65055
-#define XpExcept_sNoIntConditional 65056
-#define XpExcept_sInvPubIDChar 65057
-#define XpExcept_sNoNDATAInPeDecl 65058
-#define XpExcept_sInvStandAloneVal 65059
-#define XpExcept_sInvEncName 65060
-#define XpExcept_sInvVerNum 65061
-#define XpExcept_sInvEntityValue 65062
-#define XpExcept_sNoPEInIntDTD 65063
-#define XpExcept_sXMLDecNotAtBeg 65064
-#define XpExcept_sInvalidElementName 65065
-#define XpExcept_sBadParamEntNesting 65066
-#define XpExcept_sUnknownAxis 65067
-#define XpExcept_sMalformedIgnore 65068
-#define XpExcept_sExpectedElement 65069
-#define XpExcept_sMixedInetLocalPath 65070
-#define XpExcept_sStringNaN 65071
-#define XpExcept_sIllCharInRef 65072
-#define XpExcept_sUndeclaredEntity 65073
-#define XpExcept_sExpectedString 65074
-#define XpExcept_sSpaceExpectedAt 65075
-#define XpExcept_sUnexpEndOfInput 65076
-#define XpExcept_sQuoteExpected 65077
-#define XpExcept_sInvalidXMLVersion 65078
-#define XpExcept_sInvalidName 65079
-#define XpExcept_sInvalidCommentText 65080
-#define XpExcept_sCommentBeforeXMLDecl 65081
-#define XpExcept_sInvalidCDataSection 65082
-#define XpExcept_sRedefinedAttr 65083
-#define XpExcept_sCircularEntRef 65084
-#define XpExcept_sInvAttrChar 65085
-#define XpExcept_sInvPCData 65086
-#define XpExcept_sDataAfterValDoc 65087
-#define XpExcept_sInetOpenFailed 65088
-#define XpExcept_sInvalidFtpLoc 65089
-#define XpExcept_sInvalidFtpDir 65090
-#define XpExcept_sFtpOpenFileFailed 65091
-#define XpExcept_sSrcLoadFailed 65092
-#define XpExcept_sFmtErrorMsg 65093
-#define XpExcept_sExpMarkupDecl 65094
-#define XpExcept_sIllAttrType 65095
-#define XpExcept_sIllAttrDefKeyw 65096
-#define XpExcept_sSysIdMissing 65097
-#define XpExcept_sExtModifMissing 65098
-#define XpExcept_sIllCondSectStart 65099
-#define XpExcept_sBadSepInModel 65100
-#define XpExcept_sExpCommentOrCDATA 65101
-#define XpExcept_sUnexpectedEof 65102
-#define XpExcept_sMismatchEndTag 65103
-#define IdResourceStringsProtocols_RSSSLGetMethodError 65104
-#define IdResourceStringsProtocols_RSSSLFDSetError 65105
-#define IdResourceStringsProtocols_RSSSLDataBindingError 65106
-#define IdResourceStringsProtocols_RSSSLEOFViolation 65107
-#define IdResourceStringsProtocols_RSOSSLModeNotSet 65108
-#define IdResourceStringsProtocols_RSOSSLCouldNotLoadSSLLibrary 65109
-#define IdResourceStringsProtocols_RSOSSLStatusString 65110
-#define IdResourceStringsProtocols_RSURINoProto 65111
-#define IdResourceStringsProtocols_RSURINoHost 65112
-#define IdZLibConst_sZLibError 65113
-#define XpExcept_sIENotInstalled 65114
-#define XpExcept_sFileNotFound 65115
-#define XpExcept_sHttpDataNotAvail 65116
-#define XpExcept_sHttpReqSendFailed 65117
-#define XpExcept_sHttpReqOpenFailed 65118
-#define XpExcept_sInetConnectFailed 65119
-#define IdResourceStringsCore_RSReplyInvalidCode 65120
-#define IdResourceStringsCore_RSReplyCodeAlreadyExists 65121
-#define IdResourceStringsProtocols_RSIOHandlerPropInvalid 65122
-#define IdResourceStringsProtocols_RSHTTPChunkStarted 65123
-#define IdResourceStringsProtocols_RSHTTPNotAcceptable 65124
-#define IdResourceStringsProtocols_RSHTTPUnknownProtocol 65125
-#define IdResourceStringsProtocols_RSHTTPMethodRequiresVersion 65126
-#define IdResourceStringsProtocols_RSHTTPAuthAlreadyRegistered 65127
-#define IdResourceStringsProtocols_RSHTTPAuthInvalidHash 65128
-#define IdResourceStringsProtocols_RSSSLAcceptError 65129
-#define IdResourceStringsProtocols_RSSSLConnectError 65130
-#define IdResourceStringsProtocols_RSSSLSettingCipherError 65131
-#define IdResourceStringsProtocols_RSSSLCreatingContextError 65132
-#define IdResourceStringsProtocols_RSSSLLoadingRootCertError 65133
-#define IdResourceStringsProtocols_RSSSLLoadingCertError 65134
-#define IdResourceStringsProtocols_RSSSLLoadingKeyError 65135
-#define IdResourceStringsCore_RSTooMuchDataInBuffer 65136
-#define IdResourceStringsCore_RSFileNotFound 65137
-#define IdResourceStringsCore_RSNotConnected 65138
-#define IdResourceStringsCore_RSObjectTypeNotSupported 65139
-#define IdResourceStringsCore_RSIdNoDataToRead 65140
-#define IdResourceStringsCore_RSReadTimeout 65141
-#define IdResourceStringsCore_RSReadLnWaitMaxAttemptsExceeded 65142
-#define IdResourceStringsCore_RSReadLnMaxLineLengthExceeded 65143
-#define IdResourceStringsCore_RSConnectTimeout 65144
-#define IdResourceStringsCore_RSAlreadyConnected 65145
-#define IdResourceStringsCore_RSMaximumNumberOfCaptureLineExceeded 65146
-#define IdResourceStringsCore_RSInterceptIsDifferent 65147
-#define IdResourceStringsCore_RSTransparentProxyCannotBind 65148
-#define IdResourceStringsCore_RSTransparentProxyCanNotSupportUDP 65149
-#define IdResourceStringsCore_RSBufferMissingTerminator 65150
-#define IdResourceStringsCore_RSBufferInvalidStartPos 65151
-#define IdResourceStringsCore_RSSocksRequestServerFailed 65152
-#define IdResourceStringsCore_RSSocksRequestIdentFailed 65153
-#define IdResourceStringsCore_RSSocksUnknownError 65154
-#define IdResourceStringsCore_RSSocksServerRespondError 65155
-#define IdResourceStringsCore_RSSocksAuthMethodError 65156
-#define IdResourceStringsCore_RSSocksAuthError 65157
-#define IdResourceStringsCore_RSSocksServerGeneralError 65158
-#define IdResourceStringsCore_RSSocksServerPermissionError 65159
-#define IdResourceStringsCore_RSSocksServerNetUnreachableError 65160
-#define IdResourceStringsCore_RSSocksServerHostUnreachableError 65161
-#define IdResourceStringsCore_RSSocksServerConnectionRefusedError 65162
-#define IdResourceStringsCore_RSSocksServerTTLExpiredError 65163
-#define IdResourceStringsCore_RSSocksServerCommandError 65164
-#define IdResourceStringsCore_RSSocksServerAddressError 65165
-#define IdResourceStringsCore_RSInterceptCircularLink 65166
-#define IdResourceStringsCore_RSNotEnoughDataInBuffer 65167
-#define IdResourceStrings_RSStackAlreadyCreated 65168
-#define IdResourceStrings_RSAntiFreezeOnlyOne 65169
-#define IdResourceStrings_RSCannotSetIPVersionWhenConnected 65170
-#define IdResourceStrings_RSCannotBindRange 65171
-#define IdResourceStrings_RSConnectionClosedGracefully 65172
-#define IdResourceStrings_RSCouldNotBindSocket 65173
-#define IdResourceStrings_RSInvalidPortRange 65174
-#define IdResourceStrings_RSInvalidServiceName 65175
-#define IdResourceStrings_RSIPv6Unavailable 65176
-#define IdResourceStrings_RSInvalidIPv6Address 65177
-#define IdResourceStrings_RSIPVersionUnsupported 65178
-#define IdResourceStrings_RSNotAllBytesSent 65179
-#define IdResourceStrings_RSPackageSizeTooBig 65180
-#define IdResourceStrings_RSSetSizeExceeded 65181
-#define IdResourceStringsCore_RSSocksUDPNotSupported 65182
-#define IdResourceStringsCore_RSSocksRequestFailed 65183
-#define IdResourceStrings_RSStackECONNABORTED 65184
-#define IdResourceStrings_RSStackECONNRESET 65185
-#define IdResourceStrings_RSStackENOBUFS 65186
-#define IdResourceStrings_RSStackEISCONN 65187
-#define IdResourceStrings_RSStackENOTCONN 65188
-#define IdResourceStrings_RSStackESHUTDOWN 65189
-#define IdResourceStrings_RSStackETOOMANYREFS 65190
-#define IdResourceStrings_RSStackETIMEDOUT 65191
-#define IdResourceStrings_RSStackECONNREFUSED 65192
-#define IdResourceStrings_RSStackELOOP 65193
-#define IdResourceStrings_RSStackENAMETOOLONG 65194
-#define IdResourceStrings_RSStackEHOSTDOWN 65195
-#define IdResourceStrings_RSStackEHOSTUNREACH 65196
-#define IdResourceStrings_RSStackENOTEMPTY 65197
-#define IdResourceStrings_RSStackHOST_NOT_FOUND 65198
-#define IdResourceStrings_RSStackClassUndefined 65199
-#define IdResourceStrings_RSStackEALREADY 65200
-#define IdResourceStrings_RSStackENOTSOCK 65201
-#define IdResourceStrings_RSStackEDESTADDRREQ 65202
-#define IdResourceStrings_RSStackEMSGSIZE 65203
-#define IdResourceStrings_RSStackEPROTOTYPE 65204
-#define IdResourceStrings_RSStackENOPROTOOPT 65205
-#define IdResourceStrings_RSStackEPROTONOSUPPORT 65206
-#define IdResourceStrings_RSStackESOCKTNOSUPPORT 65207
-#define IdResourceStrings_RSStackEOPNOTSUPP 65208
-#define IdResourceStrings_RSStackEPFNOSUPPORT 65209
-#define IdResourceStrings_RSStackEAFNOSUPPORT 65210
-#define IdResourceStrings_RSStackEADDRINUSE 65211
-#define IdResourceStrings_RSStackEADDRNOTAVAIL 65212
-#define IdResourceStrings_RSStackENETDOWN 65213
-#define IdResourceStrings_RSStackENETUNREACH 65214
-#define IdResourceStrings_RSStackENETRESET 65215
-#define IdResourceStrings_RSWinsockLoadError 65216
-#define IdResourceStrings_RSStatusResolving 65217
-#define IdResourceStrings_RSStatusConnecting 65218
-#define IdResourceStrings_RSStatusConnected 65219
-#define IdResourceStrings_RSStatusDisconnecting 65220
-#define IdResourceStrings_RSStatusDisconnected 65221
-#define IdResourceStrings_RSStatusText 65222
-#define IdResourceStrings_RSStackError 65223
-#define IdResourceStrings_RSStackEINTR 65224
-#define IdResourceStrings_RSStackEBADF 65225
-#define IdResourceStrings_RSStackEACCES 65226
-#define IdResourceStrings_RSStackEFAULT 65227
-#define IdResourceStrings_RSStackEINVAL 65228
-#define IdResourceStrings_RSStackEMFILE 65229
-#define IdResourceStrings_RSStackEWOULDBLOCK 65230
-#define IdResourceStrings_RSStackEINPROGRESS 65231
-#define ExtCtrls_clNameWindowFrame 65232
-#define ExtCtrls_clNameWindowText 65233
-#define ComStrs_sTabFailClear 65234
-#define ComStrs_sTabFailDelete 65235
-#define ComStrs_sTabFailRetrieve 65236
-#define ComStrs_sTabFailGetObject 65237
-#define ComStrs_sTabFailSet 65238
-#define ComStrs_sTabFailSetObject 65239
-#define ComStrs_sTabMustBeMultiLine 65240
-#define ComStrs_sRichEditInsertError 65241
-#define ComStrs_sRichEditLoadFail 65242
-#define ComStrs_sRichEditSaveFail 65243
-#define ComStrs_sPageIndexError 65244
-#define WinHelpViewer_hNoKeyword 65245
-#define IdResourceStrings_RSFailedTimeZoneInfo 65246
-#define IdResourceStrings_RSWinsockCallError 65247
-#define ExtCtrls_clNameDefault 65248
-#define ExtCtrls_clNameGrayText 65249
-#define ExtCtrls_clNameHighlight 65250
-#define ExtCtrls_clNameHighlightText 65251
-#define ExtCtrls_clNameInactiveBorder 65252
-#define ExtCtrls_clNameInactiveCaption 65253
-#define ExtCtrls_clNameInactiveCaptionText 65254
-#define ExtCtrls_clNameInfoBk 65255
-#define ExtCtrls_clNameInfoText 65256
-#define ExtCtrls_clNameMenu 65257
-#define ExtCtrls_clNameMenuText 65258
-#define ExtCtrls_clNameNone 65259
-#define ExtCtrls_clNameScrollBar 65260
-#define ExtCtrls_clName3DDkShadow 65261
-#define ExtCtrls_clName3DLight 65262
-#define ExtCtrls_clNameWindow 65263
-#define ExtCtrls_clNameFuchsia 65264
-#define ExtCtrls_clNameAqua 65265
-#define ExtCtrls_clNameWhite 65266
-#define ExtCtrls_clNameMoneyGreen 65267
-#define ExtCtrls_clNameSkyBlue 65268
-#define ExtCtrls_clNameCream 65269
-#define ExtCtrls_clNameMedGray 65270
-#define ExtCtrls_clNameActiveBorder 65271
-#define ExtCtrls_clNameActiveCaption 65272
-#define ExtCtrls_clNameAppWorkSpace 65273
-#define ExtCtrls_clNameBackground 65274
-#define ExtCtrls_clNameBtnFace 65275
-#define ExtCtrls_clNameBtnHighlight 65276
-#define ExtCtrls_clNameBtnShadow 65277
-#define ExtCtrls_clNameBtnText 65278
-#define ExtCtrls_clNameCaptionText 65279
-#define HelpIntfs_hNothingFound 65280
-#define HelpIntfs_hNoContext 65281
-#define HelpIntfs_hNoTopics 65282
-#define ExtCtrls_clNameBlack 65283
-#define ExtCtrls_clNameMaroon 65284
-#define ExtCtrls_clNameGreen 65285
-#define ExtCtrls_clNameOlive 65286
-#define ExtCtrls_clNameNavy 65287
-#define ExtCtrls_clNamePurple 65288
-#define ExtCtrls_clNameTeal 65289
-#define ExtCtrls_clNameGray 65290
-#define ExtCtrls_clNameSilver 65291
-#define ExtCtrls_clNameRed 65292
-#define ExtCtrls_clNameLime 65293
-#define ExtCtrls_clNameYellow 65294
-#define ExtCtrls_clNameBlue 65295
-#define Consts_SmkcShift 65296
-#define Consts_SmkcCtrl 65297
-#define Consts_SmkcAlt 65298
-#define Consts_SOutOfRange 65299
-#define Consts_SInsertLineError 65300
-#define Consts_SInvalidClipFmt 65301
-#define Consts_SIconToClipboard 65302
-#define Consts_SCannotOpenClipboard 65303
-#define Consts_SInvalidMemoSize 65304
-#define Consts_SNoDefaultPrinter 65305
-#define Consts_SDuplicateMenus 65306
-#define Consts_SDockedCtlNeedsName 65307
-#define Consts_SDockTreeRemoveError 65308
-#define Consts_SDockZoneNotFound 65309
-#define Consts_SDockZoneHasNoCtl 65310
-#define HelpIntfs_hNoTableOfContents 65311
-#define Consts_SMsgDlgYesToAll 65312
-#define Consts_SmkcBkSp 65313
-#define Consts_SmkcTab 65314
-#define Consts_SmkcEsc 65315
-#define Consts_SmkcEnter 65316
-#define Consts_SmkcSpace 65317
-#define Consts_SmkcPgUp 65318
-#define Consts_SmkcPgDn 65319
-#define Consts_SmkcEnd 65320
-#define Consts_SmkcHome 65321
-#define Consts_SmkcLeft 65322
-#define Consts_SmkcUp 65323
-#define Consts_SmkcRight 65324
-#define Consts_SmkcDown 65325
-#define Consts_SmkcIns 65326
-#define Consts_SmkcDel 65327
-#define Consts_SMaskErr 65328
-#define Consts_SMaskEditErr 65329
-#define Consts_SMsgDlgWarning 65330
-#define Consts_SMsgDlgError 65331
-#define Consts_SMsgDlgInformation 65332
-#define Consts_SMsgDlgConfirm 65333
-#define Consts_SMsgDlgYes 65334
-#define Consts_SMsgDlgNo 65335
-#define Consts_SMsgDlgOK 65336
-#define Consts_SMsgDlgCancel 65337
-#define Consts_SMsgDlgHelp 65338
-#define Consts_SMsgDlgAbort 65339
-#define Consts_SMsgDlgRetry 65340
-#define Consts_SMsgDlgIgnore 65341
-#define Consts_SMsgDlgAll 65342
-#define Consts_SMsgDlgNoToAll 65343
-#define Consts_SControlParentSetToSelf 65344
-#define Consts_SOKButton 65345
-#define Consts_SCancelButton 65346
-#define Consts_SYesButton 65347
-#define Consts_SNoButton 65348
-#define Consts_SHelpButton 65349
-#define Consts_SCloseButton 65350
-#define Consts_SIgnoreButton 65351
-#define Consts_SRetryButton 65352
-#define Consts_SAbortButton 65353
-#define Consts_SAllButton 65354
-#define Consts_SCannotDragForm 65355
-#define Consts_SVMetafiles 65356
-#define Consts_SVEnhMetafiles 65357
-#define Consts_SVIcons 65358
-#define Consts_SVBitmaps 65359
-#define Consts_SParentRequired 65360
-#define Consts_SParentGivenNotAParent 65361
-#define Consts_SMDIChildNotVisible 65362
-#define Consts_SVisibleChanged 65363
-#define Consts_SCannotShowModal 65364
-#define Consts_SPropertyOutOfRange 65365
-#define Consts_SMenuIndexError 65366
-#define Consts_SMenuReinserted 65367
-#define Consts_SMenuNotFound 65368
-#define Consts_SNoTimers 65369
-#define Consts_SNotPrinting 65370
-#define Consts_SPrinting 65371
-#define Consts_SInvalidPrinter 65372
-#define Consts_SDeviceOnPort 65373
-#define Consts_SGroupIndexTooLow 65374
-#define Consts_SNoMDIForm 65375
+#define UnitFormProgress_RS_PARSE_LOG 64848
+#define UnitFormGuild_RS_NEW_GUILD 64864
+#define UnitFormGuild_RS_CHANGE_KEY 64865
+#define UnitFormGuild_RS_COL_GUILD_LOGO 64866
+#define UnitFormGuild_RS_COL_GUILD_NAME 64867
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 64868
+#define UnitFormGuild_RS_COL_COMMENT 64869
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 64870
+#define UnitFormGuild_RS_GUILD_KEY 64871
+#define UnitFormGuild_RS_CHECK_CHANGE 64872
+#define UnitFormGuild_RS_UP 64873
+#define UnitFormGuild_RS_DOWN 64874
+#define UnitFormMain_RS_NEW_VERSION 64875
+#define UnitFormMain_RS_VERSION 64876
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64877
+#define UnitFormProgress_RS_PROGRESS_ROOM 64878
+#define UnitFormProgress_RS_CONNEXION_ERROR 64879
+#define UnitFormAlert_RS_ALERT_QUANTITY 64880
+#define UnitFormAlert_RS_ALERT_UNFOUND 64881
+#define UnitFormAlert_RS_ALERT_ADDED 64882
+#define UnitFormAlert_RS_ALERT_REMOVED 64883
+#define UnitFormAlert_RS_ALERT_MODIFIED 64884
+#define UnitFormAlert_RS_ALERT_SALES 64885
+#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64886
+#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64887
+#define UnitFormAlert_RS_ALERT_SEASON 64888
+#define UnitFormAlert_RS_ALERT_HINT 64889
+#define UnitFormRoomFilter_RS_SKIN 64890
+#define UnitFormRoomFilter_RS_HPB 64891
+#define UnitFormRoomFilter_RS_SAB 64892
+#define UnitFormRoomFilter_RS_STB 64893
+#define UnitFormRoomFilter_RS_FOB 64894
+#define UnitFormRoomFilter_RS_NEEDED_FILE 64895
+#define OleConst_SNotLicensed 64896
+#define OleConst_sNoRunningObject 64897
+#define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64898
+#define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64899
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64900
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 64901
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 64902
+#define UnitFormCharacter_RS_CHAR_COL_COMMENT 64903
+#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 64904
+#define UnitFormCharacter_RS_CHAR_KEY 64905
+#define UnitFormCharacter_RS_CHECK_SALES 64906
+#define UnitFormCharacter_RS_UP 64907
+#define UnitFormCharacter_RS_DOWN 64908
+#define UnitFormWatch_RS_QUANTITY_MIN 64909
+#define UnitFormWatch_RS_DURABILITY_MIN 64910
+#define UnitFormAlert_RS_ALERT_DURABILITY 64911
+#define pnglang_EPNGUnknownInterlaceText 64912
+#define pnglang_EPNGCannotAssignChunkText 64913
+#define pnglang_EPNGUnexpectedEndText 64914
+#define pnglang_EPNGNoImageDataText 64915
+#define pnglang_EPNGCouldNotLoadResourceText 64916
+#define pnglang_EPNGOutMemoryText 64917
+#define pnglang_EPNGHeaderNotPresentText 64918
+#define pnglang_EInvalidNewSize 64919
+#define ComConst_SOleError 64920
+#define ComConst_SNoMethod 64921
+#define ComConst_SVarNotObject 64922
+#define ComConst_STooManyParams 64923
+#define ComConst_SDCOMNotInstalled 64924
+#define OleConst_SCannotActivate 64925
+#define OleConst_SNoWindowHandle 64926
+#define OleConst_SInvalidLicense 64927
+#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64928
+#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64929
+#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64930
+#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64931
+#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64932
+#define pnglang_EPngInvalidCRCText 64933
+#define pnglang_EPNGInvalidIHDRText 64934
+#define pnglang_EPNGMissingMultipleIDATText 64935
+#define pnglang_EPNGZLIBErrorText 64936
+#define pnglang_EPNGInvalidPaletteText 64937
+#define pnglang_EPNGInvalidFileHeaderText 64938
+#define pnglang_EPNGIHDRNotFirstText 64939
+#define pnglang_EPNGSizeExceedsText 64940
+#define pnglang_EPNGUnknownPalEntryText 64941
+#define pnglang_EPNGUnknownCriticalChunkText 64942
+#define pnglang_EPNGUnknownCompressionText 64943
+#define UnitRyzom_RS_ECOSYS_COMMON 64944
+#define UnitRyzom_RS_ECOSYS_PRIME 64945
+#define UnitRyzom_RS_ECOSYS_DESERT 64946
+#define UnitRyzom_RS_ECOSYS_JUNGLE 64947
+#define UnitRyzom_RS_ECOSYS_FOREST 64948
+#define UnitRyzom_RS_ECOSYS_LAKES 64949
+#define UnitRyzom_RS_VOLUME 64950
+#define UnitRyzom_RS_MENU_WATCH 64951
+#define UnitRyzom_RS_MENU_UNWATCH 64952
+#define UnitRyzom_RS_TAB_PET 64953
+#define UnitRyzom_RS_TAB_MOUNT 64954
+#define UnitRyzom_RS_DAYS 64955
+#define UnitRyzom_RS_HOURS 64956
+#define UnitRyzom_RS_MINUTES 64957
+#define UnitRyzom_RS_AND 64958
+#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64959
+#define UnitRyzom_RS_COLOR_BLUE 64960
+#define UnitRyzom_RS_COLOR_GREEN 64961
+#define UnitRyzom_RS_COLOR_PURPLE 64962
+#define UnitRyzom_RS_COLOR_RED 64963
+#define UnitRyzom_RS_COLOR_TURQUOISE 64964
+#define UnitRyzom_RS_COLOR_WHITE 64965
+#define UnitRyzom_RS_CLASS_BASE 64966
+#define UnitRyzom_RS_CLASS_FINE 64967
+#define UnitRyzom_RS_CLASS_CHOICE 64968
+#define UnitRyzom_RS_CLASS_EXCELLENT 64969
+#define UnitRyzom_RS_CLASS_SUPREME 64970
+#define UnitRyzom_RS_RACE_ALL 64971
+#define UnitRyzom_RS_RACE_FYROS 64972
+#define UnitRyzom_RS_RACE_ZORAI 64973
+#define UnitRyzom_RS_RACE_TRYKER 64974
+#define UnitRyzom_RS_RACE_MATIS 64975
+#define UnitRyzom_RS_CAT_ARMORSHELL 64976
+#define UnitRyzom_RS_CAT_AMMOJACKET 64977
+#define UnitRyzom_RS_CAT_LINING 64978
+#define UnitRyzom_RS_CAT_EXPLOSIVE 64979
+#define UnitRyzom_RS_CAT_STUFFING 64980
+#define UnitRyzom_RS_CAT_FIRINGPIN 64981
+#define UnitRyzom_RS_CAT_ARMORCLIP 64982
+#define UnitRyzom_RS_CAT_TRIGGER 64983
+#define UnitRyzom_RS_CAT_JEWELSETTING 64984
+#define UnitRyzom_RS_CAT_GRIP 64985
+#define UnitRyzom_RS_CAT_CLOTHES 64986
+#define UnitRyzom_RS_CAT_JEWEL 64987
+#define UnitRyzom_RS_CAT_MAGICFOCUS 64988
+#define UnitRyzom_RS_CAT_ALL 64989
+#define UnitRyzom_RS_COLOR_BEIGE 64990
+#define UnitRyzom_RS_COLOR_BLACK 64991
+#define UnitRyzom_RS_SPEC_DEFAFF_POWER 64992
+#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 64993
+#define UnitRyzom_RS_SPEC_HEAL_POWER 64994
+#define UnitRyzom_RS_SPEC_DESERT_RESIST 64995
+#define UnitRyzom_RS_SPEC_FOREST_RESIST 64996
+#define UnitRyzom_RS_SPEC_LAKES_RESIST 64997
+#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 64998
+#define UnitRyzom_RS_SPEC_PRIME_RESIST 64999
+#define UnitRyzom_RS_SPEC_ALL 65000
+#define UnitRyzom_RS_CAT_BLADE 65001
+#define UnitRyzom_RS_CAT_POINT 65002
+#define UnitRyzom_RS_CAT_HAMMER 65003
+#define UnitRyzom_RS_CAT_COUNTERWEIGHT 65004
+#define UnitRyzom_RS_CAT_SHAFT 65005
+#define UnitRyzom_RS_CAT_AMMOBULLET 65006
+#define UnitRyzom_RS_CAT_BARREL 65007
+#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65008
+#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65009
+#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65010
+#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65011
+#define UnitRyzom_RS_SPEC_ACID_PROTEC 65012
+#define UnitRyzom_RS_SPEC_COLD_PROTEC 65013
+#define UnitRyzom_RS_SPEC_ROT_PROTEC 65014
+#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65015
+#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 65016
+#define UnitRyzom_RS_SPEC_POISON_PROTEC 65017
+#define UnitRyzom_RS_SPEC_ELEC_PROTEC 65018
+#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 65019
+#define UnitRyzom_RS_SPEC_ELE_POWER 65020
+#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 65021
+#define UnitRyzom_RS_SPEC_OFFAFF_POWER 65022
+#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 65023
+#define XpExcept_sXPathNoDTD 65024
+#define XpExcept_sInvalidXMLChar 65025
+#define XpExcept_sInvalidBEChar 65026
+#define XpExcept_sInvalidLEChar 65027
+#define XpExcept_sBadUTF8Char 65028
+#define RyzomApi_RS_ERROR_LOADING_XML 65029
+#define UnitRyzom_RS_SPEC_DURABILITY 65030
+#define UnitRyzom_RS_SPEC_LIGHTNESS 65031
+#define UnitRyzom_RS_SPEC_SAPLOAD 65032
+#define UnitRyzom_RS_SPEC_DAMAGE 65033
+#define UnitRyzom_RS_SPEC_SPEED 65034
+#define UnitRyzom_RS_SPEC_RANGE 65035
+#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65036
+#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65037
+#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65038
+#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65039
+#define XpExcept_sInvVerNum 65040
+#define XpExcept_sInvEntityValue 65041
+#define XpExcept_sNoPEInIntDTD 65042
+#define XpExcept_sXMLDecNotAtBeg 65043
+#define XpExcept_sInvalidElementName 65044
+#define XpExcept_sBadParamEntNesting 65045
+#define XpExcept_sUnknownAxis 65046
+#define XpExcept_sMalformedIgnore 65047
+#define XpExcept_sExpectedElement 65048
+#define XpExcept_sMixedInetLocalPath 65049
+#define XpExcept_sStringNaN 65050
+#define XpExcept_sXPathNoHandler 65051
+#define XpExcept_sXPathExpectedNodeSet 65052
+#define XpExcept_sXPathForDocumentParm2 65053
+#define XpExcept_sXPathNotUnparsedEnt 65054
+#define XpExcept_sXPathUnparsedEntCount 65055
+#define XpExcept_sQuoteExpected 65056
+#define XpExcept_sInvalidXMLVersion 65057
+#define XpExcept_sInvalidName 65058
+#define XpExcept_sInvalidCommentText 65059
+#define XpExcept_sCommentBeforeXMLDecl 65060
+#define XpExcept_sInvalidCDataSection 65061
+#define XpExcept_sRedefinedAttr 65062
+#define XpExcept_sCircularEntRef 65063
+#define XpExcept_sInvAttrChar 65064
+#define XpExcept_sInvPCData 65065
+#define XpExcept_sDataAfterValDoc 65066
+#define XpExcept_sNoIntConditional 65067
+#define XpExcept_sInvPubIDChar 65068
+#define XpExcept_sNoNDATAInPeDecl 65069
+#define XpExcept_sInvStandAloneVal 65070
+#define XpExcept_sInvEncName 65071
+#define XpExcept_sFmtErrorMsg 65072
+#define XpExcept_sExpMarkupDecl 65073
+#define XpExcept_sIllAttrType 65074
+#define XpExcept_sIllAttrDefKeyw 65075
+#define XpExcept_sSysIdMissing 65076
+#define XpExcept_sExtModifMissing 65077
+#define XpExcept_sIllCondSectStart 65078
+#define XpExcept_sBadSepInModel 65079
+#define XpExcept_sExpCommentOrCDATA 65080
+#define XpExcept_sUnexpectedEof 65081
+#define XpExcept_sMismatchEndTag 65082
+#define XpExcept_sIllCharInRef 65083
+#define XpExcept_sUndeclaredEntity 65084
+#define XpExcept_sExpectedString 65085
+#define XpExcept_sSpaceExpectedAt 65086
+#define XpExcept_sUnexpEndOfInput 65087
+#define IdResourceStringsProtocols_RSOSSLCouldNotLoadSSLLibrary 65088
+#define IdResourceStringsProtocols_RSOSSLStatusString 65089
+#define IdResourceStringsProtocols_RSURINoProto 65090
+#define IdResourceStringsProtocols_RSURINoHost 65091
+#define IdZLibConst_sZLibError 65092
+#define XpExcept_sIENotInstalled 65093
+#define XpExcept_sFileNotFound 65094
+#define XpExcept_sHttpDataNotAvail 65095
+#define XpExcept_sHttpReqSendFailed 65096
+#define XpExcept_sHttpReqOpenFailed 65097
+#define XpExcept_sInetConnectFailed 65098
+#define XpExcept_sInetOpenFailed 65099
+#define XpExcept_sInvalidFtpLoc 65100
+#define XpExcept_sInvalidFtpDir 65101
+#define XpExcept_sFtpOpenFileFailed 65102
+#define XpExcept_sSrcLoadFailed 65103
+#define IdResourceStringsProtocols_RSHTTPUnknownProtocol 65104
+#define IdResourceStringsProtocols_RSHTTPMethodRequiresVersion 65105
+#define IdResourceStringsProtocols_RSHTTPAuthAlreadyRegistered 65106
+#define IdResourceStringsProtocols_RSHTTPAuthInvalidHash 65107
+#define IdResourceStringsProtocols_RSSSLAcceptError 65108
+#define IdResourceStringsProtocols_RSSSLConnectError 65109
+#define IdResourceStringsProtocols_RSSSLSettingCipherError 65110
+#define IdResourceStringsProtocols_RSSSLCreatingContextError 65111
+#define IdResourceStringsProtocols_RSSSLLoadingRootCertError 65112
+#define IdResourceStringsProtocols_RSSSLLoadingCertError 65113
+#define IdResourceStringsProtocols_RSSSLLoadingKeyError 65114
+#define IdResourceStringsProtocols_RSSSLGetMethodError 65115
+#define IdResourceStringsProtocols_RSSSLFDSetError 65116
+#define IdResourceStringsProtocols_RSSSLDataBindingError 65117
+#define IdResourceStringsProtocols_RSSSLEOFViolation 65118
+#define IdResourceStringsProtocols_RSOSSLModeNotSet 65119
+#define IdResourceStringsCore_RSReadTimeout 65120
+#define IdResourceStringsCore_RSReadLnWaitMaxAttemptsExceeded 65121
+#define IdResourceStringsCore_RSReadLnMaxLineLengthExceeded 65122
+#define IdResourceStringsCore_RSConnectTimeout 65123
+#define IdResourceStringsCore_RSAlreadyConnected 65124
+#define IdResourceStringsCore_RSMaximumNumberOfCaptureLineExceeded 65125
+#define IdResourceStringsCore_RSInterceptIsDifferent 65126
+#define IdResourceStringsCore_RSTransparentProxyCannotBind 65127
+#define IdResourceStringsCore_RSTransparentProxyCanNotSupportUDP 65128
+#define IdResourceStringsCore_RSBufferMissingTerminator 65129
+#define IdResourceStringsCore_RSBufferInvalidStartPos 65130
+#define IdResourceStringsCore_RSReplyInvalidCode 65131
+#define IdResourceStringsCore_RSReplyCodeAlreadyExists 65132
+#define IdResourceStringsProtocols_RSIOHandlerPropInvalid 65133
+#define IdResourceStringsProtocols_RSHTTPChunkStarted 65134
+#define IdResourceStringsProtocols_RSHTTPNotAcceptable 65135
+#define IdResourceStringsCore_RSSocksAuthError 65136
+#define IdResourceStringsCore_RSSocksServerGeneralError 65137
+#define IdResourceStringsCore_RSSocksServerPermissionError 65138
+#define IdResourceStringsCore_RSSocksServerNetUnreachableError 65139
+#define IdResourceStringsCore_RSSocksServerHostUnreachableError 65140
+#define IdResourceStringsCore_RSSocksServerConnectionRefusedError 65141
+#define IdResourceStringsCore_RSSocksServerTTLExpiredError 65142
+#define IdResourceStringsCore_RSSocksServerCommandError 65143
+#define IdResourceStringsCore_RSSocksServerAddressError 65144
+#define IdResourceStringsCore_RSInterceptCircularLink 65145
+#define IdResourceStringsCore_RSNotEnoughDataInBuffer 65146
+#define IdResourceStringsCore_RSTooMuchDataInBuffer 65147
+#define IdResourceStringsCore_RSFileNotFound 65148
+#define IdResourceStringsCore_RSNotConnected 65149
+#define IdResourceStringsCore_RSObjectTypeNotSupported 65150
+#define IdResourceStringsCore_RSIdNoDataToRead 65151
+#define IdResourceStrings_RSCouldNotBindSocket 65152
+#define IdResourceStrings_RSInvalidPortRange 65153
+#define IdResourceStrings_RSInvalidServiceName 65154
+#define IdResourceStrings_RSIPv6Unavailable 65155
+#define IdResourceStrings_RSInvalidIPv6Address 65156
+#define IdResourceStrings_RSIPVersionUnsupported 65157
+#define IdResourceStrings_RSNotAllBytesSent 65158
+#define IdResourceStrings_RSPackageSizeTooBig 65159
+#define IdResourceStrings_RSSetSizeExceeded 65160
+#define IdResourceStringsCore_RSSocksUDPNotSupported 65161
+#define IdResourceStringsCore_RSSocksRequestFailed 65162
+#define IdResourceStringsCore_RSSocksRequestServerFailed 65163
+#define IdResourceStringsCore_RSSocksRequestIdentFailed 65164
+#define IdResourceStringsCore_RSSocksUnknownError 65165
+#define IdResourceStringsCore_RSSocksServerRespondError 65166
+#define IdResourceStringsCore_RSSocksAuthMethodError 65167
+#define IdResourceStrings_RSStackESHUTDOWN 65168
+#define IdResourceStrings_RSStackETOOMANYREFS 65169
+#define IdResourceStrings_RSStackETIMEDOUT 65170
+#define IdResourceStrings_RSStackECONNREFUSED 65171
+#define IdResourceStrings_RSStackELOOP 65172
+#define IdResourceStrings_RSStackENAMETOOLONG 65173
+#define IdResourceStrings_RSStackEHOSTDOWN 65174
+#define IdResourceStrings_RSStackEHOSTUNREACH 65175
+#define IdResourceStrings_RSStackENOTEMPTY 65176
+#define IdResourceStrings_RSStackHOST_NOT_FOUND 65177
+#define IdResourceStrings_RSStackClassUndefined 65178
+#define IdResourceStrings_RSStackAlreadyCreated 65179
+#define IdResourceStrings_RSAntiFreezeOnlyOne 65180
+#define IdResourceStrings_RSCannotSetIPVersionWhenConnected 65181
+#define IdResourceStrings_RSCannotBindRange 65182
+#define IdResourceStrings_RSConnectionClosedGracefully 65183
+#define IdResourceStrings_RSStackENOPROTOOPT 65184
+#define IdResourceStrings_RSStackEPROTONOSUPPORT 65185
+#define IdResourceStrings_RSStackESOCKTNOSUPPORT 65186
+#define IdResourceStrings_RSStackEOPNOTSUPP 65187
+#define IdResourceStrings_RSStackEPFNOSUPPORT 65188
+#define IdResourceStrings_RSStackEAFNOSUPPORT 65189
+#define IdResourceStrings_RSStackEADDRINUSE 65190
+#define IdResourceStrings_RSStackEADDRNOTAVAIL 65191
+#define IdResourceStrings_RSStackENETDOWN 65192
+#define IdResourceStrings_RSStackENETUNREACH 65193
+#define IdResourceStrings_RSStackENETRESET 65194
+#define IdResourceStrings_RSStackECONNABORTED 65195
+#define IdResourceStrings_RSStackECONNRESET 65196
+#define IdResourceStrings_RSStackENOBUFS 65197
+#define IdResourceStrings_RSStackEISCONN 65198
+#define IdResourceStrings_RSStackENOTCONN 65199
+#define IdResourceStrings_RSStatusDisconnected 65200
+#define IdResourceStrings_RSStatusText 65201
+#define IdResourceStrings_RSStackError 65202
+#define IdResourceStrings_RSStackEINTR 65203
+#define IdResourceStrings_RSStackEBADF 65204
+#define IdResourceStrings_RSStackEACCES 65205
+#define IdResourceStrings_RSStackEFAULT 65206
+#define IdResourceStrings_RSStackEINVAL 65207
+#define IdResourceStrings_RSStackEMFILE 65208
+#define IdResourceStrings_RSStackEWOULDBLOCK 65209
+#define IdResourceStrings_RSStackEINPROGRESS 65210
+#define IdResourceStrings_RSStackEALREADY 65211
+#define IdResourceStrings_RSStackENOTSOCK 65212
+#define IdResourceStrings_RSStackEDESTADDRREQ 65213
+#define IdResourceStrings_RSStackEMSGSIZE 65214
+#define IdResourceStrings_RSStackEPROTOTYPE 65215
+#define ComStrs_sInvalidComCtl32 65216
+#define ComStrs_sDateTimeMax 65217
+#define ComStrs_sDateTimeMin 65218
+#define ComStrs_sNeedAllowNone 65219
+#define ComStrs_sFailSetCalDateTime 65220
+#define ComStrs_sFailSetCalMaxSelRange 65221
+#define ComStrs_sFailSetCalMinMaxRange 65222
+#define ComStrs_sFailsetCalSelRange 65223
+#define WinHelpViewer_hNoKeyword 65224
+#define IdResourceStrings_RSFailedTimeZoneInfo 65225
+#define IdResourceStrings_RSWinsockCallError 65226
+#define IdResourceStrings_RSWinsockLoadError 65227
+#define IdResourceStrings_RSStatusResolving 65228
+#define IdResourceStrings_RSStatusConnecting 65229
+#define IdResourceStrings_RSStatusConnected 65230
+#define IdResourceStrings_RSStatusDisconnecting 65231
+#define ExtCtrls_clName3DDkShadow 65232
+#define ExtCtrls_clName3DLight 65233
+#define ExtCtrls_clNameWindow 65234
+#define ExtCtrls_clNameWindowFrame 65235
+#define ExtCtrls_clNameWindowText 65236
+#define ComStrs_sTabFailClear 65237
+#define ComStrs_sTabFailDelete 65238
+#define ComStrs_sTabFailRetrieve 65239
+#define ComStrs_sTabFailGetObject 65240
+#define ComStrs_sTabFailSet 65241
+#define ComStrs_sTabFailSetObject 65242
+#define ComStrs_sTabMustBeMultiLine 65243
+#define ComStrs_sRichEditInsertError 65244
+#define ComStrs_sRichEditLoadFail 65245
+#define ComStrs_sRichEditSaveFail 65246
+#define ComStrs_sPageIndexError 65247
+#define ExtCtrls_clNameBtnShadow 65248
+#define ExtCtrls_clNameBtnText 65249
+#define ExtCtrls_clNameCaptionText 65250
+#define ExtCtrls_clNameDefault 65251
+#define ExtCtrls_clNameGrayText 65252
+#define ExtCtrls_clNameHighlight 65253
+#define ExtCtrls_clNameHighlightText 65254
+#define ExtCtrls_clNameInactiveBorder 65255
+#define ExtCtrls_clNameInactiveCaption 65256
+#define ExtCtrls_clNameInactiveCaptionText 65257
+#define ExtCtrls_clNameInfoBk 65258
+#define ExtCtrls_clNameInfoText 65259
+#define ExtCtrls_clNameMenu 65260
+#define ExtCtrls_clNameMenuText 65261
+#define ExtCtrls_clNameNone 65262
+#define ExtCtrls_clNameScrollBar 65263
+#define ExtCtrls_clNameLime 65264
+#define ExtCtrls_clNameYellow 65265
+#define ExtCtrls_clNameBlue 65266
+#define ExtCtrls_clNameFuchsia 65267
+#define ExtCtrls_clNameAqua 65268
+#define ExtCtrls_clNameWhite 65269
+#define ExtCtrls_clNameMoneyGreen 65270
+#define ExtCtrls_clNameSkyBlue 65271
+#define ExtCtrls_clNameCream 65272
+#define ExtCtrls_clNameMedGray 65273
+#define ExtCtrls_clNameActiveBorder 65274
+#define ExtCtrls_clNameActiveCaption 65275
+#define ExtCtrls_clNameAppWorkSpace 65276
+#define ExtCtrls_clNameBackground 65277
+#define ExtCtrls_clNameBtnFace 65278
+#define ExtCtrls_clNameBtnHighlight 65279
+#define Consts_SErrorSettingCount 65280
+#define Consts_SListBoxMustBeVirtual 65281
+#define HelpIntfs_hNoTableOfContents 65282
+#define HelpIntfs_hNothingFound 65283
+#define HelpIntfs_hNoContext 65284
+#define HelpIntfs_hNoTopics 65285
+#define ExtCtrls_clNameBlack 65286
+#define ExtCtrls_clNameMaroon 65287
+#define ExtCtrls_clNameGreen 65288
+#define ExtCtrls_clNameOlive 65289
+#define ExtCtrls_clNameNavy 65290
+#define ExtCtrls_clNamePurple 65291
+#define ExtCtrls_clNameTeal 65292
+#define ExtCtrls_clNameGray 65293
+#define ExtCtrls_clNameSilver 65294
+#define ExtCtrls_clNameRed 65295
+#define Consts_SmkcDel 65296
+#define Consts_SmkcShift 65297
+#define Consts_SmkcCtrl 65298
+#define Consts_SmkcAlt 65299
+#define Consts_SOutOfRange 65300
+#define Consts_SInsertLineError 65301
+#define Consts_SInvalidClipFmt 65302
+#define Consts_SIconToClipboard 65303
+#define Consts_SCannotOpenClipboard 65304
+#define Consts_SInvalidMemoSize 65305
+#define Consts_SNoDefaultPrinter 65306
+#define Consts_SDuplicateMenus 65307
+#define Consts_SDockedCtlNeedsName 65308
+#define Consts_SDockTreeRemoveError 65309
+#define Consts_SDockZoneNotFound 65310
+#define Consts_SDockZoneHasNoCtl 65311
+#define Consts_SMsgDlgNoToAll 65312
+#define Consts_SMsgDlgYesToAll 65313
+#define Consts_SmkcBkSp 65314
+#define Consts_SmkcTab 65315
+#define Consts_SmkcEsc 65316
+#define Consts_SmkcEnter 65317
+#define Consts_SmkcSpace 65318
+#define Consts_SmkcPgUp 65319
+#define Consts_SmkcPgDn 65320
+#define Consts_SmkcEnd 65321
+#define Consts_SmkcHome 65322
+#define Consts_SmkcLeft 65323
+#define Consts_SmkcUp 65324
+#define Consts_SmkcRight 65325
+#define Consts_SmkcDown 65326
+#define Consts_SmkcIns 65327
+#define Consts_SVBitmaps 65328
+#define Consts_SMaskErr 65329
+#define Consts_SMaskEditErr 65330
+#define Consts_SMsgDlgWarning 65331
+#define Consts_SMsgDlgError 65332
+#define Consts_SMsgDlgInformation 65333
+#define Consts_SMsgDlgConfirm 65334
+#define Consts_SMsgDlgYes 65335
+#define Consts_SMsgDlgNo 65336
+#define Consts_SMsgDlgOK 65337
+#define Consts_SMsgDlgCancel 65338
+#define Consts_SMsgDlgHelp 65339
+#define Consts_SMsgDlgAbort 65340
+#define Consts_SMsgDlgRetry 65341
+#define Consts_SMsgDlgIgnore 65342
+#define Consts_SMsgDlgAll 65343
+#define Consts_SNoMDIForm 65344
+#define Consts_SControlParentSetToSelf 65345
+#define Consts_SOKButton 65346
+#define Consts_SCancelButton 65347
+#define Consts_SYesButton 65348
+#define Consts_SNoButton 65349
+#define Consts_SHelpButton 65350
+#define Consts_SCloseButton 65351
+#define Consts_SIgnoreButton 65352
+#define Consts_SRetryButton 65353
+#define Consts_SAbortButton 65354
+#define Consts_SAllButton 65355
+#define Consts_SCannotDragForm 65356
+#define Consts_SVMetafiles 65357
+#define Consts_SVEnhMetafiles 65358
+#define Consts_SVIcons 65359
+#define Consts_SCannotFocus 65360
+#define Consts_SParentRequired 65361
+#define Consts_SParentGivenNotAParent 65362
+#define Consts_SMDIChildNotVisible 65363
+#define Consts_SVisibleChanged 65364
+#define Consts_SCannotShowModal 65365
+#define Consts_SPropertyOutOfRange 65366
+#define Consts_SMenuIndexError 65367
+#define Consts_SMenuReinserted 65368
+#define Consts_SMenuNotFound 65369
+#define Consts_SNoTimers 65370
+#define Consts_SNotPrinting 65371
+#define Consts_SPrinting 65372
+#define Consts_SInvalidPrinter 65373
+#define Consts_SDeviceOnPort 65374
+#define Consts_SGroupIndexTooLow 65375
 #define Consts_SInvalidIcon 65376
 #define Consts_SInvalidMetafile 65377
 #define Consts_SInvalidPixelFormat 65378
 #define Consts_SChangeIconSize 65379
-#define Consts_SUnknownClipboardFormat 65380
-#define Consts_SOutOfResources 65381
-#define Consts_SNoCanvasHandle 65382
-#define Consts_SInvalidImageSize 65383
-#define Consts_SInvalidImageList 65384
-#define Consts_SReplaceImage 65385
-#define Consts_SImageIndexError 65386
-#define Consts_SImageReadFail 65387
-#define Consts_SImageWriteFail 65388
-#define Consts_SWindowDCError 65389
-#define Consts_SWindowClass 65390
-#define Consts_SCannotFocus 65391
+#define Consts_SOleGraphic 65380
+#define Consts_SUnknownClipboardFormat 65381
+#define Consts_SOutOfResources 65382
+#define Consts_SNoCanvasHandle 65383
+#define Consts_SInvalidImageSize 65384
+#define Consts_SInvalidImageList 65385
+#define Consts_SReplaceImage 65386
+#define Consts_SImageIndexError 65387
+#define Consts_SImageReadFail 65388
+#define Consts_SImageWriteFail 65389
+#define Consts_SWindowDCError 65390
+#define Consts_SWindowClass 65391
 #define RTLConsts_SPropertyException 65392
 #define RTLConsts_SReadError 65393
 #define RTLConsts_SReadOnlyProperty 65394
@@ -670,29 +683,7 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
-	UnitFormAlert_RS_ALERT_VOLUME_ROOM,	"le volume de la pièce est au dessus du seuil limite (%d/%d)"
-	UnitFormAlert_RS_ALERT_VOLUME_GUILD,	"le volume du coffre est au dessus du seuil limite (%d/%d)"
-	UnitFormAlert_RS_ALERT_SEASON,	"Prochain changement de saison dans %s (%s)"
-	UnitFormAlert_RS_ALERT_HINT,	"Nouvelles alertes !"
-	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
-	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
-	UnitFormMain_RS_SEASON_SPRING,	"Printemps"
-	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
-	UnitFormMain_RS_SEASON_AUTUMN,	"Automne"
-	UnitFormMain_RS_SEASON_WINTER,	"Hiver"
-	UnitFormMain_RS_VERSION,	"Version"
-	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
-	UnitFormMain_RS_AT,	"à"
-	UnitFormAlert_RS_ALERT_DURABILITY,	"la durabilité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
-	UnitFormAlert_RS_ALERT_QUANTITY,	"la quantité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
-	UnitFormAlert_RS_ALERT_UNFOUND,	"l'objet sous surveillance %s Q%d n'existe plus"
-	UnitFormAlert_RS_ALERT_ADDED,	"l'objet %s Q%d a été ajouté (%d)"
-	UnitFormAlert_RS_ALERT_REMOVED,	"l'objet %s Q%d a été retiré (%d)"
-	UnitFormAlert_RS_ALERT_MODIFIED,	"la quantité de l'objet %s Q%d a changé (%d > %d)"
-	UnitFormAlert_RS_ALERT_SALES,	"l'objet %s Q%d sera automatiquement vendu au marchand dans %s (%s)"
-	UnitFormRoomFilter_RS_STB,	"Bonus endurance"
-	UnitFormRoomFilter_RS_FOB,	"Bonus concentration"
-	UnitFormRoomFilter_RS_NEEDED_FILE,	"Fichier \"string_client.pack\" introuvable !"
+	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
 	UnitFormGuild_RS_CHANGE_KEY,	"Changement de clé"
 	UnitFormGuild_RS_COL_GUILD_LOGO,	"Blason"
@@ -704,8 +695,29 @@ BEGIN
 	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
 	UnitFormGuild_RS_UP,	"Monter"
 	UnitFormGuild_RS_DOWN,	"Descendre"
-	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
-	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
+	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
+	UnitFormMain_RS_VERSION,	"Version"
+	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
+	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
+	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
+	UnitFormAlert_RS_ALERT_QUANTITY,	"la quantité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
+	UnitFormAlert_RS_ALERT_UNFOUND,	"l'objet sous surveillance %s Q%d n'existe plus"
+	UnitFormAlert_RS_ALERT_ADDED,	"l'objet %s Q%d a été ajouté (%d)"
+	UnitFormAlert_RS_ALERT_REMOVED,	"l'objet %s Q%d a été retiré (%d)"
+	UnitFormAlert_RS_ALERT_MODIFIED,	"la quantité de l'objet %s Q%d a changé (%d > %d)"
+	UnitFormAlert_RS_ALERT_SALES,	"l'objet %s Q%d sera automatiquement vendu au marchand dans %s (%s)"
+	UnitFormAlert_RS_ALERT_VOLUME_ROOM,	"le volume de la pièce est au dessus du seuil limite (%d/%d)"
+	UnitFormAlert_RS_ALERT_VOLUME_GUILD,	"le volume du coffre est au dessus du seuil limite (%d/%d)"
+	UnitFormAlert_RS_ALERT_SEASON,	"Prochain changement de saison dans %s (%s)"
+	UnitFormAlert_RS_ALERT_HINT,	"Nouvelles alertes !"
+	UnitFormRoomFilter_RS_SKIN,	"Skin"
+	UnitFormRoomFilter_RS_HPB,	"Bonus vie"
+	UnitFormRoomFilter_RS_SAB,	"Bonus sève"
+	UnitFormRoomFilter_RS_STB,	"Bonus endurance"
+	UnitFormRoomFilter_RS_FOB,	"Bonus concentration"
+	UnitFormRoomFilter_RS_NEEDED_FILE,	"Fichier \"string_client.pack\" introuvable !"
+	OleConst_SNotLicensed,	"License information for %s not found. You cannot use this control in design mode"
+	OleConst_sNoRunningObject,	"Unable to retrieve a pointer to a running object registered with OLE for %s/%s"
 	UnitFormCharacter_RS_CHAR_NEW_CHARACTER,	"Nouveau personnage"
 	UnitFormCharacter_RS_CHAR_CHANGE_KEY,	"Changement de clé"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD,	"Tête"
@@ -719,14 +731,7 @@ BEGIN
 	UnitFormCharacter_RS_DOWN,	"Descendre"
 	UnitFormWatch_RS_QUANTITY_MIN,	"Quantité minimum :"
 	UnitFormWatch_RS_DURABILITY_MIN,	"Durabilité minimum :"
-	UnitFormRoomFilter_RS_SKIN,	"Skin"
-	UnitFormRoomFilter_RS_HPB,	"Bonus vie"
-	UnitFormRoomFilter_RS_SAB,	"Bonus sève"
-	pnglang_EPNGIHDRNotFirstText,	"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
-	pnglang_EPNGSizeExceedsText,	"This \"Portable Network Graphics\" image is not supported because either it's width or height exceeds the maximum size, which is 65535 pixels length."
-	pnglang_EPNGUnknownPalEntryText,	"There is no such palette entry."
-	pnglang_EPNGUnknownCriticalChunkText,	"This \"Portable Network Graphics\" image contains an unknown critical part which could not be decoded."
-	pnglang_EPNGUnknownCompressionText,	"This \"Portable Network Graphics\" image is encoded with an unknown compression scheme which could not be decoded."
+	UnitFormAlert_RS_ALERT_DURABILITY,	"la durabilité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
 	pnglang_EPNGUnknownInterlaceText,	"This \"Portable Network Graphics\" image uses an unknown interlace scheme which could not be decoded."
 	pnglang_EPNGCannotAssignChunkText,	"The chunks must be compatible to be assigned."
 	pnglang_EPNGUnexpectedEndText,	"This \"Portable Network Graphics\" image is invalid because the decoder found an unexpected end of the file."
@@ -735,14 +740,14 @@ BEGIN
 	pnglang_EPNGOutMemoryText,	"Some operation could not be performed because the system is out of resources. Close some windows and try again."
 	pnglang_EPNGHeaderNotPresentText,	"This operation is not valid because the current image contains no valid header."
 	pnglang_EInvalidNewSize,	"The new size provided for image resizing is invalid."
-	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
-	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
-	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
-	UnitRyzom_RS_DAYS,	"jours"
-	UnitRyzom_RS_HOURS,	"heures"
-	UnitRyzom_RS_MINUTES,	"minutes"
-	UnitRyzom_RS_AND,	"et"
-	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
+	ComConst_SOleError,	"OLE error %.8x"
+	ComConst_SNoMethod,	"Method '%s' not supported by automation object"
+	ComConst_SVarNotObject,	"Variant does not reference an automation object"
+	ComConst_STooManyParams,	"Dispatch methods do not support more than 64 parameters"
+	ComConst_SDCOMNotInstalled,	"DCOM not installed"
+	OleConst_SCannotActivate,	"OLE control activation failed"
+	OleConst_SNoWindowHandle,	"Could not obtain OLE control window handle"
+	OleConst_SInvalidLicense,	"License information for %s is invalid"
 	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
 	UnitConfig_RS_ERROR_KEY_NOTFOUND,	"La clé API est introuvable"
 	UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS,	"Le personnage existe déjà"
@@ -754,11 +759,11 @@ BEGIN
 	pnglang_EPNGZLIBErrorText,	"Could not decompress the image because it contains invalid compressed data.\r\n Description: "
 	pnglang_EPNGInvalidPaletteText,	"The \"Portable Network Graphics\" image contains an invalid palette."
 	pnglang_EPNGInvalidFileHeaderText,	"The file being readed is not a valid \"Portable Network Graphics\" image because it contains an invalid header. This file may be corruped, try obtaining it again."
-	UnitRyzom_RS_RACE_ALL,	"Toute race"
-	UnitRyzom_RS_RACE_FYROS,	"Fyros"
-	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
-	UnitRyzom_RS_RACE_TRYKER,	"Tryker"
-	UnitRyzom_RS_RACE_MATIS,	"Matis"
+	pnglang_EPNGIHDRNotFirstText,	"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
+	pnglang_EPNGSizeExceedsText,	"This \"Portable Network Graphics\" image is not supported because either it's width or height exceeds the maximum size, which is 65535 pixels length."
+	pnglang_EPNGUnknownPalEntryText,	"There is no such palette entry."
+	pnglang_EPNGUnknownCriticalChunkText,	"This \"Portable Network Graphics\" image contains an unknown critical part which could not be decoded."
+	pnglang_EPNGUnknownCompressionText,	"This \"Portable Network Graphics\" image is encoded with an unknown compression scheme which could not be decoded."
 	UnitRyzom_RS_ECOSYS_COMMON,	"Commun"
 	UnitRyzom_RS_ECOSYS_PRIME,	"Primes racines"
 	UnitRyzom_RS_ECOSYS_DESERT,	"Désert"
@@ -770,11 +775,11 @@ BEGIN
 	UnitRyzom_RS_MENU_UNWATCH,	"Ne plus surveiller"
 	UnitRyzom_RS_TAB_PET,	"Mektoub"
 	UnitRyzom_RS_TAB_MOUNT,	"Monture"
-	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
-	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
-	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
-	UnitRyzom_RS_COLOR_BEIGE,	"Beige"
-	UnitRyzom_RS_COLOR_BLACK,	"Noir"
+	UnitRyzom_RS_DAYS,	"jours"
+	UnitRyzom_RS_HOURS,	"heures"
+	UnitRyzom_RS_MINUTES,	"minutes"
+	UnitRyzom_RS_AND,	"et"
+	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
 	UnitRyzom_RS_COLOR_BLUE,	"Bleu"
 	UnitRyzom_RS_COLOR_GREEN,	"Vert"
 	UnitRyzom_RS_COLOR_PURPLE,	"Violet"
@@ -786,11 +791,11 @@ BEGIN
 	UnitRyzom_RS_CLASS_CHOICE,	"Choix"
 	UnitRyzom_RS_CLASS_EXCELLENT,	"Excellent"
 	UnitRyzom_RS_CLASS_SUPREME,	"Suprême"
-	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
-	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
-	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
-	UnitRyzom_RS_CAT_AMMOBULLET,	"Balle de munitions"
-	UnitRyzom_RS_CAT_BARREL,	"Canon"
+	UnitRyzom_RS_RACE_ALL,	"Toute race"
+	UnitRyzom_RS_RACE_FYROS,	"Fyros"
+	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
+	UnitRyzom_RS_RACE_TRYKER,	"Tryker"
+	UnitRyzom_RS_RACE_MATIS,	"Matis"
 	UnitRyzom_RS_CAT_ARMORSHELL,	"Carapace pour armures"
 	UnitRyzom_RS_CAT_AMMOJACKET,	"Cartouche de munitions"
 	UnitRyzom_RS_CAT_LINING,	"Doublure"
@@ -802,11 +807,11 @@ BEGIN
 	UnitRyzom_RS_CAT_JEWELSETTING,	"Configuration des bijoux"
 	UnitRyzom_RS_CAT_GRIP,	"Prise"
 	UnitRyzom_RS_CAT_CLOTHES,	"Vêtements"
-	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
-	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
-	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
-	UnitRyzom_RS_SPEC_OFFAFF_POWER,	"Puissance magie débilitante"
-	UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED,	"Vitesse magie neutralisante"
+	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
+	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
+	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
+	UnitRyzom_RS_COLOR_BEIGE,	"Beige"
+	UnitRyzom_RS_COLOR_BLACK,	"Noir"
 	UnitRyzom_RS_SPEC_DEFAFF_POWER,	"Puissance magie neutralisante"
 	UnitRyzom_RS_SPEC_HEAL_CAST_SPEED,	"Vitesse magie curative"
 	UnitRyzom_RS_SPEC_HEAL_POWER,	"Puissance magie curative"
@@ -818,11 +823,11 @@ BEGIN
 	UnitRyzom_RS_SPEC_ALL,	"Toute caractéristique"
 	UnitRyzom_RS_CAT_BLADE,	"Lame"
 	UnitRyzom_RS_CAT_POINT,	"Pointe"
-	UnitRyzom_RS_SPEC_RANGE,	"Portée"
-	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
-	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
-	UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER,	"Modif. esquives adversaire"
-	UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER,	"Modif. parades adversaire"
+	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
+	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
+	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
+	UnitRyzom_RS_CAT_AMMOBULLET,	"Balle de munitions"
+	UnitRyzom_RS_CAT_BARREL,	"Canon"
 	UnitRyzom_RS_SPEC_PROTEC_FACTOR,	"Facteur de protection"
 	UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC,	"Protect. max/cp tranchant"
 	UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC,	"Protect. max/cp contondant"
@@ -834,11 +839,11 @@ BEGIN
 	UnitRyzom_RS_SPEC_SHOCK_PROTEC,	"Protection ondes de choc"
 	UnitRyzom_RS_SPEC_POISON_PROTEC,	"Protection poison"
 	UnitRyzom_RS_SPEC_ELEC_PROTEC,	"Protection électricité"
-	XpExcept_sXPathNoHandler,	"No handler specified for %s() function."
-	XpExcept_sXPathExpectedNodeSet,	"Node set expected %s"
-	XpExcept_sXPathForDocumentParm2,	"for 2nd parameter of document() function"
-	XpExcept_sXPathNotUnparsedEnt,	"Entity %s is not an unparsed entity."
-	XpExcept_sXPathUnparsedEntCount,	"Multiple entity declarations found for name %s"
+	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
+	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
+	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
+	UnitRyzom_RS_SPEC_OFFAFF_POWER,	"Puissance magie débilitante"
+	UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED,	"Vitesse magie neutralisante"
 	XpExcept_sXPathNoDTD,	"No DTD in document for unparsed-entity-uri(%s)"
 	XpExcept_sInvalidXMLChar,	"Invalid XML Character found"
 	XpExcept_sInvalidBEChar,	"Invalid (big-endian) UTF-16 character encoding"
@@ -850,11 +855,11 @@ BEGIN
 	UnitRyzom_RS_SPEC_SAPLOAD,	"Charge en sève"
 	UnitRyzom_RS_SPEC_DAMAGE,	"Dégâts"
 	UnitRyzom_RS_SPEC_SPEED,	"Vitesse"
-	XpExcept_sNoIntConditional,	"Conditional sections not allowed in internal subset of document type declaration"
-	XpExcept_sInvPubIDChar,	"Invalid PublicID character: "
-	XpExcept_sNoNDATAInPeDecl,	"NDATA not allowed in parameter entity declaration"
-	XpExcept_sInvStandAloneVal,	"Standalone value must equal 'yes' or 'no'"
-	XpExcept_sInvEncName,	"Invalid encoding declaration: "
+	UnitRyzom_RS_SPEC_RANGE,	"Portée"
+	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
+	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
+	UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER,	"Modif. esquives adversaire"
+	UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER,	"Modif. parades adversaire"
 	XpExcept_sInvVerNum,	"Invalid XML version number: "
 	XpExcept_sInvEntityValue,	"Invalid character in entity value: "
 	XpExcept_sNoPEInIntDTD,	"Parameter entities not allowed in DTD internal subset"
@@ -866,11 +871,11 @@ BEGIN
 	XpExcept_sExpectedElement,	"Expected start of new element."
 	XpExcept_sMixedInetLocalPath,	"Cannot mix absolute local path %s with internet path %s"
 	XpExcept_sStringNaN,	"String %s cannot be converted into a valid number."
-	XpExcept_sIllCharInRef,	"Illegal character in reference: %s (%d)"
-	XpExcept_sUndeclaredEntity,	"Reference to undeclared entity: "
-	XpExcept_sExpectedString,	"Expected String: "
-	XpExcept_sSpaceExpectedAt,	"Whitespace expected at "
-	XpExcept_sUnexpEndOfInput,	"End of input while looking for delimiter: "
+	XpExcept_sXPathNoHandler,	"No handler specified for %s() function."
+	XpExcept_sXPathExpectedNodeSet,	"Node set expected %s"
+	XpExcept_sXPathForDocumentParm2,	"for 2nd parameter of document() function"
+	XpExcept_sXPathNotUnparsedEnt,	"Entity %s is not an unparsed entity."
+	XpExcept_sXPathUnparsedEntCount,	"Multiple entity declarations found for name %s"
 	XpExcept_sQuoteExpected,	"Expected \" or '"
 	XpExcept_sInvalidXMLVersion,	"XMLPartner does not support XML specification greater than %s"
 	XpExcept_sInvalidName,	"Invalid XML name: "
@@ -882,11 +887,11 @@ BEGIN
 	XpExcept_sInvAttrChar,	"Invalid character in attribute value: "
 	XpExcept_sInvPCData,	"Invalid characters in element's character data: "
 	XpExcept_sDataAfterValDoc,	"There is invalid data after valid XML document"
-	XpExcept_sInetOpenFailed,	"Unable to open Internet"
-	XpExcept_sInvalidFtpLoc,	"Invalid ftp location"
-	XpExcept_sInvalidFtpDir,	"Invalid ftp directory"
-	XpExcept_sFtpOpenFileFailed,	"Unable to open ftp file"
-	XpExcept_sSrcLoadFailed,	"Unable to load source "
+	XpExcept_sNoIntConditional,	"Conditional sections not allowed in internal subset of document type declaration"
+	XpExcept_sInvPubIDChar,	"Invalid PublicID character: "
+	XpExcept_sNoNDATAInPeDecl,	"NDATA not allowed in parameter entity declaration"
+	XpExcept_sInvStandAloneVal,	"Standalone value must equal 'yes' or 'no'"
+	XpExcept_sInvEncName,	"Invalid encoding declaration: "
 	XpExcept_sFmtErrorMsg,	"File: %s. Line: %d Col: %d Error: %s"
 	XpExcept_sExpMarkupDecl,	"Expected markup declaration, but found: "
 	XpExcept_sIllAttrType,	"Illegal attribute type: "
@@ -898,11 +903,11 @@ BEGIN
 	XpExcept_sExpCommentOrCDATA,	"Expected comment or CDATA section "
 	XpExcept_sUnexpectedEof,	"Unexpected end of file "
 	XpExcept_sMismatchEndTag,	"Mismatched end tag: "
-	IdResourceStringsProtocols_RSSSLGetMethodError,	"Error geting SSL method."
-	IdResourceStringsProtocols_RSSSLFDSetError,	"Error setting File Descriptor for SSL"
-	IdResourceStringsProtocols_RSSSLDataBindingError,	"Error binding data to SSL socket."
-	IdResourceStringsProtocols_RSSSLEOFViolation,	"EOF was observed that violates the protocol"
-	IdResourceStringsProtocols_RSOSSLModeNotSet,	"Mode has not been set."
+	XpExcept_sIllCharInRef,	"Illegal character in reference: %s (%d)"
+	XpExcept_sUndeclaredEntity,	"Reference to undeclared entity: "
+	XpExcept_sExpectedString,	"Expected String: "
+	XpExcept_sSpaceExpectedAt,	"Whitespace expected at "
+	XpExcept_sUnexpEndOfInput,	"End of input while looking for delimiter: "
 	IdResourceStringsProtocols_RSOSSLCouldNotLoadSSLLibrary,	"Could not load SSL library."
 	IdResourceStringsProtocols_RSOSSLStatusString,	"SSL status: \"%s\""
 	IdResourceStringsProtocols_RSURINoProto,	"Protocol field is empty"
@@ -914,11 +919,11 @@ BEGIN
 	XpExcept_sHttpReqSendFailed,	"Unable to send http request"
 	XpExcept_sHttpReqOpenFailed,	"Unable to open http request"
 	XpExcept_sInetConnectFailed,	"Unable to make Internet connection"
-	IdResourceStringsCore_RSReplyInvalidCode,	"Reply Code is not valid: %s"
-	IdResourceStringsCore_RSReplyCodeAlreadyExists,	"Reply Code already exists: %s"
-	IdResourceStringsProtocols_RSIOHandlerPropInvalid,	"IOHandler value is not valid"
-	IdResourceStringsProtocols_RSHTTPChunkStarted,	"Chunk Started"
-	IdResourceStringsProtocols_RSHTTPNotAcceptable,	"Not Acceptable"
+	XpExcept_sInetOpenFailed,	"Unable to open Internet"
+	XpExcept_sInvalidFtpLoc,	"Invalid ftp location"
+	XpExcept_sInvalidFtpDir,	"Invalid ftp directory"
+	XpExcept_sFtpOpenFileFailed,	"Unable to open ftp file"
+	XpExcept_sSrcLoadFailed,	"Unable to load source "
 	IdResourceStringsProtocols_RSHTTPUnknownProtocol,	"Unknown Protocol"
 	IdResourceStringsProtocols_RSHTTPMethodRequiresVersion,	"Request method requires HTTP version 1.1"
 	IdResourceStringsProtocols_RSHTTPAuthAlreadyRegistered,	"This authentication method is already registered with class name %s."
@@ -930,11 +935,11 @@ BEGIN
 	IdResourceStringsProtocols_RSSSLLoadingRootCertError,	"Could not load root certificate."
 	IdResourceStringsProtocols_RSSSLLoadingCertError,	"Could not load certificate."
 	IdResourceStringsProtocols_RSSSLLoadingKeyError,	"Could not load key, check password."
-	IdResourceStringsCore_RSTooMuchDataInBuffer,	"Too much data in buffer."
-	IdResourceStringsCore_RSFileNotFound,	"File \"%s\" not found"
-	IdResourceStringsCore_RSNotConnected,	"Not Connected"
-	IdResourceStringsCore_RSObjectTypeNotSupported,	"Object type not supported."
-	IdResourceStringsCore_RSIdNoDataToRead,	"No data to read."
+	IdResourceStringsProtocols_RSSSLGetMethodError,	"Error geting SSL method."
+	IdResourceStringsProtocols_RSSSLFDSetError,	"Error setting File Descriptor for SSL"
+	IdResourceStringsProtocols_RSSSLDataBindingError,	"Error binding data to SSL socket."
+	IdResourceStringsProtocols_RSSSLEOFViolation,	"EOF was observed that violates the protocol"
+	IdResourceStringsProtocols_RSOSSLModeNotSet,	"Mode has not been set."
 	IdResourceStringsCore_RSReadTimeout,	"Read timed out."
 	IdResourceStringsCore_RSReadLnWaitMaxAttemptsExceeded,	"Max line read attempts exceeded."
 	IdResourceStringsCore_RSReadLnMaxLineLengthExceeded,	"Max line length exceeded."
@@ -946,11 +951,11 @@ BEGIN
 	IdResourceStringsCore_RSTransparentProxyCanNotSupportUDP,	"UDP Not supported by this proxy."
 	IdResourceStringsCore_RSBufferMissingTerminator,	"Buffer terminator must be specified."
 	IdResourceStringsCore_RSBufferInvalidStartPos,	"Buffer start position is invalid."
-	IdResourceStringsCore_RSSocksRequestServerFailed,	"Request rejected because SOCKS server cannot connect."
-	IdResourceStringsCore_RSSocksRequestIdentFailed,	"Request rejected because the client program and identd report different user-ids."
-	IdResourceStringsCore_RSSocksUnknownError,	"Unknown socks error."
-	IdResourceStringsCore_RSSocksServerRespondError,	"Socks server did not respond."
-	IdResourceStringsCore_RSSocksAuthMethodError,	"Invalid socks authentication method."
+	IdResourceStringsCore_RSReplyInvalidCode,	"Reply Code is not valid: %s"
+	IdResourceStringsCore_RSReplyCodeAlreadyExists,	"Reply Code already exists: %s"
+	IdResourceStringsProtocols_RSIOHandlerPropInvalid,	"IOHandler value is not valid"
+	IdResourceStringsProtocols_RSHTTPChunkStarted,	"Chunk Started"
+	IdResourceStringsProtocols_RSHTTPNotAcceptable,	"Not Acceptable"
 	IdResourceStringsCore_RSSocksAuthError,	"Authentication error to socks server."
 	IdResourceStringsCore_RSSocksServerGeneralError,	"General SOCKS server failure."
 	IdResourceStringsCore_RSSocksServerPermissionError,	"Connection not allowed by ruleset."
@@ -962,11 +967,11 @@ BEGIN
 	IdResourceStringsCore_RSSocksServerAddressError,	"Address type not supported."
 	IdResourceStringsCore_RSInterceptCircularLink,	"%d: Circular links are not allowed"
 	IdResourceStringsCore_RSNotEnoughDataInBuffer,	"Not enough data in buffer."
-	IdResourceStrings_RSStackAlreadyCreated,	"Stack already created."
-	IdResourceStrings_RSAntiFreezeOnlyOne,	"Only one TIdAntiFreeze can exist per application."
-	IdResourceStrings_RSCannotSetIPVersionWhenConnected,	"Cannot change IPVersion when connected"
-	IdResourceStrings_RSCannotBindRange,	"Can not bind in port range (%d - %d)"
-	IdResourceStrings_RSConnectionClosedGracefully,	"Connection Closed Gracefully."
+	IdResourceStringsCore_RSTooMuchDataInBuffer,	"Too much data in buffer."
+	IdResourceStringsCore_RSFileNotFound,	"File \"%s\" not found"
+	IdResourceStringsCore_RSNotConnected,	"Not Connected"
+	IdResourceStringsCore_RSObjectTypeNotSupported,	"Object type not supported."
+	IdResourceStringsCore_RSIdNoDataToRead,	"No data to read."
 	IdResourceStrings_RSCouldNotBindSocket,	"Could not bind socket. Address and port are already in use."
 	IdResourceStrings_RSInvalidPortRange,	"Invalid Port Range (%d - %d)"
 	IdResourceStrings_RSInvalidServiceName,	"%s is not a valid service."
@@ -978,11 +983,11 @@ BEGIN
 	IdResourceStrings_RSSetSizeExceeded,	"Set Size Exceeded."
 	IdResourceStringsCore_RSSocksUDPNotSupported,	"UDP is not support in this SOCKS version."
 	IdResourceStringsCore_RSSocksRequestFailed,	"Request rejected or failed."
-	IdResourceStrings_RSStackECONNABORTED,	"Software caused connection abort."
-	IdResourceStrings_RSStackECONNRESET,	"Connection reset by peer."
-	IdResourceStrings_RSStackENOBUFS,	"No buffer space available."
-	IdResourceStrings_RSStackEISCONN,	"Socket is already connected."
-	IdResourceStrings_RSStackENOTCONN,	"Socket is not connected."
+	IdResourceStringsCore_RSSocksRequestServerFailed,	"Request rejected because SOCKS server cannot connect."
+	IdResourceStringsCore_RSSocksRequestIdentFailed,	"Request rejected because the client program and identd report different user-ids."
+	IdResourceStringsCore_RSSocksUnknownError,	"Unknown socks error."
+	IdResourceStringsCore_RSSocksServerRespondError,	"Socks server did not respond."
+	IdResourceStringsCore_RSSocksAuthMethodError,	"Invalid socks authentication method."
 	IdResourceStrings_RSStackESHUTDOWN,	"Cannot send or receive after socket is closed."
 	IdResourceStrings_RSStackETOOMANYREFS,	"Too many references, cannot splice."
 	IdResourceStrings_RSStackETIMEDOUT,	"Connection timed out."
@@ -994,11 +999,11 @@ BEGIN
 	IdResourceStrings_RSStackENOTEMPTY,	"Directory not empty"
 	IdResourceStrings_RSStackHOST_NOT_FOUND,	"Host not found."
 	IdResourceStrings_RSStackClassUndefined,	"Stack Class is undefined."
-	IdResourceStrings_RSStackEALREADY,	"Operation already in progress."
-	IdResourceStrings_RSStackENOTSOCK,	"Socket operation on non-socket."
-	IdResourceStrings_RSStackEDESTADDRREQ,	"Destination address required."
-	IdResourceStrings_RSStackEMSGSIZE,	"Message too long."
-	IdResourceStrings_RSStackEPROTOTYPE,	"Protocol wrong type for socket."
+	IdResourceStrings_RSStackAlreadyCreated,	"Stack already created."
+	IdResourceStrings_RSAntiFreezeOnlyOne,	"Only one TIdAntiFreeze can exist per application."
+	IdResourceStrings_RSCannotSetIPVersionWhenConnected,	"Cannot change IPVersion when connected"
+	IdResourceStrings_RSCannotBindRange,	"Can not bind in port range (%d - %d)"
+	IdResourceStrings_RSConnectionClosedGracefully,	"Connection Closed Gracefully."
 	IdResourceStrings_RSStackENOPROTOOPT,	"Bad protocol option."
 	IdResourceStrings_RSStackEPROTONOSUPPORT,	"Protocol not supported."
 	IdResourceStrings_RSStackESOCKTNOSUPPORT,	"Socket type not supported."
@@ -1010,11 +1015,11 @@ BEGIN
 	IdResourceStrings_RSStackENETDOWN,	"Network is down."
 	IdResourceStrings_RSStackENETUNREACH,	"Network is unreachable."
 	IdResourceStrings_RSStackENETRESET,	"Net dropped connection or reset."
-	IdResourceStrings_RSWinsockLoadError,	"Error on loading Winsock2 library (%s)"
-	IdResourceStrings_RSStatusResolving,	"Resolving hostname %s."
-	IdResourceStrings_RSStatusConnecting,	"Connecting to %s."
-	IdResourceStrings_RSStatusConnected,	"Connected."
-	IdResourceStrings_RSStatusDisconnecting,	"Disconnecting."
+	IdResourceStrings_RSStackECONNABORTED,	"Software caused connection abort."
+	IdResourceStrings_RSStackECONNRESET,	"Connection reset by peer."
+	IdResourceStrings_RSStackENOBUFS,	"No buffer space available."
+	IdResourceStrings_RSStackEISCONN,	"Socket is already connected."
+	IdResourceStrings_RSStackENOTCONN,	"Socket is not connected."
 	IdResourceStrings_RSStatusDisconnected,	"Disconnected."
 	IdResourceStrings_RSStatusText,	"%s"
 	IdResourceStrings_RSStackError,	"Socket Error # %d\r\n%s"
@@ -1026,6 +1031,30 @@ BEGIN
 	IdResourceStrings_RSStackEMFILE,	"Too many open files."
 	IdResourceStrings_RSStackEWOULDBLOCK,	"Operation would block."
 	IdResourceStrings_RSStackEINPROGRESS,	"Operation now in progress."
+	IdResourceStrings_RSStackEALREADY,	"Operation already in progress."
+	IdResourceStrings_RSStackENOTSOCK,	"Socket operation on non-socket."
+	IdResourceStrings_RSStackEDESTADDRREQ,	"Destination address required."
+	IdResourceStrings_RSStackEMSGSIZE,	"Message too long."
+	IdResourceStrings_RSStackEPROTOTYPE,	"Protocol wrong type for socket."
+	ComStrs_sInvalidComCtl32,	"This control requires version 4.70 or greater of COMCTL32.DLL"
+	ComStrs_sDateTimeMax,	"Date exceeds maximum of %s"
+	ComStrs_sDateTimeMin,	"Date is less than minimum of %s"
+	ComStrs_sNeedAllowNone,	"You must be in ShowCheckbox mode to set to this date"
+	ComStrs_sFailSetCalDateTime,	"Failed to set calendar date or time"
+	ComStrs_sFailSetCalMaxSelRange,	"Failed to set maximum selection range"
+	ComStrs_sFailSetCalMinMaxRange,	"Failed to set calendar min/max range"
+	ComStrs_sFailsetCalSelRange,	"Failed to set calendar selected range"
+	WinHelpViewer_hNoKeyword,	"No help keyword specified."
+	IdResourceStrings_RSFailedTimeZoneInfo,	"Failed attempting to retrieve time zone information."
+	IdResourceStrings_RSWinsockCallError,	"Error on call to Winsock2 library function %s"
+	IdResourceStrings_RSWinsockLoadError,	"Error on loading Winsock2 library (%s)"
+	IdResourceStrings_RSStatusResolving,	"Resolving hostname %s."
+	IdResourceStrings_RSStatusConnecting,	"Connecting to %s."
+	IdResourceStrings_RSStatusConnected,	"Connected."
+	IdResourceStrings_RSStatusDisconnecting,	"Disconnecting."
+	ExtCtrls_clName3DDkShadow,	"3D Dark Shadow"
+	ExtCtrls_clName3DLight,	"3D Light"
+	ExtCtrls_clNameWindow,	"Window Background"
 	ExtCtrls_clNameWindowFrame,	"Window Frame"
 	ExtCtrls_clNameWindowText,	"Window Text"
 	ComStrs_sTabFailClear,	"Failed to clear tab control"
@@ -1039,9 +1068,9 @@ BEGIN
 	ComStrs_sRichEditLoadFail,	"Failed to Load Stream"
 	ComStrs_sRichEditSaveFail,	"Failed to Save Stream"
 	ComStrs_sPageIndexError,	"%d is an invalid PageIndex value.  PageIndex must be between 0 and %d"
-	WinHelpViewer_hNoKeyword,	"No help keyword specified."
-	IdResourceStrings_RSFailedTimeZoneInfo,	"Failed attempting to retrieve time zone information."
-	IdResourceStrings_RSWinsockCallError,	"Error on call to Winsock2 library function %s"
+	ExtCtrls_clNameBtnShadow,	"Button Shadow"
+	ExtCtrls_clNameBtnText,	"Button Text"
+	ExtCtrls_clNameCaptionText,	"Caption Text"
 	ExtCtrls_clNameDefault,	"Default"
 	ExtCtrls_clNameGrayText,	"Gray Text"
 	ExtCtrls_clNameHighlight,	"Highlight Background"
@@ -1055,9 +1084,9 @@ BEGIN
 	ExtCtrls_clNameMenuText,	"Menu Text"
 	ExtCtrls_clNameNone,	"None"
 	ExtCtrls_clNameScrollBar,	"Scroll Bar"
-	ExtCtrls_clName3DDkShadow,	"3D Dark Shadow"
-	ExtCtrls_clName3DLight,	"3D Light"
-	ExtCtrls_clNameWindow,	"Window Background"
+	ExtCtrls_clNameLime,	"Lime"
+	ExtCtrls_clNameYellow,	"Yellow"
+	ExtCtrls_clNameBlue,	"Blue"
 	ExtCtrls_clNameFuchsia,	"Fuchsia"
 	ExtCtrls_clNameAqua,	"Aqua"
 	ExtCtrls_clNameWhite,	"White"
@@ -1071,9 +1100,9 @@ BEGIN
 	ExtCtrls_clNameBackground,	"Background"
 	ExtCtrls_clNameBtnFace,	"Button Face"
 	ExtCtrls_clNameBtnHighlight,	"Button Highlight"
-	ExtCtrls_clNameBtnShadow,	"Button Shadow"
-	ExtCtrls_clNameBtnText,	"Button Text"
-	ExtCtrls_clNameCaptionText,	"Caption Text"
+	Consts_SErrorSettingCount,	"Error setting %s.Count"
+	Consts_SListBoxMustBeVirtual,	"Listbox (%s) style must be virtual in order to set Count"
+	HelpIntfs_hNoTableOfContents,	"Unable to find a Table of Contents"
 	HelpIntfs_hNothingFound,	"No help found for %s"
 	HelpIntfs_hNoContext,	"No context-sensitive help installed"
 	HelpIntfs_hNoTopics,	"No topic-based help system installed"
@@ -1087,9 +1116,7 @@ BEGIN
 	ExtCtrls_clNameGray,	"Gray"
 	ExtCtrls_clNameSilver,	"Silver"
 	ExtCtrls_clNameRed,	"Red"
-	ExtCtrls_clNameLime,	"Lime"
-	ExtCtrls_clNameYellow,	"Yellow"
-	ExtCtrls_clNameBlue,	"Blue"
+	Consts_SmkcDel,	"Del"
 	Consts_SmkcShift,	"Shift+"
 	Consts_SmkcCtrl,	"Ctrl+"
 	Consts_SmkcAlt,	"Alt+"
@@ -1105,7 +1132,7 @@ BEGIN
 	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
 	Consts_SDockZoneNotFound,	" - Dock zone not found"
 	Consts_SDockZoneHasNoCtl,	" - Dock zone has no control"
-	HelpIntfs_hNoTableOfContents,	"Unable to find a Table of Contents"
+	Consts_SMsgDlgNoToAll,	"N&o to All"
 	Consts_SMsgDlgYesToAll,	"Yes to &All"
 	Consts_SmkcBkSp,	"BkSp"
 	Consts_SmkcTab,	"Tab"
@@ -1121,7 +1148,7 @@ BEGIN
 	Consts_SmkcRight,	"Right"
 	Consts_SmkcDown,	"Down"
 	Consts_SmkcIns,	"Ins"
-	Consts_SmkcDel,	"Del"
+	Consts_SVBitmaps,	"Bitmaps"
 	Consts_SMaskErr,	"Invalid input value"
 	Consts_SMaskEditErr,	"Invalid input value.  Use escape key to abandon changes"
 	Consts_SMsgDlgWarning,	"Warning"
@@ -1137,7 +1164,7 @@ BEGIN
 	Consts_SMsgDlgRetry,	"&Retry"
 	Consts_SMsgDlgIgnore,	"&Ignore"
 	Consts_SMsgDlgAll,	"&All"
-	Consts_SMsgDlgNoToAll,	"N&o to All"
+	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
 	Consts_SControlParentSetToSelf,	"A control cannot have itself as its parent"
 	Consts_SOKButton,	"OK"
 	Consts_SCancelButton,	"Cancel"
@@ -1153,7 +1180,7 @@ BEGIN
 	Consts_SVMetafiles,	"Metafiles"
 	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
 	Consts_SVIcons,	"Icons"
-	Consts_SVBitmaps,	"Bitmaps"
+	Consts_SCannotFocus,	"Cannot focus a disabled or invisible window"
 	Consts_SParentRequired,	"Control '%s' has no parent window"
 	Consts_SParentGivenNotAParent,	"Parent given is not a parent of '%s'"
 	Consts_SMDIChildNotVisible,	"Cannot hide an MDI Child Form"
@@ -1169,11 +1196,11 @@ BEGIN
 	Consts_SInvalidPrinter,	"Printer selected is not valid"
 	Consts_SDeviceOnPort,	"%s on %s"
 	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
-	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
 	Consts_SInvalidIcon,	"Icon image is not valid"
 	Consts_SInvalidMetafile,	"Metafile is not valid"
 	Consts_SInvalidPixelFormat,	"Invalid pixel format"
 	Consts_SChangeIconSize,	"Cannot change the size of an icon"
+	Consts_SOleGraphic,	"Invalid operation on TOleGraphic"
 	Consts_SUnknownClipboardFormat,	"Unsupported clipboard format"
 	Consts_SOutOfResources,	"Out of system resources"
 	Consts_SNoCanvasHandle,	"Canvas does not allow drawing"
@@ -1185,7 +1212,6 @@ BEGIN
 	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
 	Consts_SWindowDCError,	"Error creating window device context"
 	Consts_SWindowClass,	"Error creating window class"
-	Consts_SCannotFocus,	"Cannot focus a disabled or invisible window"
 	RTLConsts_SPropertyException,	"Error reading %s%s%s: %s"
 	RTLConsts_SReadError,	"Stream read error"
 	RTLConsts_SReadOnlyProperty,	"Property is read-only"

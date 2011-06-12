@@ -34,14 +34,15 @@ uses
   UnitFormConfirmation in 'UnitFormConfirmation.pas' {FormConfirm},
   UnitFormHome in 'UnitFormHome.pas' {FormHome},
   RyzomApi in 'RyzomApi.pas',
-  UnitFormAlert in 'UnitFormAlert.pas' {FormAlert},
+  UnitFormLog in 'UnitFormLog.pas' {FormLog},
   UnitFormWatch in 'UnitFormWatch.pas' {FormWatch},
   UnitFormGuild in 'UnitFormGuild.pas' {FormGuild},
   UnitFormRoom in 'UnitFormRoom.pas' {FormRoom},
   UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter},
   UnitFormCharacter in 'UnitFormCharacter.pas' {FormCharacter},
   UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit},
-  UnitThreadAlert in 'UnitThreadAlert.pas';
+  UnitThreadAlert in 'UnitThreadAlert.pas',
+  UnitFormAlert in 'UnitFormAlert.pas' {FormAlert};
 
 {$R *.res}
 {$R cat.res}
@@ -56,12 +57,13 @@ begin
   Application.CreateForm(TFormConfirm, FormConfirm);
   Application.CreateForm(TFormInvent, FormInvent);
   Application.CreateForm(TFormHome, FormHome);
-  Application.CreateForm(TFormAlert, FormAlert);
+  Application.CreateForm(TFormLog, FormLog);
   Application.CreateForm(TFormWatch, FormWatch);
   Application.CreateForm(TFormGuild, FormGuild);
   Application.CreateForm(TFormRoom, FormRoom);
   Application.CreateForm(TFormRoomFilter, FormRoomFilter);
   Application.CreateForm(TFormCharacter, FormCharacter);
   Application.CreateForm(TFormGuildEdit, FormGuildEdit);
+  Application.CreateForm(TFormAlert, FormAlert);
   Application.Run;
 end.

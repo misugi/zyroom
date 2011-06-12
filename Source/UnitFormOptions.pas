@@ -96,7 +96,7 @@ implementation
 uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
   UnitFormGuild, UnitFormGuildEdit, UnitFormMain, UnitFormProgress,
   UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormRoomFilter,
-  UnitFormInvent, UnitFormAlert, UnitFormWatch;
+  UnitFormInvent, UnitFormAlert, UnitFormWatch, UnitFormLog;
 
 {$R *.dfm}
 
@@ -296,6 +296,7 @@ begin
   TranslateComponent(FormInvent);
   TranslateComponent(FormAlert);
   TranslateComponent(FormWatch);
+  TranslateComponent(FormLog);
   FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;
   FormGuild.UpdateLanguage;
@@ -313,6 +314,7 @@ begin
   FormCharacter.Color := GConfig.InterfaceColor;
   FormRoomFilter.Color := GConfig.InterfaceColor;
   FormInvent.Color := GConfig.InterfaceColor;
+  FormLog.Color := GConfig.InterfaceColor;
 
   // String resource file
   if FileExists(GConfig.PackFile) then
