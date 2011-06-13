@@ -118,8 +118,8 @@ IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=3
 MinorVer=2
-Release=0
-Build=29
+Release=4
+Build=50
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=3.2.0.29
+FileVersion=3.2.4.50
 InternalName=
 LegalCopyright=(C) 2011 Misugi
 LegalTrademarks=
@@ -139,9 +139,8 @@ ProductName=
 ProductVersion=1.0.0.0
 Comments=
 [HistoryLists\hlConditionals]
-Count=2
+Count=1
 Item0=__DEBUG
-Item1=__DEBUGx
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

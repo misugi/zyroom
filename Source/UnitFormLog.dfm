@@ -1,8 +1,8 @@
 object FormLog: TFormLog
-  Left = 559
-  Top = 328
-  Width = 708
-  Height = 589
+  Left = 555
+  Top = 260
+  Width = 773
+  Height = 645
   Caption = 'Log'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -12,13 +12,14 @@ object FormLog: TFormLog
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
-  object Panel1: TPanel
+  object PnHeader: TPanel
     Left = 0
     Top = 0
-    Width = 692
+    Width = 757
     Height = 28
     Align = alTop
     BevelOuter = bvNone
@@ -30,6 +31,25 @@ object FormLog: TFormLog
     ParentColor = True
     ParentFont = False
     TabOrder = 0
+    DesignSize = (
+      757
+      28)
+    object LbDateEnd: TLabel
+      Left = 595
+      Top = 4
+      Width = 10
+      Height = 14
+      Alignment = taCenter
+      Anchors = [akTop, akRight]
+      AutoSize = False
+      Caption = '-'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
     object BtLoad: TSevenButton
       Left = 0
       Top = 0
@@ -246,18 +266,88 @@ object FormLog: TFormLog
       Spacing = 5
       Marging = 5
     end
+    object DatePickerStart: TDateTimePicker
+      Left = 443
+      Top = 0
+      Width = 80
+      Height = 22
+      Anchors = [akTop, akRight]
+      Date = 40704.983557453710000000
+      Time = 40704.983557453710000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 4
+    end
+    object DatePickerEnd: TDateTimePicker
+      Left = 606
+      Top = 0
+      Width = 80
+      Height = 22
+      Anchors = [akTop, akRight]
+      Date = 40704.983557453710000000
+      Time = 40704.983557453710000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 5
+    end
+    object TimePickerStart: TDateTimePicker
+      Left = 523
+      Top = 0
+      Width = 70
+      Height = 22
+      Anchors = [akTop, akRight]
+      Date = 40704.000000000000000000
+      Time = 40704.000000000000000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      Kind = dtkTime
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 6
+    end
+    object TimePickerEnd: TDateTimePicker
+      Left = 686
+      Top = 0
+      Width = 70
+      Height = 22
+      Anchors = [akTop, akRight]
+      Date = 40704.983557453710000000
+      Time = 40704.983557453710000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      Kind = dtkTime
+      ParentFont = False
+      TabOrder = 7
+    end
   end
   object WebLog: TWebBrowser
     Left = 186
     Top = 28
-    Width = 506
-    Height = 523
+    Width = 571
+    Height = 579
     Align = alClient
     TabOrder = 1
     ControlData = {
-      4C0000004C3400000E3600000000000000000000000000000000000000000000
+      4C000000043B0000D73B00000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
-      2B2E126208000000000000004C0000000114020000000000C000000000000046
+      2B2E126203000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
       00000000000000000100000000000000000000000000000000000000}
   end
@@ -265,7 +355,7 @@ object FormLog: TFormLog
     Left = 0
     Top = 28
     Width = 186
-    Height = 523
+    Height = 579
     Align = alLeft
     BevelOuter = bvNone
     Font.Charset = DEFAULT_CHARSET
@@ -278,12 +368,12 @@ object FormLog: TFormLog
     TabOrder = 2
     DesignSize = (
       186
-      523)
+      579)
     object GbChannels: TGroupBox
       Left = 0
-      Top = 148
+      Top = 93
       Width = 181
-      Height = 159
+      Height = 145
       Caption = 'Liste des canaux'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -292,11 +382,15 @@ object FormLog: TFormLog
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
+      DesignSize = (
+        181
+        145)
       object ListChannels: TCheckListBox
         Left = 5
         Top = 16
         Width = 170
-        Height = 116
+        Height = 102
+        Anchors = [akLeft, akTop, akBottom]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -311,9 +405,10 @@ object FormLog: TFormLog
       end
       object BtCheckChannels: TSevenButton
         Left = 5
-        Top = 137
+        Top = 123
         Width = 70
         Height = 16
+        Anchors = [akLeft, akBottom]
         Caption = 'Tous'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -368,9 +463,10 @@ object FormLog: TFormLog
       end
       object BtUncheckChannels: TSevenButton
         Left = 104
-        Top = 137
+        Top = 123
         Width = 70
         Height = 16
+        Anchors = [akLeft, akBottom]
         Caption = 'Aucun'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -426,9 +522,9 @@ object FormLog: TFormLog
     end
     object GbCharacters: TGroupBox
       Left = 0
-      Top = 309
+      Top = 385
       Width = 181
-      Height = 180
+      Height = 161
       Anchors = [akLeft, akTop, akBottom]
       Caption = 'Liste des personnages'
       Font.Charset = DEFAULT_CHARSET
@@ -440,12 +536,12 @@ object FormLog: TFormLog
       TabOrder = 1
       DesignSize = (
         181
-        180)
+        161)
       object ListCharacters: TCheckListBox
         Left = 5
         Top = 16
         Width = 170
-        Height = 137
+        Height = 118
         Anchors = [akLeft, akTop, akBottom]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -459,7 +555,7 @@ object FormLog: TFormLog
       end
       object BtCheckCharacters: TSevenButton
         Left = 5
-        Top = 158
+        Top = 139
         Width = 70
         Height = 16
         Anchors = [akLeft, akBottom]
@@ -517,7 +613,7 @@ object FormLog: TFormLog
       end
       object BtUncheckCharacters: TSevenButton
         Left = 104
-        Top = 158
+        Top = 139
         Width = 70
         Height = 16
         Anchors = [akLeft, akBottom]
@@ -576,7 +672,7 @@ object FormLog: TFormLog
     end
     object BtDefault: TSevenButton
       Left = 5
-      Top = 493
+      Top = 550
       Width = 85
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -628,7 +724,7 @@ object FormLog: TFormLog
     end
     object BtOK: TSevenButton
       Left = 95
-      Top = 493
+      Top = 550
       Width = 85
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -689,7 +785,7 @@ object FormLog: TFormLog
       Left = 0
       Top = 0
       Width = 181
-      Height = 146
+      Height = 91
       Caption = 'Options'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -698,35 +794,9 @@ object FormLog: TFormLog
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 4
-      object LbDateBegin: TLabel
-        Left = 5
-        Top = 20
-        Width = 73
-        Height = 14
-        Caption = 'Date de d'#233'but :'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
-      object LbDateEnd: TLabel
-        Left = 5
-        Top = 45
-        Width = 58
-        Height = 14
-        Caption = 'Date de fin :'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object LbColorBackground: TLabel
         Left = 5
-        Top = 69
+        Top = 16
         Width = 83
         Height = 14
         Caption = 'Couleur de fond :'
@@ -739,7 +809,7 @@ object FormLog: TFormLog
       end
       object LbColorSystem: TLabel
         Left = 5
-        Top = 89
+        Top = 36
         Width = 87
         Height = 14
         Caption = 'Couleur syst'#232'me :'
@@ -750,41 +820,9 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
       end
-      object DatePickerBegin: TDateTimePicker
-        Left = 94
-        Top = 16
-        Width = 81
-        Height = 22
-        Date = 40704.983557453710000000
-        Time = 40704.983557453710000000
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = False
-        TabOrder = 0
-      end
-      object DatePickerEnd: TDateTimePicker
-        Left = 94
-        Top = 41
-        Width = 81
-        Height = 22
-        Date = 40704.983557453710000000
-        Time = 40704.983557453710000000
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 1
-      end
       object PnColorBackground: TPanel
         Left = 157
-        Top = 67
+        Top = 14
         Width = 18
         Height = 18
         Cursor = crHandPoint
@@ -803,12 +841,12 @@ object FormLog: TFormLog
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 2
+        TabOrder = 0
         OnClick = PnColorClick
       end
       object PnColorSystem: TPanel
         Left = 157
-        Top = 87
+        Top = 34
         Width = 18
         Height = 18
         Cursor = crHandPoint
@@ -827,12 +865,12 @@ object FormLog: TFormLog
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 3
+        TabOrder = 1
         OnClick = PnColorClick
       end
       object CbShowDate: TCheckBox
         Left = 5
-        Top = 126
+        Top = 71
         Width = 171
         Height = 17
         Caption = 'Afficher la date'
@@ -844,11 +882,11 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         State = cbChecked
-        TabOrder = 4
+        TabOrder = 2
       end
       object CbSystemMessage: TCheckBox
         Left = 5
-        Top = 108
+        Top = 53
         Width = 171
         Height = 17
         Caption = 'Messages syst'#232'me'
@@ -860,7 +898,173 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         State = cbChecked
-        TabOrder = 5
+        TabOrder = 3
+      end
+    end
+    object GbSystemFilter: TGroupBox
+      Left = 0
+      Top = 240
+      Width = 181
+      Height = 143
+      Caption = 'Filtrage syst'#232'me'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+      DesignSize = (
+        181
+        143)
+      object BtAddFilter: TSevenButton
+        Left = 5
+        Top = 121
+        Width = 70
+        Height = 16
+        Anchors = [akLeft, akBottom]
+        Caption = 'Ajouter'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        OnClick = BtAddFilterClick
+        Border.ColorNormal = 7368816
+        Border.ColorHot = 11632444
+        Border.ColorDown = 9134636
+        Border.ColorDisabled = 11907757
+        Border.ColorFocused = 11632444
+        Border.WidthNormal = 1
+        Border.WidthHot = 1
+        Border.WidthDown = 1
+        Border.WidthDisabled = 1
+        Border.WidthFocused = 1
+        Colors.ColorNormalFrom = 16579836
+        Colors.ColorNormalTo = 13619151
+        Colors.ColorHotFrom = 16579836
+        Colors.ColorHotTo = 16112039
+        Colors.ColorDownFrom = 16579836
+        Colors.ColorDownTo = 14398312
+        Colors.ColorDisabledFrom = 16053492
+        Colors.ColorDisabledTo = 16053492
+        Colors.ColorFocusedFrom = 16579836
+        Colors.ColorFocusedTo = 13619151
+        Fonts.FontHot.Charset = DEFAULT_CHARSET
+        Fonts.FontHot.Color = clWindowText
+        Fonts.FontHot.Height = -11
+        Fonts.FontHot.Name = 'Arial'
+        Fonts.FontHot.Style = []
+        Fonts.FontDown.Charset = DEFAULT_CHARSET
+        Fonts.FontDown.Color = clWindowText
+        Fonts.FontDown.Height = -11
+        Fonts.FontDown.Name = 'Arial'
+        Fonts.FontDown.Style = []
+        Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+        Fonts.FontDisabled.Color = clGrayText
+        Fonts.FontDisabled.Height = -11
+        Fonts.FontDisabled.Name = 'Arial'
+        Fonts.FontDisabled.Style = []
+        Fonts.FontFocused.Charset = DEFAULT_CHARSET
+        Fonts.FontFocused.Color = clWindowText
+        Fonts.FontFocused.Height = -11
+        Fonts.FontFocused.Name = 'Arial'
+        Fonts.FontFocused.Style = []
+        Spacing = 5
+        Marging = 5
+      end
+      object BtDelFilter: TSevenButton
+        Left = 104
+        Top = 121
+        Width = 70
+        Height = 16
+        Anchors = [akLeft, akBottom]
+        Caption = 'Supprimer'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        OnClick = BtDelFilterClick
+        Border.ColorNormal = 7368816
+        Border.ColorHot = 11632444
+        Border.ColorDown = 9134636
+        Border.ColorDisabled = 11907757
+        Border.ColorFocused = 11632444
+        Border.WidthNormal = 1
+        Border.WidthHot = 1
+        Border.WidthDown = 1
+        Border.WidthDisabled = 1
+        Border.WidthFocused = 1
+        Colors.ColorNormalFrom = 16579836
+        Colors.ColorNormalTo = 13619151
+        Colors.ColorHotFrom = 16579836
+        Colors.ColorHotTo = 16112039
+        Colors.ColorDownFrom = 16579836
+        Colors.ColorDownTo = 14398312
+        Colors.ColorDisabledFrom = 16053492
+        Colors.ColorDisabledTo = 16053492
+        Colors.ColorFocusedFrom = 16579836
+        Colors.ColorFocusedTo = 13619151
+        Fonts.FontHot.Charset = DEFAULT_CHARSET
+        Fonts.FontHot.Color = clWindowText
+        Fonts.FontHot.Height = -11
+        Fonts.FontHot.Name = 'Arial'
+        Fonts.FontHot.Style = []
+        Fonts.FontDown.Charset = DEFAULT_CHARSET
+        Fonts.FontDown.Color = clWindowText
+        Fonts.FontDown.Height = -11
+        Fonts.FontDown.Name = 'Arial'
+        Fonts.FontDown.Style = []
+        Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+        Fonts.FontDisabled.Color = clGrayText
+        Fonts.FontDisabled.Height = -11
+        Fonts.FontDisabled.Name = 'Arial'
+        Fonts.FontDisabled.Style = []
+        Fonts.FontFocused.Charset = DEFAULT_CHARSET
+        Fonts.FontFocused.Color = clWindowText
+        Fonts.FontFocused.Height = -11
+        Fonts.FontFocused.Name = 'Arial'
+        Fonts.FontFocused.Style = []
+        Spacing = 5
+        Marging = 5
+      end
+      object ListFilter: TListBox
+        Left = 5
+        Top = 16
+        Width = 170
+        Height = 75
+        Anchors = [akLeft, akTop, akBottom]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ItemHeight = 14
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        Sorted = True
+        TabOrder = 2
+        OnClick = ListFilterClick
+      end
+      object EdFilter: TEdit
+        Left = 5
+        Top = 94
+        Width = 170
+        Height = 22
+        Anchors = [akLeft, akBottom]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 3
       end
     end
   end

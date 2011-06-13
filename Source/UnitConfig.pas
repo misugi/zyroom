@@ -109,6 +109,13 @@ const
   _MIN_QUALITY = 0;
   _MAX_QUALITY = 270;
 
+  _LOG_HOMEPAGE_FILENAME = 'chatlog.html';
+  _LOG_HTML_FILENAME = 'log.html';
+  _LOG_BBCODE_FILENAME = 'log.bbcode';
+  _LOG_TEXT_FILENAME = 'log.txt';
+  _LOG_CHATLOG_FILENAME = 'chatlog.txt';
+  _LOG_FILTER_FILENAME = 'sysfilter.dat';
+
 type
   // List of the guilds
   TGuild = class(TObject)
@@ -163,6 +170,7 @@ type
     FCurrentPath: String;
     FConfigFileName: String;
     FLanguageFileName: String;
+    FFilterFileName: String;
     FVersion: String;
     
     function GetLanguage: Integer;
@@ -209,6 +217,7 @@ type
     property CurrentPath: String read FCurrentPath;
     property ConfigFileName: String read FConfigFileName;
     property LanguageFileName: String read FLanguageFileName;
+    property FilterFileName: String read FFilterFileName;
 
     property Language: Integer read GetLanguage write SetLanguage;
     property PackFile: String read GetPackFile write SetPackFile;
@@ -263,7 +272,8 @@ begin
   FCurrentDir := ExtractFileDir(ParamStr(0));
   FCurrentPath := ExtractFilePath(ParamStr(0));
   FConfigFileName := FCurrentPath + _CONFIG_FILENAME;
-  FLanguageFileName := FCurrentPath + _LANGUAGE_FILENAME;;
+  FLanguageFileName := FCurrentPath + _LANGUAGE_FILENAME;
+  FFilterFileName := FCurrentPath + _LANGUAGE_FILENAME;
   FIniFile := TIniFile.Create(FConfigFileName);
 
   wReg := TRegExpr.Create;

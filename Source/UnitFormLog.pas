@@ -28,11 +28,11 @@ interface
 uses
   Forms, SysUtils, Dialogs, OleCtrls, SHDocVw, StdCtrls, SevenButton, Classes,
   Controls, ExtCtrls, RyzomApi, regexpr, ComCtrls, CheckLst, Graphics, Types,
-  Windows, Clipbrd;
+  Windows, Clipbrd, ActiveX;
 
 type
   TFormLog = class(TForm)
-    Panel1: TPanel;
+    PnHeader: TPanel;
     BtLoad: TSevenButton;
     WebLog: TWebBrowser;
     OdBrowseLogFile: TOpenDialog;
@@ -51,10 +51,6 @@ type
     BtUncheckCharacters: TSevenButton;
     BtOK: TSevenButton;
     GbOptions: TGroupBox;
-    DatePickerBegin: TDateTimePicker;
-    LbDateBegin: TLabel;
-    DatePickerEnd: TDateTimePicker;
-    LbDateEnd: TLabel;
     LbColorBackground: TLabel;
     PnColorBackground: TPanel;
     LbColorSystem: TLabel;
@@ -63,6 +59,16 @@ type
     CbSystemMessage: TCheckBox;
     OdSaveFile: TSaveDialog;
     BtText: TSevenButton;
+    GbSystemFilter: TGroupBox;
+    BtAddFilter: TSevenButton;
+    BtDelFilter: TSevenButton;
+    DatePickerStart: TDateTimePicker;
+    LbDateEnd: TLabel;
+    DatePickerEnd: TDateTimePicker;
+    ListFilter: TListBox;
+    EdFilter: TEdit;
+    TimePickerStart: TDateTimePicker;
+    TimePickerEnd: TDateTimePicker;
     procedure BtLoadClick(Sender: TObject);
     procedure CheckListBoxDblClick(Sender: TObject);
     procedure BtCheckChannelsClick(Sender: TObject);
@@ -79,20 +85,26 @@ type
     procedure BtHtmlClick(Sender: TObject);
     procedure BtBbcodeClick(Sender: TObject);
     procedure BtTextClick(Sender: TObject);
+    procedure BtDelFilterClick(Sender: TObject);
+    procedure BtAddFilterClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure ListFilterClick(Sender: TObject);
   private
     FFirstLoading: Boolean;
     FLogFile: String;
     FLogFileHtml: String;
     FLogFileBbode: String;
     FLogFileText: String;
-    FDateBegin: TDate;
-    FDateEnd: TDate;
+    FFilterFile: String;
+    
+    FDateStart: TDateTime;
+    FDateEnd: TDateTime;
     
     procedure LoadLogFile;
     procedure SetDefault;
   public
     procedure ChangeChecked(AList: TCheckListBox; AChecked: Boolean);
-    procedure ChangeEnabledButtons(AEnabled: Boolean);
+    procedure ChangeEnabled(AEnabled: Boolean);
     property FirstLoading: Boolean read FFirstLoading write FFirstLoading;
     property LogFileHtml: String read FLogFileHtml write FLogFileHtml;
     property LogFileBbode: String read FLogFileBbode write FLogFileBbode;
@@ -104,7 +116,8 @@ var
 
 implementation
 
-uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress;
+uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress,
+  Math, DateUtils;
 
 {$R *.dfm}
 
@@ -112,38 +125,75 @@ uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress;
 Create the form
 *******************************************************************************}
 procedure TFormLog.FormCreate(Sender: TObject);
-var
-  wLogDir: String;
 begin
-  wLogDir := Format('%s\%s', [GConfig.CurrentDir, _LOG_DIR]);
-  ForceDirectories(wLogDir);
+  DoubleBuffered := True;
+  WebLog.DoubleBuffered := True;
+  PnHeader.DoubleBuffered := True;
+  PnOptions.DoubleBuffered := True;
+
+  ForceDirectories(GConfig.CurrentPath + _LOG_DIR);
+  FLogFile := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_CHATLOG_FILENAME;
+  FLogFileHtml := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_HTML_FILENAME;
+  FLogFileBbode := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_BBCODE_FILENAME;
+  FLogFileText := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_TEXT_FILENAME;
+  FFilterFile := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_FILTER_FILENAME;
+
+  // Load filters
+  if FileExists(FFilterFile) then
+    ListFilter.Items.LoadFromFile(FFilterFile);
+
   OdBrowseLogFile.InitialDir := GetRyzomInstallDir + '\Save';
+end;
+
+{*******************************************************************************
+Destroy the form
+*******************************************************************************}
+procedure TFormLog.FormDestroy(Sender: TObject);
+begin
+  // Save filters
+  ListFilter.Items.SaveToFile(FFilterFile);
 end;
 
 {*******************************************************************************
 Show the form
 *******************************************************************************}
 procedure TFormLog.FormShow(Sender: TObject);
+var
+  wHomeFile: String;
 begin
-  FDateBegin := 0;
-  FDateEnd := 0;
+  FDateStart := Now;
+  FDateEnd := FDateStart;
   SetDefault;
-  ChangeEnabledButtons(False);
+  ChangeEnabled(False);
   ListChannels.Clear;
   ListCharacters.Clear;
-  WebLog.Navigate('about:blank');
+  EdFilter.Text := '';
+
+  // Home page
+  wHomeFile := GConfig.CurrentPath + _LOG_HOMEPAGE_FILENAME;
+  if FileExists(wHomeFile) then
+    WebLog.Navigate(wHomeFile)
+  else
+    WebLog.Navigate('about:blank');
 end;
 
 {*******************************************************************************
 Enable or disable buttons
 *******************************************************************************}
-procedure TFormLog.ChangeEnabledButtons(AEnabled: Boolean);
+procedure TFormLog.ChangeEnabled(AEnabled: Boolean);
 begin
   BtDefault.Enabled := AEnabled;
   BtOK.Enabled := AEnabled;
   BtHtml.Enabled := AEnabled;
   BtBbcode.Enabled := AEnabled;
   BtText.Enabled := AEnabled;
+  GbOptions.Enabled := AEnabled;
+  GbChannels.Enabled := AEnabled;
+  GbCharacters.Enabled := AEnabled;
+  DatePickerStart.Enabled := AEnabled;
+  DatePickerEnd.Enabled := AEnabled;
+  TimePickerStart.Enabled := AEnabled;
+  TimePickerEnd.Enabled := AEnabled;
 end;
 
 {*******************************************************************************
@@ -152,20 +202,16 @@ Load the log file
 procedure TFormLog.BtLoadClick(Sender: TObject);
 begin
   if OdBrowseLogFile.Execute then begin
-    FLogFile := GConfig.CurrentPath + _LOG_DIR + '\chatlog.txt';
     CopyFile(PChar(OdBrowseLogFile.FileName), PChar(FLogFile), False);
-    FLogFileHtml := GConfig.CurrentPath + _LOG_DIR + '\log.html';
-    FLogFileBbode := GConfig.CurrentPath + _LOG_DIR + '\log.bbcode';
-    FLogFileText := GConfig.CurrentPath + _LOG_DIR + '\log.txt';
 
     FFirstLoading := True;
     SetDefault;
     LoadLogFile;
     FFirstLoading := False;
 
-    FDateBegin := DatePickerBegin.Date;
-    FDateEnd := DatePickerEnd.Date;
-    ChangeEnabledButtons(True);
+    FDateStart := DateOf(DatePickerStart.Date) + TimePickerStart.Time;
+    FDateEnd := DateOf(DatePickerEnd.Date) + TimePickerEnd.Time;
+    ChangeEnabled(True);
   end;
 end;
 
@@ -238,8 +284,10 @@ Default values for options
 *******************************************************************************}
 procedure TFormLog.SetDefault;
 begin
-  DatePickerBegin.DateTime := FDateBegin;
-  DatePickerEnd.DateTime := FDateEnd;
+  DatePickerStart.Date := DateOf(FDateStart);
+  DatePickerEnd.Date := DateOf(FDateEnd);
+  TimePickerStart.Time := TimeOf(FDateStart);
+  TimePickerEnd.Time := TimeOf(FDateEnd);
   PnColorBackground.Color := $00425E50;
   PnColorSystem.Color := $00000000;
   CbShowDate.Checked := True;
@@ -302,5 +350,46 @@ procedure TFormLog.BtTextClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileText);
 end;
+
+{*******************************************************************************
+Delete a filter
+*******************************************************************************}
+procedure TFormLog.BtDelFilterClick(Sender: TObject);
+var
+  wIndex: Integer;
+begin
+  wIndex := ListFilter.ItemIndex;
+  if wIndex >= 0 then begin
+    ListFilter.DeleteSelected;
+    wIndex := Min(wIndex, ListFilter.Count-1);
+    if wIndex >= 0 then
+      ListFilter.Selected[wIndex] := True;
+  end;
+end;
+
+{*******************************************************************************
+Add a filter
+*******************************************************************************}
+procedure TFormLog.BtAddFilterClick(Sender: TObject);
+begin
+  if (EdFilter.Text <> '') and (ListFilter.Items.IndexOf(EdFilter.Text) < 0) then
+    ListFilter.Items.Append(EdFilter.Text);
+  EdFilter.SetFocus;
+end;
+
+{*******************************************************************************
+Change edit value
+*******************************************************************************}
+procedure TFormLog.ListFilterClick(Sender: TObject);
+begin
+  if ListFilter.ItemIndex >= 0 then
+    EdFilter.Text := ListFilter.Items[ListFilter.ItemIndex];
+end;
+
+initialization
+  OleInitialize(nil);
+
+finalization
+  OleUninitialize;
 
 end.

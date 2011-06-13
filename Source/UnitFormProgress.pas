@@ -95,6 +95,7 @@ type
     function  DelphiToHtmlColor(ADelphiColor: TColor): String;
     function  ColorTextHtml(AHtmlColor: String; AText: String): String;
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
+    function  CheckSystemFilter(AMessage: String): Boolean;
   public
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -853,10 +854,12 @@ var
   wColorText1, wColorText2: String;
   wColorPos1, wColorPos2: Integer;
 
-  wDateBegin, wDateEnd, wDateLine: TDateTime;
+  wDateStart, wDateEnd, wDateLine: TDateTime;
   wListChannels, wListCharacters: TStringList;
 
   wSystemMessage: Boolean;
+  wSystemListingPlayer: Boolean;
+  wWriteEnabled: Boolean;
 begin
   with FormLog do begin
     // Colors
@@ -888,27 +891,29 @@ begin
       wBbcodeFile.Append('[quote]');
 
       // All lines
-      wDateBegin := 0;
+      wDateStart := 0;
       wDateEnd := 0;
       wDateLine := 0;
       for i := 0 to wChatLog.Count - 1 do begin
         // Empty line ?
         if Length(wChatLog.Strings[i]) = 0 then Continue;
         wSystemMessage := False;
+        wSystemListingPlayer := False;
         
-        wReg.Expression := '^(\d{4})/(\d{2})/(\d{2}) (\d{2}:\d{2}:\d{2}) \* (.*)$';
+        wReg.Expression := '^(\d{4})/(\d{2})/(\d{2}) (\d{2}):(\d{2}):(\d{2}) \* (.*)$';
         if wReg.Exec(wChatLog.Strings[i]) then begin
           // Date at the beginning of the line
-          wDateLine := EncodeDate(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]));
-          if wDateBegin = 0 then
-            wDateBegin := wDateLine;
+          wDateLine := EncodeDateTime(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]),
+                                      StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
+          if wDateStart = 0 then
+            wDateStart := wDateLine;
           if CbShowDate.Checked then
-            wDate := Format('%s/%s/%s %s * ', [wReg.Match[3], wReg.Match[2], wReg.Match[1], wReg.Match[4]]);
+            wDate := Format('%s/%s/%s %s:%s:%s * ', [wReg.Match[3], wReg.Match[2], wReg.Match[1], wReg.Match[4], wReg.Match[5], wReg.Match[6]]);
 
           // Initialization
           wTextHtml := '';
           wTextBbcode := '';
-          wLine := wReg.Match[5];
+          wLine := wReg.Match[7];
           wColorPos1 := 0;
           wColorPos2 := 0;
 
@@ -940,6 +945,8 @@ begin
             wTextBrut := wText;
           end else begin
             // System message
+            wReg2.Expression := '[A-Z][a-z]+\.';
+            wSystemListingPlayer := wReg2.Exec(wLine) and (wReg2.MatchPos[0] = 1);
             wSystemMessage := True;
             wTextHtml := wLine;
             wTextBbcode := wLine;
@@ -963,7 +970,7 @@ begin
           wTextBrut := wChatLog.Strings[i];
         end;
 
-        // Check options
+        // Check date
         if CbShowDate.Checked then begin
           wTextHtml := wDate + wTextHtml;
           wTextBbcode := wDate + wTextBbcode;
@@ -971,22 +978,25 @@ begin
         end;
 
         // Write HTML code
-        if FirstLoading then begin
+        wWriteEnabled := ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked and CheckSystemFilter(wTextBrut) and (not wSystemListingPlayer)));
+        if not FirstLoading then
+          // Check options
+          wWriteEnabled :=
+           (wWriteEnabled) and 
+           (wDateLine >= (DateOf(DatePickerStart.Date) + TimeOf(TimePickerStart.Time))) and
+           (wDateLine <= (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) and
+           ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wColorText2)])) and
+           ((wSystemMessage) or ((ListCharacters.Count > 0) and ListCharacters.Checked[ListCharacters.Items.IndexOf(wCharacter)]));
+
+        // Writing OK
+        if wWriteEnabled then begin
           wHtmlFile.Append(wTextHtml + '<br>');
           wBbcodeFile.Append(wTextBbcode);
           wTextFile.Append(wTextBrut);
-        end else begin
-          // Check options
-          if (DateOf(wDateLine) >= DatePickerBegin.Date) and
-             (DateOf(wDateLine) <= DatePickerEnd.Date) and
-             ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked)) and
-             ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wColorText2)])) and
-             ((wSystemMessage) or ((ListCharacters.Count > 0) and ListCharacters.Checked[ListCharacters.Items.IndexOf(wCharacter)])) then begin
-            wHtmlFile.Append(wTextHtml + '<br>');
-            wBbcodeFile.Append(wTextBbcode);
-            wTextFile.Append(wTextBrut);
-          end;
         end;
+
+        // Stop if the end date has passed
+        if (not FirstLoading) and (wDateLine > (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) then Break;
 
         // Progression
         ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
@@ -994,13 +1004,16 @@ begin
       end;
 
       // Date end
-      if (wDateBegin > 0) then
-        wDateEnd := EncodeDate(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]));
+      if (wDateStart > 0) then
+        wDateEnd := EncodeDateTime(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]),
+                                   StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
 
       // Update available options
       if FirstLoading then begin
-        DatePickerBegin.DateTime := wDateBegin;
-        DatePickerEnd.DateTime := wDateEnd;
+        DatePickerStart.Date := wDateStart;
+        TimePickerStart.Time := wDateStart;
+        DatePickerEnd.Date := wDateEnd;
+        TimePickerEnd.Time := wDateEnd;
 
         ListChannels.Items.Assign(wListChannels);
         ChangeChecked(ListChannels, True);
@@ -1031,6 +1044,24 @@ begin
       wChatLog.Free;
       wReg2.Free;
       wReg.Free;
+    end;
+  end;
+end;
+
+{*******************************************************************************
+Check a system message with filters defined
+*******************************************************************************}
+function TFormProgress.CheckSystemFilter(AMessage: String): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+  with FormLog do begin
+    for i := 0 to ListFilter.Count - 1 do begin
+      if Pos(LowerCase(ListFilter.Items[i]), LowerCase(AMessage)) > 0 then begin
+        Result := False;
+        Break;
+      end;
     end;
   end;
 end;

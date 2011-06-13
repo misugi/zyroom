@@ -1,6 +1,21 @@
 zyRoom - History of changes
 ===========================
 
+# version 3.2.4 (2011-06-13)
+New: a home page to describe the /chatLog command
+Fixed: the filters were not properly saved in the file
+
+# version 3.2.3 (2011-06-13)
+Change: it is now possible to copy text from the web browser
+
+# version 3.2.2 (2011-06-13)
+Change: optimized parsing of the log file
+
+# version 3.2.1 (2011-06-13)
+New: to parse a log, it is now possible to filter system messages (filters saved in the file "sysfilter.dat")
+Change: two time picker to select messages from a log file and the date selection is now at the top of the window
+Fixed: problem with the date picker on the first display of the Log menu
+
 # version 3.2.0 (2011-06-12)
 New: menu "Log" to parse your log file saved with the /chatLog command in the game !
 Change: position of the buttons on the filter window
