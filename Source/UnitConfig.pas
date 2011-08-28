@@ -45,6 +45,8 @@ const
   _ROOM_DIR = 'room';
   _ALERT_DIR = 'alert';
   _LOG_DIR = 'log';
+  _BACKUP_DIR = 'backup';
+  _BACKUP_NAME_FILE = 'name.txt';
   _CHARACTER_DIR = 'character';
   _PACK_FILEPATH = '\save\string_client.pack';
   _LANGUAGE_FILENAME = 'languages.lcf';
@@ -57,6 +59,7 @@ const
   _SECTION_POSITION = 'POSITION';
   _SECTION_ALERT = 'ALERT';
   _SECTION_ROOM = 'room';
+  _SECTION_BACKUP = 'BACKUP';
   _KEY_LANGUAGE = 'Language';
   _KEY_PACKFILE = 'PackFile';
   _KEY_PROXY_ENABLED = 'Enabled';
@@ -80,6 +83,7 @@ const
   _KEY_ALERT_SALES_COUNT = 'SalesCount';
   _KEY_ALERT_SEASON_COUNT = 'SeasonCount';
   _KEY_ALERT_IGNORE_CATA = 'IgnoreCata';
+  _KEY_BACKUP_AUTO = 'Auto';
 
   _GUILD_FILENAME = 'guild.ini';
   _CHARACTER_FILENAME = 'character.ini';
@@ -209,6 +213,8 @@ type
     procedure SetShowHint(const Value: Boolean);
     function GetIgnoreCata: Boolean;
     procedure SetIgnoreCata(const Value: Boolean);
+    function GetAutoBackup: Boolean;
+    procedure SetAutoBackup(const Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -240,6 +246,8 @@ type
     property SalesCount: Integer read GetSalesCount write SetSalesCount;
     property SeasonCount: Integer read GetSeasonCount write SetSeasonCount;
     property IgnoreCata: Boolean read GetIgnoreCata write SetIgnoreCata;
+
+    property AutoBackup: Boolean read GetAutoBackup write SetAutoBackup;
 
     function GetGuildPath(AGuildID: String): String;
     function GetGuildRoomPath(AGuildID: String): String;
@@ -957,6 +965,19 @@ Returns the comment
 function TCharacter.GetComment(AID: String): String;
 begin
   Result := FIniFile.ReadString(AID, _KEY_COMMENT, '');
+end;
+
+{*******************************************************************************
+Automatic backups
+*******************************************************************************}
+function TConfig.GetAutoBackup: Boolean;
+begin
+  Result := FIniFile.ReadBool(_SECTION_BACKUP, _KEY_BACKUP_AUTO, True);
+end;
+
+procedure TConfig.SetAutoBackup(const Value: Boolean);
+begin
+  FIniFile.WriteBool(_SECTION_BACKUP, _KEY_BACKUP_AUTO, Value);
 end;
 
 end.

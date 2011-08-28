@@ -27,7 +27,8 @@ interface
 
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
-  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles;
+  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles,
+  pngimage;
 
 type
   TFormInvent = class(TForm)
@@ -41,6 +42,9 @@ type
     PopupWatch: TPopupMenu;
     MenuGuard: TMenuItem;
     MenuEdit: TMenuItem;
+    ImgVolume: TImage;
+    ImgDappers: TImage;
+    LbValueDappers: TLabel;
     procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -62,11 +66,14 @@ type
     FCharID: String;
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
+    FDappers: Integer;
+    
     procedure SetFMountID(const Value: Integer);
   public
     procedure UpdateRoom;
     procedure UpdateLanguage;
     property MountID: Integer read FMountID write SetFMountID;
+    property Dappers: Integer read FDappers write FDappers;
   end;
 
 var
@@ -161,7 +168,7 @@ Tab change
 *******************************************************************************}
 procedure TFormInvent.TabInventChange(Sender: TObject);
 begin
-  UpdateRoom;
+  UpdateRoom();
 end;
 
 {*******************************************************************************
@@ -203,12 +210,13 @@ begin
           wMaxVolume := '' // mount unfound
         else
           if TabInvent.TabIndex = FMountID then
-            wMaxVolume := '/100' // mount
+            wMaxVolume := '/300' // mount
           else
             wMaxVolume := '/500'; // pack
 
   LbValueCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
-  LbValueVolume.Caption := RS_VOLUME + ' : ' + FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
+  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
+  LbValueDappers.Caption := IntToStr(FDappers);
 end;
 
 {*******************************************************************************
@@ -218,6 +226,9 @@ procedure TFormInvent.UpdateLanguage;
 var
   i: Integer;
 begin
+  ImgVolume.Hint := RS_VOLUME;
+  ImgDappers.Hint := RS_DAPPERS;
+  
   for i := 2 to 5 do begin // animals
     if i = FMountID then begin
       TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_MOUNT, i-1]);

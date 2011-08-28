@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 4.0.0 (2011-08-28)
+New: a new menu to backup files of your game profile !
+New: dappers are now displayed
+Fixed: some windows had no the color defined in the options
+Fixed: volume of a mount is now 300
+Change: bounds have been added on the calendars of the log
+
 # version 3.2.4 (2011-06-13)
 New: a home page to describe the /chatLog command
 Fixed: the filters were not properly saved in the file

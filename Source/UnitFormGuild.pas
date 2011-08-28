@@ -75,6 +75,8 @@ type
     procedure BtUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
+    FDappers: Integer;
+    
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
@@ -436,6 +438,7 @@ procedure TFormGuild.ShowRoom;
 begin
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormMain.ShowMenuForm(FormRoom);
+  FormRoom.Dappers := FDappers;
   FormRoom.UpdateRoom;
 end;
 
@@ -524,6 +527,7 @@ begin
       wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
       wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
       wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
+      FDappers := wXmlDoc.DocumentElement.SelectInteger('/guild/money');
       wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
       wStream := TMemoryStream.Create;
       GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);

@@ -72,6 +72,8 @@ type
     BtCharacter: TSevenButton;
     BtAlert: TSevenButton;
     BtLog: TSevenButton;
+    BtBackup: TSevenButton;
+    MenuAutoBackup: TMenuItem;
     procedure BtOptionsClick(Sender: TObject);
     procedure TimerStatusTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -92,6 +94,7 @@ type
     procedure PopupMenuTrayPopup(Sender: TObject);
     procedure TrayIconBalloonHintClick(Sender: TObject);
     procedure BtLogClick(Sender: TObject);
+    procedure BtBackupClick(Sender: TObject);
   private
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
@@ -117,7 +120,7 @@ implementation
 
 uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
   UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter, DateUtils,
-  UnitFormAlert, SyncObjs, Contnrs, UnitFormlog;
+  UnitFormAlert, SyncObjs, Contnrs, UnitFormlog, UnitFormBackup;
 
 {$R *.dfm}
 
@@ -204,9 +207,13 @@ begin
   FormAlert.Parent := PnContainer;
   FormAlert.Align := alClient;
 
-  Formlog.BorderStyle := bsNone;
-  Formlog.Parent := PnContainer;
-  Formlog.Align := alClient;
+  FormLog.BorderStyle := bsNone;
+  FormLog.Parent := PnContainer;
+  FormLog.Align := alClient;
+
+  FormBackup.BorderStyle := bsNone;
+  FormBackup.Parent := PnContainer;
+  FormBackup.Align := alClient;
 
   FormRoomFilter.BorderStyle := bsNone;
   FormRoomFilter.Align := alClient;
@@ -219,6 +226,9 @@ begin
 
   // Sets default filter
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
+
+  // Start automatic backup
+  FormBackup.StartAutoBackup;
 
   // Check version
   StatusBar.Panels.Items[4].Text := RS_VERSION + ' ' + GConfig.Version;
@@ -529,6 +539,7 @@ begin
   GConfig.SaveFilter := MenuKeepFilter.Checked;
   GConfig.SaveAlert := MenuSaveAlert.Checked;
   GConfig.ShowHint := MenuShowHint.Checked;
+  GConfig.AutoBackup := MenuAutoBackup.Checked;
 end;
 
 {*******************************************************************************
@@ -559,6 +570,15 @@ Show log window
 procedure TFormMain.BtLogClick(Sender: TObject);
 begin
   ShowMenuForm(FormLog);
+  Constraints.MinHeight := 645;
+end;
+
+{*******************************************************************************
+Show backup window
+*******************************************************************************}
+procedure TFormMain.BtBackupClick(Sender: TObject);
+begin
+  ShowMenuForm(FormBackup);
   Constraints.MinHeight := 645;
 end;
 

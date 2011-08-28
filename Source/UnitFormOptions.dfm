@@ -1,9 +1,9 @@
 object FormOptions: TFormOptions
-  Left = 384
+  Left = 431
   Top = 293
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 518
+  ClientHeight = 530
   ClientWidth = 392
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -17,12 +17,12 @@ object FormOptions: TFormOptions
   OnShow = FormShow
   DesignSize = (
     392
-    518)
+    530)
   PixelsPerInch = 96
   TextHeight = 14
   object GbAlert: TGroupBox
     Left = 5
-    Top = 309
+    Top = 321
     Width = 381
     Height = 176
     Caption = 'Alertes'
@@ -218,7 +218,7 @@ object FormOptions: TFormOptions
   end
   object GbProxy: TGroupBox
     Left = 5
-    Top = 159
+    Top = 171
     Width = 381
     Height = 149
     Caption = 'Proxy'
@@ -333,7 +333,7 @@ object FormOptions: TFormOptions
     Left = 5
     Top = 2
     Width = 381
-    Height = 156
+    Height = 168
     Caption = 'G'#233'n'#233'ral'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -370,7 +370,7 @@ object FormOptions: TFormOptions
     end
     object Label1: TLabel
       Left = 212
-      Top = 106
+      Top = 118
       Width = 140
       Height = 14
       Alignment = taRightJustify
@@ -385,25 +385,12 @@ object FormOptions: TFormOptions
     end
     object Label2: TLabel
       Left = 8
-      Top = 130
+      Top = 142
       Width = 214
       Height = 14
       Caption = 'Nombre de threads pour la synchronisation :'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object LbNeededFile: TLabel
-      Left = 8
-      Top = 85
-      Width = 287
-      Height = 14
-      Caption = '(Ce fichier est n'#233'cessaire pour afficher le nom des objets !)'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
       Font.Height = -11
       Font.Name = 'Arial'
       Font.Style = []
@@ -444,7 +431,7 @@ object FormOptions: TFormOptions
     end
     object PnColor: TPanel
       Left = 355
-      Top = 104
+      Top = 116
       Width = 18
       Height = 18
       Cursor = crHandPoint
@@ -468,7 +455,7 @@ object FormOptions: TFormOptions
     end
     object EdThreadCount: TSpinEdit
       Left = 312
-      Top = 125
+      Top = 137
       Width = 61
       Height = 23
       Font.Charset = DEFAULT_CHARSET
@@ -485,7 +472,7 @@ object FormOptions: TFormOptions
     end
     object CbKeepFilter: TCheckBox
       Left = 8
-      Top = 105
+      Top = 117
       Width = 201
       Height = 17
       Caption = 'Garder le filtre actif'
@@ -555,10 +542,27 @@ object FormOptions: TFormOptions
       Spacing = 5
       Marging = 5
     end
+    object LbNeededFile: TStaticText
+      Left = 8
+      Top = 85
+      Width = 363
+      Height = 30
+      AutoSize = False
+      Caption = 
+        'Ce fichier doit '#234'tre valide pour afficher le nom des objets et a' +
+        'ctiver la sauvegarde des fichiers !'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 6
+    end
   end
   object BtOK: TSevenButton
     Left = 120
-    Top = 491
+    Top = 503
     Width = 85
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -612,7 +616,7 @@ object FormOptions: TFormOptions
   end
   object BtCancel: TSevenButton
     Left = 210
-    Top = 491
+    Top = 503
     Width = 85
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -665,7 +669,7 @@ object FormOptions: TFormOptions
   end
   object BtApply: TSevenButton
     Left = 300
-    Top = 491
+    Top = 503
     Width = 85
     Height = 23
     Anchors = [akLeft, akBottom]

@@ -83,6 +83,7 @@ type
     FEyes: TPNGObject;
     FGuardFile: TIniFile;
     FLogFile: String;
+    FDappers: Integer;
 
     procedure FillRoom(AGuildID: String);
     procedure FillInvent(ACharID: String);
@@ -109,6 +110,7 @@ type
     function  LogToDelphiColor(ALogColor: String): TColor;
 
     property  TotalVolume: Double read FTotalVolume write FTotalVolume;
+    property  Dappers: Integer read FDappers write FDappers;
   end;
 
 var
@@ -1010,10 +1012,14 @@ begin
 
       // Update available options
       if FirstLoading then begin
-        DatePickerStart.Date := wDateStart;
-        TimePickerStart.Time := wDateStart;
-        DatePickerEnd.Date := wDateEnd;
-        TimePickerEnd.Time := wDateEnd;
+        DatePickerStart.MinDate := DateOf(wDateStart);
+        DatePickerStart.MaxDate := DateOf(wDateEnd);
+        DatePickerStart.Date := DateOf(wDateStart);
+        TimePickerStart.Time := TimeOf(wDateStart);
+        DatePickerEnd.MinDate := DateOf(wDateStart);
+        DatePickerEnd.MaxDate := DateOf(wDateEnd);
+        DatePickerEnd.Date := DateOf(wDateEnd);
+        TimePickerEnd.Time := TimeOf(wDateEnd);
 
         ListChannels.Items.Assign(wListChannels);
         ChangeChecked(ListChannels, True);

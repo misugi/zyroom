@@ -81,6 +81,8 @@ type
     procedure BtUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
+    FDappers: Integer;
+    
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
@@ -419,7 +421,7 @@ begin
 end;
 
 {*******************************************************************************
-Displays information of the selected guild
+Displays information of the selected character
 *******************************************************************************}
 procedure TFormCharacter.BtRoomClick(Sender: TObject);
 begin
@@ -456,6 +458,7 @@ begin
   if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormInvent.TabInvent.TabIndex := _INVENT_ROOM;
   FormMain.ShowMenuForm(FormInvent);
+  FormInvent.Dappers := FDappers;
   FormInvent.UpdateRoom;
 end;
 
@@ -626,6 +629,7 @@ begin
         wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
         wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
         wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
+        FDappers := wXmlDoc.DocumentElement.SelectInteger('/character/money');
         wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
         GRyzomApi.ApiBallisticMystix(
             wXmlDoc.DocumentElement.SelectString('/character/race'),

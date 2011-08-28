@@ -27,7 +27,8 @@ interface
 
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
-  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles;
+  Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles,
+  pngimage;
 
 type
   TFormRoom = class(TForm)
@@ -36,10 +37,13 @@ type
     GuildRoom: TScrollRoom;
     Panel1: TPanel;
     LbValueGuildName: TLabel;
-    LbValueVolume: TLabel;
     PopupWatch: TPopupMenu;
     MenuGuard: TMenuItem;
     MenuEdit: TMenuItem;
+    LbValueVolume: TLabel;
+    ImgVolume: TImage;
+    ImgDappers: TImage;
+    LbValueDappers: TLabel;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -59,8 +63,11 @@ type
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
     FGuildID: String;
+    FDappers: Integer;
   public
     procedure UpdateRoom;
+    procedure UpdateLanguage;
+    property Dappers: Integer read FDappers write FDappers;
   end;
 
 var
@@ -98,6 +105,7 @@ procedure TFormRoom.FormShow(Sender: TObject);
 begin
   FormRoomFilter.Parent := PnFilter;
   FormRoomFilter.Show;
+  UpdateLanguage;
 end;
 
 {*******************************************************************************
@@ -164,7 +172,8 @@ begin
   FGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
   FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
   LbValueGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
-  LbValueVolume.Caption := RS_VOLUME + ' : ' + FormatFloat('####0.##',FormProgress.TotalVolume) + '/10000';
+  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume) + '/10000';
+  LbValueDappers.Caption := IntToStr(FDappers);
 end;
 
 procedure TFormRoom.GuildRoomContextPopup(Sender: TObject;
@@ -236,6 +245,15 @@ begin
   end;
 
   FItemImage.Refresh;
+end;
+
+{*******************************************************************************
+Updates language
+*******************************************************************************}
+procedure TFormRoom.UpdateLanguage;
+begin
+  ImgVolume.Hint := RS_VOLUME;
+  ImgDappers.Hint := RS_DAPPERS;
 end;
 
 end.

@@ -116,10 +116,10 @@ RootDir=
 [Version Info]
 IncludeVerInfo=1
 AutoIncBuild=1
-MajorVer=3
-MinorVer=2
-Release=4
-Build=50
+MajorVer=4
+MinorVer=0
+Release=0
+Build=8
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=3.2.4.50
+FileVersion=4.0.0.8
 InternalName=
 LegalCopyright=(C) 2011 Misugi
 LegalTrademarks=

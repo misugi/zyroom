@@ -71,7 +71,7 @@ type
     BtApply: TSevenButton;
     BtAutoBrowsePackFile: TSevenButton;
     CbIgnoreCata: TCheckBox;
-    LbNeededFile: TLabel;
+    LbNeededFile: TStaticText;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtAutoBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -96,7 +96,8 @@ implementation
 uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
   UnitFormGuild, UnitFormGuildEdit, UnitFormMain, UnitFormProgress,
   UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormRoomFilter,
-  UnitFormInvent, UnitFormAlert, UnitFormWatch, UnitFormLog;
+  UnitFormInvent, UnitFormAlert, UnitFormWatch, UnitFormLog,
+  UnitFormBackup, UnitFormName;
 
 {$R *.dfm}
 
@@ -297,10 +298,14 @@ begin
   TranslateComponent(FormAlert);
   TranslateComponent(FormWatch);
   TranslateComponent(FormLog);
+  TranslateComponent(FormBackup);
+  TranslateComponent(FormName);
+  
   FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;
   FormGuild.UpdateLanguage;
   FormRoomFilter.UpdateLanguage;
+  FormRoom.UpdateLanguage;
 
   // Color of the interface
   FormOptions.Color := GConfig.InterfaceColor;
@@ -315,6 +320,10 @@ begin
   FormRoomFilter.Color := GConfig.InterfaceColor;
   FormInvent.Color := GConfig.InterfaceColor;
   FormLog.Color := GConfig.InterfaceColor;
+  FormAlert.Color := GConfig.InterfaceColor;
+  FormWatch.Color := GConfig.InterfaceColor;
+  FormBackup.Color := GConfig.InterfaceColor;
+  FormName.Color := GConfig.InterfaceColor;
 
   // String resource file
   if FileExists(GConfig.PackFile) then
@@ -330,6 +339,9 @@ begin
   end else begin
     GRyzomApi.SetProxyParameters('', 0, '', '');
   end;
+
+  // Init backup window
+  FormBackup.Init;
 end;
 
 {*******************************************************************************

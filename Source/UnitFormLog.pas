@@ -142,7 +142,7 @@ begin
   if FileExists(FFilterFile) then
     ListFilter.Items.LoadFromFile(FFilterFile);
 
-  OdBrowseLogFile.InitialDir := GetRyzomInstallDir + '\Save';
+  OdBrowseLogFile.InitialDir := ExtractFileDir(GConfig.PackFile);
 end;
 
 {*******************************************************************************
@@ -209,8 +209,8 @@ begin
     LoadLogFile;
     FFirstLoading := False;
 
-    FDateStart := DateOf(DatePickerStart.Date) + TimePickerStart.Time;
-    FDateEnd := DateOf(DatePickerEnd.Date) + TimePickerEnd.Time;
+    FDateStart := DateOf(DatePickerStart.DateTime) + TimeOf(TimePickerStart.DateTime);
+    FDateEnd := DateOf(DatePickerEnd.DateTime) + TimeOf(TimePickerEnd.DateTime);
     ChangeEnabled(True);
   end;
 end;

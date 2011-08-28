@@ -224,7 +224,7 @@ object FormMain: TFormMain
       OnClick = LbServerClick
     end
     object ImgUpdate: TImage
-      Left = 455
+      Left = 490
       Top = 2
       Width = 24
       Height = 24
@@ -275,10 +275,13 @@ object FormMain: TFormMain
     object BtOptions: TSevenButton
       Left = 5
       Top = 3
-      Width = 85
+      Width = 23
       Height = 23
-      Caption = 'Options'
+      Hint = 'Options'
+      ParentShowHint = False
+      ShowHint = True
       TabOrder = 0
+      TabStop = False
       OnClick = BtOptionsClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -320,16 +323,53 @@ object FormMain: TFormMain
       Fonts.FontFocused.Height = -11
       Fonts.FontFocused.Name = 'Arial'
       Fonts.FontFocused.Style = []
+      Pictures.PictureNormal.Data = {
+        0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001000
+        00001008060000001FF3FF61000000097048597300000B1200000B1201D2DD7E
+        FC0000012F6943435050686F746F73686F70204943432070726F66696C650000
+        78DAAD8EBD4AC3501C47CF6D45C121880437E1E2202EE2C7D631694B111C6A14
+        49B235C9A58A36B9DC5C3F3AF9123E84838BA3A06F5071109C7C0437411C1C1C
+        22647010C1339DFF19FEFCA0B1E275FC6E630E46B93541CF976114CB9947A669
+        02C0202DB5D7EF6F03E445AEF8C1FB3302E069D5EBF85DFEC66CAA8D053E81CD
+        4C95298875203BB3DA82B804DCE4485B1057806BF68236883BC019563E019CA4
+        F217C0316114837805DC6118C5D0007093CA5DC0B5EADC02B40B3D3687C3032B
+        375AAD96F4B2225172775C5A352AE5569E1646176660550654FBAADD9ED6C74A
+        063D9FFF258C6259D9DB0E02100B93BAD5A427E6F45B8578F8FDAE7F8CEFC10B
+        60EAB66EFB1F70BD068BCDBA2D2FC1FC05DCE82FF1C0503DFA8BE6E600000004
+        67414D410000D8EBF51C14AA000002BB4944415478DA63644000A6F0F070F995
+        2B57DEDFB57DD7B2D68ED689FFFFFFBFF5F9F367D6F3E7CFBF62C00118610C51
+        20D8BFFFC8C5FB8F9E3E95929031FEF1E3CB5D097111DEFAFADAAE254B16F6E1
+        35A0BCBC3AD9C4C4DC939B5F2298978F9F818B9D0D2CC9C9C5CE70EDEAB913EF
+        DE7C39959616510714FA88D5001F9FC0C286E6897DEFDEBF65E0E4E46278F9E2
+        F95F3E7E3E2676760E461E2E3E861DDB379EADAECA36032AFD87CD00E1AEEE19
+        533475CC220404F81876EDDC7EB5B92137D8D327AAB4B4B436F9C58BD70CEFDE
+        BD79B26CF1D4F863C7F6EEC330404C4CCCBCA165C65E4949796E11617E86EBD7
+        CF9E494B0E372D2EAE6A0C0E4DAD7BF5FA35C3E327CF18E6CCE8A8B878F14427
+        562F5859B9E434B64C9DCCCBCDC2202A26C4C0CACCF0E6EFDFFFFC5FBE7C65FD
+        F0E517C3A2450B0ECF9EDE6C8733105D3C42A69A1859870505078828C84A30FC
+        F9F58781898585E1F79F3F0C4B97AF797FFAD4A97B6B574FF758B66C85415454
+        C4112B2BAB7FC78E1DFB851C8D8C5C5C5C06D5F5334F2BCA8B332AAB2A31BD7D
+        FDE6DFED7BCF98FA7B9A8AFCBDEDB9ADED5C5C3535758C9F3C7B78EECECD6B77
+        7273B39250D20110088889C906BE7AF5F8B4874FC2BCFBF7AE1FB979EDE4A6AE
+        AEC9D526E6565A86063A521CECAC60858F1E3DFDB26CF98A058DF5A5C58C0CD8
+        8102107F06E2B78D8D3DAB1292D2436FDEBCF97DE1E205E7A223634C5454D5D9
+        A74D9BB866426F43182E03C0405151CDA6A37BF66E3959798E33A70F9FC9CD89
+        B598326DD94579054DED7BF76E7FEAE9AB0DC66B00287F1497771E7474F4B2F9
+        F3FBDB3F2E4E96A71F3FFD94FEC7C0C4B465F3AA9D8BE7F7F912344053DBA83C
+        3C322DDDD2CA46FEEB97AF0C2CACAC0C972E9E7F39774E7FDFFD3B5726123200
+        0CD4D50D4B85444454EDECBDFCCE9C397CF4F1E307976F5D3FD7801E0B44004E
+        530686EFD7818C2F3011009DF81ADDDE580E9E0000000049454E44AE426082}
       Spacing = 5
-      Marging = 5
+      Marging = 3
     end
     object BtGuild: TSevenButton
-      Left = 95
+      Left = 33
       Top = 3
       Width = 85
       Height = 23
       Caption = 'Guildes'
       TabOrder = 1
+      TabStop = False
       OnClick = BtGuildClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -375,12 +415,13 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtCharacter: TSevenButton
-      Left = 185
+      Left = 123
       Top = 3
       Width = 85
       Height = 23
       Caption = 'Personnages'
       TabOrder = 2
+      TabStop = False
       OnClick = BtCharacterClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -426,12 +467,13 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtAlert: TSevenButton
-      Left = 275
+      Left = 213
       Top = 3
       Width = 85
       Height = 23
       Caption = 'Alertes'
       TabOrder = 3
+      TabStop = False
       OnClick = BtAlertClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -477,13 +519,66 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtLog: TSevenButton
-      Left = 365
+      Left = 303
       Top = 3
       Width = 85
       Height = 23
       Caption = 'Log'
       TabOrder = 4
+      TabStop = False
       OnClick = BtLogClick
+      Border.ColorNormal = 7368816
+      Border.ColorHot = 11632444
+      Border.ColorDown = 9134636
+      Border.ColorDisabled = 11907757
+      Border.ColorFocused = 11632444
+      Border.WidthNormal = 1
+      Border.WidthHot = 1
+      Border.WidthDown = 1
+      Border.WidthDisabled = 1
+      Border.WidthFocused = 1
+      Colors.ColorNormalFrom = 16579836
+      Colors.ColorNormalTo = 13619151
+      Colors.ColorHotFrom = 16579836
+      Colors.ColorHotTo = 16112039
+      Colors.ColorDownFrom = 16579836
+      Colors.ColorDownTo = 14398312
+      Colors.ColorDisabledFrom = 16053492
+      Colors.ColorDisabledTo = 16053492
+      Colors.ColorFocusedFrom = 16579836
+      Colors.ColorFocusedTo = 13619151
+      Fonts.FontHot.Charset = DEFAULT_CHARSET
+      Fonts.FontHot.Color = clWindowText
+      Fonts.FontHot.Height = -11
+      Fonts.FontHot.Name = 'Arial'
+      Fonts.FontHot.Style = []
+      Fonts.FontDown.Charset = DEFAULT_CHARSET
+      Fonts.FontDown.Color = clWindowText
+      Fonts.FontDown.Height = -11
+      Fonts.FontDown.Name = 'Arial'
+      Fonts.FontDown.Style = []
+      Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+      Fonts.FontDisabled.Color = clGrayText
+      Fonts.FontDisabled.Height = -11
+      Fonts.FontDisabled.Name = 'Arial'
+      Fonts.FontDisabled.Style = []
+      Fonts.FontFocused.Charset = DEFAULT_CHARSET
+      Fonts.FontFocused.Color = clWindowText
+      Fonts.FontFocused.Height = -11
+      Fonts.FontFocused.Name = 'Arial'
+      Fonts.FontFocused.Style = []
+      Spacing = 5
+      Marging = 5
+    end
+    object BtBackup: TSevenButton
+      Left = 393
+      Top = 3
+      Width = 85
+      Height = 23
+      Caption = 'Sauvegarde'
+      TabOrder = 5
+      TabStop = False
+      OnClick = BtBackupClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
       Border.ColorDown = 9134636
@@ -11703,6 +11798,10 @@ object FormMain: TFormMain
     OnPopup = PopupMenuTrayPopup
     Left = 596
     Top = 52
+    object MenuAutoBackup: TMenuItem
+      AutoCheck = True
+      Caption = 'Activer la sauvegarde automatique'
+    end
     object MenuKeepFilter: TMenuItem
       AutoCheck = True
       Caption = 'Garder le filtre actif'

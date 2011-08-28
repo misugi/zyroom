@@ -117,6 +117,7 @@ resourcestring
   RS_ECOSYS_LAKES = 'Lacs';
 
   RS_VOLUME = 'Volume';
+  RS_DAPPERS = 'Dappers';
   RS_MENU_WATCH = 'Surveiller';
   RS_MENU_UNWATCH = 'Ne plus surveiller';
 

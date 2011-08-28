@@ -57,6 +57,7 @@ object FormLog: TFormLog
       Height = 23
       Caption = 'Charger'
       TabOrder = 0
+      TabStop = False
       OnClick = BtLoadClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -112,6 +113,7 @@ object FormLog: TFormLog
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
+      TabStop = False
       OnClick = BtHtmlClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -167,6 +169,7 @@ object FormLog: TFormLog
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
+      TabStop = False
       OnClick = BtBbcodeClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -222,6 +225,7 @@ object FormLog: TFormLog
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
+      TabStop = False
       OnClick = BtTextClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -298,7 +302,7 @@ object FormLog: TFormLog
       Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 6
     end
     object TimePickerStart: TDateTimePicker
       Left = 523
@@ -317,7 +321,7 @@ object FormLog: TFormLog
       ParentFont = False
       ParentShowHint = False
       ShowHint = False
-      TabOrder = 6
+      TabOrder = 5
     end
     object TimePickerEnd: TDateTimePicker
       Left = 686
@@ -342,6 +346,7 @@ object FormLog: TFormLog
     Top = 28
     Width = 571
     Height = 579
+    TabStop = False
     Align = alClient
     TabOrder = 1
     ControlData = {
@@ -390,6 +395,7 @@ object FormLog: TFormLog
         Top = 16
         Width = 170
         Height = 102
+        TabStop = False
         Anchors = [akLeft, akTop, akBottom]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -417,6 +423,7 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        TabStop = False
         OnClick = BtCheckChannelsClick
         Border.ColorNormal = 7368816
         Border.ColorHot = 11632444
@@ -475,6 +482,7 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        TabStop = False
         OnClick = BtUncheckChannelsClick
         Border.ColorNormal = 7368816
         Border.ColorHot = 11632444
@@ -542,6 +550,7 @@ object FormLog: TFormLog
         Top = 16
         Width = 170
         Height = 118
+        TabStop = False
         Anchors = [akLeft, akTop, akBottom]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -567,6 +576,7 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        TabStop = False
         OnClick = BtCheckCharactersClick
         Border.ColorNormal = 7368816
         Border.ColorHot = 11632444
@@ -625,6 +635,7 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        TabStop = False
         OnClick = BtUncheckCharactersClick
         Border.ColorNormal = 7368816
         Border.ColorHot = 11632444
@@ -678,6 +689,7 @@ object FormLog: TFormLog
       Anchors = [akLeft, akBottom]
       Caption = 'D'#233'faut'
       TabOrder = 2
+      TabStop = False
       OnClick = BtDefaultClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -736,6 +748,7 @@ object FormLog: TFormLog
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 3
+      TabStop = False
       OnClick = BtOKClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
@@ -873,6 +886,7 @@ object FormLog: TFormLog
         Top = 71
         Width = 171
         Height = 17
+        TabStop = False
         Caption = 'Afficher la date'
         Checked = True
         Font.Charset = DEFAULT_CHARSET
@@ -889,6 +903,7 @@ object FormLog: TFormLog
         Top = 53
         Width = 171
         Height = 17
+        TabStop = False
         Caption = 'Messages syst'#232'me'
         Checked = True
         Font.Charset = DEFAULT_CHARSET
@@ -931,6 +946,7 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        TabStop = False
         OnClick = BtAddFilterClick
         Border.ColorNormal = 7368816
         Border.ColorHot = 11632444
@@ -989,6 +1005,7 @@ object FormLog: TFormLog
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        TabStop = False
         OnClick = BtDelFilterClick
         Border.ColorNormal = 7368816
         Border.ColorHot = 11632444
@@ -1038,6 +1055,7 @@ object FormLog: TFormLog
         Top = 16
         Width = 170
         Height = 75
+        TabStop = False
         Anchors = [akLeft, akTop, akBottom]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1057,6 +1075,7 @@ object FormLog: TFormLog
         Top = 94
         Width = 170
         Height = 22
+        TabStop = False
         Anchors = [akLeft, akBottom]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

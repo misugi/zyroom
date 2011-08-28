@@ -13,7 +13,8 @@ type
 function MdkGetFileContent(AFileName: String): String;
 function MdkGetSystemDir(AFolder: Cardinal = CSIDL_DRIVES): String;
 function MdkGetFileDate(FileName: String): TDateTime;
-function MdkListFiles(ADirectory: String; AFilter: String; ASubDir: Boolean; AList: TStringList): Integer;
+function MdkListFiles(ADirectory: String; AFilter: String; ASubDir: Boolean; AList: TStrings): Integer;
+function MdkListDirs(ADirectory: String; AFilter: String; AList: TStrings): Integer;
 function MdkRemoveFiles(ADirectory: String; AFilter: String; ASudDir: Boolean): Boolean;
 function MdkRemoveDir(ADirectory: String): Boolean;
 function MdkBoolToInteger(AValue: Boolean): Integer;
@@ -72,7 +73,7 @@ end;
 {*******************************************************************************
 Returns list of files than exists in a directory
 *******************************************************************************}
-function MdkListFiles(ADirectory: String; AFilter: String; ASubDir: Boolean; AList: TStringList): Integer;
+function MdkListFiles(ADirectory: String; AFilter: String; ASubDir: Boolean; AList: TStrings): Integer;
 var
   i: Integer;
   wRec: TSearchRec;
@@ -100,7 +101,6 @@ begin
     i := FindNext(wRec);
   end;
   FindClose(wRec);
-  AList.Sort;
 end;
 
 {*******************************************************************************
@@ -115,6 +115,7 @@ begin
   try
     Result := True;
     MdkListFiles(ADirectory, AFilter, ASudDir, wList);
+    wList.Sort;
     for i := 0 to wList.Count - 1 do begin
       Result := Result and DeleteFile(wList[i]);
     end;
@@ -262,6 +263,30 @@ begin
   end;
   
   Result:= wValue;
+end;
+
+{*******************************************************************************
+Returns list of files than exists in a directory
+*******************************************************************************}
+function MdkListDirs(ADirectory: String; AFilter: String; AList: TStrings): Integer;
+var
+  i: Integer;
+  wRec: TSearchRec;
+  wDir: String;
+  wAttr: Integer;
+begin
+  wAttr := faDirectory;
+  wDir := IncludeTrailingPathDelimiter(ADirectory);
+  Result := 0;
+  i := FindFirst(wDir + AFilter, wAttr, wRec);
+  while i = 0 do begin
+    if (wRec.Name <> '.') and (wRec.Name <> '..') then begin
+      AList.Append(wDir + wRec.Name);
+      Result := Result + 1;
+    end;
+    i := FindNext(wRec);
+  end;
+  FindClose(wRec);
 end;
 
 end.

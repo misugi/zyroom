@@ -8,98 +8,103 @@
   resources were bound to the produced executable.
 */
 
-#define UnitFormMain_RS_NEW_VERSION 64848
-#define UnitFormMain_RS_SEASON_SPRING 64849
-#define UnitFormMain_RS_SEASON_SUMMER 64850
-#define UnitFormMain_RS_SEASON_AUTUMN 64851
-#define UnitFormMain_RS_SEASON_WINTER 64852
-#define UnitFormMain_RS_VERSION 64853
-#define UnitFormMain_RS_NEXT_SEASON 64854
-#define UnitFormMain_RS_AT 64855
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64856
-#define UnitFormProgress_RS_PROGRESS_ROOM 64857
-#define UnitFormProgress_RS_CONNEXION_ERROR 64858
-#define UnitFormProgress_RS_PARSE_LOG 64859
-#define UnitFormRoomFilter_RS_FOB 64864
-#define UnitFormRoomFilter_RS_NEEDED_FILE 64865
-#define UnitFormGuild_RS_NEW_GUILD 64866
-#define UnitFormGuild_RS_CHANGE_KEY 64867
-#define UnitFormGuild_RS_COL_GUILD_LOGO 64868
-#define UnitFormGuild_RS_COL_GUILD_NAME 64869
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 64870
-#define UnitFormGuild_RS_COL_COMMENT 64871
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 64872
-#define UnitFormGuild_RS_GUILD_KEY 64873
-#define UnitFormGuild_RS_CHECK_CHANGE 64874
-#define UnitFormGuild_RS_UP 64875
-#define UnitFormGuild_RS_DOWN 64876
-#define UnitFormMain_RS_STATUS_CLOSED 64877
-#define UnitFormMain_RS_STATUS_OPEN 64878
-#define UnitFormMain_RS_STATUS_RESTRICTED 64879
-#define UnitFormWatch_RS_DURABILITY_MIN 64880
-#define UnitFormAlert_RS_ALERT_DURABILITY 64881
-#define UnitFormAlert_RS_ALERT_QUANTITY 64882
-#define UnitFormAlert_RS_ALERT_UNFOUND 64883
-#define UnitFormAlert_RS_ALERT_ADDED 64884
-#define UnitFormAlert_RS_ALERT_REMOVED 64885
-#define UnitFormAlert_RS_ALERT_MODIFIED 64886
-#define UnitFormAlert_RS_ALERT_SALES 64887
-#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64888
-#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64889
-#define UnitFormAlert_RS_ALERT_SEASON 64890
-#define UnitFormAlert_RS_ALERT_HINT 64891
-#define UnitFormRoomFilter_RS_SKIN 64892
-#define UnitFormRoomFilter_RS_HPB 64893
-#define UnitFormRoomFilter_RS_SAB 64894
-#define UnitFormRoomFilter_RS_STB 64895
-#define OleConst_SNoWindowHandle 64896
-#define OleConst_SInvalidLicense 64897
-#define OleConst_SNotLicensed 64898
-#define OleConst_sNoRunningObject 64899
-#define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64900
-#define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64901
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64902
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 64903
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 64904
-#define UnitFormCharacter_RS_CHAR_COL_COMMENT 64905
-#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 64906
-#define UnitFormCharacter_RS_CHAR_KEY 64907
-#define UnitFormCharacter_RS_CHECK_SALES 64908
-#define UnitFormCharacter_RS_UP 64909
-#define UnitFormCharacter_RS_DOWN 64910
-#define UnitFormWatch_RS_QUANTITY_MIN 64911
-#define pnglang_EPNGUnknownCriticalChunkText 64912
-#define pnglang_EPNGUnknownCompressionText 64913
-#define pnglang_EPNGUnknownInterlaceText 64914
-#define pnglang_EPNGCannotAssignChunkText 64915
-#define pnglang_EPNGUnexpectedEndText 64916
-#define pnglang_EPNGNoImageDataText 64917
-#define pnglang_EPNGCouldNotLoadResourceText 64918
-#define pnglang_EPNGOutMemoryText 64919
-#define pnglang_EPNGHeaderNotPresentText 64920
-#define pnglang_EInvalidNewSize 64921
-#define ComConst_SOleError 64922
-#define ComConst_SNoMethod 64923
-#define ComConst_SVarNotObject 64924
-#define ComConst_STooManyParams 64925
-#define ComConst_SDCOMNotInstalled 64926
-#define OleConst_SCannotActivate 64927
-#define UnitRyzom_RS_AND 64928
-#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64929
-#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64930
-#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64931
-#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64932
-#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64933
-#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64934
-#define pnglang_EPngInvalidCRCText 64935
-#define pnglang_EPNGInvalidIHDRText 64936
-#define pnglang_EPNGMissingMultipleIDATText 64937
-#define pnglang_EPNGZLIBErrorText 64938
-#define pnglang_EPNGInvalidPaletteText 64939
-#define pnglang_EPNGInvalidFileHeaderText 64940
-#define pnglang_EPNGIHDRNotFirstText 64941
-#define pnglang_EPNGSizeExceedsText 64942
-#define pnglang_EPNGUnknownPalEntryText 64943
+#define UnitFormProgress_RS_PARSE_LOG 64832
+#define UnitFormGuild_RS_UP 64848
+#define UnitFormGuild_RS_DOWN 64849
+#define UnitFormMain_RS_STATUS_CLOSED 64850
+#define UnitFormMain_RS_STATUS_OPEN 64851
+#define UnitFormMain_RS_STATUS_RESTRICTED 64852
+#define UnitFormMain_RS_NEW_VERSION 64853
+#define UnitFormMain_RS_SEASON_SPRING 64854
+#define UnitFormMain_RS_SEASON_SUMMER 64855
+#define UnitFormMain_RS_SEASON_AUTUMN 64856
+#define UnitFormMain_RS_SEASON_WINTER 64857
+#define UnitFormMain_RS_VERSION 64858
+#define UnitFormMain_RS_NEXT_SEASON 64859
+#define UnitFormMain_RS_AT 64860
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64861
+#define UnitFormProgress_RS_PROGRESS_ROOM 64862
+#define UnitFormProgress_RS_CONNEXION_ERROR 64863
+#define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64864
+#define UnitFormRoomFilter_RS_SKIN 64865
+#define UnitFormRoomFilter_RS_HPB 64866
+#define UnitFormRoomFilter_RS_SAB 64867
+#define UnitFormRoomFilter_RS_STB 64868
+#define UnitFormRoomFilter_RS_FOB 64869
+#define UnitFormRoomFilter_RS_NEEDED_FILE 64870
+#define UnitFormGuild_RS_NEW_GUILD 64871
+#define UnitFormGuild_RS_CHANGE_KEY 64872
+#define UnitFormGuild_RS_COL_GUILD_LOGO 64873
+#define UnitFormGuild_RS_COL_GUILD_NAME 64874
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 64875
+#define UnitFormGuild_RS_COL_COMMENT 64876
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 64877
+#define UnitFormGuild_RS_GUILD_KEY 64878
+#define UnitFormGuild_RS_CHECK_CHANGE 64879
+#define UnitFormWatch_RS_QUANTITY_MIN 64880
+#define UnitFormWatch_RS_DURABILITY_MIN 64881
+#define UnitFormAlert_RS_ALERT_DURABILITY 64882
+#define UnitFormAlert_RS_ALERT_QUANTITY 64883
+#define UnitFormAlert_RS_ALERT_UNFOUND 64884
+#define UnitFormAlert_RS_ALERT_ADDED 64885
+#define UnitFormAlert_RS_ALERT_REMOVED 64886
+#define UnitFormAlert_RS_ALERT_MODIFIED 64887
+#define UnitFormAlert_RS_ALERT_SALES 64888
+#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64889
+#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64890
+#define UnitFormAlert_RS_ALERT_SEASON 64891
+#define UnitFormAlert_RS_ALERT_HINT 64892
+#define UnitFormBackup_RS_DELETE_CONFIRMATION 64893
+#define UnitFormBackup_RS_DESTORE_CONFIRMATION 64894
+#define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64895
+#define OleConst_SCannotActivate 64896
+#define OleConst_SNoWindowHandle 64897
+#define OleConst_SInvalidLicense 64898
+#define OleConst_SNotLicensed 64899
+#define OleConst_sNoRunningObject 64900
+#define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64901
+#define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64902
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64903
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 64904
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 64905
+#define UnitFormCharacter_RS_CHAR_COL_COMMENT 64906
+#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 64907
+#define UnitFormCharacter_RS_CHAR_KEY 64908
+#define UnitFormCharacter_RS_CHECK_SALES 64909
+#define UnitFormCharacter_RS_UP 64910
+#define UnitFormCharacter_RS_DOWN 64911
+#define pnglang_EPNGUnknownPalEntryText 64912
+#define pnglang_EPNGUnknownCriticalChunkText 64913
+#define pnglang_EPNGUnknownCompressionText 64914
+#define pnglang_EPNGUnknownInterlaceText 64915
+#define pnglang_EPNGCannotAssignChunkText 64916
+#define pnglang_EPNGUnexpectedEndText 64917
+#define pnglang_EPNGNoImageDataText 64918
+#define pnglang_EPNGCouldNotLoadResourceText 64919
+#define pnglang_EPNGOutMemoryText 64920
+#define pnglang_EPNGHeaderNotPresentText 64921
+#define pnglang_EInvalidNewSize 64922
+#define ComConst_SOleError 64923
+#define ComConst_SNoMethod 64924
+#define ComConst_SVarNotObject 64925
+#define ComConst_STooManyParams 64926
+#define ComConst_SDCOMNotInstalled 64927
+#define UnitRyzom_RS_MINUTES 64928
+#define UnitRyzom_RS_AND 64929
+#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64930
+#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64931
+#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64932
+#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64933
+#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64934
+#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64935
+#define pnglang_EPngInvalidCRCText 64936
+#define pnglang_EPNGInvalidIHDRText 64937
+#define pnglang_EPNGMissingMultipleIDATText 64938
+#define pnglang_EPNGZLIBErrorText 64939
+#define pnglang_EPNGInvalidPaletteText 64940
+#define pnglang_EPNGInvalidFileHeaderText 64941
+#define pnglang_EPNGIHDRNotFirstText 64942
+#define pnglang_EPNGSizeExceedsText 64943
 #define UnitRyzom_RS_RACE_TRYKER 64944
 #define UnitRyzom_RS_RACE_MATIS 64945
 #define UnitRyzom_RS_ECOSYS_COMMON 64946
@@ -109,13 +114,13 @@
 #define UnitRyzom_RS_ECOSYS_FOREST 64950
 #define UnitRyzom_RS_ECOSYS_LAKES 64951
 #define UnitRyzom_RS_VOLUME 64952
-#define UnitRyzom_RS_MENU_WATCH 64953
-#define UnitRyzom_RS_MENU_UNWATCH 64954
-#define UnitRyzom_RS_TAB_PET 64955
-#define UnitRyzom_RS_TAB_MOUNT 64956
-#define UnitRyzom_RS_DAYS 64957
-#define UnitRyzom_RS_HOURS 64958
-#define UnitRyzom_RS_MINUTES 64959
+#define UnitRyzom_RS_DAPPERS 64953
+#define UnitRyzom_RS_MENU_WATCH 64954
+#define UnitRyzom_RS_MENU_UNWATCH 64955
+#define UnitRyzom_RS_TAB_PET 64956
+#define UnitRyzom_RS_TAB_MOUNT 64957
+#define UnitRyzom_RS_DAYS 64958
+#define UnitRyzom_RS_HOURS 64959
 #define UnitRyzom_RS_COLOR_BEIGE 64960
 #define UnitRyzom_RS_COLOR_BLACK 64961
 #define UnitRyzom_RS_COLOR_BLUE 64962
@@ -694,6 +699,12 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
+	UnitFormGuild_RS_UP,	"Monter"
+	UnitFormGuild_RS_DOWN,	"Descendre"
+	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
+	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
+	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
 	UnitFormMain_RS_SEASON_SPRING,	"Printemps"
 	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
@@ -705,7 +716,11 @@ BEGIN
 	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
 	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
 	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
-	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
+	UnitFormBackup_RS_DEFAULT_MANUAL_NAME,	"Sauvegarde manuelle"
+	UnitFormRoomFilter_RS_SKIN,	"Skin"
+	UnitFormRoomFilter_RS_HPB,	"Bonus vie"
+	UnitFormRoomFilter_RS_SAB,	"Bonus sève"
+	UnitFormRoomFilter_RS_STB,	"Bonus endurance"
 	UnitFormRoomFilter_RS_FOB,	"Bonus concentration"
 	UnitFormRoomFilter_RS_NEEDED_FILE,	"Fichier \"string_client.pack\" introuvable !"
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
@@ -717,11 +732,7 @@ BEGIN
 	UnitFormGuild_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?"
 	UnitFormGuild_RS_GUILD_KEY,	"Clé de guilde :"
 	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
-	UnitFormGuild_RS_UP,	"Monter"
-	UnitFormGuild_RS_DOWN,	"Descendre"
-	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
-	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
-	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
+	UnitFormWatch_RS_QUANTITY_MIN,	"Quantité minimum :"
 	UnitFormWatch_RS_DURABILITY_MIN,	"Durabilité minimum :"
 	UnitFormAlert_RS_ALERT_DURABILITY,	"la durabilité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
 	UnitFormAlert_RS_ALERT_QUANTITY,	"la quantité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
@@ -734,10 +745,10 @@ BEGIN
 	UnitFormAlert_RS_ALERT_VOLUME_GUILD,	"le volume du coffre est au dessus du seuil limite (%d/%d)"
 	UnitFormAlert_RS_ALERT_SEASON,	"Prochain changement de saison dans %s (%s)"
 	UnitFormAlert_RS_ALERT_HINT,	"Nouvelles alertes !"
-	UnitFormRoomFilter_RS_SKIN,	"Skin"
-	UnitFormRoomFilter_RS_HPB,	"Bonus vie"
-	UnitFormRoomFilter_RS_SAB,	"Bonus sève"
-	UnitFormRoomFilter_RS_STB,	"Bonus endurance"
+	UnitFormBackup_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la sauvegarde sélectionnée ?"
+	UnitFormBackup_RS_DESTORE_CONFIRMATION,	"Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?"
+	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
+	OleConst_SCannotActivate,	"OLE control activation failed"
 	OleConst_SNoWindowHandle,	"Could not obtain OLE control window handle"
 	OleConst_SInvalidLicense,	"License information for %s is invalid"
 	OleConst_SNotLicensed,	"License information for %s not found. You cannot use this control in design mode"
@@ -753,7 +764,7 @@ BEGIN
 	UnitFormCharacter_RS_CHECK_SALES,	"Surveiller les ventes"
 	UnitFormCharacter_RS_UP,	"Monter"
 	UnitFormCharacter_RS_DOWN,	"Descendre"
-	UnitFormWatch_RS_QUANTITY_MIN,	"Quantité minimum :"
+	pnglang_EPNGUnknownPalEntryText,	"There is no such palette entry."
 	pnglang_EPNGUnknownCriticalChunkText,	"This \"Portable Network Graphics\" image contains an unknown critical part which could not be decoded."
 	pnglang_EPNGUnknownCompressionText,	"This \"Portable Network Graphics\" image is encoded with an unknown compression scheme which could not be decoded."
 	pnglang_EPNGUnknownInterlaceText,	"This \"Portable Network Graphics\" image uses an unknown interlace scheme which could not be decoded."
@@ -769,7 +780,7 @@ BEGIN
 	ComConst_SVarNotObject,	"Variant does not reference an automation object"
 	ComConst_STooManyParams,	"Dispatch methods do not support more than 64 parameters"
 	ComConst_SDCOMNotInstalled,	"DCOM not installed"
-	OleConst_SCannotActivate,	"OLE control activation failed"
+	UnitRyzom_RS_MINUTES,	"minutes"
 	UnitRyzom_RS_AND,	"et"
 	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
 	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
@@ -785,7 +796,6 @@ BEGIN
 	pnglang_EPNGInvalidFileHeaderText,	"The file being readed is not a valid \"Portable Network Graphics\" image because it contains an invalid header. This file may be corruped, try obtaining it again."
 	pnglang_EPNGIHDRNotFirstText,	"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
 	pnglang_EPNGSizeExceedsText,	"This \"Portable Network Graphics\" image is not supported because either it's width or height exceeds the maximum size, which is 65535 pixels length."
-	pnglang_EPNGUnknownPalEntryText,	"There is no such palette entry."
 	UnitRyzom_RS_RACE_TRYKER,	"Tryker"
 	UnitRyzom_RS_RACE_MATIS,	"Matis"
 	UnitRyzom_RS_ECOSYS_COMMON,	"Commun"
@@ -795,13 +805,13 @@ BEGIN
 	UnitRyzom_RS_ECOSYS_FOREST,	"Forêt"
 	UnitRyzom_RS_ECOSYS_LAKES,	"Lacs"
 	UnitRyzom_RS_VOLUME,	"Volume"
+	UnitRyzom_RS_DAPPERS,	"Dappers"
 	UnitRyzom_RS_MENU_WATCH,	"Surveiller"
 	UnitRyzom_RS_MENU_UNWATCH,	"Ne plus surveiller"
 	UnitRyzom_RS_TAB_PET,	"Mektoub"
 	UnitRyzom_RS_TAB_MOUNT,	"Monture"
 	UnitRyzom_RS_DAYS,	"jours"
 	UnitRyzom_RS_HOURS,	"heures"
-	UnitRyzom_RS_MINUTES,	"minutes"
 	UnitRyzom_RS_COLOR_BEIGE,	"Beige"
 	UnitRyzom_RS_COLOR_BLACK,	"Noir"
 	UnitRyzom_RS_COLOR_BLUE,	"Bleu"
