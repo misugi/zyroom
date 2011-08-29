@@ -1,6 +1,9 @@
 zyRoom - History of changes
 ===========================
 
+# version 4.0.1 (2001-09-XX)
+Fixed: problem with the option "Enable automatic backup" in the trayicon menu
+
 # version 4.0.0 (2011-08-28)
 New: a new menu to backup files of your game profile !
 New: dappers are now displayed

@@ -550,6 +550,7 @@ begin
   MenuKeepFilter.Checked := GConfig.SaveFilter;
   MenuSaveAlert.Checked := GConfig.SaveAlert;
   MenuShowHint.Checked := GConfig.ShowHint;
+  MenuAutoBackup.Checked := GConfig.AutoBackup;
 end;
 
 {*******************************************************************************
