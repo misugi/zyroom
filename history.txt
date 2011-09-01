@@ -1,7 +1,10 @@
 zyRoom - History of changes
 ===========================
 
-# version 4.0.1 (2001-09-XX)
+# version 4.0.2 (2001-09-01)
+Change: a limit of 30 automatic backups
+
+# version 4.0.1 (2001-08-29)
 Fixed: problem with the option "Enable automatic backup" in the trayicon menu
 
 # version 4.0.0 (2011-08-28)

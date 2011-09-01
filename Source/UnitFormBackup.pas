@@ -30,6 +30,9 @@ uses
   Controls, ExtCtrls, RyzomApi, regexpr, ComCtrls, CheckLst, Graphics, Types,
   Windows, Clipbrd, ActiveX, Spin;
 
+const
+  _MAX_BACKUP = 30;
+
 resourcestring
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la sauvegarde sélectionnée ?';
   RS_DESTORE_CONFIRMATION = 'Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?';
@@ -280,6 +283,10 @@ begin
       if wList.Count = 0 then begin
         BackupFiles('A', RS_DEFAULT_AUTO_NAME);
       end else begin
+        // Deletes the oldest backup if the limit is reached
+        if wList.Count = _MAX_BACKUP then
+          MdkRemoveDir(wList.Strings[0]);
+
         wLastBackupDir := ExtractFileName(wList.Strings[wList.Count-1]);
         wLastBackupDate := Copy(wLastBackupDir, 1, 10);
         wNowBackupDate := FormatDateTime('yyyy-mm-dd', Now);
