@@ -617,13 +617,13 @@ begin
 
       // Weight
       if ItemWeight > 0 then begin
-        LbValueWeight.Caption := FormatFloat('####0.##', ItemWeight) + ' kg';
+        LbValueWeight.Caption := FormatFloat('####0.##', ItemWeight, GConfig.FormatSettings) + ' kg';
         FLbList.Add(LbWeight);
         FLbList.Add(LbValueWeight);
       end;
 
       // Volume
-      LbValueVolume.Caption := FormatFloat('####0.##', ItemVolume);
+      LbValueVolume.Caption := FormatFloat('####0.##', ItemVolume, GConfig.FormatSettings);
       FLbList.Add(LbVolume);
       FLbList.Add(LbValueVolume);
 
@@ -805,8 +805,8 @@ begin
       if ItemPrice > 0 then begin
         LbValueContinent.Caption := ItemContinent;
         LbValuePrice.Caption := Format('%s (%s)', [
-          FormatFloat('###,###,###,##0', ItemPrice),
-          FormatFloat('###,###,###,##0', ItemPrice*ItemQuantity)]);
+          FormatFloat('###,###,###,##0', ItemPrice, GConfig.FormatSettings),
+          FormatFloat('###,###,###,##0', ItemPrice*ItemQuantity, GConfig.FormatSettings)]);
         wNow := Now;
         wDays := DaysBetween(wNow, ItemTime);
         wNow := IncDay(wNow, wDays);

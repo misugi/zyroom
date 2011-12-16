@@ -172,7 +172,7 @@ begin
   FGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
   FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
   LbValueGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
-  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume) + '/10000';
+  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume, GConfig.FormatSettings) + '/10000';
   LbValueDappers.Caption := IntToStr(FDappers);
 end;
 

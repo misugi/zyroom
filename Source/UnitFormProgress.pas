@@ -573,8 +573,8 @@ begin
     ioEcosys: Result := IntToStr(Ord(AItemInfo.ItemEcosys));
     ioClass: Result := IntToStr(Ord(AItemInfo.ItemClass));
     ioQuality: Result := Format('%.3d', [AItemInfo.ItemQuality]);
-    ioVolume: Result := FormatFloat('0000.00', AItemInfo.ItemVolume);
-    ioPrice: if AItemInfo.ItemPrice > 0 then Result := FormatFloat('00000000', AItemInfo.ItemPrice);
+    ioVolume: Result := FormatFloat('0000.00', AItemInfo.ItemVolume, GConfig.FormatSettings);
+    ioPrice: if AItemInfo.ItemPrice > 0 then Result := FormatFloat('00000000', AItemInfo.ItemPrice, GConfig.FormatSettings);
     ioTime: if AItemInfo.ItemPrice > 0 then Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
   end;
     

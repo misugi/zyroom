@@ -521,7 +521,7 @@ begin
 
   // Weight
   wNode := ANode.Attributes.GetNamedItem('w');
-  if Assigned(wNode) then AItemInfo.ItemWeight := StrToFloat(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemWeight := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
 
   // Size
   wNode := ANode.Attributes.GetNamedItem('s');
@@ -581,7 +581,7 @@ begin
 
   // Price
   wNode := ANode.Attributes.GetNamedItem('price');
-  if Assigned(wNode) then AItemInfo.ItemPrice := StrToFloat(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.ItemPrice := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
 
   // Quantity
   wNode := ANode.Attributes.GetNamedItem('quantity');
@@ -596,9 +596,9 @@ begin
 
   // Specifications
   wNode := ANode.Attributes.GetNamedItem('hr');
-  if Assigned(wNode) then AItemInfo.CSpeed := StrToFloat(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.CSpeed := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
   wNode := ANode.Attributes.GetNamedItem('r');
-  if Assigned(wNode) then AItemInfo.CRange := StrToFloat(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.CRange := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
   wNode := ANode.Attributes.GetNamedItem('dm');
   if Assigned(wNode) then AItemInfo.CDodgeModifier := StrToInt(wNode.NodeValue);
   wNode := ANode.Attributes.GetNamedItem('pm');
@@ -608,7 +608,7 @@ begin
   wNode := ANode.Attributes.GetNamedItem('apm');
   if Assigned(wNode) then AItemInfo.CAdvParryModifier := StrToInt(wNode.NodeValue);
   wNode := ANode.Attributes.GetNamedItem('pf');
-  if Assigned(wNode) then AItemInfo.CFactorProt := StrToFloat(wNode.NodeValue);
+  if Assigned(wNode) then AItemInfo.CFactorProt := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
   wNode := ANode.Attributes.GetNamedItem('msp');
   if Assigned(wNode) then AItemInfo.CSlashingProt := StrToInt(wNode.NodeValue);
   wNode := ANode.Attributes.GetNamedItem('mbp');

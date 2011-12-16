@@ -129,7 +129,6 @@ Creates the form
 *******************************************************************************}
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
-  DecimalSeparator := '.';
   DoubleBuffered := True;
   StatusBar.DoubleBuffered := True;
   PnHeader.DoubleBuffered := True;

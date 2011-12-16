@@ -1,10 +1,13 @@
 zyRoom - History of changes
 ===========================
 
-# version 4.0.2 (2001-09-01)
+# version 4.0.3 (2011-12-16)
+Fixed: problem with decimal separator in some cases
+
+# version 4.0.2 (2011-09-01)
 Change: a limit of 30 automatic backups
 
-# version 4.0.1 (2001-08-29)
+# version 4.0.1 (2011-08-29)
 Fixed: problem with the option "Enable automatic backup" in the trayicon menu
 
 # version 4.0.0 (2011-08-28)

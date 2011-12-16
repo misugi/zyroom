@@ -215,7 +215,7 @@ begin
             wMaxVolume := '/500'; // pack
 
   LbValueCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
-  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume) + wMaxVolume;
+  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume, GConfig.FormatSettings) + wMaxVolume;
   LbValueDappers.Caption := IntToStr(FDappers);
 end;
 

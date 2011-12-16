@@ -176,6 +176,7 @@ type
     FLanguageFileName: String;
     FFilterFileName: String;
     FVersion: String;
+    FFormatSettings: TFormatSettings;
     
     function GetLanguage: Integer;
     function GetPackFile: String;
@@ -218,6 +219,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
+    property FormatSettings: TFormatSettings read FFormatSettings;
 
     property CurrentDir: String read FCurrentDir;
     property CurrentPath: String read FCurrentPath;
@@ -283,6 +286,8 @@ begin
   FLanguageFileName := FCurrentPath + _LANGUAGE_FILENAME;
   FFilterFileName := FCurrentPath + _LANGUAGE_FILENAME;
   FIniFile := TIniFile.Create(FConfigFileName);
+
+  FFormatSettings.DecimalSeparator := '.';
 
   wReg := TRegExpr.Create;
   wVersion := MdkFileVersionInfo(Application.ExeName, fviFileVersion);
