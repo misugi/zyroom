@@ -1,6 +1,9 @@
 zyRoom - History of changes
 ===========================
 
+# version 4.0.4 (2011-12-16)
+Change: an update of the file sheetid.csv
+
 # version 4.0.3 (2011-12-16)
 Fixed: problem with decimal separator in some cases
 
