@@ -63,11 +63,11 @@ type
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
     FGuildID: String;
-    FDappers: Integer;
+    FDappers: String;
   public
     procedure UpdateRoom;
     procedure UpdateLanguage;
-    property Dappers: Integer read FDappers write FDappers;
+    property Dappers: String read FDappers write FDappers;
   end;
 
 var
@@ -173,7 +173,7 @@ begin
   FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
   LbValueGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
   LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume, GConfig.FormatSettings) + '/10000';
-  LbValueDappers.Caption := IntToStr(FDappers);
+  LbValueDappers.Caption := FDappers;
 end;
 
 procedure TFormRoom.GuildRoomContextPopup(Sender: TObject;

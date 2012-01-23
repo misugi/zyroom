@@ -83,7 +83,7 @@ type
     FEyes: TPNGObject;
     FGuardFile: TIniFile;
     FLogFile: String;
-    FDappers: Integer;
+    FDappers: String;
 
     procedure FillRoom(AGuildID: String);
     procedure FillInvent(ACharID: String);
@@ -110,7 +110,7 @@ type
     function  LogToDelphiColor(ALogColor: String): TColor;
 
     property  TotalVolume: Double read FTotalVolume write FTotalVolume;
-    property  Dappers: Integer read FDappers write FDappers;
+    property  Dappers: String read FDappers write FDappers;
   end;
 
 var

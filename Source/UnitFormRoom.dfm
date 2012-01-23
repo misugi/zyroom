@@ -91,7 +91,7 @@ object FormRoom: TFormRoom
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
-        Caption = '9999/99999'
+        Caption = '-'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -186,7 +186,7 @@ object FormRoom: TFormRoom
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
-        Caption = '4000000000'
+        Caption = '-'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11

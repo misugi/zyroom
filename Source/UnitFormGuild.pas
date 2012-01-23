@@ -75,7 +75,7 @@ type
     procedure BtUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
-    FDappers: Integer;
+    FDappers: String;
     
     procedure LoadGrid;
     procedure Synchronize;
@@ -527,7 +527,7 @@ begin
       wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
       wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
       wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
-      FDappers := wXmlDoc.DocumentElement.SelectInteger('/guild/money');
+      FDappers := wXmlDoc.DocumentElement.SelectString('/guild/money');
       wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
       wStream := TMemoryStream.Create;
       GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);

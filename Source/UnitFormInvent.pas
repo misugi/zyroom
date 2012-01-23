@@ -66,14 +66,14 @@ type
     FCharID: String;
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
-    FDappers: Integer;
+    FDappers: String;
     
     procedure SetFMountID(const Value: Integer);
   public
     procedure UpdateRoom;
     procedure UpdateLanguage;
     property MountID: Integer read FMountID write SetFMountID;
-    property Dappers: Integer read FDappers write FDappers;
+    property Dappers: String read FDappers write FDappers;
   end;
 
 var
@@ -216,7 +216,7 @@ begin
 
   LbValueCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
   LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume, GConfig.FormatSettings) + wMaxVolume;
-  LbValueDappers.Caption := IntToStr(FDappers);
+  LbValueDappers.Caption := FDappers;
 end;
 
 {*******************************************************************************

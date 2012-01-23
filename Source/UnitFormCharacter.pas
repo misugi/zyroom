@@ -81,7 +81,7 @@ type
     procedure BtUpClick(Sender: TObject);
   private
     FIconList: TObjectList;
-    FDappers: Integer;
+    FDappers: String;
     
     procedure LoadGrid;
     procedure Synchronize;
@@ -629,7 +629,7 @@ begin
         wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
         wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
         wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
-        FDappers := wXmlDoc.DocumentElement.SelectInteger('/character/money');
+        FDappers := wXmlDoc.DocumentElement.SelectString('/character/money');
         wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
         GRyzomApi.ApiBallisticMystix(
             wXmlDoc.DocumentElement.SelectString('/character/race'),
