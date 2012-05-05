@@ -215,7 +215,8 @@ var
   wOptions: String;
 begin
   wOptions := Format('?sheetid=%s', [AId]);
-  if AColor <> icNone then wOptions := wOptions + Format('&c=%d', [Ord(AColor)]);
+  if AColor = icNone then AColor := icBeige;
+  wOptions := wOptions + Format('&c=%d', [Ord(AColor)]);
   if AQuality > 0 then wOptions := wOptions + Format('&q=%d', [AQuality]);
   if ASize > 0 then wOptions := wOptions + Format('&s=%d', [ASize]);
   if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);

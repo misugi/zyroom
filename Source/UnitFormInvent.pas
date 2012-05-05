@@ -28,7 +28,7 @@ interface
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
   Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles,
-  pngimage;
+  pngimage, Clipbrd;
 
 type
   TFormInvent = class(TForm)
@@ -45,6 +45,7 @@ type
     ImgVolume: TImage;
     ImgDappers: TImage;
     LbValueDappers: TLabel;
+    MenuCopy: TMenuItem;
     procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -61,6 +62,7 @@ type
       var Handled: Boolean);
     procedure MenuGuardClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure MenuCopyClick(Sender: TObject);
   private
     FMountID: Integer;
     FCharID: String;
@@ -95,6 +97,9 @@ begin
   TabInvent.DoubleBuffered := True;
   DoubleBuffered := True;
   FGuardFile := nil;
+  {$IFNDEF __DEBUG}
+  MenuCopy.Visible := False;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -321,6 +326,14 @@ begin
   end;
 
   FItemImage.Refresh;
+end;
+
+{*******************************************************************************
+Copy the item name
+*******************************************************************************}
+procedure TFormInvent.MenuCopyClick(Sender: TObject);
+begin
+  Clipboard.SetTextBuf(PChar(TItemInfo(FItemImage.Data).ItemName));
 end;
 
 end.

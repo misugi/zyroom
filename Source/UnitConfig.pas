@@ -313,6 +313,8 @@ Returns the path of a guild directory
 function TConfig.GetGuildPath(AGuildID: String): String;
 begin
   Result := Format('%s%s\%s\', [FCurrentPath, _GUILD_DIR, AGuildID]);
+  if not DirectoryExists(Result) then
+    ForceDirectories(Result);
 end;
 
 {*******************************************************************************
@@ -321,6 +323,8 @@ Returns the path of a room directory
 function TConfig.GetGuildRoomPath(AGuildID: String): String;
 begin
   Result := Format('%s%s\%s\%s\', [FCurrentPath, _GUILD_DIR, AGuildID, _ROOM_DIR]);
+  if not DirectoryExists(Result) then
+    ForceDirectories(Result);
 end;
 
 {*******************************************************************************
@@ -329,6 +333,8 @@ Returns the path of a character directory
 function TConfig.GetCharPath(ACharID: String): String;
 begin
   Result := Format('%s%s\%s\', [FCurrentPath, _CHARACTER_DIR, ACharID]);
+  if not DirectoryExists(Result) then
+    ForceDirectories(Result);
 end;
 
 {*******************************************************************************
@@ -337,6 +343,8 @@ Returns the path of a character directory
 function TConfig.GetCharRoomPath(ACharID: String): String;
 begin
   Result := Format('%s%s\%s\%s\', [FCurrentPath, _CHARACTER_DIR, ACharID, _ROOM_DIR]);
+  if not DirectoryExists(Result) then
+    ForceDirectories(Result);
 end;
 
 {*******************************************************************************

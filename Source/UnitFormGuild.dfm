@@ -164,7 +164,7 @@ object FormGuild: TFormGuild
       Marging = 5
     end
     object BtDelete: TSevenButton
-      Left = 180
+      Left = 270
       Top = 0
       Width = 85
       Height = 23
@@ -215,7 +215,7 @@ object FormGuild: TFormGuild
       Marging = 5
     end
     object BtRoom: TSevenButton
-      Left = 270
+      Left = 360
       Top = 0
       Width = 85
       Height = 23
@@ -266,7 +266,7 @@ object FormGuild: TFormGuild
       Marging = 5
     end
     object BtDown: TSevenButton
-      Left = 360
+      Left = 450
       Top = 0
       Width = 19
       Height = 23
@@ -326,7 +326,7 @@ object FormGuild: TFormGuild
       Marging = 5
     end
     object BtUp: TSevenButton
-      Left = 384
+      Left = 474
       Top = 0
       Width = 19
       Height = 23
@@ -382,6 +382,57 @@ object FormGuild: TFormGuild
         BEC8C70836393838B9AD661896F05B6BCDD65AF4F90566B694124A299873D28D
         3967ABB5A2F78E1823CE395055A2318689C8FB0821C07B0FE71CF6DE78000C57
         15264341E3DC0000000049454E44AE426082}
+      Spacing = 5
+      Marging = 5
+    end
+    object BtReset: TSevenButton
+      Left = 180
+      Top = 0
+      Width = 85
+      Height = 23
+      Caption = 'R'#233'initialiser'
+      TabOrder = 6
+      OnClick = BtResetClick
+      Border.ColorNormal = 7368816
+      Border.ColorHot = 11632444
+      Border.ColorDown = 9134636
+      Border.ColorDisabled = 11907757
+      Border.ColorFocused = 11632444
+      Border.WidthNormal = 1
+      Border.WidthHot = 1
+      Border.WidthDown = 1
+      Border.WidthDisabled = 1
+      Border.WidthFocused = 1
+      Colors.ColorNormalFrom = 16579836
+      Colors.ColorNormalTo = 13619151
+      Colors.ColorHotFrom = 16579836
+      Colors.ColorHotTo = 16112039
+      Colors.ColorDownFrom = 16579836
+      Colors.ColorDownTo = 14398312
+      Colors.ColorDisabledFrom = 16053492
+      Colors.ColorDisabledTo = 16053492
+      Colors.ColorFocusedFrom = 16579836
+      Colors.ColorFocusedTo = 13619151
+      Fonts.FontHot.Charset = DEFAULT_CHARSET
+      Fonts.FontHot.Color = clWindowText
+      Fonts.FontHot.Height = -11
+      Fonts.FontHot.Name = 'Arial'
+      Fonts.FontHot.Style = []
+      Fonts.FontDown.Charset = DEFAULT_CHARSET
+      Fonts.FontDown.Color = clWindowText
+      Fonts.FontDown.Height = -11
+      Fonts.FontDown.Name = 'Arial'
+      Fonts.FontDown.Style = []
+      Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+      Fonts.FontDisabled.Color = clGrayText
+      Fonts.FontDisabled.Height = -11
+      Fonts.FontDisabled.Name = 'Arial'
+      Fonts.FontDisabled.Style = []
+      Fonts.FontFocused.Charset = DEFAULT_CHARSET
+      Fonts.FontFocused.Color = clWindowText
+      Fonts.FontFocused.Height = -11
+      Fonts.FontFocused.Name = 'Arial'
+      Fonts.FontFocused.Style = []
       Spacing = 5
       Marging = 5
     end

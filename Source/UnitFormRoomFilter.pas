@@ -965,6 +965,12 @@ begin
   PnCat2.Parent := TabInfo;
   PnSales.Parent := TabInfo;
   TabTemp.TabVisible := False;
+
+  // min and max values for the quality
+  EdQualityMin.MinValue := _MIN_QUALITY;
+  EdQualityMin.MaxValue := _MAX_QUALITY;
+  EdQualityMax.MinValue := _MIN_QUALITY;
+  EdQualityMax.MaxValue := _MAX_QUALITY;
 end;
 
 {*******************************************************************************

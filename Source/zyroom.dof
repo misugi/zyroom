@@ -117,9 +117,9 @@ RootDir=
 IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=4
-MinorVer=0
-Release=5
-Build=21
+MinorVer=1
+Release=0
+Build=2
 Debug=0
 PreRelease=0
 Special=0
@@ -130,17 +130,18 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=4.0.5.21
+FileVersion=4.1.0.2
 InternalName=
-LegalCopyright=(C) 2011 Misugi
+LegalCopyright=© 2012 Misugi
 LegalTrademarks=
 OriginalFilename=
 ProductName=
-ProductVersion=1.0.0.0
+ProductVersion=4
 Comments=
 [HistoryLists\hlConditionals]
-Count=1
+Count=2
 Item0=__DEBUG
+Item1=__DEBUG;__NOSYNCH
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

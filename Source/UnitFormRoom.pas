@@ -28,7 +28,7 @@ interface
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
   Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles,
-  pngimage;
+  pngimage, Clipbrd;
 
 type
   TFormRoom = class(TForm)
@@ -44,6 +44,7 @@ type
     ImgVolume: TImage;
     ImgDappers: TImage;
     LbValueDappers: TLabel;
+    MenuCopy: TMenuItem;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
@@ -59,6 +60,7 @@ type
       var Handled: Boolean);
     procedure MenuGuardClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure MenuCopyClick(Sender: TObject);
   private
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
@@ -88,6 +90,9 @@ begin
   GuildRoom.DoubleBuffered := True;
   DoubleBuffered := True;
   FGuardFile := nil;
+  {$IFNDEF __DEBUG}
+  MenuCopy.Visible := False;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -254,6 +259,14 @@ procedure TFormRoom.UpdateLanguage;
 begin
   ImgVolume.Hint := RS_VOLUME;
   ImgDappers.Hint := RS_DAPPERS;
+end;
+
+{*******************************************************************************
+Copy the item name
+*******************************************************************************}
+procedure TFormRoom.MenuCopyClick(Sender: TObject);
+begin
+  Clipboard.SetTextBuf(PChar(TItemInfo(FItemImage.Data).ItemName));
 end;
 
 end.

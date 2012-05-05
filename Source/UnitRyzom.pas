@@ -171,7 +171,7 @@ type
   TItemEcosystemSet = set of TItemEcosystem;
   TItemEquip = (iqLightArmor, iqMediumArmor, iqHeavyArmor, iqWeaponMelee, iqWeaponRange, iqAmplifier, iqJewel, iqBuckler, iqShield, iqTool, iqAmmo, iqOther);
   TItemWeapon = (iwOneHand, iwTwoHands);
-  TItemSkin = (isSkin1, isSkin2, isSkin3, isNoSkin);
+  TItemSkin = (isSkin1, isSkin2, isSkin3, isUnknown);
   TItemEquipSet = set of TItemEquip;
   TItemSorting = (ioType, ioEcosys, ioClass, ioQuality, ioVolume, ioPrice, ioTime);
   TItemBonus = (ibHp, ibSab, ibStamina, ibFocus);
@@ -699,7 +699,7 @@ begin
     // Tool
     if AItemInfo.ItemType = itOther then begin
       wRegExpr.Expression := _EXPR_TOOL;
-      if wRegExpr.Exec(AItemInfo.ItemName) and (Pos('item_sap_recharge', AItemInfo.ItemName) <> 1) then begin
+      if wRegExpr.Exec(AItemInfo.ItemName) and (Pos('_sap_recharge', AItemInfo.ItemName) = 0) then begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqTool;
         wCoef := 10.0;
@@ -1016,7 +1016,8 @@ begin
   if (AItemInfo.ItemPrice > 0) and (Now > AItemInfo.ItemTime) then Exit;
 
   // Quality
-  if (AItemInfo.ItemQuality < AFilter.QualityMin) or (AItemInfo.ItemQuality > AFilter.QualityMax) then Exit;
+  if AItemInfo.ItemQuality <= _MAX_QUALITY then // for sap charges eg
+    if (AItemInfo.ItemQuality < AFilter.QualityMin) or (AItemInfo.ItemQuality > AFilter.QualityMax) then Exit;
 
   // If the name does not match
   if AFilter.ItemName <> '' then begin
@@ -1045,10 +1046,12 @@ begin
   // Materials and equipment
   if (AItemInfo.ItemEquip <> iqTool) and (AItemInfo.ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then begin
     // Ecosystem
-    if not (AItemInfo.ItemEcosys in AFilter.Ecosystem) then Exit;
+    if AItemInfo.ItemEcosys <> ieUnknown then
+      if not (AItemInfo.ItemEcosys in AFilter.Ecosystem) then Exit;
 
     // Class
-    if (Ord(AItemInfo.ItemClass) < Ord(AFilter.ClassMin)) or (Ord(AItemInfo.ItemClass) > Ord(AFilter.ClassMax)) then Exit;
+    if AItemInfo.ItemClass <> icUnknown then // for jewels that are looted eg
+      if (Ord(AItemInfo.ItemClass) < Ord(AFilter.ClassMin)) or (Ord(AItemInfo.ItemClass) > Ord(AFilter.ClassMax)) then Exit;
   end;
   
   // Item category (only materials)
@@ -1110,7 +1113,7 @@ begin
   ItemEquip := iqOther;
   ItemCategory1 := -1;
   ItemCategory2 := -1;
-  ItemSkin := isNoSkin;
+  ItemSkin := isUnknown;
   ItemDesc := '';
   ItemHp := 0;
   ItemDur := 0;

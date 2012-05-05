@@ -225,5 +225,9 @@ object FormRoom: TFormRoom
       Caption = 'Surveiller'
       OnClick = MenuGuardClick
     end
+    object MenuCopy: TMenuItem
+      Caption = 'Copier'
+      OnClick = MenuCopyClick
+    end
   end
 end

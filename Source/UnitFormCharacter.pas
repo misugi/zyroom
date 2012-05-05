@@ -37,13 +37,14 @@ resourcestring
   RS_CHAR_COL_CHAR_NAME = 'Personnage';
   RS_CHAR_COL_CHAR_NUMBER = 'Numéro';
   RS_CHAR_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
-  RS_CHAR_COL_COMMENT = 'Commentaire';
+  RS_CHAR_COL_COMMENT = 'Description';
   RS_CHAR_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer le personnage sélectionné ?';
   RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
   RS_CHAR_KEY = 'Clé de personnage :';
   RS_CHECK_SALES = 'Surveiller les ventes';
   RS_UP = 'Monter';
   RS_DOWN = 'Descendre';
+  RS_RESET_OK = 'Réinitialisation terminée';
 
 const
   _EXPR_MOUNT = '^ias[dfjl]\.sitem';
@@ -60,6 +61,7 @@ type
     BtRoom: TSevenButton;
     BtDown: TSevenButton;
     BtUp: TSevenButton;
+    BtReset: TSevenButton;
     procedure FormCreate(Sender: TObject);
     procedure GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -79,6 +81,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure BtDownClick(Sender: TObject);
     procedure BtUpClick(Sender: TObject);
+    procedure BtResetClick(Sender: TObject);
   private
     FIconList: TObjectList;
     FDappers: String;
@@ -224,7 +227,6 @@ var
   wCheckSales: Boolean;
   wXmlDoc: TXpObjModel;
   wIconFile: String;
-  wInfoFile: String;
   i: Integer;
 begin
   FormGuildEdit.Caption := RS_CHAR_NEW_CHARACTER;
@@ -253,9 +255,6 @@ begin
         GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild, wCheckVolume, wCheckSales);
         GCharacter.SetIndex(wCharID, GridChar.RowCount - 1);
 
-        ForceDirectories(GConfig.GetCharRoomPath(wCharID));
-        wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
-        wStream.SaveToFile(wInfoFile);
         wStream.Clear;
         GRyzomApi.ApiBallisticMystix(
           wXmlDoc.DocumentElement.SelectString('/character/race'),
@@ -299,7 +298,6 @@ var
   wCharList: TStringList;
   wPng: TPNGObject;
   wIconFile: String;
-  wItemsFile: String;
   i: Integer;
 begin
   SendMessage(GridChar.Handle, WM_SETREDRAW, 0, 0);
@@ -318,7 +316,6 @@ begin
       GCharacter.CharList(wCharList);
       for i := 0 to wCharList.Count - 1 do begin
         wIconFile := GConfig.GetCharPath(wCharList[i]) + _ICON_FILENAME;
-        wItemsFile := GConfig.GetCharPath(wCharList[i]) + _ITEMS_FILENAME;
         wPng := TPNGObject.Create;
         if FileExists(wIconFile) then begin
           try
@@ -603,6 +600,7 @@ begin
       wCheckSales := FormGuildEdit.CbCheckChange.Checked;
     end;
 
+    {$IFNDEF  __NOSYNCH}
     if wDoUpdate then begin
       // Updates icon
       wStream := TMemoryStream.Create;
@@ -651,6 +649,7 @@ begin
       GridChar.Cells[1, GridChar.Row] := wCharName;
       GridChar.Cells[2, GridChar.Row] := wComment;
     end;
+    {$ENDIF}
   finally
     wRegExpr.Free;
   end;
@@ -687,6 +686,23 @@ Up
 procedure TFormCharacter.BtUpClick(Sender: TObject);
 begin
   MoveRow(-1);
+end;
+
+{*******************************************************************************
+Reset the icons directory
+*******************************************************************************}
+procedure TFormCharacter.BtResetClick(Sender: TObject);
+var
+  wRow: Integer;
+  wCharID: String;
+begin
+  wRow := GridChar.Row;
+  if wRow > 0 then begin
+    wCharID := GridChar.Cells[3, wRow];
+    MdkRemoveDir(GConfig.GetCharRoomPath(wCharID));
+    DeleteFile(GConfig.GetCharPath(wCharID) + _INDEX_FILENAME);
+    ShowMessage(RS_RESET_OK);
+  end;
 end;
 
 end.

@@ -36,12 +36,13 @@ resourcestring
   RS_COL_GUILD_LOGO = 'Blason';
   RS_COL_GUILD_NAME = 'Guilde';
   RS_COL_GUILD_NUMBER = 'Numéro';
-  RS_COL_COMMENT = 'Commentaire';
+  RS_COL_COMMENT = 'Description';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
   RS_GUILD_KEY = 'Clé de guilde :';
   RS_CHECK_CHANGE = 'Surveiller les objets';
   RS_UP = 'Monter';
   RS_DOWN = 'Descendre';
+  RS_RESET_OK = 'Réinitialisation terminée';
 
 type
   TPublicStringGrid = class(TCustomGrid); 
@@ -55,6 +56,7 @@ type
     BtRoom: TSevenButton;
     BtDown: TSevenButton;
     BtUp: TSevenButton;
+    BtReset: TSevenButton;
     procedure FormCreate(Sender: TObject);
     procedure GridGuildDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
@@ -73,6 +75,7 @@ type
     procedure GridGuildDblClick(Sender: TObject);
     procedure BtDownClick(Sender: TObject);
     procedure BtUpClick(Sender: TObject);
+    procedure BtResetClick(Sender: TObject);
   private
     FIconList: TObjectList;
     FDappers: String;
@@ -238,8 +241,8 @@ begin
         wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
         wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
         GGuild.AddGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer, wCheckVolume, wCheckChange);
+        GGuild.SetIndex(wGuildID, GridGuild.RowCount - 1);
 
-        ForceDirectories(GConfig.GetGuildRoomPath(wGuildID));
         wStream.Clear;
         GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
         wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
@@ -280,7 +283,6 @@ var
   wGuildList: TStringList;
   wPng: TPNGObject;
   wIconFile: String;
-  wInfoFile: String;
   i: Integer;
 begin
   SendMessage(GridGuild.Handle, WM_SETREDRAW, 0, 0);
@@ -299,7 +301,6 @@ begin
       GGuild.GuildList(wGuildList);
       for i := 0 to wGuildList.Count - 1 do begin
         wIconFile := GConfig.GetGuildPath(wGuildList[i]) + _ICON_FILENAME;
-        wInfoFile := GConfig.GetGuildPath(wGuildList[i]) + _INFO_FILENAME;
         wPng := TPNGObject.Create;
         if FileExists(wIconFile) then begin
           try
@@ -513,6 +514,7 @@ begin
     if (not wCheckChange) and (FileExists(wWatchFile)) then DeleteFile(wWatchFile);
   end;
 
+  {$IFNDEF  __NOSYNCH}
   if wDoUpdate then begin
     // Updates icon
     wStream := TMemoryStream.Create;
@@ -543,6 +545,7 @@ begin
     GridGuild.Cells[1, GridGuild.Row] := wGuildName;
     GridGuild.Cells[2, GridGuild.Row] := wComment;
   end;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -576,6 +579,23 @@ Up
 procedure TFormGuild.BtUpClick(Sender: TObject);
 begin
   MoveRow(-1);
+end;
+
+{*******************************************************************************
+Reset the icons directory
+*******************************************************************************}
+procedure TFormGuild.BtResetClick(Sender: TObject);
+var
+  wRow: Integer;
+  wGuildID: String;
+begin
+  wRow := GridGuild.Row;
+  if wRow > 0 then begin
+    wGuildID := GridGuild.Cells[3, wRow];
+    MdkRemoveDir(GConfig.GetGuildRoomPath(wGuildID));
+    DeleteFile(GConfig.GetGuildPath(wGuildID) + _INDEX_FILENAME);
+    ShowMessage(RS_RESET_OK);
+  end;
 end;
 
 end.

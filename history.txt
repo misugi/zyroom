@@ -1,6 +1,16 @@
 zyRoom - History of changes
 ===========================
 
+# version 4.1.0 (2012-05-05)
+New: you can now reset icons for a guild or a character with the button at the top of the list
+Fixed: new sap recharges were not displayed because of filter
+Fixed: jewels that are looted were not displayed because of filter
+Fixed: the default color for an item is now beige (and not white)
+Change: an update of the file sheetid.csv
+Change: automatic creation of directories
+Change: minimal and maximal value for the quality in the filter
+Change: initial position for a new guild added in the list
+
 # version 4.0.5 (2012-01-23)
 Fixed: money was not displayed when the amount was greater than 2147483647 dappers
 

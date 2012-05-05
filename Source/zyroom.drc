@@ -8,55 +8,57 @@
   resources were bound to the produced executable.
 */
 
-#define UnitFormProgress_RS_PARSE_LOG 64832
-#define UnitFormGuild_RS_UP 64848
-#define UnitFormGuild_RS_DOWN 64849
-#define UnitFormMain_RS_STATUS_CLOSED 64850
-#define UnitFormMain_RS_STATUS_OPEN 64851
-#define UnitFormMain_RS_STATUS_RESTRICTED 64852
-#define UnitFormMain_RS_NEW_VERSION 64853
-#define UnitFormMain_RS_SEASON_SPRING 64854
-#define UnitFormMain_RS_SEASON_SUMMER 64855
-#define UnitFormMain_RS_SEASON_AUTUMN 64856
-#define UnitFormMain_RS_SEASON_WINTER 64857
-#define UnitFormMain_RS_VERSION 64858
-#define UnitFormMain_RS_NEXT_SEASON 64859
-#define UnitFormMain_RS_AT 64860
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64861
-#define UnitFormProgress_RS_PROGRESS_ROOM 64862
-#define UnitFormProgress_RS_CONNEXION_ERROR 64863
-#define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64864
-#define UnitFormRoomFilter_RS_SKIN 64865
-#define UnitFormRoomFilter_RS_HPB 64866
-#define UnitFormRoomFilter_RS_SAB 64867
-#define UnitFormRoomFilter_RS_STB 64868
-#define UnitFormRoomFilter_RS_FOB 64869
-#define UnitFormRoomFilter_RS_NEEDED_FILE 64870
-#define UnitFormGuild_RS_NEW_GUILD 64871
-#define UnitFormGuild_RS_CHANGE_KEY 64872
-#define UnitFormGuild_RS_COL_GUILD_LOGO 64873
-#define UnitFormGuild_RS_COL_GUILD_NAME 64874
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 64875
-#define UnitFormGuild_RS_COL_COMMENT 64876
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 64877
-#define UnitFormGuild_RS_GUILD_KEY 64878
-#define UnitFormGuild_RS_CHECK_CHANGE 64879
-#define UnitFormWatch_RS_QUANTITY_MIN 64880
-#define UnitFormWatch_RS_DURABILITY_MIN 64881
-#define UnitFormAlert_RS_ALERT_DURABILITY 64882
-#define UnitFormAlert_RS_ALERT_QUANTITY 64883
-#define UnitFormAlert_RS_ALERT_UNFOUND 64884
-#define UnitFormAlert_RS_ALERT_ADDED 64885
-#define UnitFormAlert_RS_ALERT_REMOVED 64886
-#define UnitFormAlert_RS_ALERT_MODIFIED 64887
-#define UnitFormAlert_RS_ALERT_SALES 64888
-#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64889
-#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64890
-#define UnitFormAlert_RS_ALERT_SEASON 64891
-#define UnitFormAlert_RS_ALERT_HINT 64892
-#define UnitFormBackup_RS_DELETE_CONFIRMATION 64893
-#define UnitFormBackup_RS_DESTORE_CONFIRMATION 64894
-#define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64895
+#define UnitFormProgress_RS_PROGRESS_ROOM 64832
+#define UnitFormProgress_RS_CONNEXION_ERROR 64833
+#define UnitFormProgress_RS_PARSE_LOG 64834
+#define UnitFormGuild_RS_CHECK_CHANGE 64848
+#define UnitFormGuild_RS_UP 64849
+#define UnitFormGuild_RS_DOWN 64850
+#define UnitFormGuild_RS_RESET_OK 64851
+#define UnitFormMain_RS_STATUS_CLOSED 64852
+#define UnitFormMain_RS_STATUS_OPEN 64853
+#define UnitFormMain_RS_STATUS_RESTRICTED 64854
+#define UnitFormMain_RS_NEW_VERSION 64855
+#define UnitFormMain_RS_SEASON_SPRING 64856
+#define UnitFormMain_RS_SEASON_SUMMER 64857
+#define UnitFormMain_RS_SEASON_AUTUMN 64858
+#define UnitFormMain_RS_SEASON_WINTER 64859
+#define UnitFormMain_RS_VERSION 64860
+#define UnitFormMain_RS_NEXT_SEASON 64861
+#define UnitFormMain_RS_AT 64862
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64863
+#define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64864
+#define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64865
+#define UnitFormRoomFilter_RS_SKIN 64866
+#define UnitFormRoomFilter_RS_HPB 64867
+#define UnitFormRoomFilter_RS_SAB 64868
+#define UnitFormRoomFilter_RS_STB 64869
+#define UnitFormRoomFilter_RS_FOB 64870
+#define UnitFormRoomFilter_RS_NEEDED_FILE 64871
+#define UnitFormGuild_RS_NEW_GUILD 64872
+#define UnitFormGuild_RS_CHANGE_KEY 64873
+#define UnitFormGuild_RS_COL_GUILD_LOGO 64874
+#define UnitFormGuild_RS_COL_GUILD_NAME 64875
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 64876
+#define UnitFormGuild_RS_COL_COMMENT 64877
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 64878
+#define UnitFormGuild_RS_GUILD_KEY 64879
+#define UnitFormCharacter_RS_RESET_OK 64880
+#define UnitFormWatch_RS_QUANTITY_MIN 64881
+#define UnitFormWatch_RS_DURABILITY_MIN 64882
+#define UnitFormAlert_RS_ALERT_DURABILITY 64883
+#define UnitFormAlert_RS_ALERT_QUANTITY 64884
+#define UnitFormAlert_RS_ALERT_UNFOUND 64885
+#define UnitFormAlert_RS_ALERT_ADDED 64886
+#define UnitFormAlert_RS_ALERT_REMOVED 64887
+#define UnitFormAlert_RS_ALERT_MODIFIED 64888
+#define UnitFormAlert_RS_ALERT_SALES 64889
+#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64890
+#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64891
+#define UnitFormAlert_RS_ALERT_SEASON 64892
+#define UnitFormAlert_RS_ALERT_HINT 64893
+#define UnitFormBackup_RS_DELETE_CONFIRMATION 64894
+#define UnitFormBackup_RS_DESTORE_CONFIRMATION 64895
 #define OleConst_SCannotActivate 64896
 #define OleConst_SNoWindowHandle 64897
 #define OleConst_SInvalidLicense 64898
@@ -699,9 +701,13 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
+	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
+	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
 	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
+	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
 	UnitFormGuild_RS_UP,	"Monter"
 	UnitFormGuild_RS_DOWN,	"Descendre"
+	UnitFormGuild_RS_RESET_OK,	"Réinitialisation terminée"
 	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
 	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
@@ -714,8 +720,7 @@ BEGIN
 	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
 	UnitFormMain_RS_AT,	"à"
 	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
-	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
-	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
+	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
 	UnitFormBackup_RS_DEFAULT_MANUAL_NAME,	"Sauvegarde manuelle"
 	UnitFormRoomFilter_RS_SKIN,	"Skin"
 	UnitFormRoomFilter_RS_HPB,	"Bonus vie"
@@ -728,10 +733,10 @@ BEGIN
 	UnitFormGuild_RS_COL_GUILD_LOGO,	"Blason"
 	UnitFormGuild_RS_COL_GUILD_NAME,	"Guilde"
 	UnitFormGuild_RS_COL_GUILD_NUMBER,	"Numéro"
-	UnitFormGuild_RS_COL_COMMENT,	"Commentaire"
+	UnitFormGuild_RS_COL_COMMENT,	"Description"
 	UnitFormGuild_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?"
 	UnitFormGuild_RS_GUILD_KEY,	"Clé de guilde :"
-	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
+	UnitFormCharacter_RS_RESET_OK,	"Réinitialisation terminée"
 	UnitFormWatch_RS_QUANTITY_MIN,	"Quantité minimum :"
 	UnitFormWatch_RS_DURABILITY_MIN,	"Durabilité minimum :"
 	UnitFormAlert_RS_ALERT_DURABILITY,	"la durabilité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
@@ -747,7 +752,6 @@ BEGIN
 	UnitFormAlert_RS_ALERT_HINT,	"Nouvelles alertes !"
 	UnitFormBackup_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la sauvegarde sélectionnée ?"
 	UnitFormBackup_RS_DESTORE_CONFIRMATION,	"Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?"
-	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
 	OleConst_SCannotActivate,	"OLE control activation failed"
 	OleConst_SNoWindowHandle,	"Could not obtain OLE control window handle"
 	OleConst_SInvalidLicense,	"License information for %s is invalid"
@@ -758,7 +762,7 @@ BEGIN
 	UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD,	"Tête"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NAME,	"Personnage"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER,	"Numéro"
-	UnitFormCharacter_RS_CHAR_COL_COMMENT,	"Commentaire"
+	UnitFormCharacter_RS_CHAR_COL_COMMENT,	"Description"
 	UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer le personnage sélectionné ?"
 	UnitFormCharacter_RS_CHAR_KEY,	"Clé de personnage :"
 	UnitFormCharacter_RS_CHECK_SALES,	"Surveiller les ventes"
