@@ -317,11 +317,13 @@ begin
 
       BtUpdate.Enabled := False;
       BtDelete.Enabled := False;
+      BtReset.Enabled := False;
       BtRoom.Enabled := False;
       if GridGuild.RowCount > 1 then begin
         GridGuild.Row := 1;
         BtUpdate.Enabled := True;
         BtDelete.Enabled := True;
+        BtReset.Enabled := True;
         BtRoom.Enabled := True;
       end;
     finally
@@ -388,6 +390,7 @@ begin
       if GridGuild.RowCount = 1 then begin
         BtUpdate.Enabled := False;
         BtDelete.Enabled := False;
+        BtReset.Enabled := False;
         BtRoom.Enabled := False;
       end;
     finally

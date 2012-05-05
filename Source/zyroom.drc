@@ -8,25 +8,25 @@
   resources were bound to the produced executable.
 */
 
-#define UnitFormProgress_RS_PROGRESS_ROOM 64832
-#define UnitFormProgress_RS_CONNEXION_ERROR 64833
-#define UnitFormProgress_RS_PARSE_LOG 64834
+#define UnitFormMain_RS_VERSION 64832
+#define UnitFormMain_RS_NEXT_SEASON 64833
+#define UnitFormMain_RS_AT 64834
 #define UnitFormGuild_RS_CHECK_CHANGE 64848
 #define UnitFormGuild_RS_UP 64849
 #define UnitFormGuild_RS_DOWN 64850
 #define UnitFormGuild_RS_RESET_OK 64851
-#define UnitFormMain_RS_STATUS_CLOSED 64852
-#define UnitFormMain_RS_STATUS_OPEN 64853
-#define UnitFormMain_RS_STATUS_RESTRICTED 64854
-#define UnitFormMain_RS_NEW_VERSION 64855
-#define UnitFormMain_RS_SEASON_SPRING 64856
-#define UnitFormMain_RS_SEASON_SUMMER 64857
-#define UnitFormMain_RS_SEASON_AUTUMN 64858
-#define UnitFormMain_RS_SEASON_WINTER 64859
-#define UnitFormMain_RS_VERSION 64860
-#define UnitFormMain_RS_NEXT_SEASON 64861
-#define UnitFormMain_RS_AT 64862
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64863
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64852
+#define UnitFormProgress_RS_PROGRESS_ROOM 64853
+#define UnitFormProgress_RS_CONNEXION_ERROR 64854
+#define UnitFormProgress_RS_PARSE_LOG 64855
+#define UnitFormMain_RS_STATUS_CLOSED 64856
+#define UnitFormMain_RS_STATUS_OPEN 64857
+#define UnitFormMain_RS_STATUS_RESTRICTED 64858
+#define UnitFormMain_RS_NEW_VERSION 64859
+#define UnitFormMain_RS_SEASON_SPRING 64860
+#define UnitFormMain_RS_SEASON_SUMMER 64861
+#define UnitFormMain_RS_SEASON_AUTUMN 64862
+#define UnitFormMain_RS_SEASON_WINTER 64863
 #define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64864
 #define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64865
 #define UnitFormRoomFilter_RS_SKIN 64866
@@ -91,14 +91,14 @@
 #define ComConst_SVarNotObject 64925
 #define ComConst_STooManyParams 64926
 #define ComConst_SDCOMNotInstalled 64927
-#define UnitRyzom_RS_MINUTES 64928
-#define UnitRyzom_RS_AND 64929
-#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64930
-#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64931
-#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64932
-#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64933
-#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64934
-#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64935
+#define UnitRyzom_RS_MENU_WATCH 64928
+#define UnitRyzom_RS_MENU_UNWATCH 64929
+#define UnitRyzom_RS_TAB_PET 64930
+#define UnitRyzom_RS_TAB_MOUNT 64931
+#define UnitRyzom_RS_DAYS 64932
+#define UnitRyzom_RS_HOURS 64933
+#define UnitRyzom_RS_MINUTES 64934
+#define UnitRyzom_RS_AND 64935
 #define pnglang_EPngInvalidCRCText 64936
 #define pnglang_EPNGInvalidIHDRText 64937
 #define pnglang_EPNGMissingMultipleIDATText 64938
@@ -107,86 +107,86 @@
 #define pnglang_EPNGInvalidFileHeaderText 64941
 #define pnglang_EPNGIHDRNotFirstText 64942
 #define pnglang_EPNGSizeExceedsText 64943
-#define UnitRyzom_RS_RACE_TRYKER 64944
-#define UnitRyzom_RS_RACE_MATIS 64945
-#define UnitRyzom_RS_ECOSYS_COMMON 64946
-#define UnitRyzom_RS_ECOSYS_PRIME 64947
-#define UnitRyzom_RS_ECOSYS_DESERT 64948
-#define UnitRyzom_RS_ECOSYS_JUNGLE 64949
-#define UnitRyzom_RS_ECOSYS_FOREST 64950
-#define UnitRyzom_RS_ECOSYS_LAKES 64951
-#define UnitRyzom_RS_VOLUME 64952
-#define UnitRyzom_RS_DAPPERS 64953
-#define UnitRyzom_RS_MENU_WATCH 64954
-#define UnitRyzom_RS_MENU_UNWATCH 64955
-#define UnitRyzom_RS_TAB_PET 64956
-#define UnitRyzom_RS_TAB_MOUNT 64957
-#define UnitRyzom_RS_DAYS 64958
-#define UnitRyzom_RS_HOURS 64959
-#define UnitRyzom_RS_COLOR_BEIGE 64960
-#define UnitRyzom_RS_COLOR_BLACK 64961
-#define UnitRyzom_RS_COLOR_BLUE 64962
-#define UnitRyzom_RS_COLOR_GREEN 64963
-#define UnitRyzom_RS_COLOR_PURPLE 64964
-#define UnitRyzom_RS_COLOR_RED 64965
-#define UnitRyzom_RS_COLOR_TURQUOISE 64966
-#define UnitRyzom_RS_COLOR_WHITE 64967
-#define UnitRyzom_RS_CLASS_BASE 64968
-#define UnitRyzom_RS_CLASS_FINE 64969
-#define UnitRyzom_RS_CLASS_CHOICE 64970
-#define UnitRyzom_RS_CLASS_EXCELLENT 64971
-#define UnitRyzom_RS_CLASS_SUPREME 64972
-#define UnitRyzom_RS_RACE_ALL 64973
-#define UnitRyzom_RS_RACE_FYROS 64974
-#define UnitRyzom_RS_RACE_ZORAI 64975
-#define UnitRyzom_RS_CAT_AMMOBULLET 64976
-#define UnitRyzom_RS_CAT_BARREL 64977
-#define UnitRyzom_RS_CAT_ARMORSHELL 64978
-#define UnitRyzom_RS_CAT_AMMOJACKET 64979
-#define UnitRyzom_RS_CAT_LINING 64980
-#define UnitRyzom_RS_CAT_EXPLOSIVE 64981
-#define UnitRyzom_RS_CAT_STUFFING 64982
-#define UnitRyzom_RS_CAT_FIRINGPIN 64983
-#define UnitRyzom_RS_CAT_ARMORCLIP 64984
-#define UnitRyzom_RS_CAT_TRIGGER 64985
-#define UnitRyzom_RS_CAT_JEWELSETTING 64986
-#define UnitRyzom_RS_CAT_GRIP 64987
-#define UnitRyzom_RS_CAT_CLOTHES 64988
-#define UnitRyzom_RS_CAT_JEWEL 64989
-#define UnitRyzom_RS_CAT_MAGICFOCUS 64990
-#define UnitRyzom_RS_CAT_ALL 64991
-#define UnitRyzom_RS_SPEC_OFFAFF_POWER 64992
-#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 64993
-#define UnitRyzom_RS_SPEC_DEFAFF_POWER 64994
-#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 64995
-#define UnitRyzom_RS_SPEC_HEAL_POWER 64996
-#define UnitRyzom_RS_SPEC_DESERT_RESIST 64997
-#define UnitRyzom_RS_SPEC_FOREST_RESIST 64998
-#define UnitRyzom_RS_SPEC_LAKES_RESIST 64999
-#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65000
-#define UnitRyzom_RS_SPEC_PRIME_RESIST 65001
-#define UnitRyzom_RS_SPEC_ALL 65002
-#define UnitRyzom_RS_CAT_BLADE 65003
-#define UnitRyzom_RS_CAT_POINT 65004
-#define UnitRyzom_RS_CAT_HAMMER 65005
-#define UnitRyzom_RS_CAT_COUNTERWEIGHT 65006
-#define UnitRyzom_RS_CAT_SHAFT 65007
-#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65008
-#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65009
-#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65010
-#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65011
-#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65012
-#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65013
-#define UnitRyzom_RS_SPEC_ACID_PROTEC 65014
-#define UnitRyzom_RS_SPEC_COLD_PROTEC 65015
-#define UnitRyzom_RS_SPEC_ROT_PROTEC 65016
-#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65017
-#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 65018
-#define UnitRyzom_RS_SPEC_POISON_PROTEC 65019
-#define UnitRyzom_RS_SPEC_ELEC_PROTEC 65020
-#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 65021
-#define UnitRyzom_RS_SPEC_ELE_POWER 65022
-#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 65023
+#define UnitRyzom_RS_CLASS_CHOICE 64944
+#define UnitRyzom_RS_CLASS_EXCELLENT 64945
+#define UnitRyzom_RS_CLASS_SUPREME 64946
+#define UnitRyzom_RS_RACE_ALL 64947
+#define UnitRyzom_RS_RACE_FYROS 64948
+#define UnitRyzom_RS_RACE_ZORAI 64949
+#define UnitRyzom_RS_RACE_TRYKER 64950
+#define UnitRyzom_RS_RACE_MATIS 64951
+#define UnitRyzom_RS_ECOSYS_COMMON 64952
+#define UnitRyzom_RS_ECOSYS_PRIME 64953
+#define UnitRyzom_RS_ECOSYS_DESERT 64954
+#define UnitRyzom_RS_ECOSYS_JUNGLE 64955
+#define UnitRyzom_RS_ECOSYS_FOREST 64956
+#define UnitRyzom_RS_ECOSYS_LAKES 64957
+#define UnitRyzom_RS_VOLUME 64958
+#define UnitRyzom_RS_DAPPERS 64959
+#define UnitRyzom_RS_CAT_JEWELSETTING 64960
+#define UnitRyzom_RS_CAT_GRIP 64961
+#define UnitRyzom_RS_CAT_CLOTHES 64962
+#define UnitRyzom_RS_CAT_JEWEL 64963
+#define UnitRyzom_RS_CAT_MAGICFOCUS 64964
+#define UnitRyzom_RS_CAT_ALL 64965
+#define UnitRyzom_RS_COLOR_BEIGE 64966
+#define UnitRyzom_RS_COLOR_BLACK 64967
+#define UnitRyzom_RS_COLOR_BLUE 64968
+#define UnitRyzom_RS_COLOR_GREEN 64969
+#define UnitRyzom_RS_COLOR_PURPLE 64970
+#define UnitRyzom_RS_COLOR_RED 64971
+#define UnitRyzom_RS_COLOR_TURQUOISE 64972
+#define UnitRyzom_RS_COLOR_WHITE 64973
+#define UnitRyzom_RS_CLASS_BASE 64974
+#define UnitRyzom_RS_CLASS_FINE 64975
+#define UnitRyzom_RS_SPEC_ALL 64976
+#define UnitRyzom_RS_CAT_BLADE 64977
+#define UnitRyzom_RS_CAT_POINT 64978
+#define UnitRyzom_RS_CAT_HAMMER 64979
+#define UnitRyzom_RS_CAT_COUNTERWEIGHT 64980
+#define UnitRyzom_RS_CAT_SHAFT 64981
+#define UnitRyzom_RS_CAT_AMMOBULLET 64982
+#define UnitRyzom_RS_CAT_BARREL 64983
+#define UnitRyzom_RS_CAT_ARMORSHELL 64984
+#define UnitRyzom_RS_CAT_AMMOJACKET 64985
+#define UnitRyzom_RS_CAT_LINING 64986
+#define UnitRyzom_RS_CAT_EXPLOSIVE 64987
+#define UnitRyzom_RS_CAT_STUFFING 64988
+#define UnitRyzom_RS_CAT_FIRINGPIN 64989
+#define UnitRyzom_RS_CAT_ARMORCLIP 64990
+#define UnitRyzom_RS_CAT_TRIGGER 64991
+#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 64992
+#define UnitRyzom_RS_SPEC_POISON_PROTEC 64993
+#define UnitRyzom_RS_SPEC_ELEC_PROTEC 64994
+#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 64995
+#define UnitRyzom_RS_SPEC_ELE_POWER 64996
+#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 64997
+#define UnitRyzom_RS_SPEC_OFFAFF_POWER 64998
+#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 64999
+#define UnitRyzom_RS_SPEC_DEFAFF_POWER 65000
+#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 65001
+#define UnitRyzom_RS_SPEC_HEAL_POWER 65002
+#define UnitRyzom_RS_SPEC_DESERT_RESIST 65003
+#define UnitRyzom_RS_SPEC_FOREST_RESIST 65004
+#define UnitRyzom_RS_SPEC_LAKES_RESIST 65005
+#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65006
+#define UnitRyzom_RS_SPEC_PRIME_RESIST 65007
+#define UnitRyzom_RS_SPEC_SAPLOAD 65008
+#define UnitRyzom_RS_SPEC_DAMAGE 65009
+#define UnitRyzom_RS_SPEC_SPEED 65010
+#define UnitRyzom_RS_SPEC_RANGE 65011
+#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65012
+#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65013
+#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65014
+#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65015
+#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65016
+#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65017
+#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65018
+#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65019
+#define UnitRyzom_RS_SPEC_ACID_PROTEC 65020
+#define UnitRyzom_RS_SPEC_COLD_PROTEC 65021
+#define UnitRyzom_RS_SPEC_ROT_PROTEC 65022
+#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65023
 #define XpExcept_sXPathNotUnparsedEnt 65024
 #define XpExcept_sXPathUnparsedEntCount 65025
 #define XpExcept_sXPathNoDTD 65026
@@ -195,14 +195,14 @@
 #define XpExcept_sInvalidLEChar 65029
 #define XpExcept_sBadUTF8Char 65030
 #define RyzomApi_RS_ERROR_LOADING_XML 65031
-#define UnitRyzom_RS_SPEC_DURABILITY 65032
-#define UnitRyzom_RS_SPEC_LIGHTNESS 65033
-#define UnitRyzom_RS_SPEC_SAPLOAD 65034
-#define UnitRyzom_RS_SPEC_DAMAGE 65035
-#define UnitRyzom_RS_SPEC_SPEED 65036
-#define UnitRyzom_RS_SPEC_RANGE 65037
-#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65038
-#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65039
+#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 65032
+#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 65033
+#define UnitConfig_RS_ERROR_KEY_NOTFOUND 65034
+#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 65035
+#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 65036
+#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 65037
+#define UnitRyzom_RS_SPEC_DURABILITY 65038
+#define UnitRyzom_RS_SPEC_LIGHTNESS 65039
 #define XpExcept_sInvStandAloneVal 65040
 #define XpExcept_sInvEncName 65041
 #define XpExcept_sInvVerNum 65042
@@ -701,13 +701,17 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
-	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
-	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
-	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
+	UnitFormMain_RS_VERSION,	"Version"
+	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
+	UnitFormMain_RS_AT,	"à"
 	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
 	UnitFormGuild_RS_UP,	"Monter"
 	UnitFormGuild_RS_DOWN,	"Descendre"
 	UnitFormGuild_RS_RESET_OK,	"Réinitialisation terminée"
+	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
+	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
+	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
+	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
 	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
 	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
@@ -716,10 +720,6 @@ BEGIN
 	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
 	UnitFormMain_RS_SEASON_AUTUMN,	"Automne"
 	UnitFormMain_RS_SEASON_WINTER,	"Hiver"
-	UnitFormMain_RS_VERSION,	"Version"
-	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
-	UnitFormMain_RS_AT,	"à"
-	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
 	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
 	UnitFormBackup_RS_DEFAULT_MANUAL_NAME,	"Sauvegarde manuelle"
 	UnitFormRoomFilter_RS_SKIN,	"Skin"
@@ -784,14 +784,14 @@ BEGIN
 	ComConst_SVarNotObject,	"Variant does not reference an automation object"
 	ComConst_STooManyParams,	"Dispatch methods do not support more than 64 parameters"
 	ComConst_SDCOMNotInstalled,	"DCOM not installed"
+	UnitRyzom_RS_MENU_WATCH,	"Surveiller"
+	UnitRyzom_RS_MENU_UNWATCH,	"Ne plus surveiller"
+	UnitRyzom_RS_TAB_PET,	"Mektoub"
+	UnitRyzom_RS_TAB_MOUNT,	"Monture"
+	UnitRyzom_RS_DAYS,	"jours"
+	UnitRyzom_RS_HOURS,	"heures"
 	UnitRyzom_RS_MINUTES,	"minutes"
 	UnitRyzom_RS_AND,	"et"
-	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
-	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
-	UnitConfig_RS_ERROR_KEY_NOTFOUND,	"La clé API est introuvable"
-	UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS,	"Le personnage existe déjà"
-	UnitConfig_RS_ERROR_CHAR_NOTFOUND,	"Le personnage est introuvable"
-	UnitConfig_RS_ERROR_CHARNAME_NOTFOUND,	"Le nom du personnage est introuvable"
 	pnglang_EPngInvalidCRCText,	"This \"Portable Network Graphics\" image is not valid because it contains invalid pieces of data (crc error)"
 	pnglang_EPNGInvalidIHDRText,	"The \"Portable Network Graphics\" image could not be loaded because one of its main piece of data (ihdr) might be corrupted"
 	pnglang_EPNGMissingMultipleIDATText,	"This \"Portable Network Graphics\" image is invalid because it has missing image parts."
@@ -800,6 +800,12 @@ BEGIN
 	pnglang_EPNGInvalidFileHeaderText,	"The file being readed is not a valid \"Portable Network Graphics\" image because it contains an invalid header. This file may be corruped, try obtaining it again."
 	pnglang_EPNGIHDRNotFirstText,	"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
 	pnglang_EPNGSizeExceedsText,	"This \"Portable Network Graphics\" image is not supported because either it's width or height exceeds the maximum size, which is 65535 pixels length."
+	UnitRyzom_RS_CLASS_CHOICE,	"Choix"
+	UnitRyzom_RS_CLASS_EXCELLENT,	"Excellent"
+	UnitRyzom_RS_CLASS_SUPREME,	"Suprême"
+	UnitRyzom_RS_RACE_ALL,	"Toute race"
+	UnitRyzom_RS_RACE_FYROS,	"Fyros"
+	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
 	UnitRyzom_RS_RACE_TRYKER,	"Tryker"
 	UnitRyzom_RS_RACE_MATIS,	"Matis"
 	UnitRyzom_RS_ECOSYS_COMMON,	"Commun"
@@ -810,12 +816,12 @@ BEGIN
 	UnitRyzom_RS_ECOSYS_LAKES,	"Lacs"
 	UnitRyzom_RS_VOLUME,	"Volume"
 	UnitRyzom_RS_DAPPERS,	"Dappers"
-	UnitRyzom_RS_MENU_WATCH,	"Surveiller"
-	UnitRyzom_RS_MENU_UNWATCH,	"Ne plus surveiller"
-	UnitRyzom_RS_TAB_PET,	"Mektoub"
-	UnitRyzom_RS_TAB_MOUNT,	"Monture"
-	UnitRyzom_RS_DAYS,	"jours"
-	UnitRyzom_RS_HOURS,	"heures"
+	UnitRyzom_RS_CAT_JEWELSETTING,	"Configuration des bijoux"
+	UnitRyzom_RS_CAT_GRIP,	"Prise"
+	UnitRyzom_RS_CAT_CLOTHES,	"Vêtements"
+	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
+	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
+	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
 	UnitRyzom_RS_COLOR_BEIGE,	"Beige"
 	UnitRyzom_RS_COLOR_BLACK,	"Noir"
 	UnitRyzom_RS_COLOR_BLUE,	"Bleu"
@@ -826,12 +832,12 @@ BEGIN
 	UnitRyzom_RS_COLOR_WHITE,	"Blanc"
 	UnitRyzom_RS_CLASS_BASE,	"Base"
 	UnitRyzom_RS_CLASS_FINE,	"Fin"
-	UnitRyzom_RS_CLASS_CHOICE,	"Choix"
-	UnitRyzom_RS_CLASS_EXCELLENT,	"Excellent"
-	UnitRyzom_RS_CLASS_SUPREME,	"Suprême"
-	UnitRyzom_RS_RACE_ALL,	"Toute race"
-	UnitRyzom_RS_RACE_FYROS,	"Fyros"
-	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
+	UnitRyzom_RS_SPEC_ALL,	"Toute caractéristique"
+	UnitRyzom_RS_CAT_BLADE,	"Lame"
+	UnitRyzom_RS_CAT_POINT,	"Pointe"
+	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
+	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
+	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
 	UnitRyzom_RS_CAT_AMMOBULLET,	"Balle de munitions"
 	UnitRyzom_RS_CAT_BARREL,	"Canon"
 	UnitRyzom_RS_CAT_ARMORSHELL,	"Carapace pour armures"
@@ -842,12 +848,12 @@ BEGIN
 	UnitRyzom_RS_CAT_FIRINGPIN,	"Percuteur"
 	UnitRyzom_RS_CAT_ARMORCLIP,	"Fixation pour armures"
 	UnitRyzom_RS_CAT_TRIGGER,	"Détente"
-	UnitRyzom_RS_CAT_JEWELSETTING,	"Configuration des bijoux"
-	UnitRyzom_RS_CAT_GRIP,	"Prise"
-	UnitRyzom_RS_CAT_CLOTHES,	"Vêtements"
-	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
-	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
-	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
+	UnitRyzom_RS_SPEC_SHOCK_PROTEC,	"Protection ondes de choc"
+	UnitRyzom_RS_SPEC_POISON_PROTEC,	"Protection poison"
+	UnitRyzom_RS_SPEC_ELEC_PROTEC,	"Protection électricité"
+	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
+	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
+	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
 	UnitRyzom_RS_SPEC_OFFAFF_POWER,	"Puissance magie débilitante"
 	UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED,	"Vitesse magie neutralisante"
 	UnitRyzom_RS_SPEC_DEFAFF_POWER,	"Puissance magie neutralisante"
@@ -858,12 +864,12 @@ BEGIN
 	UnitRyzom_RS_SPEC_LAKES_RESIST,	"Résistance lacs"
 	UnitRyzom_RS_SPEC_JUNGLE_RESIST,	"Résistance jungle"
 	UnitRyzom_RS_SPEC_PRIME_RESIST,	"Résistance primes racines"
-	UnitRyzom_RS_SPEC_ALL,	"Toute caractéristique"
-	UnitRyzom_RS_CAT_BLADE,	"Lame"
-	UnitRyzom_RS_CAT_POINT,	"Pointe"
-	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
-	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
-	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
+	UnitRyzom_RS_SPEC_SAPLOAD,	"Charge en sève"
+	UnitRyzom_RS_SPEC_DAMAGE,	"Dégâts"
+	UnitRyzom_RS_SPEC_SPEED,	"Vitesse"
+	UnitRyzom_RS_SPEC_RANGE,	"Portée"
+	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
+	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
 	UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER,	"Modif. esquives adversaire"
 	UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER,	"Modif. parades adversaire"
 	UnitRyzom_RS_SPEC_PROTEC_FACTOR,	"Facteur de protection"
@@ -874,12 +880,6 @@ BEGIN
 	UnitRyzom_RS_SPEC_COLD_PROTEC,	"Protection froid"
 	UnitRyzom_RS_SPEC_ROT_PROTEC,	"Protection pourriture"
 	UnitRyzom_RS_SPEC_FIRE_PROTEC,	"Protection feu"
-	UnitRyzom_RS_SPEC_SHOCK_PROTEC,	"Protection ondes de choc"
-	UnitRyzom_RS_SPEC_POISON_PROTEC,	"Protection poison"
-	UnitRyzom_RS_SPEC_ELEC_PROTEC,	"Protection électricité"
-	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
-	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
-	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
 	XpExcept_sXPathNotUnparsedEnt,	"Entity %s is not an unparsed entity."
 	XpExcept_sXPathUnparsedEntCount,	"Multiple entity declarations found for name %s"
 	XpExcept_sXPathNoDTD,	"No DTD in document for unparsed-entity-uri(%s)"
@@ -888,14 +888,14 @@ BEGIN
 	XpExcept_sInvalidLEChar,	"Invalid (little-endian) UTF-16 character encoding"
 	XpExcept_sBadUTF8Char,	"Badly formed UTF-8 character in stream"
 	RyzomApi_RS_ERROR_LOADING_XML,	"Erreur de chargement du flux XML"
+	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
+	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
+	UnitConfig_RS_ERROR_KEY_NOTFOUND,	"La clé API est introuvable"
+	UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS,	"Le personnage existe déjà"
+	UnitConfig_RS_ERROR_CHAR_NOTFOUND,	"Le personnage est introuvable"
+	UnitConfig_RS_ERROR_CHARNAME_NOTFOUND,	"Le nom du personnage est introuvable"
 	UnitRyzom_RS_SPEC_DURABILITY,	"Durabilité"
 	UnitRyzom_RS_SPEC_LIGHTNESS,	"Légereté"
-	UnitRyzom_RS_SPEC_SAPLOAD,	"Charge en sève"
-	UnitRyzom_RS_SPEC_DAMAGE,	"Dégâts"
-	UnitRyzom_RS_SPEC_SPEED,	"Vitesse"
-	UnitRyzom_RS_SPEC_RANGE,	"Portée"
-	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
-	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
 	XpExcept_sInvStandAloneVal,	"Standalone value must equal 'yes' or 'no'"
 	XpExcept_sInvEncName,	"Invalid encoding declaration: "
 	XpExcept_sInvVerNum,	"Invalid XML version number: "
