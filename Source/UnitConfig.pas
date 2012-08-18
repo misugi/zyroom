@@ -629,9 +629,9 @@ begin
   Result := False;
   try
     wStream := TStringStream.Create('');
-    GRyzomApi.SendRequest('http://zyroom.misulud.fr/version/version.txt', wStream);
+    GRyzomApi.SendRequest('http://www.misulud.fr/version.php?sw=zyroom&req=check', wStream);
     if FVersion <> wStream.DataString then begin
-      AFileUrl := Format('http://zyroom.misulud.fr/version/zyroom-%s.zip', [wStream.DataString]);
+      AFileUrl := Format('http://www.misulud.fr/version.php?sw=zyroom&req=dl&ver=%s', [wStream.DataString]);
       Result := True;
     end;
   except
