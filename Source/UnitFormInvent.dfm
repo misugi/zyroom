@@ -1,6 +1,6 @@
 object FormInvent: TFormInvent
-  Left = 345
-  Top = 287
+  Left = 647
+  Top = 404
   Width = 725
   Height = 440
   Caption = 'Inventaire'

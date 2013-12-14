@@ -1,4 +1,4 @@
-object FormRoomFilter: TFormRoomFilter
+object FormFilter: TFormFilter
   Left = 401
   Top = 263
   Width = 325

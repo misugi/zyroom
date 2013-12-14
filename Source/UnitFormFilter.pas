@@ -21,7 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with zyRoom.  If not, see http://www.gnu.org/licenses.
 *******************************************************************************}
-unit UnitFormRoomFilter;
+unit UnitFormFilter;
 
 interface
 
@@ -40,7 +40,7 @@ resourcestring
   RS_NEEDED_FILE = 'Fichier "string_client.pack" introuvable !';
 
 type
-  TFormRoomFilter = class(TForm)
+  TFormFilter = class(TForm)
     PageControl: TPageControl;
     TabFilter: TTabSheet;
     TabInfo: TTabSheet;
@@ -244,7 +244,7 @@ type
   end;
 
 var
-  FormRoomFilter: TFormRoomFilter;
+  FormFilter: TFormFilter;
 
 implementation
 
@@ -256,7 +256,7 @@ uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
 {*******************************************************************************
 Updates language
 *******************************************************************************}
-procedure TFormRoomFilter.UpdateLanguage;
+procedure TFormFilter.UpdateLanguage;
 var
   i: Integer;
   wIndex: Integer;
@@ -309,7 +309,7 @@ end;
 {*******************************************************************************
 Closes the form
 *******************************************************************************}
-procedure TFormRoomFilter.FormClose(Sender: TObject;
+procedure TFormFilter.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
 end;
@@ -317,7 +317,7 @@ end;
 {*******************************************************************************
 Shows the form
 *******************************************************************************}
-procedure TFormRoomFilter.FormShow(Sender: TObject);
+procedure TFormFilter.FormShow(Sender: TObject);
 begin
   LoadCurrentFilter;
   PageControl.TabIndex := 0; // page by default
@@ -327,7 +327,7 @@ end;
 {*******************************************************************************
 Applies the filter
 *******************************************************************************}
-procedure TFormRoomFilter.BtOKClick(Sender: TObject);
+procedure TFormFilter.BtOKClick(Sender: TObject);
 begin
   ApplyFilter;
 end;
@@ -335,7 +335,7 @@ end;
 {*******************************************************************************
 Changes the checkbox for natural or animal materials
 *******************************************************************************}
-procedure TFormRoomFilter.CbTypeMatClick(Sender: TObject);
+procedure TFormFilter.CbTypeMatClick(Sender: TObject);
 begin
   EnabledGroup(GbEcosys, CbTypeMat.Checked or CbTypeEquipment.Checked);
   EnabledGroup(GbClass, CbTypeMat.Checked or CbTypeEquipment.Checked);
@@ -347,7 +347,7 @@ end;
 {*******************************************************************************
 Enables or disables all components in a groupbox
 *******************************************************************************}
-procedure TFormRoomFilter.EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
+procedure TFormFilter.EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
 var
   i: Integer;
 begin
@@ -359,7 +359,7 @@ end;
 {*******************************************************************************
 Loads the current filter
 *******************************************************************************}
-procedure TFormRoomFilter.LoadCurrentFilter;
+procedure TFormFilter.LoadCurrentFilter;
 begin
   // Sorting
   EdSorting.ItemIndex := Ord(GCurrentFilter.Sorting);
@@ -434,7 +434,7 @@ end;
 {*******************************************************************************
 Saves the current filter
 *******************************************************************************}
-procedure TFormRoomFilter.SaveCurrentFilter;
+procedure TFormFilter.SaveCurrentFilter;
 begin
   // Sorting
   case EdSorting.ItemIndex of
@@ -514,7 +514,7 @@ end;
 {*******************************************************************************
 Sets default filter
 *******************************************************************************}
-procedure TFormRoomFilter.BtDefaultClick(Sender: TObject);
+procedure TFormFilter.BtDefaultClick(Sender: TObject);
 begin
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
   LoadCurrentFilter;
@@ -524,7 +524,7 @@ end;
 {*******************************************************************************
 Applies filter
 *******************************************************************************}
-procedure TFormRoomFilter.ApplyFilter;
+procedure TFormFilter.ApplyFilter;
 begin
   SaveCurrentFilter;
   if FormRoom.Visible then begin
@@ -537,7 +537,7 @@ end;
 {*******************************************************************************
 Displays info of the selected item
 *******************************************************************************}
-procedure TFormRoomFilter.UpdateInfo(AItemImage: TItemImage);
+procedure TFormFilter.UpdateInfo(AItemImage: TItemImage);
 var
   wNow: TDateTime;
   wDays: Integer;
@@ -617,13 +617,13 @@ begin
 
       // Weight
       if ItemWeight > 0 then begin
-        LbValueWeight.Caption := FormatFloat('####0.##', ItemWeight, GConfig.FormatSettings) + ' kg';
+        LbValueWeight.Caption := FormatFloat2('####0.##', ItemWeight) + ' kg';
         FLbList.Add(LbWeight);
         FLbList.Add(LbValueWeight);
       end;
 
       // Volume
-      LbValueVolume.Caption := FormatFloat('####0.##', ItemVolume, GConfig.FormatSettings);
+      LbValueVolume.Caption := FormatFloat2('####0.##', ItemVolume);
       FLbList.Add(LbVolume);
       FLbList.Add(LbValueVolume);
 
@@ -644,11 +644,11 @@ begin
       // Equipements
       if (ItemType = itEquipment) then begin
         if (ItemEquip in [iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
-          LbValueSpeed.Caption := FloatToStr(CSpeed);
+          LbValueSpeed.Caption := IntToStr(CSpeed);
           FLbList2.Add(LbAutoSpeed);
           FLbList2.Add(LbValueSpeed);
 
-          LbValueRange.Caption := FloatToStr(CRange);
+          LbValueRange.Caption := IntToStr(CRange);
           FLbList2.Add(LbAutoRange);
           FLbList2.Add(LbValueRange);
         end;
@@ -682,7 +682,7 @@ begin
           FLbList2.Add(LbAutoSlashingProt);
           FLbList2.Add(LbValueSlashingProt);
 
-          LbValueSmashingProt.Caption := IntToStr(CSmashingProt);
+          LbValueSmashingProt.Caption := IntToStr(CBluntProt);
           FLbList2.Add(LbAutoSmashingProt);
           FLbList2.Add(LbValueSmashingProt);
 
@@ -805,8 +805,8 @@ begin
       if ItemPrice > 0 then begin
         LbValueContinent.Caption := ItemContinent;
         LbValuePrice.Caption := Format('%s (%s)', [
-          FormatFloat('###,###,###,##0', ItemPrice, GConfig.FormatSettings),
-          FormatFloat('###,###,###,##0', ItemPrice*ItemQuantity, GConfig.FormatSettings)]);
+          FormatFloat2('###,###,###,##0', ItemPrice),
+          FormatFloat2('###,###,###,##0', ItemPrice*ItemQuantity)]);
         wNow := Now;
         wDays := DaysBetween(wNow, ItemTime);
         wNow := IncDay(wNow, wDays);
@@ -927,7 +927,7 @@ end;
 {*******************************************************************************
 Initialize info
 *******************************************************************************}
-procedure TFormRoomFilter.InitInfo;
+procedure TFormFilter.InitInfo;
 begin
   FCurrentItem := nil;
   PnTitle.Visible := False;
@@ -941,7 +941,7 @@ end;
 {*******************************************************************************
 Creates the form
 *******************************************************************************}
-procedure TFormRoomFilter.FormCreate(Sender: TObject);
+procedure TFormFilter.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
@@ -976,7 +976,7 @@ end;
 {*******************************************************************************
 Destroys the form
 *******************************************************************************}
-procedure TFormRoomFilter.FormDestroy(Sender: TObject);
+procedure TFormFilter.FormDestroy(Sender: TObject);
 begin
   FPngObject.Free;
   FLbList.Free;
@@ -986,12 +986,12 @@ end;
 {*******************************************************************************
 Changes the current page
 *******************************************************************************}
-procedure TFormRoomFilter.PageControlChange(Sender: TObject);
+procedure TFormFilter.PageControlChange(Sender: TObject);
 begin
   FCurrentItem := nil;
 end;
 
-procedure TFormRoomFilter.BackupComboIndex;
+procedure TFormFilter.BackupComboIndex;
 begin
   FComboIndexSorting := EdSorting.ItemIndex;
   FComboIndexClassMin := EdClassMin.ItemIndex;
@@ -1001,7 +1001,7 @@ begin
   FComboIndexContinent := EdContinent.ItemIndex;
 end;
 
-procedure TFormRoomFilter.RestoreComboIndex;
+procedure TFormFilter.RestoreComboIndex;
 begin
   EdSorting.ItemIndex := FComboIndexSorting;
   EdClassMin.ItemIndex := FComboIndexClassMin;
@@ -1011,7 +1011,7 @@ begin
   EdContinent.ItemIndex := FComboIndexContinent;
 end;
 
-procedure TFormRoomFilter.PnTitleClick(Sender: TObject);
+procedure TFormFilter.PnTitleClick(Sender: TObject);
 begin
   FormOptions.ShowModal;
 end;

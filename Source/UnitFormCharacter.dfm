@@ -1,6 +1,6 @@
 object FormCharacter: TFormCharacter
-  Left = 345
-  Top = 282
+  Left = 647
+  Top = 397
   Width = 708
   Height = 438
   Caption = 'Personnages'
@@ -14,10 +14,9 @@ object FormCharacter: TFormCharacter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
-  object GridChar: TStringGrid
+  object GridItem: TStringGrid
     Left = 0
     Top = 28
     Width = 692
@@ -37,11 +36,11 @@ object FormCharacter: TFormCharacter
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
     ParentFont = False
     TabOrder = 0
-    OnDblClick = GridCharDblClick
-    OnDrawCell = GridCharDrawCell
-    OnMouseWheelDown = GridCharMouseWheelDown
-    OnMouseWheelUp = GridCharMouseWheelUp
-    OnSelectCell = GridCharSelectCell
+    OnDblClick = GridItemDblClick
+    OnDrawCell = GridItemDrawCell
+    OnMouseWheelDown = GridItemMouseWheelDown
+    OnMouseWheelUp = GridItemMouseWheelUp
+    OnSelectCell = GridItemSelectCell
     ColWidths = (
       36
       36

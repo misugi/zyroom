@@ -13,6 +13,7 @@ object FormAlert: TFormAlert
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 14
   object RichEditAlert: TRichEdit

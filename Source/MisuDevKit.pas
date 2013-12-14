@@ -21,6 +21,7 @@ function MdkBoolToInteger(AValue: Boolean): Integer;
 function MdkFileVersionInfo(AFileName: String; AInfoType: TFileVersionInfo): String;
 function MdkFileSize(AFileName: String): DWORD;
 function MdkRemoveAccents(ASource: String): String;
+function MdkArrayToString(AArray: array of String; ASep: String = ', '): String;
 
 procedure MdkWriteFile(AFileName: String; ABuffer: String; ANewLine: Boolean = True; AOverwrite: Boolean = False);
 
@@ -287,6 +288,22 @@ begin
     i := FindNext(wRec);
   end;
   FindClose(wRec);
+end;
+
+{*******************************************************************************
+Returns the string representation of an array
+*******************************************************************************}
+function MdkArrayToString(AArray: array of String; ASep: String): String;
+var
+  i: Integer;
+begin
+  Result := '';
+  for i := 0 to High(AArray) do begin
+    if Length(Result) > 0 then
+      Result := Result + ASep + AArray[i]
+    else
+      Result := AArray[i];
+  end;
 end;
 
 end.

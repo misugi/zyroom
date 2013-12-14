@@ -84,7 +84,7 @@ var
 implementation
 
 uses UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
-  UnitFormRoomFilter, UnitFormCharacter, UnitFormWatch, Spin;
+  UnitFormFilter, UnitFormCharacter, UnitFormWatch, Spin;
 
 {$R *.dfm}
 
@@ -115,8 +115,8 @@ Display the form
 *******************************************************************************}
 procedure TFormInvent.FormShow(Sender: TObject);
 begin
-  FormRoomFilter.Parent := PnFilter1;
-  FormRoomFilter.Show;
+  FormFilter.Parent := PnFilter1;
+  FormFilter.Show;
   UpdateLanguage;
 end;
 
@@ -147,7 +147,7 @@ procedure TFormInvent.CharInventMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   if Sender is TItemImage then begin
-    FormRoomFilter.UpdateInfo(TItemImage(Sender));
+    FormFilter.UpdateInfo(TItemImage(Sender));
   end;
 end;
 
@@ -157,7 +157,7 @@ Closes the form
 procedure TFormInvent.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  FormRoomFilter.Close;
+  FormFilter.Close;
 end;
 
 {*******************************************************************************
@@ -199,7 +199,7 @@ procedure TFormInvent.UpdateRoom;
 var
   wMaxVolume: String;
 begin
-  FCharID := FormCharacter.GridChar.Cells[3, FormCharacter.GridChar.Row];
+  FCharID := FormCharacter.GridItem.Cells[3, FormCharacter.GridItem.Row];
   FormProgress.ShowFormInvent(FCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
 
   if TabInvent.TabIndex = 0 then
@@ -219,8 +219,8 @@ begin
           else
             wMaxVolume := '/500'; // pack
 
-  LbValueCharName.Caption := FormCharacter.GridChar.Cells[1, FormCharacter.GridChar.Row];
-  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume, GConfig.FormatSettings) + wMaxVolume;
+  LbValueCharName.Caption := FormCharacter.GridItem.Cells[1, FormCharacter.GridItem.Row];
+  LbValueVolume.Caption := FormatFloat2('####0.##',FormProgress.TotalVolume) + wMaxVolume;
   LbValueDappers.Caption := FDappers;
 end;
 
@@ -285,12 +285,12 @@ begin
     FreeAndNil(FGuardFile);
     FGuardFile := TIniFile.Create(wGuardFile);
     case TabInvent.TabIndex of
-      0: wSection := 'room';
-      1: wSection := 'bag';
-      2: wSection := 'pet_animal1';
-      3: wSection := 'pet_animal2';
-      4: wSection := 'pet_animal3';
-      5: wSection := 'pet_animal4';
+      0: wSection := _SECTION_ROOM;
+      1: wSection := _SECTION_BAG;
+      2: wSection := _SECTION_PET1;
+      3: wSection := _SECTION_PET2;
+      4: wSection := _SECTION_PET3;
+      5: wSection := _SECTION_PET4;
     end;
     wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
     if ItemType = itEquipment then

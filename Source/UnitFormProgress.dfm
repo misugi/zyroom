@@ -1,6 +1,6 @@
 object FormProgress: TFormProgress
-  Left = 378
-  Top = 329
+  Left = 709
+  Top = 463
   BorderIcons = []
   BorderStyle = bsToolWindow
   ClientHeight = 82

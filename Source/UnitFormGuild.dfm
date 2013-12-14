@@ -1,6 +1,6 @@
 object FormGuild: TFormGuild
-  Left = 345
-  Top = 282
+  Left = 399
+  Top = 287
   Width = 708
   Height = 425
   Caption = 'Guildes'
@@ -16,7 +16,7 @@ object FormGuild: TFormGuild
   OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 14
-  object GridGuild: TStringGrid
+  object GridItem: TStringGrid
     Left = 0
     Top = 28
     Width = 692
@@ -36,11 +36,11 @@ object FormGuild: TFormGuild
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
     ParentFont = False
     TabOrder = 0
-    OnDblClick = GridGuildDblClick
-    OnDrawCell = GridGuildDrawCell
-    OnMouseWheelDown = GridGuildMouseWheelDown
-    OnMouseWheelUp = GridGuildMouseWheelUp
-    OnSelectCell = GridGuildSelectCell
+    OnDblClick = GridItemDblClick
+    OnDrawCell = GridItemDrawCell
+    OnMouseWheelDown = GridItemMouseWheelDown
+    OnMouseWheelUp = GridItemMouseWheelUp
+    OnSelectCell = GridItemSelectCell
     ColWidths = (
       36
       36

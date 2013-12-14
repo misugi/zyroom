@@ -49,12 +49,8 @@ type
     PnContainer: TPanel;
     TimerStatus: TTimer;
     PnHeader: TPanel;
-    ImgAniro: TImage;
-    LbAniro: TLabel;
-    ImgLeanon: TImage;
-    LbLeanon: TLabel;
-    ImgArispotle: TImage;
-    LbArispotle: TLabel;
+    ImgStatus: TImage;
+    LbAutoStatus: TLabel;
     TimerUpdate: TTimer;
     StatusBar: TStatusBar;
     ImgUpdate: TImage;
@@ -80,7 +76,6 @@ type
     procedure BtGuildClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure LbServerClick(Sender: TObject);
     procedure ImgLogoClick(Sender: TObject);
     procedure BtCharacterClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -99,17 +94,21 @@ type
     FPngClosed: TPNGObject;
     FPngOpen: TPNGObject;
     FPngRestricted: TPNGObject;
-    FServerLabelSelected: TLabel;
     FCurrentForm: TForm;
     FFileUrl: String;
+    {$IFNDEF __NOALERT}
     FAlert: TAlert;
+    {$ENDIF}
     FVisible: Boolean;
-    FServerID: String;
 
-    procedure UpdateStatusAndTime(AOnlyTime: Boolean);
-    procedure GetSeasonInfo(AServerID: String);
+    FPanelTime: TStatusPanel;
+    FPanelCurrentSeason: TStatusPanel;
+    FPanelNextSeason: TStatusPanel;
+    FPanelVersion: TStatusPanel;
+
+    procedure UpdateStatusAndTime;
+    procedure GetSeasonInfo;
   public
-    property ServerID: String read FServerID;
     procedure ShowMenuForm(AForm: TForm);
   end;
 
@@ -119,7 +118,7 @@ var
 implementation
 
 uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
-  UnitFormCharacter, UnitFormInvent, UnitFormRoomFilter, DateUtils,
+  UnitFormCharacter, UnitFormInvent, UnitFormFilter, DateUtils,
   UnitFormAlert, SyncObjs, Contnrs, UnitFormlog, UnitFormBackup;
 
 {$R *.dfm}
@@ -154,7 +153,12 @@ begin
   GAlertCS := TCriticalSection.Create;
   GMsgList := TObjectList.Create(True);
 
-  {$IFNDEF __DEBUG}
+  FPanelTime := StatusBar.Panels.Items[0];
+  FPanelCurrentSeason := StatusBar.Panels.Items[1];
+  FPanelNextSeason := StatusBar.Panels.Items[2];
+  FPanelVersion := StatusBar.Panels.Items[3];
+
+  {$IFNDEF __NOALERT}
   // Start thread for alerts
   FAlert := TAlert.Create;
   {$ENDIF}
@@ -169,17 +173,6 @@ begin
   
   // Load the settings
   FormOptions.ApplyConfig;
-
-  // Default server to display the time
-  case GConfig.Language of
-    _LANGUAGE_FRENCH_ID: FServerLabelSelected := LbAniro;
-    _LANGUAGE_ENGLISH_ID: FServerLabelSelected := LbArispotle;
-    _LANGUAGE_GERMAN_ID: FServerLabelSelected := LbLeanon;
-  end;
-  FServerLabelSelected.Font.Style := [fsBold];
-  FServerLabelSelected.Cursor := crDefault;
-  FServerLabelSelected.OnClick := nil;
-  StatusBar.Panels.Items[0].Text := FServerLabelSelected.Caption;
 
   // Prepare all the project forms
   FormHome.BorderStyle := bsNone;
@@ -214,14 +207,14 @@ begin
   FormBackup.Parent := PnContainer;
   FormBackup.Align := alClient;
 
-  FormRoomFilter.BorderStyle := bsNone;
-  FormRoomFilter.Align := alClient;
+  FormFilter.BorderStyle := bsNone;
+  FormFilter.Align := alClient;
 
   // Displays the home form by default
   ShowMenuForm(FormHome);
 
   // Updates the status and time
-  UpdateStatusAndTime(False);
+  UpdateStatusAndTime;
 
   // Sets default filter
   GRyzomApi.SetDefaultFilter(GCurrentFilter);
@@ -230,7 +223,7 @@ begin
   FormBackup.StartAutoBackup;
 
   // Check version
-  StatusBar.Panels.Items[4].Text := RS_VERSION + ' ' + GConfig.Version;
+  FPanelVersion.Text := RS_VERSION + ' ' + GConfig.Version;
   ImgUpdate.Hint := RS_NEW_VERSION;
   {$IFNDEF __DEBUG}
   if GConfig.CheckVersion(FFileUrl) then begin
@@ -254,7 +247,7 @@ Destroys the form
 *******************************************************************************}
 procedure TFormMain.FormDestroy(Sender: TObject);
 begin
-  {$IFNDEF __DEBUG}
+  {$IFNDEF __NOALERT}
   FAlert.Terminate;
   WaitForSingleObject(FAlert.Handle, 10000);
   {$ENDIF}
@@ -287,87 +280,37 @@ Auto-timer to update status and time
 procedure TFormMain.TimerStatusTimer(Sender: TObject);
 begin
   if not FormProgress.Visible then
-    UpdateStatusAndTime(False);
+    UpdateStatusAndTime;
 end;
 
 {*******************************************************************************
 Update status and time
 *******************************************************************************}
-procedure TFormMain.UpdateStatusAndTime(AOnlyTime: Boolean);
+procedure TFormMain.UpdateStatusAndTime;
+{$IFNDEF __NOSTATUS}
 var
   wStream: TStringStream;
+{$ENDIF}
 begin
-  {$IFNDEF __DEBUG}
+  ImgStatus.Hint := RS_STATUS_OPEN;
+  ImgStatus.Picture.Assign(FPngOpen);
+  {$IFNDEF __NOSTATUS}
   try
-    if not AOnlyTime then begin
-      GRyzomApi.UpdateStatus;
-
-      // Aniro status
-      case GRyzomApi.AniroStatus of
-        _STATUS_CLOSED: begin
-          ImgAniro.Hint := RS_STATUS_CLOSED;
-          ImgAniro.Picture.Assign(FPngClosed);
-        end;
-        _STATUS_OPEN: begin
-          ImgAniro.Hint := RS_STATUS_OPEN;
-          ImgAniro.Picture.Assign(FPngOpen);
-        end;
-        _STATUS_RESTRICTED: begin
-          ImgAniro.Hint := RS_STATUS_RESTRICTED;
-          ImgAniro.Picture.Assign(FPngRestricted);
-        end;
-      end;
-
-      // Leanon status
-      case GRyzomApi.LeanonStatus of
-        _STATUS_CLOSED: begin
-          ImgLeanon.Hint := RS_STATUS_CLOSED;
-          ImgLeanon.Picture.Assign(FPngClosed);
-        end;
-        _STATUS_OPEN: begin
-          ImgLeanon.Hint := RS_STATUS_OPEN;
-          ImgLeanon.Picture.Assign(FPngOpen);
-        end;
-        _STATUS_RESTRICTED: begin
-          ImgLeanon.Hint := RS_STATUS_RESTRICTED;
-          ImgLeanon.Picture.Assign(FPngRestricted);
-        end;
-      end;
-
-      // Arispotle status
-      case GRyzomApi.ArispotleStatus of
-        _STATUS_CLOSED: begin
-          ImgArispotle.Hint := RS_STATUS_CLOSED;
-          ImgArispotle.Picture.Assign(FPngClosed);
-        end;
-        _STATUS_OPEN: begin
-          ImgArispotle.Hint := RS_STATUS_OPEN;
-          ImgArispotle.Picture.Assign(FPngOpen);
-        end;
-        _STATUS_RESTRICTED: begin
-          ImgArispotle.Hint := RS_STATUS_RESTRICTED;
-          ImgArispotle.Picture.Assign(FPngRestricted);
-        end;
-      end;
-    end;
-
     // Time
     wStream := TStringStream.Create('');
     try
-      if FServerLabelSelected = LbAniro then FServerID := _SHARD_ANIRO_ID;
-      if FServerLabelSelected = LbLeanon then FServerID := _SHARD_LEANON_ID;
-      if FServerLabelSelected = LbArispotle then FServerID := _SHARD_ARIPOTLE_ID;
-   
-      GRyzomApi.ApiTime(FServerID, _FORMAT_TXT, wStream);
-      StatusBar.Panels.Items[1].Text := wStream.DataString;
-      GetSeasonInfo(FServerID);
+      GRyzomApi.ApiTime(_FORMAT_TXT, wStream);
+      FPanelTime.Text := wStream.DataString;
+      GetSeasonInfo;
     finally
       wStream.Free;
     end;
   except
-    StatusBar.Panels.Items[1].Text := '-';
-    StatusBar.Panels.Items[2].Text := '-';
-    StatusBar.Panels.Items[3].Text := '-';
+    FPanelTime.Text := '-';
+    FPanelCurrentSeason.Text := '-';
+    FPanelNextSeason.Text := '-';
+    ImgStatus.Hint := RS_STATUS_CLOSED;
+    ImgStatus.Picture.Assign(FPngClosed);
   end;
   {$ENDIF}
 end;
@@ -398,26 +341,6 @@ begin
   ShowMenuForm(FormHome);
   BtGuild.Font.Style := [];
   BtCharacter.Font.Style := [];
-end;
-
-{*******************************************************************************
-Change the server to display the time
-*******************************************************************************}
-procedure TFormMain.LbServerClick(Sender: TObject);
-begin
-  FServerLabelSelected.Font.Style := [];
-  FServerLabelSelected.Cursor := crHandPoint;
-  FServerLabelSelected.OnClick := LbServerClick;
-
-  // New server
-  FServerLabelSelected := TLabel(Sender);
-  FServerLabelSelected.Font.Style := [fsBold];
-  FServerLabelSelected.Cursor := crDefault;
-  FServerLabelSelected.OnClick := nil;
-  StatusBar.Panels.Items[0].Text := FServerLabelSelected.Caption;
-
-  // Update only the time
-  UpdateStatusAndTime(True);
 end;
 
 {*******************************************************************************
@@ -457,7 +380,7 @@ end;
 {*******************************************************************************
 Get season information
 *******************************************************************************}
-procedure TFormMain.GetSeasonInfo(AServerID: String);
+procedure TFormMain.GetSeasonInfo;
 var
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
@@ -467,11 +390,12 @@ var
   wTimeOfDay: Integer;
   wMinutes: Integer;
   wNextSeason: TDateTime;
+  wServerTick: Integer;
 begin
   wStream := TMemoryStream.Create;
   wXmlDoc := TXpObjModel.Create(nil);
   try
-    GRyzomApi.ApiTime(AServerID, _FORMAT_XML, wStream);
+    GRyzomApi.ApiTime(_FORMAT_XML, wStream);
     wXmlDoc.LoadStream(wStream);
     wSeasonIndex := StrToIntDef(wXmlDoc.DocumentElement.SelectString('/shard_time/season'), -1);
     case wSeasonIndex of
@@ -482,15 +406,20 @@ begin
     else
       wSeason := '-';
     end;
-    StatusBar.Panels.Items[2].Text := wSeason;
+    FPanelCurrentSeason.Text := wSeason;
 
     // Calculation of next season
     wDayOfSeason := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/day_of_season'));
     wTimeOfDay := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/time_of_day'));
     wMinutes := ( (89-wDayOfSeason)*24 + (23-wTimeOfDay) )*3;
     wNextSeason := IncMinute(Now, wMinutes);
-    StatusBar.Panels.Items[3].Text := Format('%s %s %s %s', [
+    FPanelNextSeason.Text := Format('%s %s %s %s', [
       RS_NEXT_SEASON, DateToStr(wNextSeason), RS_AT, FormatDateTime('hh:nn', wNextSeason)]);
+
+    // Check server tick
+    wServerTick := wXmlDoc.DocumentElement.SelectInteger('/shard_time/server_tick');
+    if wServerTick <= 0 then
+      raise Exception.Create('Bad server tick, the server is probably closed');
   finally
     wXmlDoc.Free;
     wStream.Free;

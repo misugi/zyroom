@@ -28,7 +28,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, ComCtrls, Buttons, RegExpr, SevenButton;
+  LcUnit, StrUtils, Buttons, SevenButton, UnitConfig;
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
@@ -39,21 +39,20 @@ resourcestring
   RS_CHAR_COL_LAST_SYNCHRONIZATION = 'Synchronisation';
   RS_CHAR_COL_COMMENT = 'Description';
   RS_CHAR_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer le personnage sélectionné ?';
-  RS_CHAR_PROGRESS_SYNCHRONIZE = 'Syncrhonisation en cours, veuillez patienter...';
-  RS_CHAR_KEY = 'Clé de personnage :';
+  RS_CHAR_KEY = 'Clé API de personnage :';
   RS_CHECK_SALES = 'Surveiller les ventes';
   RS_UP = 'Monter';
   RS_DOWN = 'Descendre';
   RS_RESET_OK = 'Réinitialisation terminée';
 
 const
-  _EXPR_MOUNT = '^ias[dfjl]\.sitem';
+  _EXPR_MOUNT = '^chidb2\.creature$';
 
 type
   TPublicStringGrid = class(TCustomGrid); 
 
   TFormCharacter = class(TForm)
-    GridChar: TStringGrid;
+    GridItem: TStringGrid;
     Panel1: TPanel;
     BtNew: TSevenButton;
     BtUpdate: TSevenButton;
@@ -63,22 +62,21 @@ type
     BtUp: TSevenButton;
     BtReset: TSevenButton;
     procedure FormCreate(Sender: TObject);
-    procedure GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
+    procedure GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
     procedure BtNewClick(Sender: TObject);
     procedure BtUpdateClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure GridCharMouseWheelDown(Sender: TObject; Shift: TShiftState;
+    procedure GridItemMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
-    procedure GridCharMouseWheelUp(Sender: TObject; Shift: TShiftState;
+    procedure GridItemMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
-    procedure GridCharSelectCell(Sender: TObject; ACol, ARow: Integer;
+    procedure GridItemSelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
     procedure BtDeleteClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure GridCharDblClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
+    procedure GridItemDblClick(Sender: TObject);
     procedure BtDownClick(Sender: TObject);
     procedure BtUpClick(Sender: TObject);
     procedure BtResetClick(Sender: TObject);
@@ -89,9 +87,12 @@ type
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
-    procedure GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
-    procedure UpdateCharacter(AAuto: Boolean);
+    procedure UpdateItem(AAuto: Boolean);
+    procedure SetItemInfo(AAction: TActionType);
     procedure MoveRow(AIndex: Integer);
+    procedure SelectItem(AItemID: String);
+    procedure EnableButtons(AEnabled: Boolean);
+    procedure GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
   public
     procedure UpdateLanguage;
   end;
@@ -101,9 +102,9 @@ var
 
 implementation
 
-uses UnitConfig, UnitFormGuildEdit, UnitRyzom, MisuDevKit,
-  UnitFormConfirmation, UnitFormProgress, UnitFormMain, UnitFormRoom,
-  UnitFormRoomFilter, UnitFormInvent;
+uses UnitFormEdit, UnitRyzom, MisuDevKit,
+  UnitFormConfirmation, UnitFormProgress, UnitFormMain,
+  UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr;
 
 {$R *.dfm}
 
@@ -113,7 +114,7 @@ Creates the form
 procedure TFormCharacter.FormCreate(Sender: TObject);
 begin
   FIconList := TObjectList.Create;
-  GridChar.DoubleBuffered := True;
+  GridItem.DoubleBuffered := True;
   LoadGrid;
 end;
 
@@ -128,7 +129,7 @@ end;
 {*******************************************************************************
 Displays the grid
 *******************************************************************************}
-procedure TFormCharacter.GridCharDrawCell(Sender: TObject; ACol, ARow: Integer;
+procedure TFormCharacter.GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
 var
   wGuild: String;
@@ -215,71 +216,19 @@ end;
 Adds a new guild
 *******************************************************************************}
 procedure TFormCharacter.BtNewClick(Sender: TObject);
-var
-  wCharKey: String;
-  wCharID: String;
-  wCharName: String;
-  wCharServer: String;
-  wCharGuild: String;
-  wStream: TMemoryStream;
-  wComment: String;
-  wCheckVolume: Boolean;
-  wCheckSales: Boolean;
-  wXmlDoc: TXpObjModel;
-  wIconFile: String;
-  i: Integer;
 begin
-  FormGuildEdit.Caption := RS_CHAR_NEW_CHARACTER;
-  FormGuildEdit.LbAutoKey.Caption := RS_CHAR_KEY;
-  FormGuildEdit.EdKey.Text := '';
-  FormGuildEdit.EdComment.Text := '';
-  FormGuildEdit.CbCheckChange.Caption := RS_CHECK_SALES;
-  FormGuildEdit.CbCheckVolume.Checked := False;
-  FormGuildEdit.CbCheckChange.Checked := False;
-  if FormGuildEdit.ShowModal = mrOk then begin
-    wCharKey := FormGuildEdit.EdKey.Text;
-    wComment := FormGuildEdit.EdComment.Text;
-    wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
-    wCheckSales := FormGuildEdit.CbCheckChange.Checked;
-    wStream := TMemoryStream.Create;
-    try
-      GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
-      wXmlDoc := TXpObjModel.Create(nil);
-      try
-        wXmlDoc.LoadStream(wStream);
-        wCharID := wXmlDoc.DocumentElement.SelectString('/character/cid');
-        wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
-        wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
-        wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
-        wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
-        GCharacter.AddChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild, wCheckVolume, wCheckSales);
-        GCharacter.SetIndex(wCharID, GridChar.RowCount - 1);
+  // Prepare edit window
+  FormEdit.Caption := RS_CHAR_NEW_CHARACTER;
+  FormEdit.LbAutoKey.Caption := RS_CHAR_KEY;
+  FormEdit.EdKey.Text := '';
+  FormEdit.EdComment.Text := '';
+  FormEdit.CbCheckChange.Caption := RS_CHECK_SALES;
+  FormEdit.CbCheckVolume.Checked := False;
+  FormEdit.CbCheckChange.Checked := False;
 
-        wStream.Clear;
-        GRyzomApi.ApiBallisticMystix(
-          wXmlDoc.DocumentElement.SelectString('/character/race'),
-          wXmlDoc.DocumentElement.SelectString('/character/gender'),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_type')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_color')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/tattoo')),
-          StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/eyes_color')),
-          wStream);
-        wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
-        wStream.SaveToFile(wIconFile);
-        LoadGrid;
-        for i := 1 to GridChar.RowCount - 1 do begin
-          if CompareText(wCharName, GridChar.Cells[1, i]) = 0 then begin
-            GridChar.Row := i;
-            Break;
-          end;
-        end;
-      finally
-        wXmlDoc.Free;
-      end;
-    finally
-      wStream.Free;
-    end;
-  end;
+  // display window
+  if FormEdit.ShowModal = mrOk then
+    SetItemInfo(atAdd);
 end;
 
 {*******************************************************************************
@@ -287,7 +236,7 @@ Changes the key of a guild
 *******************************************************************************}
 procedure TFormCharacter.BtUpdateClick(Sender: TObject);
 begin
-  UpdateCharacter(False);
+  UpdateItem(False);
 end;
 
 {*******************************************************************************
@@ -295,27 +244,27 @@ Loads the grid
 *******************************************************************************}
 procedure TFormCharacter.LoadGrid;
 var
-  wCharList: TStringList;
+  wItemList: TStringList;
   wPng: TPNGObject;
   wIconFile: String;
   i: Integer;
 begin
-  SendMessage(GridChar.Handle, WM_SETREDRAW, 0, 0);
+  SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
   try
-    GridChar.RowCount := 1;
-    GridChar.Row := 0;
-    GridChar.ColCount := 4;
-    GridChar.RowHeights[0] := 20;
-    GridChar.ColWidths[0] := 48;
-    GridChar.ColWidths[1] := 250;
-    GridChar.ColWidths[3] := 70;
-  
+    GridItem.RowCount := 1;
+    GridItem.Row := 0;
+    GridItem.ColCount := 4;
+    GridItem.RowHeights[0] := 20;
+    GridItem.ColWidths[0] := 48;
+    GridItem.ColWidths[1] := 250;
+    GridItem.ColWidths[3] := 70;
+
     FIconList.Clear;
-    wCharList := TStringList.Create;
+    wItemList := TStringList.Create;
     try
-      GCharacter.CharList(wCharList);
-      for i := 0 to wCharList.Count - 1 do begin
-        wIconFile := GConfig.GetCharPath(wCharList[i]) + _ICON_FILENAME;
+      GCharacter.CharList(wItemList);
+      for i := 0 to wItemList.Count - 1 do begin
+        wIconFile := GConfig.GetCharPath(wItemList[i]) + _ICON_FILENAME;
         wPng := TPNGObject.Create;
         if FileExists(wIconFile) then begin
           try
@@ -324,61 +273,55 @@ begin
           end;
         end;
         FIconList.Add(wPng);
-        GridChar.RowCount := GridChar.RowCount + 1;
-        GridChar.Cells[1, GridChar.RowCount-1] := GCharacter.GetCharName(wCharList[i]);
-        GridChar.Cells[2, GridChar.RowCount-1] := GCharacter.GetComment(wCharList[i]);
-        GridChar.Cells[3, GridChar.RowCount-1] := wCharList[i];
+        GridItem.RowCount := GridItem.RowCount + 1;
+        GridItem.Cells[1, GridItem.RowCount-1] := GCharacter.GetCharName(wItemList[i]);
+        GridItem.Cells[2, GridItem.RowCount-1] := GCharacter.GetComment(wItemList[i]);
+        GridItem.Cells[3, GridItem.RowCount-1] := wItemList[i];
       end;
 
-      BtUpdate.Enabled := False;
-      BtDelete.Enabled := False;
-      BtReset.Enabled := False;
-      BtRoom.Enabled := False;
-      if GridChar.RowCount > 1 then begin
-        GridChar.Row := 1;
-        BtUpdate.Enabled := True;
-        BtDelete.Enabled := True;
-        BtReset.Enabled := True;
-        BtRoom.Enabled := True;
+      EnableButtons(False);
+      if GridItem.RowCount > 1 then begin
+        GridItem.Row := 1;
+        EnableButtons(True);
       end;
     finally
-      wCharList.Free;
+      wItemList.Free;
     end;
   finally
-    SendMessage(GridChar.Handle, WM_SETREDRAW, 1, 0);
-    GridChar.Refresh;
+    SendMessage(GridItem.Handle, WM_SETREDRAW, 1, 0);
+    GridItem.Refresh;
   end;
 end;
 
 {*******************************************************************************
 Scroll down
 *******************************************************************************}
-procedure TFormCharacter.GridCharMouseWheelDown(Sender: TObject;
+procedure TFormCharacter.GridItemMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(GridChar.Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
+  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
 end;
 
 {*******************************************************************************
 Scroll up
 *******************************************************************************}
-procedure TFormCharacter.GridCharMouseWheelUp(Sender: TObject;
+procedure TFormCharacter.GridItemMouseWheelUp(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(GridChar.Handle, WM_VSCROLL, SB_LINEUP, 0) ;
+  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEUP, 0) ;
 end;
 
 {*******************************************************************************
 Selects a guild in the grid
 *******************************************************************************}
-procedure TFormCharacter.GridCharSelectCell(Sender: TObject; ACol,
+procedure TFormCharacter.GridItemSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   if ARow = 0 then CanSelect := False;
   BtUp.Enabled := ARow > 1;
-  BtDown.Enabled := ARow < GridChar.RowCount - 1;
+  BtDown.Enabled := ARow < GridItem.RowCount - 1;
 end;
 
 {*******************************************************************************
@@ -388,45 +331,41 @@ procedure TFormCharacter.BtDeleteClick(Sender: TObject);
 var
   wRow: Integer;
   wTopRow: Integer;
-  wCharID: String;
+  wItemID: String;
 begin
-  wRow := GridChar.Row;
+  wRow := GridItem.Row;
   if wRow > 0 then begin
-    wCharID := GridChar.Cells[3, wRow];
+    wItemID := GridItem.Cells[3, wRow];
     if FormConfirm.ShowConfirmation(RS_CHAR_DELETE_CONFIRMATION) <> mrYes then Exit;
     
-    SendMessage(GridChar.Handle, WM_SETREDRAW, 0, 0);
+    SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
     try
-      wTopRow := GridChar.TopRow;
-      TPublicStringGrid(GridChar).DeleteRow(wRow);
-      GridChar.TopRow := wTopRow;
-      if wRow < GridChar.RowCount then GridChar.Row := wRow;
+      wTopRow := GridItem.TopRow;
+      TPublicStringGrid(GridItem).DeleteRow(wRow);
+      GridItem.TopRow := wTopRow;
+      if wRow < GridItem.RowCount then GridItem.Row := wRow;
 
-      if GridChar.RowCount = 1 then begin
-        BtUpdate.Enabled := False;
-        BtDelete.Enabled := False;
-        BtReset.Enabled := False;
-        BtRoom.Enabled := False;
-      end;
+      if GridItem.RowCount = 1 then
+        EnableButtons(False);
     finally
-      SendMessage(GridChar.Handle, WM_SETREDRAW, 1, 0);
+      SendMessage(GridItem.Handle, WM_SETREDRAW, 1, 0);
     end;
 
-    GCharacter.DeleteChar(wCharID);
-    MdkRemoveDir(GConfig.GetCharRoomPath(wCharID));
-    MdkRemoveDir(GConfig.GetCharPath(wCharID));
+    GCharacter.DeleteChar(wItemID);
+    MdkRemoveDir(GConfig.GetCharPath(wItemID));
+    MdkRemoveDir(GConfig.GetCharPath(wItemID));
     FIconList.Delete(wRow-1);
-    GridChar.Refresh;
+    GridItem.Refresh;
   end;
 end;
 
 {*******************************************************************************
-Displays information of the selected character
+Displays information of the selected item
 *******************************************************************************}
 procedure TFormCharacter.BtRoomClick(Sender: TObject);
 begin
   try
-    UpdateCharacter(True);
+    UpdateItem(True);
     Synchronize;
     ShowRoom;
   except
@@ -439,19 +378,19 @@ Resize the window
 *******************************************************************************}
 procedure TFormCharacter.FormResize(Sender: TObject);
 begin
-  GridChar.ColWidths[2] := GridChar.Width - GridChar.ColWidths[0] - GridChar.ColWidths[1] - GridChar.ColWidths[3] - 25;
+  GridItem.ColWidths[2] := GridItem.Width - GridItem.ColWidths[0] - GridItem.ColWidths[1] - GridItem.ColWidths[3] - 25;
 end;
 
 {*******************************************************************************
 Double clic on the grid
 *******************************************************************************}
-procedure TFormCharacter.GridCharDblClick(Sender: TObject);
+procedure TFormCharacter.GridItemDblClick(Sender: TObject);
 begin
-  if GridChar.Row > 0 then BtRoomClick(BtRoom);
+  if GridItem.Row > 0 then BtRoomClick(BtRoom);
 end;
 
 {*******************************************************************************
-Display inventory
+Display items
 *******************************************************************************}
 procedure TFormCharacter.ShowRoom;
 begin
@@ -467,10 +406,270 @@ Synchronization
 *******************************************************************************}
 procedure TFormCharacter.Synchronize;
 var
-  wCharID: String;
+  wItemID: String;
 begin
-  wCharID := GridChar.Cells[3, GridChar.Row];
-  FormProgress.ShowFormSynchronizeChar(wCharID);
+  wItemID := GridItem.Cells[3, GridItem.Row];
+  FormProgress.ShowFormSyncChar(wItemID);
+end;
+
+{*******************************************************************************
+Updates language
+*******************************************************************************}
+procedure TFormCharacter.UpdateLanguage;
+begin
+  GridItem.Cells[0, 0] := RS_CHAR_COL_CHAR_HEAD;
+  GridItem.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
+  GridItem.Cells[2, 0] := RS_CHAR_COL_COMMENT;
+  GridItem.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
+  BtUp.Hint := RS_UP;
+  BtDown.Hint := RS_DOWN;
+end;
+
+{*******************************************************************************
+Updates information
+*******************************************************************************}
+procedure TFormCharacter.UpdateItem(AAuto: Boolean);
+var
+  wItemID: String;
+  wDoUpdate: Boolean;
+begin
+  wDoUpdate := AAuto;
+
+  // read ID
+  wItemID := GridItem.Cells[3, GridItem.Row];
+
+  // prepare the edit window
+  FormEdit.Caption := RS_CHAR_CHANGE_KEY;
+  FormEdit.LbAutoKey.Caption := RS_CHAR_KEY;
+  FormEdit.EdKey.Text := GCharacter.GetCharKey(wItemID);
+  FormEdit.EdComment.Text := GCharacter.GetComment(wItemID);
+  FormEdit.CbCheckChange.Caption := RS_CHECK_SALES;
+  FormEdit.CbCheckVolume.Checked := GCharacter.GetCheckVolume(wItemID);
+  FormEdit.CbCheckChange.Checked := GCharacter.GetCheckSales(wItemID);
+
+  if not wDoUpdate then
+    wDoUpdate := FormEdit.ShowModal = mrOk;
+
+  if wDoUpdate then
+    SetItemInfo(atUpdate);
+end;
+
+{*******************************************************************************
+Up/Down
+*******************************************************************************}
+procedure TFormCharacter.MoveRow(AIndex: Integer);
+var
+  wRow: Integer;
+  wID1, wID2: String;
+begin
+  wRow := GridItem.Row;
+  wID1 := GridItem.Cells[3, wRow];
+  wID2 := GridItem.Cells[3, wRow + AIndex];
+  GCharacter.SetIndex(wID1, wRow + AIndex);
+  GCharacter.SetIndex(wID2, wRow);
+  LoadGrid;
+  GridItem.Row := wRow + AIndex;
+end;
+
+{*******************************************************************************
+Down
+*******************************************************************************}
+procedure TFormCharacter.BtDownClick(Sender: TObject);
+begin
+  MoveRow(+1);
+end;
+
+{*******************************************************************************
+Up
+*******************************************************************************}
+procedure TFormCharacter.BtUpClick(Sender: TObject);
+begin
+  MoveRow(-1);
+end;
+
+{*******************************************************************************
+Reset the icons directory
+*******************************************************************************}
+procedure TFormCharacter.BtResetClick(Sender: TObject);
+var
+  wRow: Integer;
+  wItemID: String;
+begin
+  wRow := GridItem.Row;
+  if wRow > 0 then begin
+    wItemID := GridItem.Cells[3, wRow];
+    MdkRemoveDir(GConfig.GetCharRoomPath(wItemID));
+    DeleteFile(GConfig.GetCharPath(wItemID) + _INDEX_FILENAME);
+    ShowMessage(RS_RESET_OK);
+  end;
+end;
+
+{*******************************************************************************
+Set info
+*******************************************************************************}
+procedure TFormCharacter.SetItemInfo(AAction: TActionType);
+var
+  i: Integer;
+  
+  wItemKey: String;
+  wComment: String;
+  wCheckVolume: Boolean;
+  wCheckSales: Boolean;
+  wItemID: String;
+  wItemName: String;
+  wItemServer: String;
+  wItemGuild: String;
+  wGabarit: String;
+  wMorph: String;
+
+  wXmlDoc: TXpObjModel;
+  wStream: TMemoryStream;
+  wRegExpr: TRegExpr;
+  wNodeList: TXpNodeList;
+  wList: TStringList;
+  
+  wInfoFile: String;
+  wIconFile: String;
+  wPetSheet: String;
+begin
+  wStream := TMemoryStream.Create;
+  wXmlDoc := TXpObjModel.Create(nil);
+  wRegExpr := TRegExpr.Create;
+  wList := TStringList.Create;
+  try
+    // read info on the edit window
+    wItemKey := FormEdit.EdKey.Text;
+    wComment := FormEdit.EdComment.Text;
+    wCheckVolume := FormEdit.CbCheckVolume.Checked;
+    wCheckSales := FormEdit.CbCheckChange.Checked;
+
+    // call API
+    {$IFNDEF __LOCALINFO}
+    GRyzomApi.ApiCharacter(wItemKey, wStream);
+    wXmlDoc.LoadStream(wStream);
+    {$ELSE}
+    if AAction = atAdd then begin
+      GRyzomApi.ApiCharacter(wItemKey, wStream);
+      wXmlDoc.LoadStream(wStream);
+    end else begin
+      wItemID := GridItem.Cells[3, GridItem.Row];
+      wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
+      wXmlDoc.LoadDataSource(wInfoFile);
+    end;
+    {$ENDIF}
+
+    // check modules
+    if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/@modules'), _REQUIRED_MODULES_CHAR) then
+      MessageDlg(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_CHAR, ',')]), mtWarning, [mbOK], 0);
+
+    // read info in the XML
+    wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/id');
+    wItemName := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/name');
+    wItemServer := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/shard');
+    wItemServer := UpperCase(LeftStr(wItemServer, 1)) + LowerCase(RightStr(wItemServer, Length(wItemServer)-1));
+    wItemGuild := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/guild/name');
+    FDappers := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/money');
+
+    // update INI
+    GCharacter.SetChar(AAction, wItemID, wItemKey, wItemName, wItemServer, wComment, wItemGuild, wCheckVolume, wCheckSales);
+
+    // save to info.xml
+    {$IFNDEF __LOCALINFO}
+    wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
+    wStream.SaveToFile(wInfoFile);
+    {$ENDIF}
+
+    // search the mount from the pet list
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/ryzomapi/character/pets/animal');
+    try
+      FormInvent.MountID := -1;
+      for i := 0 to wNodeList.Length - 1 do begin
+        wPetSheet := wNodeList.Item(i).SelectString('sheet');
+        wRegExpr.Expression := _EXPR_MOUNT;
+        if wRegExpr.Exec(wPetSheet) then begin
+          FormInvent.MountID := i;
+          Break;
+        end;
+      end;
+    finally
+      wNodeList.Free;
+    end;
+
+    {$IFNDEF __LOCALINFO}
+    // Gabarit
+    wList.Clear;
+    wList.Append(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/gabarit/@height'));
+    wList.Append(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/gabarit/@torso'));
+    wList.Append(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/gabarit/@arms'));
+    wList.Append(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/gabarit/@legs'));
+    wList.Append(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/gabarit/@breast'));
+    wGabarit := wList.CommaText;
+
+    // Morph
+    wList.Clear;
+    for i := 1 to 8 do begin
+      wList.Append(wXmlDoc.DocumentElement.SelectString(Format('/ryzomapi/character/body/morph/@target%d', [i])));
+    end;
+    wMorph := wList.CommaText;
+
+    // Get image
+    wStream.Clear;
+    GRyzomApi.ApiBallisticMystix(
+      wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/race'),
+      wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/gender'),
+      StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/hairtype'), 0),
+      StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/haircolor'), 0),
+      StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/tattoo'), 0),
+      StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/eyescolor'), 0),
+      wGabarit, wMorph, wStream);
+    wIconFile := GConfig.GetCharPath(wItemID) + _ICON_FILENAME;
+    wStream.SaveToFile(wIconFile);
+    if AAction = atUpdate then
+      TPNGObject(FIconList.Items[GridItem.Row-1]).LoadFromFile(wIconFile);
+    {$ENDIF}
+
+    // refresh grid info
+    if AAction = atAdd then begin
+      GCharacter.SetIndex(wItemID, GridItem.RowCount - 1);
+      LoadGrid;
+      SelectItem(wItemID);
+    end else begin
+      GridItem.Cells[1, GridItem.Row] := wItemName;
+      GridItem.Cells[2, GridItem.Row] := wComment;
+      GridItem.Refresh;
+    end;
+  finally
+    wList.Free;
+    wRegExpr.Free;
+    wXmlDoc.Free;
+    wStream.Free;
+  end;
+end;
+
+{*******************************************************************************
+select a char from his ID
+*******************************************************************************}
+procedure TFormCharacter.SelectItem(AItemID: String);
+var
+  i: Integer;
+begin
+  for i := 1 to GridItem.RowCount - 1 do begin
+    if CompareText(AItemID, GridItem.Cells[3, i]) = 0 then begin
+      GridItem.Row := i;
+      Break;
+    end;
+  end;
+end;
+
+{*******************************************************************************
+Enables or disables buttons
+*******************************************************************************}
+procedure TFormCharacter.EnableButtons(AEnabled: Boolean);
+begin
+  BtUpdate.Enabled := AEnabled;
+  BtDelete.Enabled := AEnabled;
+  BtReset.Enabled := AEnabled;
+  BtRoom.Enabled := AEnabled;
 end;
 
 {*******************************************************************************
@@ -478,35 +677,63 @@ Returns the head of the character
 *******************************************************************************}
 procedure TFormCharacter.GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
 const
-  _HEAD_WIDTH = 60;
-  _HEAD_HEIGHT = 60;
+  _HEAD_WIDTH = 80;
+  _HEAD_HEIGHT = 80;
 var
-  x, y: Integer;
   wRectSrc: TRect;
   wBmp: TBitmap;
   wHead: TBitmap;
   wRect: TRect;
-begin
-  if AIcon.Width = 0 then Exit;
+  wTop: Integer;
+  wLeft: Integer;
+  wRight: Integer;
 
-  // Detects the first pixel not black
-  x := 0;
-  y := 0;
-  while (AIcon.Pixels[x, y] = clBlack) and (y < AIcon.Height) do begin
-    if x < AIcon.Width then begin
-      Inc(x);
-    end else begin
-      x := 0;
-      Inc(y);
+  // Search the center of the head
+  function HeadCenter(): Boolean;
+  var
+    x, y: Integer;
+  begin
+    Result := False;
+
+    // search the first pixel not black from the top of icon.png
+    x := 0;
+    y := 0;
+    while (AIcon.Pixels[x, y] = clBlack) and (y < AIcon.Height) do begin
+      if x < AIcon.Width then begin
+        Inc(x);
+      end else begin
+        x := 0;
+        Inc(y);
+      end;
+    end;
+
+    if y < AIcon.Height then begin
+      wTop := y;
+      Inc(y, 20); // jump 20 lines
+
+      // get left and right of the head
+      if y < AIcon.Height then begin
+        x := 0;
+        while (AIcon.Pixels[x, y] = clBlack) and (x < AIcon.Width) do Inc(x);
+        wLeft := x;
+        
+        x := AIcon.Width-1;
+        while (AIcon.Pixels[x, y] = clBlack) and (x >= 0) do Dec(x);
+        wRight := x;
+
+        if (wRight - wLeft) < _HEAD_WIDTH then
+          Result := True;
+      end;
     end;
   end;
-
-  if y = AIcon.Height then Exit;
+begin
+  if AIcon.Width = 0 then Exit;
+  if not HeadCenter then Exit;
 
   // Defines rectangle
-  wRectSrc.Left := (AIcon.Width div 2) - (_HEAD_WIDTH div 2);
+  wRectSrc.Left := wLeft + ((wRight-wLeft) div 2) - (_HEAD_WIDTH div 2);
   wRectSrc.Right := wRectSrc.Left + _HEAD_WIDTH;
-  wRectSrc.Top := y-2;
+  wRectSrc.Top := wTop-2;
   wRectSrc.Bottom := wRectSrc.Top + _HEAD_HEIGHT;
 
   // Copy bitmap
@@ -532,180 +759,6 @@ begin
 
   ACanvas.StretchDraw(ARect, wHead);
   wBmp.Free;
-end;
-
-{*******************************************************************************
-Displays the form
-*******************************************************************************}
-procedure TFormCharacter.FormShow(Sender: TObject);
-begin
-  UpdateLanguage;
-end;
-
-{*******************************************************************************
-Updates language
-*******************************************************************************}
-procedure TFormCharacter.UpdateLanguage;
-begin
-  GridChar.Cells[0, 0] := RS_CHAR_COL_CHAR_HEAD;
-  GridChar.Cells[1, 0] := RS_CHAR_COL_CHAR_NAME;
-  GridChar.Cells[2, 0] := RS_CHAR_COL_COMMENT;
-  GridChar.Cells[3, 0] := RS_CHAR_COL_CHAR_NUMBER;
-  BtUp.Hint := RS_UP;
-  BtDown.Hint := RS_DOWN;
-end;
-
-{*******************************************************************************
-Updates character information
-*******************************************************************************}
-procedure TFormCharacter.UpdateCharacter(AAuto: Boolean);
-var
-  wCharID: String;
-  wCharKey: String;
-  wCharName: String;
-  wCharServer: String;
-  wComment: String;
-  wCheckVolume: Boolean;
-  wCheckSales: Boolean;
-  wCharGuild: String;
-  wStream: TMemoryStream;
-  wXmlDoc: TXpObjModel;
-  wInfoFile: String;
-  wIconFile: String;
-  wDoUpdate: Boolean;
-  wPetList: TXpNodeList;
-  wPetSheet: String;
-  wRegExpr: TRegExpr;
-  i: Integer;
-begin
-  wRegExpr := TRegExpr.Create;
-  try
-    wDoUpdate := AAuto;
-
-    wCharID := GridChar.Cells[3, GridChar.Row];
-    wCharKey := GCharacter.GetCharKey(wCharID);
-    wComment := GCharacter.GetComment(wCharID);
-    wCheckVolume := GCharacter.GetCheckVolume(wCharID);
-    wCheckSales := GCharacter.GetCheckSales(wCharID);
-
-    if not wDoUpdate then begin
-      FormGuildEdit.Caption := RS_CHAR_CHANGE_KEY;
-      FormGuildEdit.LbAutoKey.Caption := RS_CHAR_KEY;
-      FormGuildEdit.EdKey.Text := wCharKey;
-      FormGuildEdit.EdComment.Text := wComment;
-      FormGuildEdit.CbCheckChange.Caption := RS_CHECK_SALES;
-      FormGuildEdit.CbCheckVolume.Checked := wCheckVolume;
-      FormGuildEdit.CbCheckChange.Checked := wCheckSales;
-      wDoUpdate := FormGuildEdit.ShowModal = mrOk;
-      wCharKey := FormGuildEdit.EdKey.Text;
-      wComment := FormGuildEdit.EdComment.Text;
-      wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
-      wCheckSales := FormGuildEdit.CbCheckChange.Checked;
-    end;
-
-    {$IFNDEF  __NOSYNCH}
-    if wDoUpdate then begin
-      // Updates icon
-      wStream := TMemoryStream.Create;
-      wXmlDoc := TXpObjModel.Create(nil);
-      try
-        GRyzomApi.ApiCharacter(wCharKey, cpFull, wStream);
-        wInfoFile := GConfig.GetCharPath(wCharID) + _INFO_FILENAME;
-        wStream.SaveToFile(wInfoFile);
-        wStream.Clear;
-        wXmlDoc.LoadDataSource(wInfoFile);
-
-        wPetList := wXmlDoc.DocumentElement.SelectNodes('/character/pets/pet');
-        FormInvent.MountID := -1;
-        for i := 0 to wPetList.Length - 1 do begin
-          wPetSheet := wPetList.Item(i).Attributes.GetNamedItem('sheet').NodeValue;
-          wRegExpr.Expression := _EXPR_MOUNT;
-          if wRegExpr.Exec(wPetSheet) then begin
-            FormInvent.MountID := i;
-            Break;
-          end;
-        end;
-
-        wCharName := wXmlDoc.DocumentElement.SelectString('/character/name');
-        wCharServer := wXmlDoc.DocumentElement.SelectString('/character/shard');
-        wCharServer := UpperCase(LeftStr(wCharServer, 1)) + RightStr(wCharServer, Length(wCharServer)-1);
-        wCharGuild := wXmlDoc.DocumentElement.SelectString('/character/guild/name');
-        FDappers := wXmlDoc.DocumentElement.SelectString('/character/money');
-        wIconFile := GConfig.GetCharPath(wCharID) + _ICON_FILENAME;
-        GRyzomApi.ApiBallisticMystix(
-            wXmlDoc.DocumentElement.SelectString('/character/race'),
-            wXmlDoc.DocumentElement.SelectString('/character/gender'),
-            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_type')),
-            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/hair_color')),
-            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/tattoo')),
-            StrToInt(wXmlDoc.DocumentElement.SelectString('/character/body/eyes_color')),
-            wStream);
-        wStream.SaveToFile(wIconFile);
-        TPNGObject(FIconList.Items[GridChar.Row-1]).LoadFromFile(wIconFile);
-        GridChar.Refresh;
-      finally
-        wXmlDoc.Free;
-        wStream.Free;
-      end;
-
-      GCharacter.UpdateChar(wCharID, wCharKey, wCharName, wCharServer, wComment, wCharGuild, wCheckVolume, wCheckSales);
-      GridChar.Cells[1, GridChar.Row] := wCharName;
-      GridChar.Cells[2, GridChar.Row] := wComment;
-    end;
-    {$ENDIF}
-  finally
-    wRegExpr.Free;
-  end;
-end;
-
-{*******************************************************************************
-Up/Down
-*******************************************************************************}
-procedure TFormCharacter.MoveRow(AIndex: Integer);
-var
-  wRow: Integer;
-  wID1, wID2: String;
-begin
-  wRow := GridChar.Row;
-  wID1 := GridChar.Cells[3, wRow];
-  wID2 := GridChar.Cells[3, wRow + AIndex];
-  GCharacter.SetIndex(wID1, wRow + AIndex);
-  GCharacter.SetIndex(wID2, wRow);
-  LoadGrid;
-  GridChar.Row := wRow + AIndex;
-end;
-
-{*******************************************************************************
-Down
-*******************************************************************************}
-procedure TFormCharacter.BtDownClick(Sender: TObject);
-begin
-  MoveRow(+1);
-end;
-
-{*******************************************************************************
-Up
-*******************************************************************************}
-procedure TFormCharacter.BtUpClick(Sender: TObject);
-begin
-  MoveRow(-1);
-end;
-
-{*******************************************************************************
-Reset the icons directory
-*******************************************************************************}
-procedure TFormCharacter.BtResetClick(Sender: TObject);
-var
-  wRow: Integer;
-  wCharID: String;
-begin
-  wRow := GridChar.Row;
-  if wRow > 0 then begin
-    wCharID := GridChar.Cells[3, wRow];
-    MdkRemoveDir(GConfig.GetCharRoomPath(wCharID));
-    DeleteFile(GConfig.GetCharPath(wCharID) + _INDEX_FILENAME);
-    ShowMessage(RS_RESET_OK);
-  end;
 end;
 
 end.

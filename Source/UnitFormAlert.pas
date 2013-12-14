@@ -74,6 +74,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure BtClearClick(Sender: TObject);
     procedure BtSaveClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     procedure ReadMessage;
     procedure AutoSave;
@@ -230,6 +231,7 @@ begin
 
           RichEditAlert.SelLength := 0;
           RichEditAlert.Perform(EM_SCROLLCARET, 0 ,0);
+          RichEditAlert.Refresh;
         end;
       finally
         GMsgList.Delete(0);
@@ -263,6 +265,9 @@ Load alert file
 procedure TFormAlert.FormCreate(Sender: TObject);
 begin
   RichEditAlert.Clear;
+  {$IFDEF __DEBUG}
+  TimerUpdate.Interval := 5000;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -304,6 +309,14 @@ begin
     wAlertFile := Format('%s\alert-%s.rtf', [wAlertDir, FormatDateTime('yyyymmdd-hhnnss', Now)]);
     RichEditAlert.Lines.SaveToFile(wAlertFile);
   end;
+end;
+
+{*******************************************************************************
+Refresh data
+*******************************************************************************}
+procedure TFormAlert.FormResize(Sender: TObject);
+begin
+  RichEditAlert.Refresh;
 end;
 
 end.

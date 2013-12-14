@@ -38,9 +38,9 @@ uses
   UnitFormName in 'UnitFormName.pas' {FormName},
   UnitFormGuild in 'UnitFormGuild.pas' {FormGuild},
   UnitFormRoom in 'UnitFormRoom.pas' {FormRoom},
-  UnitFormRoomFilter in 'UnitFormRoomFilter.pas' {FormRoomFilter},
+  UnitFormFilter in 'UnitFormFilter.pas' {FormFilter},
   UnitFormCharacter in 'UnitFormCharacter.pas' {FormCharacter},
-  UnitFormGuildEdit in 'UnitFormGuildEdit.pas' {FormGuildEdit},
+  UnitFormEdit in 'UnitFormEdit.pas' {FormEdit},
   UnitThreadAlert in 'UnitThreadAlert.pas',
   UnitFormAlert in 'UnitFormAlert.pas' {FormAlert},
   UnitFormLog in 'UnitFormLog.pas' {FormLog},
@@ -63,9 +63,9 @@ begin
   Application.CreateForm(TFormName, FormName);
   Application.CreateForm(TFormGuild, FormGuild);
   Application.CreateForm(TFormRoom, FormRoom);
-  Application.CreateForm(TFormRoomFilter, FormRoomFilter);
+  Application.CreateForm(TFormFilter, FormFilter);
   Application.CreateForm(TFormCharacter, FormCharacter);
-  Application.CreateForm(TFormGuildEdit, FormGuildEdit);
+  Application.CreateForm(TFormEdit, FormEdit);
   Application.CreateForm(TFormAlert, FormAlert);
   Application.CreateForm(TFormLog, FormLog);
   Application.CreateForm(TFormWatch, FormWatch);

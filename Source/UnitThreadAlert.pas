@@ -21,7 +21,7 @@ type
     procedure CheckObjects(AGuildID: String);
     procedure CheckItems(AGuardFile: String; AObjectName: String; ASection: String; ANodeList: TXpNodeList; var AVolume: Double);
     procedure CheckSales(ACharID: String);
-    procedure CheckSeason(AServerID: String);
+    procedure CheckSeason;
   protected
     procedure Execute; override;
   public
@@ -48,8 +48,11 @@ begin
 
   FPause := TEvent.Create(nil, True, False, IntToStr(Self.ThreadID));
   FPause.ResetEvent;
+  {$IFNDEF __DEBUG}
   FTimeout := 3600000; // 1h
-//  FTimeout := 10000; // Debug
+  {$ELSE}
+  FTimeout := 10000;
+  {$ENDIF}
 
   FApi := TRyzomApi.Create;
   // Set proxy parameters
@@ -80,7 +83,7 @@ begin
       try
         SynchroChars;
         SynchroGuilds;
-        CheckSeason(FormMain.ServerID);
+        CheckSeason;
       finally
         FPause.WaitFor(FTimeout);
       end;
@@ -119,8 +122,8 @@ begin
         wCharID := wList[i];
         wCharKey := GCharacter.GetCharKey(wCharID);
         wXmlFile.Clear;
-        FApi.ApiCharacter(wCharKey, cpItems, wXmlFile);
-        wXmlFile.SaveToFile(GConfig.GetCharPath(wCharID) + _ITEMS_FILENAME);
+        FApi.ApiCharacter(wCharKey, wXmlFile);
+        wXmlFile.SaveToFile(GConfig.GetCharPath(wCharID) + _INFO_FILENAME);
         CheckInvent(wCharID);
         if GConfig.SalesCount > 0 then CheckSales(wCharID);
       except
@@ -154,7 +157,7 @@ begin
         wGuildKey := GGuild.GetGuildKey(wGuildID);
         wXmlFile.Clear;
         FApi.ApiGuild(wGuildKey, wXmlFile);
-        wXmlFile.SaveToFile(GConfig.GetGuildPath(wGuildID) + _ITEMS_FILENAME);
+        wXmlFile.SaveToFile(GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME);
         CheckRoom(wGuildID);
         CheckObjects(wGuildID);
       except
@@ -283,31 +286,27 @@ Check character invent
 *******************************************************************************}
 procedure TAlert.CheckInvent(ACharID: String);
 var
-  wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wItemsFile: String;
-  wNodeName: String;
   wGuardFile: String;
   wCharName: String;
   wVolume: Double;
   wMsg: TAlertMessage;
 begin
-  wItemsFile := GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME;
+  wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
   if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
 
   wGuardFile := GConfig.GetCharPath(ACharID) + _GUARD_FILENAME;
   wCharName := GCharacter.GetCharName(ACharID);
 
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(wItemsFile, fmOpenRead);
   try
-    wXmlDoc.LoadStream(wXmlFile);
+    wXmlDoc.LoadDataSource(wItemsFile);
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/room/item');
-    wNodeName := _SECTION_ROOM;
-    CheckItems(wGuardFile, wCharName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
+    CheckItems(wGuardFile, wCharName, _SECTION_ROOM, wNodeList, wVolume);
     wNodeList.Free;
 
     // Check volume for room
@@ -317,7 +316,7 @@ begin
         wMsg.MsgType := atVolumeRoom;
         wMsg.MsgDate := Now;
         wMsg.MsgName := wCharName;
-        wMsg.MsgLocation := wNodeName;
+        wMsg.MsgLocation := _SECTION_ROOM;
         wMsg.MsgObject := '';
         wMsg.MsgValue1 := Trunc(wVolume);
         wMsg.MsgValue2 := GConfig.VolumeRoom;
@@ -326,37 +325,31 @@ begin
     end;
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/bag/item');
-    wNodeName := 'bag';
-    CheckItems(wGuardFile, wCharName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_BAG);
+    CheckItems(wGuardFile, wCharName, _SECTION_BAG, wNodeList, wVolume);
     wNodeList.Free;
     
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal1/item');
-    wNodeName := 'pet_animal1';
-    CheckItems(wGuardFile, wCharName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);
+    CheckItems(wGuardFile, wCharName, _SECTION_PET1, wNodeList, wVolume);
     wNodeList.Free;
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal2/item');
-    wNodeName := 'pet_animal2';
-    CheckItems(wGuardFile, wCharName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);
+    CheckItems(wGuardFile, wCharName, _SECTION_PET2, wNodeList, wVolume);
     wNodeList.Free;
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal3/item');
-    wNodeName := 'pet_animal3';
-    CheckItems(wGuardFile, wCharName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);
+    CheckItems(wGuardFile, wCharName, _SECTION_PET3, wNodeList, wVolume);
     wNodeList.Free;
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/inventories/pet_animal4/item');
-    wNodeName := 'pet_animal4';
-    CheckItems(wGuardFile, wCharName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);
+    CheckItems(wGuardFile, wCharName, _SECTION_PET4, wNodeList, wVolume);
     wNodeList.Free;
   finally
     wXmlDoc.Free;
-    wXmlFile.Free;
   end;
 end;
 
@@ -365,31 +358,27 @@ Check guild room
 *******************************************************************************}
 procedure TAlert.CheckRoom(AGuildID: String);
 var
-  wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wItemsFile: String;
-  wNodeName: String;
   wGuardFile: String;
   wGuildName: String;
   wVolume: Double;
   wMsg: TAlertMessage;
 begin
-  wItemsFile := GConfig.GetGuildPath(AGuildID) + _ITEMS_FILENAME;
+  wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
   if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
 
   wGuardFile := GConfig.GetGuildPath(AGuildID) + _GUARD_FILENAME;
   wGuildName := GGuild.GetGuildName(AGuildID);
 
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(wItemsFile, fmOpenRead);
   try
-    wXmlDoc.LoadStream(wXmlFile);
+    wXmlDoc.LoadDataSource(wItemsFile);
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
-    wNodeName := _SECTION_ROOM;
-    CheckItems(wGuardFile, wGuildName, wNodeName, wNodeList, wVolume);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
+    CheckItems(wGuardFile, wGuildName, _SECTION_ROOM, wNodeList, wVolume);
     wNodeList.Free;
 
     // Check volume for guild
@@ -399,7 +388,7 @@ begin
         wMsg.MsgType := atVolumeGuild;
         wMsg.MsgDate := Now;
         wMsg.MsgName := wGuildName;
-        wMsg.MsgLocation := wNodeName;
+        wMsg.MsgLocation := _SECTION_ROOM;
         wMsg.MsgObject := '';
         wMsg.MsgValue1 := Trunc(wVolume);
         wMsg.MsgValue2 := GConfig.VolumeGuild;
@@ -408,7 +397,6 @@ begin
     end;
   finally
     wXmlDoc.Free;
-    wXmlFile.Free;
   end;
 end;
 
@@ -417,7 +405,6 @@ Check all objects in guild
 *******************************************************************************}
 procedure TAlert.CheckObjects(AGuildID: String);
 var
-  wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wItemInfo: TItemInfo;
@@ -439,19 +426,18 @@ var
 begin
   if not GGuild.GetCheckChange(AGuildID) then Exit;
   
-  wItemsFile := GConfig.GetGuildPath(AGuildID) + _ITEMS_FILENAME;
+  wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
   if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
 
   wWatchFile := GConfig.GetGuildPath(AGuildID) + _WATCH_FILENAME;
   wGuildName := GGuild.GetGuildName(AGuildID);
 
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(wItemsFile, fmOpenRead);
   try
-    wXmlDoc.LoadStream(wXmlFile);
+    wXmlDoc.LoadDataSource(wItemsFile);
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/guild/room/item');
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
     try
       wItemList := TItemList.Create(True);
       wRegExpr := TRegExpr.Create;
@@ -567,7 +553,6 @@ begin
     end;
   finally
     wXmlDoc.Free;
-    wXmlFile.Free;
   end;
 end;
 
@@ -576,7 +561,6 @@ Check sales
 *******************************************************************************}
 procedure TAlert.CheckSales(ACharID: String);
 var
-  wXmlFile: TFileStream;
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   i: Integer;
@@ -589,18 +573,17 @@ var
 begin
   if not GCharacter.GetCheckSales(ACharID) then Exit;
 
-  wItemsFile := GConfig.GetCharPath(ACharID) + _ITEMS_FILENAME;
+  wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
   if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
 
   wCharName := GCharacter.GetCharName(ACharID);
 
   wXmlDoc := TXpObjModel.Create(nil);
-  wXmlFile := TFileStream.Create(wItemsFile, fmOpenRead);
   try
-    wXmlDoc.LoadStream(wXmlFile);
+    wXmlDoc.LoadDataSource(wItemsFile);
 
     if Terminated then Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/items/item_in_store/item');
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);
 
     // Loop sales
     for i := 0 to wNodeList.Length - 1 do begin
@@ -622,7 +605,7 @@ begin
           wMsg.MsgType := atSales;
           wMsg.MsgDate := Now;
           wMsg.MsgName := wCharName;
-          wMsg.MsgLocation := 'store';
+          wMsg.MsgLocation := _SECTION_STORE;
           wMsg.MsgObject := GRyzomStringPack.GetString(wItemInfo.ItemName);
           wMsg.MsgQuality := wItemInfo.ItemQuality;
           wMsg.MsgValue1 := 0;
@@ -638,14 +621,13 @@ begin
     end;
   finally
     wXmlDoc.Free;
-    wXmlFile.Free;
   end;
 end;
 
 {*******************************************************************************
 Check season
 *******************************************************************************}
-procedure TAlert.CheckSeason(AServerID: String);
+procedure TAlert.CheckSeason;
 var
   wStream: TMemoryStream;
   wXmlDoc: TXpObjModel;
@@ -661,7 +643,7 @@ begin
   wStream := TMemoryStream.Create;
   wXmlDoc := TXpObjModel.Create(nil);
   try
-    GRyzomApi.ApiTime(AServerID, _FORMAT_XML, wStream);
+    GRyzomApi.ApiTime(_FORMAT_XML, wStream);
     wXmlDoc.LoadStream(wStream);
     wSeasonIndex := StrToIntDef(wXmlDoc.DocumentElement.SelectString('/shard_time/season'), -1);
 

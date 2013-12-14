@@ -78,7 +78,7 @@ var
 implementation
 
 uses UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
-  UnitFormRoomFilter, UnitFormWatch;
+  UnitFormFilter, UnitFormWatch;
 
 {$R *.dfm}
 
@@ -108,8 +108,8 @@ Display the form
 *******************************************************************************}
 procedure TFormRoom.FormShow(Sender: TObject);
 begin
-  FormRoomFilter.Parent := PnFilter;
-  FormRoomFilter.Show;
+  FormFilter.Parent := PnFilter;
+  FormFilter.Show;
   UpdateLanguage;
 end;
 
@@ -140,7 +140,7 @@ procedure TFormRoom.GuildRoomMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   if Sender is TItemImage then begin
-    FormRoomFilter.UpdateInfo(TItemImage(Sender));
+    FormFilter.UpdateInfo(TItemImage(Sender));
   end;
 end;
 
@@ -150,7 +150,7 @@ Closes the form
 procedure TFormRoom.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  FormRoomFilter.Close;
+  FormFilter.Close;
 end;
 
 {*******************************************************************************
@@ -174,10 +174,10 @@ Hall
 *******************************************************************************}
 procedure TFormRoom.UpdateRoom;
 begin
-  FGuildID := FormGuild.GridGuild.Cells[3, FormGuild.GridGuild.Row];
+  FGuildID := FormGuild.GridItem.Cells[3, FormGuild.GridItem.Row];
   FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
-  LbValueGuildName.Caption := FormGuild.GridGuild.Cells[1, FormGuild.GridGuild.Row];
-  LbValueVolume.Caption := FormatFloat('####0.##',FormProgress.TotalVolume, GConfig.FormatSettings) + '/10000';
+  LbValueGuildName.Caption := FormGuild.GridItem.Cells[1, FormGuild.GridItem.Row];
+  LbValueVolume.Caption := FormatFloat2('####0.##',FormProgress.TotalVolume) + '/10000';
   LbValueDappers.Caption := FDappers;
 end;
 
@@ -215,7 +215,7 @@ begin
     wGuardFile := GConfig.GetGuildPath(FGuildID) + 'guard.dat';
     FreeAndNil(FGuardFile);
     FGuardFile := TIniFile.Create(wGuardFile);
-    wSection := 'room';
+    wSection := _SECTION_ROOM;
     wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
     if ItemType = itEquipment then
       FormWatch.LbAutoValue.Caption := RS_DURABILITY_MIN

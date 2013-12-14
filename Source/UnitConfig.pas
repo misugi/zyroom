@@ -58,8 +58,16 @@ const
   _SECTION_PROXY = 'PROXY';
   _SECTION_POSITION = 'POSITION';
   _SECTION_ALERT = 'ALERT';
-  _SECTION_ROOM = 'room';
   _SECTION_BACKUP = 'BACKUP';
+
+  _SECTION_ROOM = 'room';
+  _SECTION_BAG = 'bag';
+  _SECTION_PET1 = 'pet_animal1';
+  _SECTION_PET2 = 'pet_animal2';
+  _SECTION_PET3 = 'pet_animal3';
+  _SECTION_PET4 = 'pet_animal4';
+  _SECTION_STORE = 'store';
+
   _KEY_LANGUAGE = 'Language';
   _KEY_PACKFILE = 'PackFile';
   _KEY_PROXY_ENABLED = 'Enabled';
@@ -106,7 +114,6 @@ const
 
   _ICON_FILENAME = 'icon.png';
   _INFO_FILENAME = 'info.xml';
-  _ITEMS_FILENAME = 'items.xml';
   _INDEX_FILENAME = 'index.dat';
   _GUARD_FILENAME = 'guard.dat';
   _WATCH_FILENAME = 'watch.dat';
@@ -121,6 +128,8 @@ const
   _LOG_FILTER_FILENAME = 'sysfilter.dat';
 
 type
+  TActionType = (atAdd, atUpdate);
+  
   // List of the guilds
   TGuild = class(TObject)
   private
@@ -136,8 +145,7 @@ type
     function  GetCheckVolume(AID: String): Boolean;
     function  GetCheckChange(AID: String): Boolean;
     function  GuildExists(AGuildID: String): Boolean;
-    procedure AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
-    procedure UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
+    procedure SetGuild(AAction: TActionType; AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
     procedure SetIndex(AGuildID: String; AIndex: Integer);
@@ -159,8 +167,7 @@ type
     function  GetCheckVolume(AID: String): Boolean;
     function  GetCheckSales(AID: String): Boolean;
     function  CharExists(ACharID: String): Boolean;
-    procedure AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
-    procedure UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
+    procedure SetChar(AAction: TActionType; ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
     procedure DeleteChar(ACharID: String);
     procedure CharList(ACharIDList: TStrings);
     procedure SetIndex(ACharID: String; AIndex: Integer);
@@ -174,7 +181,6 @@ type
     FCurrentPath: String;
     FConfigFileName: String;
     FLanguageFileName: String;
-    FFilterFileName: String;
     FVersion: String;
     FFormatSettings: TFormatSettings;
     
@@ -226,7 +232,6 @@ type
     property CurrentPath: String read FCurrentPath;
     property ConfigFileName: String read FConfigFileName;
     property LanguageFileName: String read FLanguageFileName;
-    property FilterFileName: String read FFilterFileName;
 
     property Language: Integer read GetLanguage write SetLanguage;
     property PackFile: String read GetPackFile write SetPackFile;
@@ -259,6 +264,8 @@ type
     function CheckVersion(var AFileUrl: String): Boolean;
   end;
 
+  function StrToFloat2(AValue: String): Extended;
+  function FormatFloat2(AFormat: string; AValue: Extended): String;
 
 var
   GConfig: TConfig;
@@ -268,6 +275,22 @@ var
 implementation
 
 uses RyzomApi, UnitRyzom;
+
+{*******************************************************************************
+Converts a string into a float unsing point for separator
+*******************************************************************************}
+function StrToFloat2(AValue: String): Extended;
+begin
+  Result := StrToFloat(AValue, GConfig.FormatSettings);
+end;
+
+{*******************************************************************************
+Formats a float into a string unsing point for separator
+*******************************************************************************}
+function FormatFloat2(AFormat: String; AValue: Extended): String;
+begin
+  Result := FormatFloat(AFormat, AValue, GConfig.FormatSettings);
+end;
 
 { TConfig }
 
@@ -284,7 +307,6 @@ begin
   FCurrentPath := ExtractFilePath(ParamStr(0));
   FConfigFileName := FCurrentPath + _CONFIG_FILENAME;
   FLanguageFileName := FCurrentPath + _LANGUAGE_FILENAME;
-  FFilterFileName := FCurrentPath + _LANGUAGE_FILENAME;
   FIniFile := TIniFile.Create(FConfigFileName);
 
   FFormatSettings.DecimalSeparator := '.';
@@ -662,32 +684,18 @@ begin
 end;
 
 {*******************************************************************************
-Adds a guild
+Set info for a guild
 *******************************************************************************}
-procedure TGuild.AddGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
+procedure TGuild.SetGuild(AAction: TActionType; AGuildID, AGuildKey, AGuildName, AComment,
+  AServer: String; ACheckVolume, ACheckChange: Boolean);
 var
   wKey: String;
 begin
-  if FIniFile.SectionExists(AGuildID) then
-    raise Exception.Create(RS_ERROR_GUILD_ALREADY_EXISTS);
-  wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
-  FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
-  FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
-  FIniFile.WriteString(AGuildID, _KEY_COMMENT, AComment);
-  FIniFile.WriteString(AGuildID, _KEY_SERVER, AServer);
-  FIniFile.WriteBool(AGuildID, _KEY_CHECK_VOLUME, ACheckVolume);
-  FIniFile.WriteBool(AGuildID, _KEY_CHECK_CHANGE, ACheckChange);
-end;
+  case AAction of
+    atAdd: if FIniFile.SectionExists(AGuildID) then raise Exception.Create(RS_ERROR_GUILD_ALREADY_EXISTS);
+    atUpdate: if not FIniFile.SectionExists(AGuildID) then raise Exception.Create(RS_ERROR_GUILD_NOTFOUND);
+  end;
 
-{*******************************************************************************
-Updates a guild
-*******************************************************************************}
-procedure TGuild.UpdateGuild(AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
-var
-  wKey: String;
-begin
-  if not FIniFile.SectionExists(AGuildID) then
-    raise Exception.Create(RS_ERROR_GUILD_NOTFOUND);
   wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
   FIniFile.WriteString(AGuildID, _KEY_KEY, wKey);
   FIniFile.WriteString(AGuildID, _KEY_NAME, AGuildName);
@@ -809,33 +817,17 @@ end;
 { TCharacter }
 
 {*******************************************************************************
-Adds a character
+Set info for a character
 *******************************************************************************}
-procedure TCharacter.AddChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
+procedure TCharacter.SetChar(AAction: TActionType; ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
 var
   wKey: String;
 begin
-  if FIniFile.SectionExists(ACharID) then
-    raise Exception.Create(RS_ERROR_CHAR_ALREADY_EXISTS);
-  wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
-  FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
-  FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);
-  FIniFile.WriteString(ACharID, _KEY_SERVER, ACharServer);
-  FIniFile.WriteString(ACharID, _KEY_COMMENT, AComment);
-  FIniFile.WriteString(ACharID, _KEY_GUILD, AGuild);
-  FIniFile.WriteBool(ACharID, _KEY_CHECK_VOLUME, ACheckVolume);
-  FIniFile.WriteBool(ACharID, _KEY_CHECK_SALES, ACheckSales);
-end;
+  case AAction of
+    atAdd: if FIniFile.SectionExists(ACharID) then raise Exception.Create(RS_ERROR_CHAR_ALREADY_EXISTS);
+    atUpdate: if not FIniFile.SectionExists(ACharID) then raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
+  end;
 
-{*******************************************************************************
-Updates a character
-*******************************************************************************}
-procedure TCharacter.UpdateChar(ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
-var
-  wKey: String;
-begin
-  if not FIniFile.SectionExists(ACharID) then
-    raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
   wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
   FIniFile.WriteString(ACharID, _KEY_KEY, wKey);
   FIniFile.WriteString(ACharID, _KEY_NAME, ACharName);

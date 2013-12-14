@@ -28,17 +28,17 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, Buttons, SevenButton;
+  LcUnit, StrUtils, Buttons, SevenButton, UnitConfig;
 
 resourcestring
   RS_NEW_GUILD = 'Nouvelle guilde';
   RS_CHANGE_KEY = 'Changement de clé';
   RS_COL_GUILD_LOGO = 'Blason';
-  RS_COL_GUILD_NAME = 'Guilde';
+  RS_COL_GUILD_NAME = 'Iteme';
   RS_COL_GUILD_NUMBER = 'Numéro';
   RS_COL_COMMENT = 'Description';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
-  RS_GUILD_KEY = 'Clé de guilde :';
+  RS_GUILD_KEY = 'Clé API de guilde :';
   RS_CHECK_CHANGE = 'Surveiller les objets';
   RS_UP = 'Monter';
   RS_DOWN = 'Descendre';
@@ -48,7 +48,7 @@ type
   TPublicStringGrid = class(TCustomGrid); 
 
   TFormGuild = class(TForm)
-    GridGuild: TStringGrid;
+    GridItem: TStringGrid;
     Panel1: TPanel;
     BtNew: TSevenButton;
     BtUpdate: TSevenButton;
@@ -58,21 +58,21 @@ type
     BtUp: TSevenButton;
     BtReset: TSevenButton;
     procedure FormCreate(Sender: TObject);
-    procedure GridGuildDrawCell(Sender: TObject; ACol, ARow: Integer;
+    procedure GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
     procedure BtNewClick(Sender: TObject);
     procedure BtUpdateClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure GridGuildMouseWheelDown(Sender: TObject; Shift: TShiftState;
+    procedure GridItemMouseWheelDown(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
-    procedure GridGuildMouseWheelUp(Sender: TObject; Shift: TShiftState;
+    procedure GridItemMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
-    procedure GridGuildSelectCell(Sender: TObject; ACol, ARow: Integer;
+    procedure GridItemSelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
     procedure BtDeleteClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure GridGuildDblClick(Sender: TObject);
+    procedure GridItemDblClick(Sender: TObject);
     procedure BtDownClick(Sender: TObject);
     procedure BtUpClick(Sender: TObject);
     procedure BtResetClick(Sender: TObject);
@@ -83,8 +83,11 @@ type
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
-    procedure UpdateGuild(AAuto: Boolean);
+    procedure UpdateItem(AAuto: Boolean);
+    procedure SetItemInfo(AAction: TActionType);
     procedure MoveRow(AIndex: Integer);
+    procedure SelectItem(AItemID: String);
+    procedure EnableButtons(AEnabled: Boolean);
   public
     procedure UpdateLanguage;
   end;
@@ -94,9 +97,9 @@ var
 
 implementation
 
-uses UnitConfig, UnitFormGuildEdit, UnitRyzom, MisuDevKit,
-  UnitFormConfirmation, UnitFormProgress, UnitFormMain, UnitFormRoom,
-  UnitFormRoomFilter, ScrollRoom;
+uses UnitFormEdit, UnitRyzom, MisuDevKit,
+  UnitFormConfirmation, UnitFormProgress, UnitFormMain,
+  UnitFormFilter, UnitFormRoom;
 
 {$R *.dfm}
 
@@ -106,7 +109,7 @@ Creates the form
 procedure TFormGuild.FormCreate(Sender: TObject);
 begin
   FIconList := TObjectList.Create;
-  GridGuild.DoubleBuffered := True;
+  GridItem.DoubleBuffered := True;
   LoadGrid;
 end;
 
@@ -121,7 +124,7 @@ end;
 {*******************************************************************************
 Displays the grid
 *******************************************************************************}
-procedure TFormGuild.GridGuildDrawCell(Sender: TObject; ACol, ARow: Integer;
+procedure TFormGuild.GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
 var
   wServer: String;
@@ -190,7 +193,7 @@ begin
           DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
       end;
 
-      // Logo
+      // Drawing image (logo)
       if (ACol = 0) then
         Draw(Rect.Left + ((ColWidths[ACol] - 32) div 2),
           Rect.Top + ((RowHeights[ARow] - 32) div 2), TPNGObject(FIconList.Items[ARow-1]));
@@ -202,69 +205,19 @@ end;
 Adds a new guild
 *******************************************************************************}
 procedure TFormGuild.BtNewClick(Sender: TObject);
-var
-  wGuildKey: String;
-  wGuildID: String;
-  wGuildName: String;
-  wGuildIcon: String;
-  wStream: TMemoryStream;
-  wComment: String;
-  wCheckVolume: Boolean;
-  wCheckChange: Boolean;
-  wServer: String;
-  wXmlDoc: TXpObjModel;
-  wIconFile: String;
-  wWatchFile: String;
-  i: Integer;
 begin
-  FormGuildEdit.Caption := RS_NEW_GUILD;
-  FormGuildEdit.LbAutoKey.Caption := RS_GUILD_KEY;
-  FormGuildEdit.EdKey.Text := '';
-  FormGuildEdit.EdComment.Text := '';
-  FormGuildEdit.CbCheckVolume.Checked := False;
-  FormGuildEdit.CbCheckChange.Checked := False;
-  FormGuildEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
-  if FormGuildEdit.ShowModal = mrOk then begin
-    wGuildKey := FormGuildEdit.EdKey.Text;
-    wComment := FormGuildEdit.EdComment.Text;
-    wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
-    wCheckChange := FormGuildEdit.CbCheckChange.Checked;
-    wStream := TMemoryStream.Create;
-    try
-      GRyzomApi.ApiGuild(wGuildKey, wStream);
-      wXmlDoc := TXpObjModel.Create(nil);
-      try
-        wXmlDoc.LoadStream(wStream);
-        wGuildID := wXmlDoc.DocumentElement.SelectString('/guild/gid');
-        wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
-        wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
-        wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
-        wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
-        GGuild.AddGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer, wCheckVolume, wCheckChange);
-        GGuild.SetIndex(wGuildID, GridGuild.RowCount - 1);
+  // Prepare edit window
+  FormEdit.Caption := RS_NEW_GUILD;
+  FormEdit.LbAutoKey.Caption := RS_GUILD_KEY;
+  FormEdit.EdKey.Text := '';
+  FormEdit.EdComment.Text := '';
+  FormEdit.CbCheckVolume.Checked := False;
+  FormEdit.CbCheckChange.Checked := False;
+  FormEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
 
-        wStream.Clear;
-        GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
-        wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
-        wStream.SaveToFile(wIconFile);
-        LoadGrid;
-        for i := 1 to GridGuild.RowCount - 1 do begin
-          if CompareText(wGuildName, GridGuild.Cells[1, i]) = 0 then begin
-            GridGuild.Row := i;
-            Break;
-          end;
-        end;
-
-        // Delete watch file if exists
-        wWatchFile := GConfig.GetGuildPath(wGuildID) + _WATCH_FILENAME;
-        if FileExists(wWatchFile) then DeleteFile(wWatchFile);
-      finally
-        wXmlDoc.Free;
-      end;
-    finally
-      wStream.Free;
-    end;
-  end;
+  // display window
+  if FormEdit.ShowModal = mrOk then
+    SetItemInfo(atAdd);
 end;
 
 {*******************************************************************************
@@ -272,7 +225,7 @@ Changes the key of a guild
 *******************************************************************************}
 procedure TFormGuild.BtUpdateClick(Sender: TObject);
 begin
-  UpdateGuild(False);
+  UpdateItem(False);
 end;
 
 {*******************************************************************************
@@ -280,27 +233,27 @@ Loads the grid
 *******************************************************************************}
 procedure TFormGuild.LoadGrid;
 var
-  wGuildList: TStringList;
+  wItemList: TStringList;
   wPng: TPNGObject;
   wIconFile: String;
   i: Integer;
 begin
-  SendMessage(GridGuild.Handle, WM_SETREDRAW, 0, 0);
+  SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
   try
-    GridGuild.RowCount := 1;
-    GridGuild.Row := 0;
-    GridGuild.ColCount := 4;
-    GridGuild.RowHeights[0] := 20;
-    GridGuild.ColWidths[0] := 48;
-    GridGuild.ColWidths[1] := 250;
-    GridGuild.ColWidths[3] := 70;
+    GridItem.RowCount := 1;
+    GridItem.Row := 0;
+    GridItem.ColCount := 4;
+    GridItem.RowHeights[0] := 20;
+    GridItem.ColWidths[0] := 48;
+    GridItem.ColWidths[1] := 250;
+    GridItem.ColWidths[3] := 70;
 
     FIconList.Clear;
-    wGuildList := TStringList.Create;
+    wItemList := TStringList.Create;
     try
-      GGuild.GuildList(wGuildList);
-      for i := 0 to wGuildList.Count - 1 do begin
-        wIconFile := GConfig.GetGuildPath(wGuildList[i]) + _ICON_FILENAME;
+      GGuild.GuildList(wItemList);
+      for i := 0 to wItemList.Count - 1 do begin
+        wIconFile := GConfig.GetGuildPath(wItemList[i]) + _ICON_FILENAME;
         wPng := TPNGObject.Create;
         if FileExists(wIconFile) then begin
           try
@@ -309,61 +262,55 @@ begin
           end;
         end;
         FIconList.Add(wPng);
-        GridGuild.RowCount := GridGuild.RowCount + 1;
-        GridGuild.Cells[1, GridGuild.RowCount-1] := GGuild.GetGuildName(wGuildList[i]);
-        GridGuild.Cells[2, GridGuild.RowCount-1] := GGuild.GetComment(wGuildList[i]);
-        GridGuild.Cells[3, GridGuild.RowCount-1] := wGuildList[i];
+        GridItem.RowCount := GridItem.RowCount + 1;
+        GridItem.Cells[1, GridItem.RowCount-1] := GGuild.GetGuildName(wItemList[i]);
+        GridItem.Cells[2, GridItem.RowCount-1] := GGuild.GetComment(wItemList[i]);
+        GridItem.Cells[3, GridItem.RowCount-1] := wItemList[i];
       end;
 
-      BtUpdate.Enabled := False;
-      BtDelete.Enabled := False;
-      BtReset.Enabled := False;
-      BtRoom.Enabled := False;
-      if GridGuild.RowCount > 1 then begin
-        GridGuild.Row := 1;
-        BtUpdate.Enabled := True;
-        BtDelete.Enabled := True;
-        BtReset.Enabled := True;
-        BtRoom.Enabled := True;
+      EnableButtons(False);
+      if GridItem.RowCount > 1 then begin
+        GridItem.Row := 1;
+        EnableButtons(True);
       end;
     finally
-      wGuildList.Free;
+      wItemList.Free;
     end;
   finally
-    SendMessage(GridGuild.Handle, WM_SETREDRAW, 1, 0);
-    GridGuild.Refresh;
+    SendMessage(GridItem.Handle, WM_SETREDRAW, 1, 0);
+    GridItem.Refresh;
   end;
 end;
 
 {*******************************************************************************
 Scroll down
 *******************************************************************************}
-procedure TFormGuild.GridGuildMouseWheelDown(Sender: TObject;
+procedure TFormGuild.GridItemMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(GridGuild.Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
+  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
 end;
 
 {*******************************************************************************
 Scroll up
 *******************************************************************************}
-procedure TFormGuild.GridGuildMouseWheelUp(Sender: TObject;
+procedure TFormGuild.GridItemMouseWheelUp(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(GridGuild.Handle, WM_VSCROLL, SB_LINEUP, 0) ;
+  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEUP, 0) ;
 end;
 
 {*******************************************************************************
 Selects a guild in the grid
 *******************************************************************************}
-procedure TFormGuild.GridGuildSelectCell(Sender: TObject; ACol,
+procedure TFormGuild.GridItemSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   if ARow = 0 then CanSelect := False;
   BtUp.Enabled := ARow > 1;
-  BtDown.Enabled := ARow < GridGuild.RowCount - 1;
+  BtDown.Enabled := ARow < GridItem.RowCount - 1;
 end;
 
 {*******************************************************************************
@@ -373,45 +320,41 @@ procedure TFormGuild.BtDeleteClick(Sender: TObject);
 var
   wRow: Integer;
   wTopRow: Integer;
-  wGuildID: String;
+  wItemID: String;
 begin
-  wRow := GridGuild.Row;
+  wRow := GridItem.Row;
   if wRow > 0 then begin
-    wGuildID := GridGuild.Cells[3, wRow];
+    wItemID := GridItem.Cells[3, wRow];
     if FormConfirm.ShowConfirmation(RS_DELETE_CONFIRMATION) <> mrYes then Exit;
     
-    SendMessage(GridGuild.Handle, WM_SETREDRAW, 0, 0);
+    SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
     try
-      wTopRow := GridGuild.TopRow;
-      TPublicStringGrid(GridGuild).DeleteRow(wRow);
-      GridGuild.TopRow := wTopRow;
-      if wRow < GridGuild.RowCount then GridGuild.Row := wRow;
+      wTopRow := GridItem.TopRow;
+      TPublicStringGrid(GridItem).DeleteRow(wRow);
+      GridItem.TopRow := wTopRow;
+      if wRow < GridItem.RowCount then GridItem.Row := wRow;
 
-      if GridGuild.RowCount = 1 then begin
-        BtUpdate.Enabled := False;
-        BtDelete.Enabled := False;
-        BtReset.Enabled := False;
-        BtRoom.Enabled := False;
-      end;
+      if GridItem.RowCount = 1 then
+        EnableButtons(False);
     finally
-      SendMessage(GridGuild.Handle, WM_SETREDRAW, 1, 0);
+      SendMessage(GridItem.Handle, WM_SETREDRAW, 1, 0);
     end;
 
-    GGuild.DeleteGuild(wGuildID);
-    MdkRemoveDir(GConfig.GetGuildRoomPath(wGuildID));
-    MdkRemoveDir(GConfig.GetGuildPath(wGuildID));
+    GGuild.DeleteGuild(wItemID);
+    MdkRemoveDir(GConfig.GetGuildRoomPath(wItemID));
+    MdkRemoveDir(GConfig.GetGuildPath(wItemID));
     FIconList.Delete(wRow-1);
-    GridGuild.Refresh;
+    GridItem.Refresh;
   end;
 end;
 
 {*******************************************************************************
-Displays information of the selected guild
+Displays information of the selected item
 *******************************************************************************}
 procedure TFormGuild.BtRoomClick(Sender: TObject);
 begin
   try
-    UpdateGuild(True);
+    UpdateItem(True);
     Synchronize;
     ShowRoom;
   except
@@ -424,19 +367,19 @@ Resize the window
 *******************************************************************************}
 procedure TFormGuild.FormResize(Sender: TObject);
 begin
-  GridGuild.ColWidths[2] := GridGuild.Width - GridGuild.ColWidths[0] - GridGuild.ColWidths[1] - GridGuild.ColWidths[3] - 25;
+  GridItem.ColWidths[2] := GridItem.Width - GridItem.ColWidths[0] - GridItem.ColWidths[1] - GridItem.ColWidths[3] - 25;
 end;
 
 {*******************************************************************************
 Double clic on the grid
 *******************************************************************************}
-procedure TFormGuild.GridGuildDblClick(Sender: TObject);
+procedure TFormGuild.GridItemDblClick(Sender: TObject);
 begin
-  if GridGuild.Row > 0 then BtRoomClick(BtRoom);
+  if GridItem.Row > 0 then BtRoomClick(BtRoom);
 end;
 
 {*******************************************************************************
-Display room
+Display items
 *******************************************************************************}
 procedure TFormGuild.ShowRoom;
 begin
@@ -451,10 +394,10 @@ Synchronization
 *******************************************************************************}
 procedure TFormGuild.Synchronize;
 var
-  wGuildID: String;
+  wItemID: String;
 begin
-  wGuildID := GridGuild.Cells[3, GridGuild.Row];
-  FormProgress.ShowFormSynchronize(wGuildID);
+  wItemID := GridItem.Cells[3, GridItem.Row];
+  FormProgress.ShowFormSyncGuild(wItemID);
 end;
 
 {*******************************************************************************
@@ -462,93 +405,41 @@ Updates language
 *******************************************************************************}
 procedure TFormGuild.UpdateLanguage;
 begin
-  GridGuild.Cells[0, 0] := RS_COL_GUILD_LOGO;
-  GridGuild.Cells[1, 0] := RS_COL_GUILD_NAME;
-  GridGuild.Cells[2, 0] := RS_COL_COMMENT;
-  GridGuild.Cells[3, 0] := RS_COL_GUILD_NUMBER;
+  GridItem.Cells[0, 0] := RS_COL_GUILD_LOGO;
+  GridItem.Cells[1, 0] := RS_COL_GUILD_NAME;
+  GridItem.Cells[2, 0] := RS_COL_COMMENT;
+  GridItem.Cells[3, 0] := RS_COL_GUILD_NUMBER;
   BtUp.Hint := RS_UP;
   BtDown.Hint := RS_DOWN;
 end;
 
 {*******************************************************************************
-Updates guild information
+Updates information
 *******************************************************************************}
-procedure TFormGuild.UpdateGuild(AAuto: Boolean);
+procedure TFormGuild.UpdateItem(AAuto: Boolean);
 var
-  wGuildID: String;
-  wGuildKey: String;
-  wGuildName: String;
-  wComment: String;
-  wCheckVolume: Boolean;
-  wCheckChange: Boolean;
-  wServer: String;
-  wGuildIcon: String;
-  wIconFile: String;
-  wInfoFile: String;
-  wWatchFile: String;
-  wStream: TMemoryStream;
-  wXmlDoc: TXpObjModel;
+  wItemID: String;
   wDoUpdate: Boolean;
 begin
   wDoUpdate := AAuto;
 
-  wGuildID := GridGuild.Cells[3, GridGuild.Row];
-  wGuildKey := GGuild.GetGuildKey(wGuildID);
-  wComment := GGuild.GetComment(wGuildID);
-  wCheckVolume := GGuild.GetCheckVolume(wGuildID);
-  wCheckChange := GGuild.GetCheckChange(wGuildID);
+  // read ID
+  wItemID := GridItem.Cells[3, GridItem.Row];
 
-  if not wDoUpdate then begin
-    FormGuildEdit.Caption := RS_CHANGE_KEY;
-    FormGuildEdit.LbAutoKey.Caption := RS_GUILD_KEY;
-    FormGuildEdit.EdKey.Text := wGuildKey;
-    FormGuildEdit.EdComment.Text := wComment;
-    FormGuildEdit.CbCheckVolume.Checked := wCheckVolume;
-    FormGuildEdit.CbCheckChange.Checked := wCheckChange;
-    FormGuildEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
-    wDoUpdate := FormGuildEdit.ShowModal = mrOk;
-    wGuildKey := FormGuildEdit.EdKey.Text;
-    wComment := FormGuildEdit.EdComment.Text;
-    wCheckVolume := FormGuildEdit.CbCheckVolume.Checked;
-    wCheckChange := FormGuildEdit.CbCheckChange.Checked;
+  // prepare the edit window
+  FormEdit.Caption := RS_CHANGE_KEY;
+  FormEdit.LbAutoKey.Caption := RS_GUILD_KEY;
+  FormEdit.EdKey.Text := GGuild.GetGuildKey(wItemID);
+  FormEdit.EdComment.Text := GGuild.GetComment(wItemID);
+  FormEdit.CbCheckVolume.Checked := GGuild.GetCheckVolume(wItemID);
+  FormEdit.CbCheckChange.Checked := GGuild.GetCheckChange(wItemID);
+  FormEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
 
-    // Delete watch file if exists
-    wWatchFile := GConfig.GetGuildPath(wGuildID) + _WATCH_FILENAME;
-    if (not wCheckChange) and (FileExists(wWatchFile)) then DeleteFile(wWatchFile);
-  end;
+  if not wDoUpdate then
+    wDoUpdate := FormEdit.ShowModal = mrOk;
 
-  {$IFNDEF  __NOSYNCH}
-  if wDoUpdate then begin
-    // Updates icon
-    wStream := TMemoryStream.Create;
-    wXmlDoc := TXpObjModel.Create(nil);
-    try
-      GRyzomApi.ApiGuild(wGuildKey, wStream);
-      wInfoFile := GConfig.GetGuildPath(wGuildID) + _INFO_FILENAME;
-      wStream.SaveToFile(wInfoFile);
-      wStream.Clear;
-      wXmlDoc.LoadDataSource(wInfoFile);
-      wGuildName := wXmlDoc.DocumentElement.SelectString('/guild/name');
-      wGuildIcon := wXmlDoc.DocumentElement.SelectString('/guild/icon');
-      wServer := wXmlDoc.DocumentElement.SelectString('/guild/shard');
-      wServer := UpperCase(LeftStr(wServer, 1)) + RightStr(wServer, Length(wServer)-1);
-      FDappers := wXmlDoc.DocumentElement.SelectString('/guild/money');
-      wIconFile := GConfig.GetGuildPath(wGuildID) + _ICON_FILENAME;
-      wStream := TMemoryStream.Create;
-      GRyzomApi.ApiGuildIcon(wGuildIcon, _ICON_SMALL, wStream);
-      wStream.SaveToFile(wIconFile);
-      TPNGObject(FIconList.Items[GridGuild.Row-1]).LoadFromFile(wIconFile);
-      GridGuild.Refresh;
-    finally
-      wXmlDoc.Free;
-      wStream.Free;
-    end;
-    
-    GGuild.UpdateGuild(wGuildID, wGuildKey, wGuildName, wComment, wServer, wCheckVolume, wCheckChange);
-    GridGuild.Cells[1, GridGuild.Row] := wGuildName;
-    GridGuild.Cells[2, GridGuild.Row] := wComment;
-  end;
-  {$ENDIF}
+  if wDoUpdate then
+    SetItemInfo(atUpdate);
 end;
 
 {*******************************************************************************
@@ -559,13 +450,13 @@ var
   wRow: Integer;
   wID1, wID2: String;
 begin
-  wRow := GridGuild.Row;
-  wID1 := GridGuild.Cells[3, wRow];
-  wID2 := GridGuild.Cells[3, wRow + AIndex];
+  wRow := GridItem.Row;
+  wID1 := GridItem.Cells[3, wRow];
+  wID2 := GridItem.Cells[3, wRow + AIndex];
   GGuild.SetIndex(wID1, wRow + AIndex);
   GGuild.SetIndex(wID2, wRow);
   LoadGrid;
-  GridGuild.Row := wRow + AIndex;
+  GridItem.Row := wRow + AIndex;
 end;
 
 {*******************************************************************************
@@ -590,15 +481,137 @@ Reset the icons directory
 procedure TFormGuild.BtResetClick(Sender: TObject);
 var
   wRow: Integer;
-  wGuildID: String;
+  wItemID: String;
 begin
-  wRow := GridGuild.Row;
+  wRow := GridItem.Row;
   if wRow > 0 then begin
-    wGuildID := GridGuild.Cells[3, wRow];
-    MdkRemoveDir(GConfig.GetGuildRoomPath(wGuildID));
-    DeleteFile(GConfig.GetGuildPath(wGuildID) + _INDEX_FILENAME);
+    wItemID := GridItem.Cells[3, wRow];
+    MdkRemoveDir(GConfig.GetGuildRoomPath(wItemID));
+    DeleteFile(GConfig.GetGuildPath(wItemID) + _INDEX_FILENAME);
     ShowMessage(RS_RESET_OK);
   end;
+end;
+
+{*******************************************************************************
+Set info
+*******************************************************************************}
+procedure TFormGuild.SetItemInfo(AAction: TActionType);
+var
+  wItemKey: String;
+  wComment: String;
+  wCheckVolume: Boolean;
+  wCheckChange: Boolean;
+  wItemID: String;
+  wItemName: String;
+  wItemIcon: String;
+  wItemServer: String;
+
+  wXmlDoc: TXpObjModel;
+  wStream: TMemoryStream;
+
+  wInfoFile: String;
+  wIconFile: String;
+  wWatchFile: String;
+begin
+  wStream := TMemoryStream.Create;
+  wXmlDoc := TXpObjModel.Create(nil);
+  try
+    // read info on the edit window
+    wItemKey := FormEdit.EdKey.Text;
+    wComment := FormEdit.EdComment.Text;
+    wCheckVolume := FormEdit.CbCheckVolume.Checked;
+    wCheckChange := FormEdit.CbCheckChange.Checked;
+
+    // call API
+    {$IFNDEF __LOCALINFO}
+    GRyzomApi.ApiGuild(wItemKey, wStream);
+    wXmlDoc.LoadStream(wStream);
+    {$ELSE}
+    if AAction = atAdd then begin
+      GRyzomApi.ApiGuild(wItemKey, wStream);
+      wXmlDoc.LoadStream(wStream);
+    end else begin
+      wItemID := GridItem.Cells[3, GridItem.Row];
+      wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
+      wXmlDoc.LoadDataSource(wInfoFile);
+    end;
+    {$ENDIF}
+
+    // check modules
+    if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/@modules'), _REQUIRED_MODULES_GUILD) then
+      MessageDlg(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_GUILD, ',')]), mtWarning, [mbOK], 0);
+
+    // read info in the XML
+    wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/gid');
+    wItemName := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/name');
+    wItemIcon := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/icon');
+    wItemServer := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/shard');
+    wItemServer := UpperCase(LeftStr(wItemServer, 1)) + LowerCase(RightStr(wItemServer, Length(wItemServer)-1));
+    FDappers := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/money');
+
+    // update INI
+    GGuild.SetGuild(AAction, wItemID, wItemKey, wItemName, wComment, wItemServer, wCheckVolume, wCheckChange);
+
+    // save to info.xml
+    {$IFNDEF __LOCALINFO}
+    wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
+    wStream.SaveToFile(wInfoFile);
+    {$ENDIF}
+
+    // Get image
+    {$IFNDEF __LOCALINFO}
+    wStream.Clear;
+    GRyzomApi.ApiGuildIcon(wItemIcon, _ICON_SMALL, wStream);
+    wIconFile := GConfig.GetGuildPath(wItemID) + _ICON_FILENAME;
+    wStream.SaveToFile(wIconFile);
+    if AAction = atUpdate then
+      TPNGObject(FIconList.Items[GridItem.Row-1]).LoadFromFile(wIconFile);
+    {$ENDIF}
+
+    // delete watch file if necessary
+    wWatchFile := GConfig.GetGuildPath(wItemID) + _WATCH_FILENAME;
+    if ( (AAction = atAdd) or (not wCheckChange) ) and FileExists(wWatchFile) then DeleteFile(wWatchFile);
+
+    // refresh grid info
+    if AAction = atAdd then begin
+      GGuild.SetIndex(wItemID, GridItem.RowCount - 1);
+      LoadGrid;
+      SelectItem(wItemID);
+    end else begin
+      GridItem.Cells[1, GridItem.Row] := wItemName;
+      GridItem.Cells[2, GridItem.Row] := wComment;
+      GridItem.Refresh;
+    end;
+  finally
+    wXmlDoc.Free;
+    wStream.Free;
+  end;
+end;
+
+{*******************************************************************************
+select a char from his ID
+*******************************************************************************}
+procedure TFormGuild.SelectItem(AItemID: String);
+var
+  i: Integer;
+begin
+  for i := 1 to GridItem.RowCount - 1 do begin
+    if CompareText(AItemID, GridItem.Cells[3, i]) = 0 then begin
+      GridItem.Row := i;
+      Break;
+    end;
+  end;
+end;
+
+{*******************************************************************************
+Enables or disables buttons
+*******************************************************************************}
+procedure TFormGuild.EnableButtons(AEnabled: Boolean);
+begin
+  BtUpdate.Enabled := AEnabled;
+  BtDelete.Enabled := AEnabled;
+  BtReset.Enabled := AEnabled;
+  BtRoom.Enabled := AEnabled;
 end;
 
 end.

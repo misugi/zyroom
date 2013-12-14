@@ -31,15 +31,12 @@ uses
 
 resourcestring
   RS_ERROR_LOADING_XML = 'Erreur de chargement du flux XML';
+  RS_REQUIRED_MODULES = 'Veuillez activer tous les modules requis sur votre clé API : %s';
 
 const
-  _STATUS_CLOSED = 0;
-  _STATUS_OPEN = 1;
-  _STATUS_RESTRICTED = 2;
-
-  _SHARD_ANIRO_ID = 'ani';
-  _SHARD_LEANON_ID = 'lea';
-  _SHARD_ARIPOTLE_ID = 'ari';
+  _API_BASE_URL = 'http://api.ryzom.com';
+  _REQUIRED_MODULES_CHAR : array [0..4] of String = ('C01','C04','C05','C06','A03');
+  _REQUIRED_MODULES_GUILD : array [0..2] of String = ('G01','G02','G03');
 
   _FORMAT_XML = 'xml';
   _FORMAT_RAW = 'raw';
@@ -47,13 +44,21 @@ const
 
   _ICON_SMALL = 's';
   _ICON_BIG = 'b';
-
-  _NODE_ERROR = 'error';
   _ICON_FORMAT = '.png';
+
+  _XPATH_ROOM_CHAR = '/ryzomapi/character/room/item';
+  _XPATH_ROOM_GUILD = '/ryzomapi/guild/room/item';
+  _XPATH_BAG = '/ryzomapi/character/bag/item';
+  _XPATH_PET1 = '/ryzomapi/character/pets/animal[@index=''0'']/inventory/item';
+  _XPATH_PET2 = '/ryzomapi/character/pets/animal[@index=''1'']/inventory/item';
+  _XPATH_PET3 = '/ryzomapi/character/pets/animal[@index=''2'']/inventory/item';
+  _XPATH_PET4 = '/ryzomapi/character/pets/animal[@index=''3'']/inventory/item';
+  _XPATH_STORE = '/ryzomapi/character/shop/shopitem';
+  _XPATH_ERROR_MESSAGE = '/ryzomapi/*/error';
+  _XPATH_ERROR_CODE = '/ryzomapi/*/error/@code';
 
 type
   TItemColor = (icRed, icBeige, icGreen, icTurquoise, icBlue, icPurple, icWhite, icBlack, icNone);
-  TCharacterPart = (cpFull, cpItems);
 
   // Ryzom API
   TRyzomApi = class
@@ -61,19 +66,21 @@ type
     FHttpRequest: TIdHTTP;
     FHttpCompressor: TIdCompressorZLib;
     FXmlDocument: TXpObjModel;
+
+    procedure CheckXmlError(AResponse: TStream);
+    procedure CallAPI(AUrl: String; AResponse: TStream);
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure ApiGuild(AKey: String; AResponse: TStream);
-    procedure ApiCharacter(AKey: String; APart: TCharacterPart; AResponse: TStream);
+    procedure ApiCharacter(AKey: String; AResponse: TStream);
     procedure ApiGuildIcon(AIcon: String; ASize: String; AResponse: TStream);
     procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor = icWhite;
       AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False);
-    procedure ApiStatus(AFormat: String; AResponse: TStream);
     procedure ApiBallisticMystix(ARace: String; AGender: String; AHairType: Integer; AHairColor: Integer;
-      ATatoo: Integer; AEyesColor: Integer; AResponse: TStream);
-    procedure ApiTime(AShardID: String; AFormat: String; AResponse: TStream);
+      ATatoo: Integer; AEyesColor: Integer; AGabarit, AMorph: String; AResponse: TStream);
+    procedure ApiTime(AFormat: String; AResponse: TStream);
     procedure SetProxyParameters(AProxyAddress: String; AProxyPort: Integer;
       AProxyUsername: String; AProxyPassword: String);
     procedure SendRequest(ARequest: String; AResponse: TStream);
@@ -92,6 +99,7 @@ type
 
   function ToItemColor(AColor: String): TItemColor;
   function GetRyzomInstallDir: String;
+  function CheckModules(AModules: String; ARequired: array of String): Boolean;
 
 implementation
 
@@ -120,6 +128,28 @@ begin
       Result := wReg.ReadString('InstallLocation');
   finally
     wReg.Free;
+  end;
+end;
+
+{*******************************************************************************
+Check required modules
+*******************************************************************************}
+function CheckModules(AModules: String; ARequired: array of String): Boolean;
+var
+  wList: TStringList;
+  i: Integer;
+begin
+  Result := False;
+  wList := TStringList.Create;
+  try
+    wList.Delimiter := ':';
+    wList.DelimitedText := AModules;
+    for i := 0 to High(ARequired) do begin
+      if wList.IndexOf(ARequired[i]) < 0 then Exit;
+    end;
+    Result := True;
+  finally
+    wList.Free;
   end;
 end;
 
@@ -153,43 +183,24 @@ Calls the "Guild" API
 procedure TRyzomApi.ApiGuild(AKey: String; AResponse: TStream);
 begin
   try
-    FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild.php?key=%s', [AKey]), AResponse);
+    CallAPI(Format('%s/guild.php?apikey=%s', [_API_BASE_URL, AKey]), AResponse);
+    CheckXmlError(AResponse);
   except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    on E: Exception do raise Exception.CreateFmt('[ApiGuild] %s', [E.Message]);
   end;
-  AResponse.Position := 0;
-
-  if not FXmlDocument.LoadStream(AResponse) then
-    raise Exception.Create(RS_ERROR_LOADING_XML);
-
-  if CompareText(FXmlDocument.DocumentElement.NodeName, _NODE_ERROR) = 0 then
-    raise Exception.Create('[API Result Error] '+FXmlDocument.DocumentElement.FirstChild.NodeValue);
-
-  AResponse.Position := 0;
 end;
 
 {*******************************************************************************
 Calls the "Character" API
 *******************************************************************************}
-procedure TRyzomApi.ApiCharacter(AKey: String; APart: TCharacterPart; AResponse: TStream);
+procedure TRyzomApi.ApiCharacter(AKey: String; AResponse: TStream);
 begin
   try
-    case APart of
-      cpFull: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=full&key=%s', [AKey]), AResponse);
-      cpItems: FHttpRequest.Get(Format('http://atys.ryzom.com/api/character.php?part=items&key=%s', [AKey]), AResponse);
-    end;
+    CallAPI(Format('%s/character.php?apikey=%s', [_API_BASE_URL, AKey]), AResponse);
+    CheckXmlError(AResponse);
   except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    on E: Exception do raise Exception.CreateFmt('[ApiCharacter] %s', [E.Message]);
   end;
-  AResponse.Position := 0;
-
-  if not FXmlDocument.LoadStream(AResponse) then
-    raise Exception.Create(RS_ERROR_LOADING_XML);
-
-  if CompareText(FXmlDocument.DocumentElement.NodeName, _NODE_ERROR) = 0 then
-    raise Exception.Create('[API Result Error] '+FXmlDocument.DocumentElement.FirstChild.NodeValue);
-
-  AResponse.Position := 0;
 end;
 
 {*******************************************************************************
@@ -198,15 +209,38 @@ Calls the "GuildIcon" API
 procedure TRyzomApi.ApiGuildIcon(AIcon, ASize: String; AResponse: TStream);
 begin
   try
-    FHttpRequest.Get(Format('http://atys.ryzom.com/api/guild_icon.php?icon=%s&size=%s', [AIcon, ASize]), AResponse);
+    CallAPI(Format('%s/guild_icon.php?icon=%s&size=%s', [_API_BASE_URL, AIcon, ASize]), AResponse);
   except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    on E: Exception do raise Exception.CreateFmt('[ApiGuildIcon] %s', [E.Message]);
   end;
-  AResponse.Position := 0;
 end;
 
 {*******************************************************************************
 Calls the "ItemIcon" API
+
+c (optional)
+The color of the item. It's a value between 0 and 7 (example).
+ 
+q (optional)
+The quality of the item (example).
+ 
+s (optional)
+Default is 1.
+The size of the stack (example).
+ 
+sap (optional)
+Default is -1.
+The number of sap of the item.
+-1 no sap icon, no number 
+0 sap icon, no number 
+1 sap icon number 0 
+2 sap icon number 1 
+3 sap icon number 2 
+
+destroyed (optional)
+Default is 0.
+0: nothing special (example).
+1: display the item as if it was destroyed (with a red cross) (example).
 *******************************************************************************}
 procedure TRyzomApi.ApiItemIcon(AId: String; AResponse: TStream;
   AColor: TItemColor; AQuality, ASize, ASap: Integer;
@@ -214,46 +248,36 @@ procedure TRyzomApi.ApiItemIcon(AId: String; AResponse: TStream;
 var
   wOptions: String;
 begin
-  wOptions := Format('?sheetid=%s', [AId]);
-  if AColor = icNone then AColor := icBeige;
-  wOptions := wOptions + Format('&c=%d', [Ord(AColor)]);
-  if AQuality > 0 then wOptions := wOptions + Format('&q=%d', [AQuality]);
-  if ASize > 0 then wOptions := wOptions + Format('&s=%d', [ASize]);
-  if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);
-  if ADestroyed then wOptions := wOptions + '&destroyed=1';
+  try
+    wOptions := Format('?sheetid=%s', [AId]);
+    if AColor = icNone then AColor := icBeige;
+    wOptions := wOptions + Format('&c=%d', [Ord(AColor)]);
+    if AQuality > 0 then wOptions := wOptions + Format('&q=%d', [AQuality]);
+    if ASize > 0 then wOptions := wOptions + Format('&s=%d', [ASize]);
+    if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);
+    if ADestroyed then wOptions := wOptions + '&destroyed=1';
   
-  try
-    FHttpRequest.Get('http://atys.ryzom.com/api/item_icon.php' + wOptions, AResponse);
+    CallAPI(Format('%s/item_icon.php%s', [_API_BASE_URL, wOptions]), AResponse);
   except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    on E: Exception do raise Exception.CreateFmt('[ApiItemIcon] %s', [E.Message]);
   end;
-  AResponse.Position := 0;
-end;
-
-{*******************************************************************************
-Calls the "Status" API
-*******************************************************************************}
-procedure TRyzomApi.ApiStatus(AFormat: String; AResponse: TStream);
-begin
-  try
-    FHttpRequest.Get(Format('http://atys.ryzom.com/api/status.php?format=%s', [AFormat]), AResponse);
-  except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
-  end;
-  AResponse.Position := 0;
 end;
 
 {*******************************************************************************
 Calls the "Time" API
 *******************************************************************************}
-procedure TRyzomApi.ApiTime(AShardID: String; AFormat: String; AResponse: TStream);
+procedure TRyzomApi.ApiTime(AFormat: String; AResponse: TStream);
 begin
   try
-    FHttpRequest.Get(Format('http://atys.ryzom.com/api/time.php?shardid=%s&format=%s', [AShardID, AFormat]), AResponse);
+    try
+      FHttpRequest.Get(Format('%s/time.php?format=%s', [_API_BASE_URL, AFormat]), AResponse);
+    except
+      on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    end;
+    AResponse.Position := 0;
   except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    on E: Exception do raise Exception.CreateFmt('[ApiTime] %s', [E.Message]);
   end;
-  AResponse.Position := 0;
 end;
 
 
@@ -338,15 +362,47 @@ end;
 Get character image
 *******************************************************************************}
 procedure TRyzomApi.ApiBallisticMystix(ARace, AGender: String; AHairType,
-  AHairColor, ATatoo, AEyesColor: Integer; AResponse: TStream);
+  AHairColor, ATatoo, AEyesColor: Integer; AGabarit, AMorph: String; AResponse: TStream);
 begin
   try
-    FHttpRequest.Get(Format('http://ballisticmystix.net/api/dressingroom.php?race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d',
-      [ARace, AGender, AHairType, AHairColor, ATatoo, AEyesColor]), AResponse);
+    CallAPI(Format('http://ballisticmystix.net/api/dressingroom.php?angle=0&race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d&gabarit=%s&morph=%s',
+      [Copy(ARace, 1, 2), AGender, AHairType, AHairColor, ATatoo, AEyesColor, AGabarit, AMorph]), AResponse);
   except
-    on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+    on E: Exception do raise Exception.CreateFmt('[ApiBallisticMystix] %s', [E.Message]);
   end;
+end;
+
+{*******************************************************************************
+Check the XML returned by the API
+*******************************************************************************}
+procedure TRyzomApi.CheckXmlError(AResponse: TStream);
+var
+  wCode: Integer;
+  wMessage: String;
+begin
+  if not FXmlDocument.LoadStream(AResponse) then
+    raise Exception.Create(RS_ERROR_LOADING_XML);
+
+  wCode := FXmlDocument.DocumentElement.SelectInteger(_XPATH_ERROR_CODE);
+  if wCode > 0 then begin
+    wMessage := FXmlDocument.DocumentElement.SelectString(_XPATH_ERROR_MESSAGE);
+    raise Exception.CreateFmt('[API Result Error] %d: %s', [wCode, wMessage]);
+  end;
+
   AResponse.Position := 0;
+end;
+
+{*******************************************************************************
+Call API
+*******************************************************************************}
+procedure TRyzomApi.CallAPI(AUrl: String; AResponse: TStream);
+begin
+  try
+    FHttpRequest.Get(AUrl, AResponse);
+    AResponse.Position := 0;
+  except
+    on E: Exception do raise Exception.CreateFmt('[API Call Error] %s', [E.Message]);
+  end;
 end;
 
 end.

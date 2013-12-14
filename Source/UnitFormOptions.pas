@@ -94,8 +94,8 @@ var
 implementation
 
 uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
-  UnitFormGuild, UnitFormGuildEdit, UnitFormMain, UnitFormProgress,
-  UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormRoomFilter,
+  UnitFormGuild, UnitFormEdit, UnitFormMain, UnitFormProgress,
+  UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormFilter,
   UnitFormInvent, UnitFormAlert, UnitFormWatch, UnitFormLog,
   UnitFormBackup, UnitFormName;
 
@@ -133,8 +133,14 @@ Creates the form
 *******************************************************************************}
 procedure TFormOptions.FormCreate(Sender: TObject);
 begin
+  {$IFNDEF __DEBUG}
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
   EnumSystemLocales(@LocalesCallback, LCID_SUPPORTED);
+  {$ELSE}
+  // no limit
+  EdSalesCount.MaxValue := 0;
+  EdSeasonCount.MaxValue := 0;
+  {$ENDIF}
 end;
 
 {*******************************************************************************
@@ -281,43 +287,45 @@ Applies settings of the application
 procedure TFormOptions.ApplyConfig;
 begin
   // Language of the interface
+  {$IFNDEF __DEBUG}
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
   TranslateComponent(FormOptions);
   TranslateComponent(FormMain);
-  TranslateComponent(FormGuildEdit);
+  TranslateComponent(FormEdit);
   TranslateComponent(FormProgress);
   TranslateComponent(FormConfirm);
   TranslateComponent(FormHome);
   TranslateComponent(FormRoom);
   TranslateComponent(FormGuild);
   TranslateComponent(FormCharacter);
-  FormRoomFilter.BackupComboIndex;
-  TranslateComponent(FormRoomFilter);
-  FormRoomFilter.RestoreComboIndex;
+  FormFilter.BackupComboIndex;
+  TranslateComponent(FormFilter);
+  FormFilter.RestoreComboIndex;
   TranslateComponent(FormInvent);
   TranslateComponent(FormAlert);
   TranslateComponent(FormWatch);
   TranslateComponent(FormLog);
   TranslateComponent(FormBackup);
   TranslateComponent(FormName);
+  {$ENDIF}
   
   FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;
   FormGuild.UpdateLanguage;
-  FormRoomFilter.UpdateLanguage;
+  FormFilter.UpdateLanguage;
   FormRoom.UpdateLanguage;
 
   // Color of the interface
   FormOptions.Color := GConfig.InterfaceColor;
   FormMain.Color := GConfig.InterfaceColor;
-  FormGuildEdit.Color := GConfig.InterfaceColor;
+  FormEdit.Color := GConfig.InterfaceColor;
   FormProgress.Color := GConfig.InterfaceColor;
   FormConfirm.Color := GConfig.InterfaceColor;
   FormHome.Color := GConfig.InterfaceColor;
   FormRoom.Color := GConfig.InterfaceColor;
   FormGuild.Color := GConfig.InterfaceColor;
   FormCharacter.Color := GConfig.InterfaceColor;
-  FormRoomFilter.Color := GConfig.InterfaceColor;
+  FormFilter.Color := GConfig.InterfaceColor;
   FormInvent.Color := GConfig.InterfaceColor;
   FormLog.Color := GConfig.InterfaceColor;
   FormAlert.Color := GConfig.InterfaceColor;

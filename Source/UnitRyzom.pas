@@ -151,8 +151,8 @@ const
 
   _ITEM_CLASS : array [0..4] of String = ('base', 'fine', 'choice', 'excellent', 'supreme');
 
-  _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([b-f])01\.sitem';
-  _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-e])01\.sitem';
+  _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([a-f])01\.sitem';
+  _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-f])01\.sitem';
   _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_)(\w*)\.sitem';
   _EXPR_TOOL = '^(icoka[rm]t|sfxitforage|it).*\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
@@ -196,6 +196,7 @@ type
     Sorting: TItemSorting;
   end;
   
+  //todo: 5.1 Rajouter l'info locked sur un item et dans ApiItemIcon (anticipation sur l'API item_icon.php qui pourrait bien le supporter)
   TItemInfo = class(TObject)
   public
     ItemSlot: Integer;
@@ -203,7 +204,7 @@ type
     ItemColor: TItemColor;
     ItemQuality: Integer;
     ItemSize: Integer;
-    ItemSap: Integer;
+    ItemSap: Boolean;
     ItemDestroyed: Boolean;
     ItemFileName: String;
     ItemClass: TItemClass;
@@ -235,15 +236,15 @@ type
     MatColor3: Integer;
     MatSpec1: array of array [0..1] of Integer;
     MatSpec2: array of array [0..1] of Integer;
-    CSpeed: Double;
-    CRange: Double;
+    CSpeed: Integer;
+    CRange: Integer;
     CDodgeModifier: Integer;
     CParryModifier: Integer;
     CAdvDodgeModifier: Integer;
     CAdvParryModifier: Integer;
     CFactorProt: Double;
     CSlashingProt: Integer;
-    CSmashingProt: Integer;
+    CBluntProt: Integer;
     CPiercingProt: Integer;
 
     constructor Create;
@@ -263,23 +264,19 @@ type
     FCatStrings: TStringList;
     FSheetId: TStringList;
 
-    FAniroStatus: Integer;
-    FArispotleStatus: Integer;
-    FLeanonStatus: Integer;
+    FServerStatus: Integer;
   public
     constructor Create;
     destructor Destroy; override;
 
-    procedure UpdateStatus;
+//obs    procedure UpdateStatus;
     procedure GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
     function  CheckItem(AItemInfo: TItemInfo; AFilter: TItemFilter): Boolean;
     procedure GetItemInfoFromName(AItemInfo: TItemInfo);
     procedure SetDefaultFilter(var AFilter: TItemFilter);
     function  GetSheetName(ASheetId: String): String;
     
-    property AniroStatus: Integer read FAniroStatus;
-    property LeanonStatus: Integer read FLeanonStatus;
-    property ArispotleStatus: Integer read FArispotleStatus;
+    property ServerStatus: Integer read FServerStatus;
   end;
 
   function GetSpecName(AIndex: Integer): String;
@@ -500,131 +497,144 @@ Returns information of an item
 *******************************************************************************}
 procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
-  wNode: TXpNode;
+  wNodeValue: String;
 begin
-  // Name
-  AItemInfo.ItemName := ANode.Text;
-  if Pos('#', AItemInfo.ItemName) = 1 then
-    AItemInfo.ItemName := GetSheetName(AItemInfo.ItemName);
+  try
+    // Name
+    AItemInfo.ItemName := ANode.SelectString('.//sheet');
+    if Pos('#', AItemInfo.ItemName) = 1 then
+      AItemInfo.ItemName := GetSheetName(AItemInfo.ItemName);
 
-  // Slot
-  wNode := ANode.Attributes.GetNamedItem('slot');
-  if Assigned(wNode) then AItemInfo.ItemSlot := StrToInt(wNode.NodeValue);
+    // Slot
+    wNodeValue := ANode.SelectString('@slot');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemSlot := StrToInt(wNodeValue);
 
-  // Color
-  wNode := ANode.Attributes.GetNamedItem('c');
-  if Assigned(wNode) then AItemInfo.ItemColor := ToItemColor(wNode.NodeValue);
+    // Color
+    wNodeValue := ANode.SelectString('.//craftparameters/color');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemColor := ToItemColor(wNodeValue);
 
-  // Quality
-  wNode := ANode.Attributes.GetNamedItem('q');
-  if Assigned(wNode) then AItemInfo.ItemQuality := StrToInt(wNode.NodeValue);
+    // Quality
+    wNodeValue := ANode.SelectString('.//quality');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemQuality := StrToInt(wNodeValue);
 
-  // Weight
-  wNode := ANode.Attributes.GetNamedItem('w');
-  if Assigned(wNode) then AItemInfo.ItemWeight := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
+    // Weight
+    wNodeValue := ANode.SelectString('.//craftparameters/weight');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemWeight := StrToFloat2(wNodeValue);
 
-  // Size
-  wNode := ANode.Attributes.GetNamedItem('s');
-  if Assigned(wNode) then AItemInfo.ItemSize := StrToInt(wNode.NodeValue);
+    // Size
+    wNodeValue := ANode.SelectString('stack');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemSize := StrToInt(wNodeValue);
 
-  // Sap load
-  wNode := ANode.Attributes.GetNamedItem('sap');
-  if Assigned(wNode) then AItemInfo.ItemSap := StrToInt(wNode.NodeValue);
+    // Sap load
+    // Attention, 2 noeuds sapload:
+    // dans craftparameters = max charge de sève
+    // noeud courant = charge actuelle
+    // => mais ça nous indique toujours pas combien de sorts on peut lancer ! (pour récupérer l'icone correspondante)
+    // DONC utilisation d'un booléen juste pour mettre (ou pas) l'icone de charge sans nombre !
+    wNodeValue := ANode.SelectString('sapload');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemSap := True;
 
-  // Destroyed / HP
-  wNode := ANode.Attributes.GetNamedItem('hp');
-  if Assigned(wNode) then begin
-    AItemInfo.ItemHp := StrToInt(wNode.NodeValue);
-    AItemInfo.ItemDestroyed := AItemInfo.ItemHp <= 1;
-  end;
-
-  // Durability
-  wNode := ANode.Attributes.GetNamedItem('dur');
-  if Assigned(wNode) then AItemInfo.ItemDur := StrToInt(wNode.NodeValue);
-
-  // HP Bonus
-  wNode := ANode.Attributes.GetNamedItem('hpb');
-  if Assigned(wNode) then AItemInfo.ItemHpb := StrToInt(wNode.NodeValue);
-
-  // Sap Bonus
-  wNode := ANode.Attributes.GetNamedItem('sab');
-  if Assigned(wNode) then AItemInfo.ItemSab := StrToInt(wNode.NodeValue);
-
-  // Stamina Bonus
-  wNode := ANode.Attributes.GetNamedItem('stb');
-  if Assigned(wNode) then AItemInfo.ItemStb := StrToInt(wNode.NodeValue);
-
-  // Focus Bonus
-  wNode := ANode.Attributes.GetNamedItem('fob');
-  if Assigned(wNode) then AItemInfo.ItemFob := StrToInt(wNode.NodeValue);
-
-  AItemInfo.ItemBonus := (AItemInfo.ItemHpb <> 0) or (AItemInfo.ItemSab <> 0)
-                      or (AItemInfo.ItemStb <> 0) or (AItemInfo.ItemFob <> 0);
-
-  // Energy
-  wNode := ANode.Attributes.GetNamedItem('e');
-  if Assigned(wNode) then begin
-    case Ord(wNode.NodeValue[1]) of
-      98:  AItemInfo.ItemClass := icBasic; {b = base}
-      102: AItemInfo.ItemClass := icFine; {f = fine}
-      99:  AItemInfo.ItemClass := icChoice; {c = choice}
-      101: AItemInfo.ItemClass := icExcellent; {e = excelent}
-      115: AItemInfo.ItemClass := icSupreme; {s = supreme}
+    // Destroyed / HP
+    wNodeValue := ANode.SelectString('.//hp');
+    if Length(wNodeValue) > 0 then begin
+      AItemInfo.ItemHp := StrToInt(wNodeValue);
+      AItemInfo.ItemDestroyed := AItemInfo.ItemHp = 1;
     end;
+
+    // Durability
+    wNodeValue := ANode.SelectString('.//craftparameters/durability');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemDur := StrToIntDef(wNodeValue, 0);
+
+    // HP Bonus
+    wNodeValue := ANode.SelectString('.//craftparameters/hpbuff');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemHpb := StrToInt(wNodeValue);
+
+    // Sap Bonus
+    wNodeValue := ANode.SelectString('.//craftparameters/sapbuff');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemSab := StrToInt(wNodeValue);
+
+    // Stamina Bonus
+    wNodeValue := ANode.SelectString('.//craftparameters/stabuff');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemStb := StrToInt(wNodeValue);
+
+    // Focus Bonus
+    wNodeValue := ANode.SelectString('.//craftparameters/focusbuff');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemFob := StrToInt(wNodeValue);
+
+    AItemInfo.ItemBonus := (AItemInfo.ItemHpb <> 0) or (AItemInfo.ItemSab <> 0)
+                        or (AItemInfo.ItemStb <> 0) or (AItemInfo.ItemFob <> 0);
+
+    // Energy
+    //todo : API trouver l'info dans le nouveau XML ? (noeud "statenergy" ?) => sinon l'info est récupérée avec GetItemInfoFromName
+  {  wNode := ANode.Attributes.GetNamedItem('e');
+    if Assigned(wNode) then begin
+      case Ord(wNode.NodeValue[1]) of
+        98:  AItemInfo.ItemClass := icBasic; // b = base
+        102: AItemInfo.ItemClass := icFine; // f = fine
+        99:  AItemInfo.ItemClass := icChoice; // c = choice
+        101: AItemInfo.ItemClass := icExcellent; // e = excelent
+        115: AItemInfo.ItemClass := icSupreme; // s = supreme
+      end;
+    end;}
+
+    // Continent
+    wNodeValue := ANode.SelectString('continent');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemContinent := wNodeValue;
+    AItemInfo.ItemContinent := UpperCase(LeftStr(AItemInfo.ItemContinent, 1)) +
+      LowerCase(RightStr(AItemInfo.ItemContinent, Length(AItemInfo.ItemContinent)-1));
+
+    // Price
+    wNodeValue := ANode.SelectString('price');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemPrice := StrToFloat2(wNodeValue);
+
+    // Quantity
+    if AItemInfo.ItemSize >= 0 then
+      AItemInfo.ItemQuantity := AItemInfo.ItemSize;
+
+    // Since
+    wNodeValue := ANode.SelectString('timestamp');
+    if Length(wNodeValue) > 0 then AItemInfo.ItemTime := IncHour(IncDay(UnixToDateTime(StrToInt64(wNodeValue)), 7), 2);
+
+    // Specifications
+    //todo: API plein de valeurs sont maintenant flottantes ???
+    wNodeValue := ANode.SelectString('.//craftparameters/speed');
+    if Length(wNodeValue) > 0 then AItemInfo.CSpeed := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/range');
+    if Length(wNodeValue) > 0 then AItemInfo.CRange := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/dodgemodifier');
+    if Length(wNodeValue) > 0 then AItemInfo.CDodgeModifier := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/parrymodifier');
+    if Length(wNodeValue) > 0 then AItemInfo.CParryModifier := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/adversarydodgemodifier');
+    if Length(wNodeValue) > 0 then AItemInfo.CAdvDodgeModifier := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/adversaryparrymodifier');
+    if Length(wNodeValue) > 0 then AItemInfo.CAdvParryModifier := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/protectionfactor');
+    if Length(wNodeValue) > 0 then AItemInfo.CFactorProt := StrToFloat2(wNodeValue);
+    wNodeValue := ANode.SelectString('.//craftparameters/maxslashingprotection');
+    if Length(wNodeValue) > 0 then AItemInfo.CSlashingProt := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/maxbluntprotection');
+    if Length(wNodeValue) > 0 then AItemInfo.CBluntProt := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/maxpiercingprotection');
+    if Length(wNodeValue) > 0 then AItemInfo.CPiercingProt := StrToIntDef(wNodeValue, 0);
+
+    //todo: 5.1 Lire les infos de résistance/protection sur les bijoux
+
+    //todo: 5.1 Lire les caractéristiques magiques des amplis
+
+    // Image filename
+    AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s',
+      [AItemInfo.ItemName, Ord(AItemInfo.ItemColor), AItemInfo.ItemQuality, AItemInfo.ItemSize,
+      MdkBoolToInteger(AItemInfo.ItemDestroyed), _ICON_FORMAT]);
+  except
+    on E: Exception do Exception.CreateFmt('[GetItemInfoFromXML] %s', [E.Message]);
   end;
-
-  // Continent
-  wNode := ANode.Attributes.GetNamedItem('continent');
-  if Assigned(wNode) then AItemInfo.ItemContinent := wNode.NodeValue;
-  AItemInfo.ItemContinent := UpperCase(LeftStr(AItemInfo.ItemContinent, 1)) +
-    RightStr(AItemInfo.ItemContinent, Length(AItemInfo.ItemContinent)-1);
-
-  // Price
-  wNode := ANode.Attributes.GetNamedItem('price');
-  if Assigned(wNode) then AItemInfo.ItemPrice := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
-
-  // Quantity
-  wNode := ANode.Attributes.GetNamedItem('quantity');
-  if Assigned(wNode) then begin
-    AItemInfo.ItemQuantity := StrToInt(wNode.NodeValue);
-    AItemInfo.ItemSize := AItemInfo.ItemQuantity;
-  end;
-
-  // Since
-  wNode := ANode.Attributes.GetNamedItem('in_sell_since');
-  if Assigned(wNode) then AItemInfo.ItemTime := IncHour(IncDay(UnixToDateTime(StrToInt64(wNode.NodeValue)), 7), 2);
-
-  // Specifications
-  wNode := ANode.Attributes.GetNamedItem('hr');
-  if Assigned(wNode) then AItemInfo.CSpeed := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
-  wNode := ANode.Attributes.GetNamedItem('r');
-  if Assigned(wNode) then AItemInfo.CRange := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
-  wNode := ANode.Attributes.GetNamedItem('dm');
-  if Assigned(wNode) then AItemInfo.CDodgeModifier := StrToInt(wNode.NodeValue);
-  wNode := ANode.Attributes.GetNamedItem('pm');
-  if Assigned(wNode) then AItemInfo.CParryModifier := StrToInt(wNode.NodeValue);
-  wNode := ANode.Attributes.GetNamedItem('adm');
-  if Assigned(wNode) then AItemInfo.CAdvDodgeModifier := StrToInt(wNode.NodeValue);
-  wNode := ANode.Attributes.GetNamedItem('apm');
-  if Assigned(wNode) then AItemInfo.CAdvParryModifier := StrToInt(wNode.NodeValue);
-  wNode := ANode.Attributes.GetNamedItem('pf');
-  if Assigned(wNode) then AItemInfo.CFactorProt := StrToFloat(wNode.NodeValue, GConfig.FormatSettings);
-  wNode := ANode.Attributes.GetNamedItem('msp');
-  if Assigned(wNode) then AItemInfo.CSlashingProt := StrToInt(wNode.NodeValue);
-  wNode := ANode.Attributes.GetNamedItem('mbp');
-  if Assigned(wNode) then AItemInfo.CSmashingProt := StrToInt(wNode.NodeValue);
-  wNode := ANode.Attributes.GetNamedItem('mpp');
-  if Assigned(wNode) then AItemInfo.CPiercingProt := StrToInt(wNode.NodeValue);
-
-  // Image filename
-  AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s',
-    [AItemInfo.ItemName, Ord(AItemInfo.ItemColor), AItemInfo.ItemQuality, AItemInfo.ItemSize,
-    MdkBoolToInteger(AItemInfo.ItemDestroyed), _ICON_FORMAT]);
 end;
 
 {*******************************************************************************
 Updates status of the servers
 *******************************************************************************}
+{obs
 procedure TRyzom.UpdateStatus;
 var
   wResponse: TMemoryStream;
@@ -635,14 +645,12 @@ begin
     ApiStatus(_FORMAT_XML, wResponse);
     if FXmlDocument.LoadStream(wResponse) then begin
       wXpath := '/shard_status/shard[@shardid=''%s'']';
-      FAniroStatus := FXmlDocument.DocumentElement.SelectInteger(Format(wXpath, [_SHARD_ANIRO_ID]));
-      FLeanonStatus := FXmlDocument.DocumentElement.SelectInteger(Format(wXpath, [_SHARD_LEANON_ID]));
-      FArispotleStatus := FXmlDocument.DocumentElement.SelectInteger(Format(wXpath, [_SHARD_ARIPOTLE_ID]));
+      FServerStatus := FXmlDocument.DocumentElement.SelectInteger(Format(wXpath, [_SHARD_ID]));
     end;
   finally
     wResponse.Free;
   end;
-end;
+end;}
 
 {*******************************************************************************
 Sets the default filter for items
@@ -712,18 +720,18 @@ begin
       if wRegExpr.Exec(AItemInfo.ItemName) then begin
         AItemInfo.ItemType := itEquipment;
         case Ord(wRegExpr.Match[1][1]) of
-          116: AItemInfo.ItemEcosys := ieLakes; {t = tryker}
-          102: AItemInfo.ItemEcosys := ieDesert; {f = fyros}
-          109: AItemInfo.ItemEcosys := ieForest; {m = matis}
-          122: AItemInfo.ItemEcosys := ieJungle; {z = zorai}
+          116: AItemInfo.ItemEcosys := ieLakes; // t = tryker
+          102: AItemInfo.ItemEcosys := ieDesert; // f = fyros
+          109: AItemInfo.ItemEcosys := ieForest; // m = matis
+          122: AItemInfo.ItemEcosys := ieJungle; // z = zorai
         else
           AItemInfo.ItemEcosys := ieCommon;
         end;
 
         AItemInfo.ItemSkin := isSkin1;
         case Ord(wRegExpr.Match[2][2]) of
-          50: AItemInfo.ItemSkin := isSkin2; {2 = skin2}
-          51: AItemInfo.ItemSkin := isSkin3; {3 = skin3}
+          50: AItemInfo.ItemSkin := isSkin2; // 2 = skin2
+          51: AItemInfo.ItemSkin := isSkin3; // 3 = skin3
         end;
 
         // Shield
@@ -731,11 +739,11 @@ begin
           wRegExpr.Expression := _EXPR_EQUIPMENT_SHIELD;
           if wRegExpr.Exec(AItemInfo.ItemName) then begin
             case Ord(wRegExpr.Match[2][1]) of
-              98: begin {b = buckler}
+              98: begin // b = buckler
                 AItemInfo.ItemEquip := iqBuckler;
                 wCoef := 5.0;
               end;
-              115: begin {s = shield}
+              115: begin // s = shield
                 AItemInfo.ItemEquip := iqShield;
                 wCoef := 10.0;
               end;
@@ -748,10 +756,10 @@ begin
           wRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
           if wRegExpr.Exec(AItemInfo.ItemName) then begin
             case Ord(wRegExpr.Match[1][1]) of
-              108: AItemInfo.ItemEquip := iqLightArmor; {l = light}
-              99: AItemInfo.ItemEquip := iqLightArmor; {c = light}
-              109: AItemInfo.ItemEquip := iqMediumArmor; {m = medium}
-              104: AItemInfo.ItemEquip := iqHeavyArmor; {h = heavy}
+              108: AItemInfo.ItemEquip := iqLightArmor; // l = light
+              99: AItemInfo.ItemEquip := iqLightArmor; // c = light
+              109: AItemInfo.ItemEquip := iqMediumArmor; // m = medium
+              104: AItemInfo.ItemEquip := iqHeavyArmor; // h = heavy
             end;
             wCoef := 7.0;
             if Pos('iccah', AItemInfo.ItemName) = 1 then wCoef := 20.0 // boss
@@ -772,7 +780,7 @@ begin
           wRegExpr.Expression := _EXPR_EQUIPMENT_WEAPON;
           if wRegExpr.Exec(AItemInfo.ItemName) then begin
             case Ord(wRegExpr.Match[1][1]) of
-              109: begin {m = melee}
+              109: begin // m = melee
                 AItemInfo.ItemEquip := iqWeaponMelee;
                 case Ord(wRegExpr.Match[2][1]) of
                   // 1 = 1 hand
@@ -788,7 +796,7 @@ begin
                   end;
                 end;
               end;
-              114: begin {r = range}
+              114: begin // r = range
                 AItemInfo.ItemEquip := iqWeaponRange;
                 case Ord(wRegExpr.Match[2][1]) of
                   // 1 = 1 hand
@@ -907,34 +915,36 @@ begin
 
       // Ecosystem
       case Ord(wRegExpr.Match[1][1]) of
-        99: AItemInfo.ItemEcosys := ieCommon; {c}
-        112: AItemInfo.ItemEcosys := iePrime; {p}
-        100: AItemInfo.ItemEcosys := ieDesert; {d}
-        102: AItemInfo.ItemEcosys := ieForest; {f}
-        108: AItemInfo.ItemEcosys := ieLakes; {l}
-        106: AItemInfo.ItemEcosys := ieJungle; {j}
+        99: AItemInfo.ItemEcosys := ieCommon; // c
+        112: AItemInfo.ItemEcosys := iePrime; // p
+        100: AItemInfo.ItemEcosys := ieDesert; // d
+        102: AItemInfo.ItemEcosys := ieForest; // f
+        108: AItemInfo.ItemEcosys := ieLakes; // l
+        106: AItemInfo.ItemEcosys := ieJungle; // j
       end;
     end;
 
     // Natural
     if AItemInfo.ItemType = itNaturalMat then begin
       case Ord(wRegExpr.Match[2][1]) of
-        98: AItemInfo.ItemClass := icBasic; {b}
-        99: AItemInfo.ItemClass := icFine; {c}
-        100: AItemInfo.ItemClass := icChoice; {d}
-        101: AItemInfo.ItemClass := icExcellent; {e}
-        102: AItemInfo.ItemClass := icSupreme; {f}
+        97: AItemInfo.ItemClass := icBasic; // a (no item encountered with this until now - basic by default)
+        98: AItemInfo.ItemClass := icBasic; // b
+        99: AItemInfo.ItemClass := icFine; // c
+        100: AItemInfo.ItemClass := icChoice; // d
+        101: AItemInfo.ItemClass := icExcellent; // e
+        102: AItemInfo.ItemClass := icSupreme; // f
       end;
     end;
 
     // Animal
     if AItemInfo.ItemType = itAnimalMat then begin
       case Ord(wRegExpr.Match[2][1]) of
-        97: AItemInfo.ItemClass := icBasic; {a}
-        98: AItemInfo.ItemClass := icFine; {b}
-        99: AItemInfo.ItemClass := icChoice; {c}
-        100: AItemInfo.ItemClass := icExcellent; {d}
-        101: AItemInfo.ItemClass := icSupreme; {e}
+        97: AItemInfo.ItemClass := icBasic; // a
+        98: AItemInfo.ItemClass := icFine; // b
+        99: AItemInfo.ItemClass := icChoice; // c
+        100: AItemInfo.ItemClass := icExcellent; // d
+        101: AItemInfo.ItemClass := icSupreme; // e
+        102: AItemInfo.ItemClass := icSupreme; // f (materials for missions in prime roots)
       end;
     end;
 
@@ -1056,7 +1066,7 @@ begin
   
   // Item category (only materials)
   if AItemInfo.ItemType in [itAnimalMat, itNaturalMat] then begin
-    if (AFilter.CategoryIndex > 0) and (Pos('m0312', AItemInfo.ItemName) = 0) {larva} then begin
+    if (AFilter.CategoryIndex > 0) and (Pos('m0312', AItemInfo.ItemName) = 0) then begin // special cond for larva
       wCatIndex1 := AItemInfo.ItemCategory1;
       wCatIndex2 := AItemInfo.ItemCategory2;
       if (wCatIndex1 <> AFilter.CategoryIndex) and (wCatIndex2 <> AFilter.CategoryIndex) then Exit;
@@ -1104,7 +1114,7 @@ begin
   ItemColor := icNone;
   ItemQuality := -1;
   ItemSize := -1;
-  ItemSap := -1;
+  ItemSap := False;
   ItemDestroyed := False;
   ItemFileName := '';
   ItemClass := icUnknown;
@@ -1141,7 +1151,7 @@ begin
   CAdvParryModifier := 0;
   CFactorProt := 0;
   CSlashingProt := 0;
-  CSmashingProt := 0;
+  CBluntProt := 0;
   CPiercingProt := 0;
 end;
 

@@ -21,7 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with zyRoom.  If not, see http://www.gnu.org/licenses.
 *******************************************************************************}
-unit UnitFormGuildEdit;
+unit UnitFormEdit;
 
 interface
 
@@ -30,10 +30,10 @@ uses
   Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, SevenButton;
 
 const
-  _URL_PROFILE_PAGE = 'https://secure.ryzom.com/payment_profile/account.php';
+  _URL_PROFILE_PAGE = 'http://app.ryzom.com/app_ryzomapi';
   
 type
-  TFormGuildEdit = class(TForm)
+  TFormEdit = class(TForm)
     LbAutoKey: TLabel;
     EdKey: TEdit;
     ImgProfilePage: TImage;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  FormGuildEdit: TFormGuildEdit;
+  FormEdit: TFormEdit;
 
 implementation
 
@@ -59,7 +59,7 @@ implementation
 {*******************************************************************************
 Displays the form
 *******************************************************************************}
-procedure TFormGuildEdit.FormShow(Sender: TObject);
+procedure TFormEdit.FormShow(Sender: TObject);
 begin
   EdKey.SetFocus;
 end;
@@ -67,7 +67,7 @@ end;
 {*******************************************************************************
 Link to the Ryzom account page
 *******************************************************************************}
-procedure TFormGuildEdit.ImgProfilePageClick(Sender: TObject);
+procedure TFormEdit.ImgProfilePageClick(Sender: TObject);
 begin
   ShellExecute(0, 'open', _URL_PROFILE_PAGE, nil, nil, SW_SHOW);
 end;
