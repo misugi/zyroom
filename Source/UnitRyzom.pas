@@ -269,7 +269,6 @@ type
     constructor Create;
     destructor Destroy; override;
 
-//obs    procedure UpdateStatus;
     procedure GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
     function  CheckItem(AItemInfo: TItemInfo; AFilter: TItemFilter): Boolean;
     procedure GetItemInfoFromName(AItemInfo: TItemInfo);
@@ -630,27 +629,6 @@ begin
     on E: Exception do Exception.CreateFmt('[GetItemInfoFromXML] %s', [E.Message]);
   end;
 end;
-
-{*******************************************************************************
-Updates status of the servers
-*******************************************************************************}
-{obs
-procedure TRyzom.UpdateStatus;
-var
-  wResponse: TMemoryStream;
-  wXpath: String;
-begin
-  wResponse := TMemoryStream.Create();
-  try
-    ApiStatus(_FORMAT_XML, wResponse);
-    if FXmlDocument.LoadStream(wResponse) then begin
-      wXpath := '/shard_status/shard[@shardid=''%s'']';
-      FServerStatus := FXmlDocument.DocumentElement.SelectInteger(Format(wXpath, [_SHARD_ID]));
-    end;
-  finally
-    wResponse.Free;
-  end;
-end;}
 
 {*******************************************************************************
 Sets the default filter for items

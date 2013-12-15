@@ -83,6 +83,7 @@ type
     FEyes: TPNGObject;
     FGuardFile: TIniFile;
     FLogFile: String;
+    FFirstLoading: Boolean;
     FDappers: String;
 
     procedure FillRoom(AGuildID: String);
@@ -92,7 +93,7 @@ type
     function  GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
 
-    procedure ParseLogFile(ALogFile: String);
+    procedure ParseLogFile(ALogFile: String; AFirstLoading: Boolean);
     function  DelphiToHtmlColor(ADelphiColor: TColor): String;
     function  ColorTextHtml(AHtmlColor: String; AText: String): String;
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
@@ -104,7 +105,7 @@ type
     procedure ShowFormSyncChar(ACharID: String);
     procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
     procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
-    procedure ShowParseLog(ALogFile: String);
+    procedure ShowParseLog(ALogFile: String; AFirstLoading: Boolean);
 
     function  LogToHtmlColor(ALogColor: String): String;
     function  LogToDelphiColor(ALogColor: String): TColor;
@@ -390,7 +391,7 @@ begin
       _TASK_ROOM: FillRoom(FGuildID);
       _TASK_SYNCHRONIZE_CHAR: SynchronizeChar(FCharID);
       _TASK_INVENT: FillInvent(FCharID);
-      _TASK_PARSE_LOG: ParseLogFile(FLogFile);
+      _TASK_PARSE_LOG: ParseLogFile(FLogFile, FFirstLoading);
     end;
   finally
     CloseForm;
@@ -449,9 +450,10 @@ end;
 {*******************************************************************************
 Parse a log file
 *******************************************************************************}
-procedure TFormProgress.ShowParseLog(ALogFile: String);
+procedure TFormProgress.ShowParseLog(ALogFile: String; AFirstLoading: Boolean);
 begin
   FLogFile := ALogFile;
+  FFirstLoading := AFirstLoading;
   FProcessingType := _TASK_PARSE_LOG;
   LbProgress.Caption := RS_PARSE_LOG;
   Self.ShowModal;
@@ -820,7 +822,7 @@ end;
 {*******************************************************************************
 Parse the log file
 *******************************************************************************}
-procedure TFormProgress.ParseLogFile(ALogFile: String);
+procedure TFormProgress.ParseLogFile(ALogFile: String; AFirstLoading: Boolean);
 var
   wReg: TRegExpr;
   wReg2: TRegExpr;
@@ -965,7 +967,7 @@ begin
 
         // Write HTML code
         wWriteEnabled := ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked and CheckSystemFilter(wTextBrut) and (not wSystemListingPlayer)));
-        if not FirstLoading then
+        if not AFirstLoading then
           // Check options
           wWriteEnabled :=
            (wWriteEnabled) and 
@@ -982,12 +984,12 @@ begin
         end;
 
         // Stop if the end date has passed
-        if (not FirstLoading) and (wDateLine > (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) then Break;
+        if (not AFirstLoading) and (wDateLine > (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) then Break;
 
         // Progression
         ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
         Application.ProcessMessages;
-      end;
+      end; // end for
 
       // Date end
       if (wDateStart > 0) then
@@ -995,7 +997,7 @@ begin
                                    StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
 
       // Update available options
-      if FirstLoading then begin
+      if AFirstLoading then begin
         DatePickerStart.MinDate := DateOf(wDateStart);
         DatePickerStart.MaxDate := DateOf(wDateEnd);
         DatePickerStart.Date := DateOf(wDateStart);
@@ -1017,13 +1019,14 @@ begin
       wHtmlFile.Append('</font></body></html>');
       wBbcodeFile.Append('[/quote]');
 
-      // Save files (HTML and BBCode)
+      // Save files (HTML, BBCode, Text)
       wHtmlFile.SaveToFile(LogFileHtml);
+      wHtmlFile.SaveToFile(LogFileBrowser);
       wBbcodeFile.SaveToFile(LogFileBbode);
       wTextFile.SaveToFile(LogFileText);
 
       // Load HTML file in the browser
-      WebLog.Navigate(LogFileHtml);
+      WebLog.Navigate(LogFileBrowser);
     finally
       // Free objects
       wListCharacters.Free;

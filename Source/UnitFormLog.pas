@@ -28,7 +28,7 @@ interface
 uses
   Forms, SysUtils, Dialogs, OleCtrls, SHDocVw, StdCtrls, SevenButton, Classes,
   Controls, ExtCtrls, RyzomApi, regexpr, ComCtrls, CheckLst, Graphics, Types,
-  Windows, Clipbrd, ActiveX;
+  Windows, Clipbrd, ActiveX, ShellAPI;
 
 type
   TFormLog = class(TForm)
@@ -77,7 +77,6 @@ type
     procedure BtCheckCharactersClick(Sender: TObject);
     procedure PnColorClick(Sender: TObject);
     procedure BtDefaultClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure BtOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ListChannelsDrawItem(Control: TWinControl; Index: Integer;
@@ -90,25 +89,25 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure ListFilterClick(Sender: TObject);
   private
-    FFirstLoading: Boolean;
     FLogFile: String;
     FLogFileHtml: String;
     FLogFileBbode: String;
     FLogFileText: String;
+    FLogFileBrowser: String;
     FFilterFile: String;
     
     FDateStart: TDateTime;
     FDateEnd: TDateTime;
     
-    procedure LoadLogFile;
-    procedure SetDefault;
+    procedure LoadLogFile(AFirstLoading: Boolean = False);
+    procedure SetDefault(ASetDates: Boolean = True);
   public
     procedure ChangeChecked(AList: TCheckListBox; AChecked: Boolean);
     procedure ChangeEnabled(AEnabled: Boolean);
-    property FirstLoading: Boolean read FFirstLoading write FFirstLoading;
     property LogFileHtml: String read FLogFileHtml write FLogFileHtml;
     property LogFileBbode: String read FLogFileBbode write FLogFileBbode;
     property LogFileText: String read FLogFileText write FLogFileText;
+    property LogFileBrowser: String read FLogFileBrowser write FLogFileBrowser;
   end;
 
 var
@@ -125,6 +124,8 @@ uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress,
 Create the form
 *******************************************************************************}
 procedure TFormLog.FormCreate(Sender: TObject);
+var
+  wHomeFile: String;
 begin
   DoubleBuffered := True;
   WebLog.DoubleBuffered := True;
@@ -136,13 +137,28 @@ begin
   FLogFileHtml := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_HTML_FILENAME;
   FLogFileBbode := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_BBCODE_FILENAME;
   FLogFileText := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_TEXT_FILENAME;
+  FLogFileBrowser := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_BROWSER_FILENAME;
   FFilterFile := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_FILTER_FILENAME;
 
   // Load filters
   if FileExists(FFilterFile) then
     ListFilter.Items.LoadFromFile(FFilterFile);
 
+  // Initial dir to select a log file
   OdBrowseLogFile.InitialDir := ExtractFileDir(GConfig.PackFile);
+
+  // Home page
+  wHomeFile := GConfig.CurrentPath + _LOG_HOMEPAGE_FILENAME;
+  if FileExists(wHomeFile) then
+    WebLog.Navigate(wHomeFile)
+  else
+    WebLog.Navigate('about:blank');
+
+  // Init
+  ChangeEnabled(False);
+  ListChannels.Clear;
+  ListCharacters.Clear;
+  EdFilter.Text := '';
 end;
 
 {*******************************************************************************
@@ -152,29 +168,6 @@ procedure TFormLog.FormDestroy(Sender: TObject);
 begin
   // Save filters
   ListFilter.Items.SaveToFile(FFilterFile);
-end;
-
-{*******************************************************************************
-Show the form
-*******************************************************************************}
-procedure TFormLog.FormShow(Sender: TObject);
-var
-  wHomeFile: String;
-begin
-  FDateStart := Now;
-  FDateEnd := FDateStart;
-  SetDefault;
-  ChangeEnabled(False);
-  ListChannels.Clear;
-  ListCharacters.Clear;
-  EdFilter.Text := '';
-
-  // Home page
-  wHomeFile := GConfig.CurrentPath + _LOG_HOMEPAGE_FILENAME;
-  if FileExists(wHomeFile) then
-    WebLog.Navigate(wHomeFile)
-  else
-    WebLog.Navigate('about:blank');
 end;
 
 {*******************************************************************************
@@ -202,12 +195,12 @@ Load the log file
 procedure TFormLog.BtLoadClick(Sender: TObject);
 begin
   if OdBrowseLogFile.Execute then begin
+    // Copy log file
     CopyFile(PChar(OdBrowseLogFile.FileName), PChar(FLogFile), False);
 
-    FFirstLoading := True;
-    SetDefault;
-    LoadLogFile;
-    FFirstLoading := False;
+    // Default filter and load file
+    SetDefault(False);
+    LoadLogFile(True);
 
     FDateStart := DateOf(DatePickerStart.DateTime) + TimeOf(TimePickerStart.DateTime);
     FDateEnd := DateOf(DatePickerEnd.DateTime) + TimeOf(TimePickerEnd.DateTime);
@@ -282,12 +275,14 @@ end;
 {*******************************************************************************
 Default values for options
 *******************************************************************************}
-procedure TFormLog.SetDefault;
+procedure TFormLog.SetDefault(ASetDates: Boolean);
 begin
-  DatePickerStart.Date := DateOf(FDateStart);
-  DatePickerEnd.Date := DateOf(FDateEnd);
-  TimePickerStart.Time := TimeOf(FDateStart);
-  TimePickerEnd.Time := TimeOf(FDateEnd);
+  if ASetDates then begin
+    DatePickerStart.Date := DateOf(FDateStart);
+    DatePickerEnd.Date := DateOf(FDateEnd);
+    TimePickerStart.Time := TimeOf(FDateStart);
+    TimePickerEnd.Time := TimeOf(FDateEnd);
+  end;
   PnColorBackground.Color := $00425E50;
   PnColorSystem.Color := $00000000;
   CbShowDate.Checked := True;
@@ -307,9 +302,9 @@ end;
 {*******************************************************************************
 Load the log file
 *******************************************************************************}
-procedure TFormLog.LoadLogFile;
+procedure TFormLog.LoadLogFile(AFirstLoading: Boolean);
 begin
-  FormProgress.ShowParseLog(FLogFile);
+  FormProgress.ShowParseLog(FLogFile, AFirstLoading);
   ListChannels.Refresh; // refresh background color
 end;
 
@@ -333,6 +328,7 @@ Copy HTML
 procedure TFormLog.BtHtmlClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileHtml);
+  ShellExecute(0, 'open', PChar(FLogFileHtml), nil, nil , SW_SHOW);
 end;
 
 {*******************************************************************************
@@ -341,6 +337,7 @@ Copy BBCode
 procedure TFormLog.BtBbcodeClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileBbode);
+  ShellExecute(0, 'open', PChar(FLogFileBbode), nil, nil , SW_SHOW);
 end;
 
 {*******************************************************************************
@@ -349,6 +346,7 @@ Copy Text
 procedure TFormLog.BtTextClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileText);
+  ShellExecute(0, 'open', PChar(FLogFileText), nil, nil , SW_SHOW);
 end;
 
 {*******************************************************************************
@@ -362,8 +360,12 @@ begin
   if wIndex >= 0 then begin
     ListFilter.DeleteSelected;
     wIndex := Min(wIndex, ListFilter.Count-1);
-    if wIndex >= 0 then
+    if wIndex >= 0 then begin
       ListFilter.Selected[wIndex] := True;
+      EdFilter.Text := ListFilter.Items[wIndex];
+    end else begin
+      EdFilter.Text := '';
+    end;
   end;
 end;
 

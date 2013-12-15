@@ -225,12 +225,12 @@ begin
   // Check version
   FPanelVersion.Text := RS_VERSION + ' ' + GConfig.Version;
   ImgUpdate.Hint := RS_NEW_VERSION;
-  {$IFNDEF __DEBUG}
+  {$IF not Defined(__NOUPDATE) and not Defined(__DEBUG)}
   if GConfig.CheckVersion(FFileUrl) then begin
     ImgUpdate.Visible := True;
     TimerUpdate.Enabled := True;
   end;
-  {$ENDIF}
+  {$IFEND}
 
   FVisible := True;
 end;

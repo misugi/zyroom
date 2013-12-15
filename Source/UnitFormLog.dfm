@@ -13,7 +13,6 @@ object FormLog: TFormLog
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 14
   object PnHeader: TPanel
@@ -107,11 +106,10 @@ object FormLog: TFormLog
       Top = 0
       Width = 85
       Height = 23
-      Hint = 'Copier'
       Caption = 'HTML'
       Enabled = False
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 1
       TabStop = False
       OnClick = BtHtmlClick
@@ -163,11 +161,10 @@ object FormLog: TFormLog
       Top = 0
       Width = 85
       Height = 23
-      Hint = 'Copier'
       Caption = 'BBCode'
       Enabled = False
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 2
       TabStop = False
       OnClick = BtBbcodeClick
@@ -219,11 +216,10 @@ object FormLog: TFormLog
       Top = 0
       Width = 85
       Height = 23
-      Hint = 'Copier'
       Caption = 'Texte'
       Enabled = False
       ParentShowHint = False
-      ShowHint = True
+      ShowHint = False
       TabOrder = 3
       TabStop = False
       OnClick = BtTextClick
@@ -276,8 +272,8 @@ object FormLog: TFormLog
       Width = 80
       Height = 22
       Anchors = [akTop, akRight]
-      Date = 40704.983557453710000000
-      Time = 40704.983557453710000000
+      Date = 2.000000000000000000
+      Time = 2.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -294,8 +290,8 @@ object FormLog: TFormLog
       Width = 80
       Height = 22
       Anchors = [akTop, akRight]
-      Date = 40704.983557453710000000
-      Time = 40704.983557453710000000
+      Date = 2.000000000000000000
+      Time = 2.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -329,8 +325,8 @@ object FormLog: TFormLog
       Width = 70
       Height = 22
       Anchors = [akTop, akRight]
-      Date = 40704.983557453710000000
-      Time = 40704.983557453710000000
+      Date = 40704.000000000000000000
+      Time = 40704.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -843,7 +839,7 @@ object FormLog: TFormLog
         BevelOuter = bvNone
         BorderWidth = 1
         BorderStyle = bsSingle
-        Color = 12631988
+        Color = 4349520
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -867,7 +863,7 @@ object FormLog: TFormLog
         BevelOuter = bvNone
         BorderWidth = 1
         BorderStyle = bsSingle
-        Color = 12631988
+        Color = clBlack
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

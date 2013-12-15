@@ -121,9 +121,10 @@ const
   _MAX_QUALITY = 270;
 
   _LOG_HOMEPAGE_FILENAME = 'chatlog.html';
-  _LOG_HTML_FILENAME = 'log.html';
-  _LOG_BBCODE_FILENAME = 'log.bbcode';
-  _LOG_TEXT_FILENAME = 'log.txt';
+  _LOG_HTML_FILENAME = 'log-html.txt';
+  _LOG_BBCODE_FILENAME = 'log-bbcode.txt';
+  _LOG_TEXT_FILENAME = 'log-plain.txt';
+  _LOG_BROWSER_FILENAME = 'log.html';
   _LOG_CHATLOG_FILENAME = 'chatlog.txt';
   _LOG_FILTER_FILENAME = 'sysfilter.dat';
 

@@ -11,13 +11,13 @@
 #define UnitFormProgress_RS_PROGRESS_ROOM 64832
 #define UnitFormProgress_RS_CONNEXION_ERROR 64833
 #define UnitFormProgress_RS_PARSE_LOG 64834
-#define UnitFormGuild_RS_CHECK_CHANGE 64848
-#define UnitFormGuild_RS_UP 64849
-#define UnitFormGuild_RS_DOWN 64850
-#define UnitFormGuild_RS_RESET_OK 64851
-#define UnitFormMain_RS_STATUS_CLOSED 64852
-#define UnitFormMain_RS_STATUS_OPEN 64853
-#define UnitFormMain_RS_STATUS_RESTRICTED 64854
+#define UnitFormGuild_RS_GUILD_KEY 64848
+#define UnitFormGuild_RS_CHECK_CHANGE 64849
+#define UnitFormGuild_RS_UP 64850
+#define UnitFormGuild_RS_DOWN 64851
+#define UnitFormGuild_RS_RESET_OK 64852
+#define UnitFormMain_RS_STATUS_CLOSED 64853
+#define UnitFormMain_RS_STATUS_OPEN 64854
 #define UnitFormMain_RS_NEW_VERSION 64855
 #define UnitFormMain_RS_SEASON_SPRING 64856
 #define UnitFormMain_RS_SEASON_SUMMER 64857
@@ -27,166 +27,166 @@
 #define UnitFormMain_RS_NEXT_SEASON 64861
 #define UnitFormMain_RS_AT 64862
 #define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64863
-#define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64864
-#define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64865
-#define UnitFormRoomFilter_RS_SKIN 64866
-#define UnitFormRoomFilter_RS_HPB 64867
-#define UnitFormRoomFilter_RS_SAB 64868
-#define UnitFormRoomFilter_RS_STB 64869
-#define UnitFormRoomFilter_RS_FOB 64870
-#define UnitFormRoomFilter_RS_NEEDED_FILE 64871
-#define UnitFormGuild_RS_NEW_GUILD 64872
-#define UnitFormGuild_RS_CHANGE_KEY 64873
-#define UnitFormGuild_RS_COL_GUILD_LOGO 64874
-#define UnitFormGuild_RS_COL_GUILD_NAME 64875
-#define UnitFormGuild_RS_COL_GUILD_NUMBER 64876
-#define UnitFormGuild_RS_COL_COMMENT 64877
-#define UnitFormGuild_RS_DELETE_CONFIRMATION 64878
-#define UnitFormGuild_RS_GUILD_KEY 64879
-#define UnitFormCharacter_RS_RESET_OK 64880
-#define UnitFormWatch_RS_QUANTITY_MIN 64881
-#define UnitFormWatch_RS_DURABILITY_MIN 64882
-#define UnitFormAlert_RS_ALERT_DURABILITY 64883
-#define UnitFormAlert_RS_ALERT_QUANTITY 64884
-#define UnitFormAlert_RS_ALERT_UNFOUND 64885
-#define UnitFormAlert_RS_ALERT_ADDED 64886
-#define UnitFormAlert_RS_ALERT_REMOVED 64887
-#define UnitFormAlert_RS_ALERT_MODIFIED 64888
-#define UnitFormAlert_RS_ALERT_SALES 64889
-#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64890
-#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64891
-#define UnitFormAlert_RS_ALERT_SEASON 64892
-#define UnitFormAlert_RS_ALERT_HINT 64893
-#define UnitFormBackup_RS_DELETE_CONFIRMATION 64894
-#define UnitFormBackup_RS_DESTORE_CONFIRMATION 64895
-#define OleConst_SCannotActivate 64896
-#define OleConst_SNoWindowHandle 64897
-#define OleConst_SInvalidLicense 64898
-#define OleConst_SNotLicensed 64899
-#define OleConst_sNoRunningObject 64900
-#define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64901
-#define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64902
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64903
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 64904
-#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 64905
-#define UnitFormCharacter_RS_CHAR_COL_COMMENT 64906
-#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 64907
-#define UnitFormCharacter_RS_CHAR_KEY 64908
-#define UnitFormCharacter_RS_CHECK_SALES 64909
-#define UnitFormCharacter_RS_UP 64910
-#define UnitFormCharacter_RS_DOWN 64911
-#define pnglang_EPNGUnknownPalEntryText 64912
-#define pnglang_EPNGUnknownCriticalChunkText 64913
-#define pnglang_EPNGUnknownCompressionText 64914
-#define pnglang_EPNGUnknownInterlaceText 64915
-#define pnglang_EPNGCannotAssignChunkText 64916
-#define pnglang_EPNGUnexpectedEndText 64917
-#define pnglang_EPNGNoImageDataText 64918
-#define pnglang_EPNGCouldNotLoadResourceText 64919
-#define pnglang_EPNGOutMemoryText 64920
-#define pnglang_EPNGHeaderNotPresentText 64921
-#define pnglang_EInvalidNewSize 64922
-#define ComConst_SOleError 64923
-#define ComConst_SNoMethod 64924
-#define ComConst_SVarNotObject 64925
-#define ComConst_STooManyParams 64926
-#define ComConst_SDCOMNotInstalled 64927
-#define UnitRyzom_RS_MINUTES 64928
-#define UnitRyzom_RS_AND 64929
-#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64930
-#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64931
-#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64932
-#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64933
-#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64934
-#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64935
-#define pnglang_EPngInvalidCRCText 64936
-#define pnglang_EPNGInvalidIHDRText 64937
-#define pnglang_EPNGMissingMultipleIDATText 64938
-#define pnglang_EPNGZLIBErrorText 64939
-#define pnglang_EPNGInvalidPaletteText 64940
-#define pnglang_EPNGInvalidFileHeaderText 64941
-#define pnglang_EPNGIHDRNotFirstText 64942
-#define pnglang_EPNGSizeExceedsText 64943
-#define UnitRyzom_RS_RACE_TRYKER 64944
-#define UnitRyzom_RS_RACE_MATIS 64945
-#define UnitRyzom_RS_ECOSYS_COMMON 64946
-#define UnitRyzom_RS_ECOSYS_PRIME 64947
-#define UnitRyzom_RS_ECOSYS_DESERT 64948
-#define UnitRyzom_RS_ECOSYS_JUNGLE 64949
-#define UnitRyzom_RS_ECOSYS_FOREST 64950
-#define UnitRyzom_RS_ECOSYS_LAKES 64951
-#define UnitRyzom_RS_VOLUME 64952
-#define UnitRyzom_RS_DAPPERS 64953
-#define UnitRyzom_RS_MENU_WATCH 64954
-#define UnitRyzom_RS_MENU_UNWATCH 64955
-#define UnitRyzom_RS_TAB_PET 64956
-#define UnitRyzom_RS_TAB_MOUNT 64957
-#define UnitRyzom_RS_DAYS 64958
-#define UnitRyzom_RS_HOURS 64959
-#define UnitRyzom_RS_COLOR_BEIGE 64960
-#define UnitRyzom_RS_COLOR_BLACK 64961
-#define UnitRyzom_RS_COLOR_BLUE 64962
-#define UnitRyzom_RS_COLOR_GREEN 64963
-#define UnitRyzom_RS_COLOR_PURPLE 64964
-#define UnitRyzom_RS_COLOR_RED 64965
-#define UnitRyzom_RS_COLOR_TURQUOISE 64966
-#define UnitRyzom_RS_COLOR_WHITE 64967
-#define UnitRyzom_RS_CLASS_BASE 64968
-#define UnitRyzom_RS_CLASS_FINE 64969
-#define UnitRyzom_RS_CLASS_CHOICE 64970
-#define UnitRyzom_RS_CLASS_EXCELLENT 64971
-#define UnitRyzom_RS_CLASS_SUPREME 64972
-#define UnitRyzom_RS_RACE_ALL 64973
-#define UnitRyzom_RS_RACE_FYROS 64974
-#define UnitRyzom_RS_RACE_ZORAI 64975
-#define UnitRyzom_RS_CAT_AMMOBULLET 64976
-#define UnitRyzom_RS_CAT_BARREL 64977
-#define UnitRyzom_RS_CAT_ARMORSHELL 64978
-#define UnitRyzom_RS_CAT_AMMOJACKET 64979
-#define UnitRyzom_RS_CAT_LINING 64980
-#define UnitRyzom_RS_CAT_EXPLOSIVE 64981
-#define UnitRyzom_RS_CAT_STUFFING 64982
-#define UnitRyzom_RS_CAT_FIRINGPIN 64983
-#define UnitRyzom_RS_CAT_ARMORCLIP 64984
-#define UnitRyzom_RS_CAT_TRIGGER 64985
-#define UnitRyzom_RS_CAT_JEWELSETTING 64986
-#define UnitRyzom_RS_CAT_GRIP 64987
-#define UnitRyzom_RS_CAT_CLOTHES 64988
-#define UnitRyzom_RS_CAT_JEWEL 64989
-#define UnitRyzom_RS_CAT_MAGICFOCUS 64990
-#define UnitRyzom_RS_CAT_ALL 64991
-#define UnitRyzom_RS_SPEC_OFFAFF_POWER 64992
-#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 64993
-#define UnitRyzom_RS_SPEC_DEFAFF_POWER 64994
-#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 64995
-#define UnitRyzom_RS_SPEC_HEAL_POWER 64996
-#define UnitRyzom_RS_SPEC_DESERT_RESIST 64997
-#define UnitRyzom_RS_SPEC_FOREST_RESIST 64998
-#define UnitRyzom_RS_SPEC_LAKES_RESIST 64999
-#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65000
-#define UnitRyzom_RS_SPEC_PRIME_RESIST 65001
-#define UnitRyzom_RS_SPEC_ALL 65002
-#define UnitRyzom_RS_CAT_BLADE 65003
-#define UnitRyzom_RS_CAT_POINT 65004
-#define UnitRyzom_RS_CAT_HAMMER 65005
-#define UnitRyzom_RS_CAT_COUNTERWEIGHT 65006
-#define UnitRyzom_RS_CAT_SHAFT 65007
-#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65008
-#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65009
-#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65010
-#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65011
-#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65012
-#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65013
-#define UnitRyzom_RS_SPEC_ACID_PROTEC 65014
-#define UnitRyzom_RS_SPEC_COLD_PROTEC 65015
-#define UnitRyzom_RS_SPEC_ROT_PROTEC 65016
-#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65017
-#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 65018
-#define UnitRyzom_RS_SPEC_POISON_PROTEC 65019
-#define UnitRyzom_RS_SPEC_ELEC_PROTEC 65020
-#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 65021
-#define UnitRyzom_RS_SPEC_ELE_POWER 65022
-#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 65023
+#define UnitFormBackup_RS_DESTORE_CONFIRMATION 64864
+#define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64865
+#define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64866
+#define UnitFormFilter_RS_SKIN 64867
+#define UnitFormFilter_RS_HPB 64868
+#define UnitFormFilter_RS_SAB 64869
+#define UnitFormFilter_RS_STB 64870
+#define UnitFormFilter_RS_FOB 64871
+#define UnitFormFilter_RS_NEEDED_FILE 64872
+#define UnitFormGuild_RS_NEW_GUILD 64873
+#define UnitFormGuild_RS_CHANGE_KEY 64874
+#define UnitFormGuild_RS_COL_GUILD_LOGO 64875
+#define UnitFormGuild_RS_COL_GUILD_NAME 64876
+#define UnitFormGuild_RS_COL_GUILD_NUMBER 64877
+#define UnitFormGuild_RS_COL_COMMENT 64878
+#define UnitFormGuild_RS_DELETE_CONFIRMATION 64879
+#define UnitFormCharacter_RS_CHECK_SALES 64880
+#define UnitFormCharacter_RS_UP 64881
+#define UnitFormCharacter_RS_DOWN 64882
+#define UnitFormCharacter_RS_RESET_OK 64883
+#define UnitFormAlert_RS_ALERT_DURABILITY 64884
+#define UnitFormAlert_RS_ALERT_QUANTITY 64885
+#define UnitFormAlert_RS_ALERT_UNFOUND 64886
+#define UnitFormAlert_RS_ALERT_ADDED 64887
+#define UnitFormAlert_RS_ALERT_REMOVED 64888
+#define UnitFormAlert_RS_ALERT_MODIFIED 64889
+#define UnitFormAlert_RS_ALERT_SALES 64890
+#define UnitFormAlert_RS_ALERT_VOLUME_ROOM 64891
+#define UnitFormAlert_RS_ALERT_VOLUME_GUILD 64892
+#define UnitFormAlert_RS_ALERT_SEASON 64893
+#define UnitFormAlert_RS_ALERT_HINT 64894
+#define UnitFormBackup_RS_DELETE_CONFIRMATION 64895
+#define ComConst_SDCOMNotInstalled 64896
+#define OleConst_SCannotActivate 64897
+#define OleConst_SNoWindowHandle 64898
+#define OleConst_SInvalidLicense 64899
+#define OleConst_SNotLicensed 64900
+#define OleConst_sNoRunningObject 64901
+#define UnitFormWatch_RS_QUANTITY_MIN 64902
+#define UnitFormWatch_RS_DURABILITY_MIN 64903
+#define UnitFormCharacter_RS_CHAR_NEW_CHARACTER 64904
+#define UnitFormCharacter_RS_CHAR_CHANGE_KEY 64905
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD 64906
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NAME 64907
+#define UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER 64908
+#define UnitFormCharacter_RS_CHAR_COL_COMMENT 64909
+#define UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION 64910
+#define UnitFormCharacter_RS_CHAR_KEY 64911
+#define pnglang_EPNGSizeExceedsText 64912
+#define pnglang_EPNGUnknownPalEntryText 64913
+#define pnglang_EPNGUnknownCriticalChunkText 64914
+#define pnglang_EPNGUnknownCompressionText 64915
+#define pnglang_EPNGUnknownInterlaceText 64916
+#define pnglang_EPNGCannotAssignChunkText 64917
+#define pnglang_EPNGUnexpectedEndText 64918
+#define pnglang_EPNGNoImageDataText 64919
+#define pnglang_EPNGCouldNotLoadResourceText 64920
+#define pnglang_EPNGOutMemoryText 64921
+#define pnglang_EPNGHeaderNotPresentText 64922
+#define pnglang_EInvalidNewSize 64923
+#define ComConst_SOleError 64924
+#define ComConst_SNoMethod 64925
+#define ComConst_SVarNotObject 64926
+#define ComConst_STooManyParams 64927
+#define UnitRyzom_RS_HOURS 64928
+#define UnitRyzom_RS_MINUTES 64929
+#define UnitRyzom_RS_AND 64930
+#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64931
+#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64932
+#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64933
+#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64934
+#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64935
+#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64936
+#define pnglang_EPngInvalidCRCText 64937
+#define pnglang_EPNGInvalidIHDRText 64938
+#define pnglang_EPNGMissingMultipleIDATText 64939
+#define pnglang_EPNGZLIBErrorText 64940
+#define pnglang_EPNGInvalidPaletteText 64941
+#define pnglang_EPNGInvalidFileHeaderText 64942
+#define pnglang_EPNGIHDRNotFirstText 64943
+#define UnitRyzom_RS_RACE_ZORAI 64944
+#define UnitRyzom_RS_RACE_TRYKER 64945
+#define UnitRyzom_RS_RACE_MATIS 64946
+#define UnitRyzom_RS_ECOSYS_COMMON 64947
+#define UnitRyzom_RS_ECOSYS_PRIME 64948
+#define UnitRyzom_RS_ECOSYS_DESERT 64949
+#define UnitRyzom_RS_ECOSYS_JUNGLE 64950
+#define UnitRyzom_RS_ECOSYS_FOREST 64951
+#define UnitRyzom_RS_ECOSYS_LAKES 64952
+#define UnitRyzom_RS_VOLUME 64953
+#define UnitRyzom_RS_DAPPERS 64954
+#define UnitRyzom_RS_MENU_WATCH 64955
+#define UnitRyzom_RS_MENU_UNWATCH 64956
+#define UnitRyzom_RS_TAB_PET 64957
+#define UnitRyzom_RS_TAB_MOUNT 64958
+#define UnitRyzom_RS_DAYS 64959
+#define UnitRyzom_RS_CAT_ALL 64960
+#define UnitRyzom_RS_COLOR_BEIGE 64961
+#define UnitRyzom_RS_COLOR_BLACK 64962
+#define UnitRyzom_RS_COLOR_BLUE 64963
+#define UnitRyzom_RS_COLOR_GREEN 64964
+#define UnitRyzom_RS_COLOR_PURPLE 64965
+#define UnitRyzom_RS_COLOR_RED 64966
+#define UnitRyzom_RS_COLOR_TURQUOISE 64967
+#define UnitRyzom_RS_COLOR_WHITE 64968
+#define UnitRyzom_RS_CLASS_BASE 64969
+#define UnitRyzom_RS_CLASS_FINE 64970
+#define UnitRyzom_RS_CLASS_CHOICE 64971
+#define UnitRyzom_RS_CLASS_EXCELLENT 64972
+#define UnitRyzom_RS_CLASS_SUPREME 64973
+#define UnitRyzom_RS_RACE_ALL 64974
+#define UnitRyzom_RS_RACE_FYROS 64975
+#define UnitRyzom_RS_CAT_SHAFT 64976
+#define UnitRyzom_RS_CAT_AMMOBULLET 64977
+#define UnitRyzom_RS_CAT_BARREL 64978
+#define UnitRyzom_RS_CAT_ARMORSHELL 64979
+#define UnitRyzom_RS_CAT_AMMOJACKET 64980
+#define UnitRyzom_RS_CAT_LINING 64981
+#define UnitRyzom_RS_CAT_EXPLOSIVE 64982
+#define UnitRyzom_RS_CAT_STUFFING 64983
+#define UnitRyzom_RS_CAT_FIRINGPIN 64984
+#define UnitRyzom_RS_CAT_ARMORCLIP 64985
+#define UnitRyzom_RS_CAT_TRIGGER 64986
+#define UnitRyzom_RS_CAT_JEWELSETTING 64987
+#define UnitRyzom_RS_CAT_GRIP 64988
+#define UnitRyzom_RS_CAT_CLOTHES 64989
+#define UnitRyzom_RS_CAT_JEWEL 64990
+#define UnitRyzom_RS_CAT_MAGICFOCUS 64991
+#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 64992
+#define UnitRyzom_RS_SPEC_OFFAFF_POWER 64993
+#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 64994
+#define UnitRyzom_RS_SPEC_DEFAFF_POWER 64995
+#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 64996
+#define UnitRyzom_RS_SPEC_HEAL_POWER 64997
+#define UnitRyzom_RS_SPEC_DESERT_RESIST 64998
+#define UnitRyzom_RS_SPEC_FOREST_RESIST 64999
+#define UnitRyzom_RS_SPEC_LAKES_RESIST 65000
+#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65001
+#define UnitRyzom_RS_SPEC_PRIME_RESIST 65002
+#define UnitRyzom_RS_SPEC_ALL 65003
+#define UnitRyzom_RS_CAT_BLADE 65004
+#define UnitRyzom_RS_CAT_POINT 65005
+#define UnitRyzom_RS_CAT_HAMMER 65006
+#define UnitRyzom_RS_CAT_COUNTERWEIGHT 65007
+#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65008
+#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65009
+#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65010
+#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65011
+#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65012
+#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65013
+#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65014
+#define UnitRyzom_RS_SPEC_ACID_PROTEC 65015
+#define UnitRyzom_RS_SPEC_COLD_PROTEC 65016
+#define UnitRyzom_RS_SPEC_ROT_PROTEC 65017
+#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65018
+#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 65019
+#define UnitRyzom_RS_SPEC_POISON_PROTEC 65020
+#define UnitRyzom_RS_SPEC_ELEC_PROTEC 65021
+#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 65022
+#define UnitRyzom_RS_SPEC_ELE_POWER 65023
 #define XpExcept_sXPathNotUnparsedEnt 65024
 #define XpExcept_sXPathUnparsedEntCount 65025
 #define XpExcept_sXPathNoDTD 65026
@@ -195,14 +195,14 @@
 #define XpExcept_sInvalidLEChar 65029
 #define XpExcept_sBadUTF8Char 65030
 #define RyzomApi_RS_ERROR_LOADING_XML 65031
-#define UnitRyzom_RS_SPEC_DURABILITY 65032
-#define UnitRyzom_RS_SPEC_LIGHTNESS 65033
-#define UnitRyzom_RS_SPEC_SAPLOAD 65034
-#define UnitRyzom_RS_SPEC_DAMAGE 65035
-#define UnitRyzom_RS_SPEC_SPEED 65036
-#define UnitRyzom_RS_SPEC_RANGE 65037
-#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65038
-#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65039
+#define RyzomApi_RS_REQUIRED_MODULES 65032
+#define UnitRyzom_RS_SPEC_DURABILITY 65033
+#define UnitRyzom_RS_SPEC_LIGHTNESS 65034
+#define UnitRyzom_RS_SPEC_SAPLOAD 65035
+#define UnitRyzom_RS_SPEC_DAMAGE 65036
+#define UnitRyzom_RS_SPEC_SPEED 65037
+#define UnitRyzom_RS_SPEC_RANGE 65038
+#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65039
 #define XpExcept_sInvStandAloneVal 65040
 #define XpExcept_sInvEncName 65041
 #define XpExcept_sInvVerNum 65042
@@ -704,13 +704,13 @@ BEGIN
 	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
 	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
 	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
+	UnitFormGuild_RS_GUILD_KEY,	"Clé API de guilde :"
 	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
 	UnitFormGuild_RS_UP,	"Monter"
 	UnitFormGuild_RS_DOWN,	"Descendre"
 	UnitFormGuild_RS_RESET_OK,	"Réinitialisation terminée"
 	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
-	UnitFormMain_RS_STATUS_RESTRICTED,	"Limité"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
 	UnitFormMain_RS_SEASON_SPRING,	"Printemps"
 	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
@@ -720,25 +720,26 @@ BEGIN
 	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
 	UnitFormMain_RS_AT,	"à"
 	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
+	UnitFormBackup_RS_DESTORE_CONFIRMATION,	"Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?"
 	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
 	UnitFormBackup_RS_DEFAULT_MANUAL_NAME,	"Sauvegarde manuelle"
-	UnitFormRoomFilter_RS_SKIN,	"Skin"
-	UnitFormRoomFilter_RS_HPB,	"Bonus vie"
-	UnitFormRoomFilter_RS_SAB,	"Bonus sève"
-	UnitFormRoomFilter_RS_STB,	"Bonus endurance"
-	UnitFormRoomFilter_RS_FOB,	"Bonus concentration"
-	UnitFormRoomFilter_RS_NEEDED_FILE,	"Fichier \"string_client.pack\" introuvable !"
+	UnitFormFilter_RS_SKIN,	"Skin"
+	UnitFormFilter_RS_HPB,	"Bonus vie"
+	UnitFormFilter_RS_SAB,	"Bonus sève"
+	UnitFormFilter_RS_STB,	"Bonus endurance"
+	UnitFormFilter_RS_FOB,	"Bonus concentration"
+	UnitFormFilter_RS_NEEDED_FILE,	"Fichier \"string_client.pack\" introuvable !"
 	UnitFormGuild_RS_NEW_GUILD,	"Nouvelle guilde"
 	UnitFormGuild_RS_CHANGE_KEY,	"Changement de clé"
 	UnitFormGuild_RS_COL_GUILD_LOGO,	"Blason"
-	UnitFormGuild_RS_COL_GUILD_NAME,	"Guilde"
+	UnitFormGuild_RS_COL_GUILD_NAME,	"Iteme"
 	UnitFormGuild_RS_COL_GUILD_NUMBER,	"Numéro"
 	UnitFormGuild_RS_COL_COMMENT,	"Description"
 	UnitFormGuild_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?"
-	UnitFormGuild_RS_GUILD_KEY,	"Clé de guilde :"
+	UnitFormCharacter_RS_CHECK_SALES,	"Surveiller les ventes"
+	UnitFormCharacter_RS_UP,	"Monter"
+	UnitFormCharacter_RS_DOWN,	"Descendre"
 	UnitFormCharacter_RS_RESET_OK,	"Réinitialisation terminée"
-	UnitFormWatch_RS_QUANTITY_MIN,	"Quantité minimum :"
-	UnitFormWatch_RS_DURABILITY_MIN,	"Durabilité minimum :"
 	UnitFormAlert_RS_ALERT_DURABILITY,	"la durabilité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
 	UnitFormAlert_RS_ALERT_QUANTITY,	"la quantité de l'objet %s Q%d est en dessous du seuil de surveillance (%d/%d)"
 	UnitFormAlert_RS_ALERT_UNFOUND,	"l'objet sous surveillance %s Q%d n'existe plus"
@@ -751,12 +752,14 @@ BEGIN
 	UnitFormAlert_RS_ALERT_SEASON,	"Prochain changement de saison dans %s (%s)"
 	UnitFormAlert_RS_ALERT_HINT,	"Nouvelles alertes !"
 	UnitFormBackup_RS_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer la sauvegarde sélectionnée ?"
-	UnitFormBackup_RS_DESTORE_CONFIRMATION,	"Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?"
+	ComConst_SDCOMNotInstalled,	"DCOM not installed"
 	OleConst_SCannotActivate,	"OLE control activation failed"
 	OleConst_SNoWindowHandle,	"Could not obtain OLE control window handle"
 	OleConst_SInvalidLicense,	"License information for %s is invalid"
 	OleConst_SNotLicensed,	"License information for %s not found. You cannot use this control in design mode"
 	OleConst_sNoRunningObject,	"Unable to retrieve a pointer to a running object registered with OLE for %s/%s"
+	UnitFormWatch_RS_QUANTITY_MIN,	"Quantité minimum :"
+	UnitFormWatch_RS_DURABILITY_MIN,	"Durabilité minimum :"
 	UnitFormCharacter_RS_CHAR_NEW_CHARACTER,	"Nouveau personnage"
 	UnitFormCharacter_RS_CHAR_CHANGE_KEY,	"Changement de clé"
 	UnitFormCharacter_RS_CHAR_COL_CHAR_HEAD,	"Tête"
@@ -764,10 +767,8 @@ BEGIN
 	UnitFormCharacter_RS_CHAR_COL_CHAR_NUMBER,	"Numéro"
 	UnitFormCharacter_RS_CHAR_COL_COMMENT,	"Description"
 	UnitFormCharacter_RS_CHAR_DELETE_CONFIRMATION,	"Etes-vous sûr de vouloir supprimer le personnage sélectionné ?"
-	UnitFormCharacter_RS_CHAR_KEY,	"Clé de personnage :"
-	UnitFormCharacter_RS_CHECK_SALES,	"Surveiller les ventes"
-	UnitFormCharacter_RS_UP,	"Monter"
-	UnitFormCharacter_RS_DOWN,	"Descendre"
+	UnitFormCharacter_RS_CHAR_KEY,	"Clé API de personnage :"
+	pnglang_EPNGSizeExceedsText,	"This \"Portable Network Graphics\" image is not supported because either it's width or height exceeds the maximum size, which is 65535 pixels length."
 	pnglang_EPNGUnknownPalEntryText,	"There is no such palette entry."
 	pnglang_EPNGUnknownCriticalChunkText,	"This \"Portable Network Graphics\" image contains an unknown critical part which could not be decoded."
 	pnglang_EPNGUnknownCompressionText,	"This \"Portable Network Graphics\" image is encoded with an unknown compression scheme which could not be decoded."
@@ -783,7 +784,7 @@ BEGIN
 	ComConst_SNoMethod,	"Method '%s' not supported by automation object"
 	ComConst_SVarNotObject,	"Variant does not reference an automation object"
 	ComConst_STooManyParams,	"Dispatch methods do not support more than 64 parameters"
-	ComConst_SDCOMNotInstalled,	"DCOM not installed"
+	UnitRyzom_RS_HOURS,	"heures"
 	UnitRyzom_RS_MINUTES,	"minutes"
 	UnitRyzom_RS_AND,	"et"
 	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
@@ -799,7 +800,7 @@ BEGIN
 	pnglang_EPNGInvalidPaletteText,	"The \"Portable Network Graphics\" image contains an invalid palette."
 	pnglang_EPNGInvalidFileHeaderText,	"The file being readed is not a valid \"Portable Network Graphics\" image because it contains an invalid header. This file may be corruped, try obtaining it again."
 	pnglang_EPNGIHDRNotFirstText,	"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
-	pnglang_EPNGSizeExceedsText,	"This \"Portable Network Graphics\" image is not supported because either it's width or height exceeds the maximum size, which is 65535 pixels length."
+	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
 	UnitRyzom_RS_RACE_TRYKER,	"Tryker"
 	UnitRyzom_RS_RACE_MATIS,	"Matis"
 	UnitRyzom_RS_ECOSYS_COMMON,	"Commun"
@@ -815,7 +816,7 @@ BEGIN
 	UnitRyzom_RS_TAB_PET,	"Mektoub"
 	UnitRyzom_RS_TAB_MOUNT,	"Monture"
 	UnitRyzom_RS_DAYS,	"jours"
-	UnitRyzom_RS_HOURS,	"heures"
+	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
 	UnitRyzom_RS_COLOR_BEIGE,	"Beige"
 	UnitRyzom_RS_COLOR_BLACK,	"Noir"
 	UnitRyzom_RS_COLOR_BLUE,	"Bleu"
@@ -831,7 +832,7 @@ BEGIN
 	UnitRyzom_RS_CLASS_SUPREME,	"Suprême"
 	UnitRyzom_RS_RACE_ALL,	"Toute race"
 	UnitRyzom_RS_RACE_FYROS,	"Fyros"
-	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
+	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
 	UnitRyzom_RS_CAT_AMMOBULLET,	"Balle de munitions"
 	UnitRyzom_RS_CAT_BARREL,	"Canon"
 	UnitRyzom_RS_CAT_ARMORSHELL,	"Carapace pour armures"
@@ -847,7 +848,7 @@ BEGIN
 	UnitRyzom_RS_CAT_CLOTHES,	"Vêtements"
 	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
 	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
-	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
+	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
 	UnitRyzom_RS_SPEC_OFFAFF_POWER,	"Puissance magie débilitante"
 	UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED,	"Vitesse magie neutralisante"
 	UnitRyzom_RS_SPEC_DEFAFF_POWER,	"Puissance magie neutralisante"
@@ -863,7 +864,7 @@ BEGIN
 	UnitRyzom_RS_CAT_POINT,	"Pointe"
 	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
 	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
-	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
+	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
 	UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER,	"Modif. esquives adversaire"
 	UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER,	"Modif. parades adversaire"
 	UnitRyzom_RS_SPEC_PROTEC_FACTOR,	"Facteur de protection"
@@ -879,7 +880,6 @@ BEGIN
 	UnitRyzom_RS_SPEC_ELEC_PROTEC,	"Protection électricité"
 	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
 	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
-	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
 	XpExcept_sXPathNotUnparsedEnt,	"Entity %s is not an unparsed entity."
 	XpExcept_sXPathUnparsedEntCount,	"Multiple entity declarations found for name %s"
 	XpExcept_sXPathNoDTD,	"No DTD in document for unparsed-entity-uri(%s)"
@@ -888,6 +888,7 @@ BEGIN
 	XpExcept_sInvalidLEChar,	"Invalid (little-endian) UTF-16 character encoding"
 	XpExcept_sBadUTF8Char,	"Badly formed UTF-8 character in stream"
 	RyzomApi_RS_ERROR_LOADING_XML,	"Erreur de chargement du flux XML"
+	RyzomApi_RS_REQUIRED_MODULES,	"Veuillez activer tous les modules requis sur votre clé API : %s"
 	UnitRyzom_RS_SPEC_DURABILITY,	"Durabilité"
 	UnitRyzom_RS_SPEC_LIGHTNESS,	"Légereté"
 	UnitRyzom_RS_SPEC_SAPLOAD,	"Charge en sève"
@@ -895,7 +896,6 @@ BEGIN
 	UnitRyzom_RS_SPEC_SPEED,	"Vitesse"
 	UnitRyzom_RS_SPEC_RANGE,	"Portée"
 	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
-	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
 	XpExcept_sInvStandAloneVal,	"Standalone value must equal 'yes' or 'no'"
 	XpExcept_sInvEncName,	"Invalid encoding declaration: "
 	XpExcept_sInvVerNum,	"Invalid XML version number: "
@@ -1168,7 +1168,7 @@ BEGIN
 	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
 	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
 	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
-	Consts_SMsgDlgIgnore,	"&Ignorer"
+	Consts_SMsgDlgIgnore,	"&Ignore"
 	Consts_SMsgDlgAll,	"&All"
 	Consts_SMsgDlgNoToAll,	"N&o to All"
 	Consts_SMsgDlgYesToAll,	"Yes to &All"
@@ -1189,17 +1189,17 @@ BEGIN
 	Consts_SVBitmaps,	"Bitmaps"
 	Consts_SMaskErr,	"Invalid input value"
 	Consts_SMaskEditErr,	"Invalid input value.  Use escape key to abandon changes"
-	Consts_SMsgDlgWarning,	"Attention"
-	Consts_SMsgDlgError,	"Erreur"
+	Consts_SMsgDlgWarning,	"Warning"
+	Consts_SMsgDlgError,	"Error"
 	Consts_SMsgDlgInformation,	"Information"
-	Consts_SMsgDlgConfirm,	"Confirmation"
-	Consts_SMsgDlgYes,	"&Oui"
-	Consts_SMsgDlgNo,	"&Non"
+	Consts_SMsgDlgConfirm,	"Confirm"
+	Consts_SMsgDlgYes,	"&Yes"
+	Consts_SMsgDlgNo,	"&No"
 	Consts_SMsgDlgOK,	"OK"
-	Consts_SMsgDlgCancel,	"Annuler"
-	Consts_SMsgDlgHelp,	"&Aide"
-	Consts_SMsgDlgAbort,	"&Abandonner"
-	Consts_SMsgDlgRetry,	"&Réessayer"
+	Consts_SMsgDlgCancel,	"Cancel"
+	Consts_SMsgDlgHelp,	"&Help"
+	Consts_SMsgDlgAbort,	"&Abort"
+	Consts_SMsgDlgRetry,	"&Retry"
 	Consts_SDeviceOnPort,	"%s on %s"
 	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
 	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"

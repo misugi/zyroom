@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 5.0.0 (2013-12-15)
+New: zyRoom is now compatible with the new Ryzom API !!!
+Change: review of source code
+Change: for log files, when you click on a button, the file is opened in your default text editor
+Fixed: bug on few mission materials from prime roots
+Fixed: bug when getting the image of an item with sap load
+
 # version 4.1.1 (2012-08-19)
 Change: new address to check and download the last available version
 
