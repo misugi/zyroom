@@ -2,7 +2,7 @@ object FormConfirm: TFormConfirm
   Left = 425
   Top = 347
   BorderStyle = bsDialog
-  Caption = 'Confirmation'
+  Caption = 'Information'
   ClientHeight = 71
   ClientWidth = 350
   Color = 12631988

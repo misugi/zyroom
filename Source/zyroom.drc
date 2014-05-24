@@ -13,17 +13,17 @@
 #define UnitFormGuild_RS_UP 64850
 #define UnitFormGuild_RS_DOWN 64851
 #define UnitFormGuild_RS_RESET_OK 64852
-#define UnitFormMain_RS_STATUS_OPEN 64853
-#define UnitFormMain_RS_NEW_VERSION 64854
-#define UnitFormMain_RS_VERSION 64855
-#define UnitFormLog_RS_DELETECONFIRMATION1 64856
-#define UnitFormLog_RS_DELETECONFIRMATION2 64857
-#define UnitFormLog_RS_MENUDELETEOLD 64858
-#define UnitFormLog_RS_FILESAVED 64859
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64860
-#define UnitFormProgress_RS_PROGRESS_ROOM 64861
-#define UnitFormProgress_RS_PARSE_LOG 64862
-#define UnitFormProgress_RS_CLEAN_LOG 64863
+#define UnitFormLog_RS_DELETECONFIRMATION1 64853
+#define UnitFormLog_RS_DELETECONFIRMATION2 64854
+#define UnitFormLog_RS_MENUDELETEOLD 64855
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64856
+#define UnitFormProgress_RS_PROGRESS_ROOM 64857
+#define UnitFormProgress_RS_CONNEXION_ERROR 64858
+#define UnitFormProgress_RS_PARSE_LOG 64859
+#define UnitFormProgress_RS_CLEAN_LOG 64860
+#define UnitFormMain_RS_STATUS_OPEN 64861
+#define UnitFormMain_RS_NEW_VERSION 64862
+#define UnitFormMain_RS_VERSION 64863
 #define UnitFormBackup_RS_DESTORE_CONFIRMATION 64864
 #define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64865
 #define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64866
@@ -376,182 +376,182 @@
 #define IdResourceStrings_RSStackEALREADY 65213
 #define IdResourceStrings_RSStackENOTSOCK 65214
 #define IdResourceStrings_RSStackEDESTADDRREQ 65215
-#define ComStrs_sRichEditSaveFail 65216
-#define ComStrs_sPageIndexError 65217
-#define ComStrs_sInvalidComCtl32 65218
-#define ComStrs_sDateTimeMax 65219
-#define ComStrs_sDateTimeMin 65220
-#define ComStrs_sNeedAllowNone 65221
-#define ComStrs_sFailSetCalDateTime 65222
-#define ComStrs_sFailSetCalMaxSelRange 65223
-#define ComStrs_sFailSetCalMinMaxRange 65224
-#define ComStrs_sFailsetCalSelRange 65225
-#define WinHelpViewer_hNoKeyword 65226
+#define ComStrs_sRichEditLoadFail 65216
+#define ComStrs_sRichEditSaveFail 65217
+#define ComStrs_sPageIndexError 65218
+#define ComStrs_sInvalidComCtl32 65219
+#define ComStrs_sDateTimeMax 65220
+#define ComStrs_sDateTimeMin 65221
+#define ComStrs_sNeedAllowNone 65222
+#define ComStrs_sFailSetCalDateTime 65223
+#define ComStrs_sFailSetCalMaxSelRange 65224
+#define ComStrs_sFailSetCalMinMaxRange 65225
+#define ComStrs_sFailsetCalSelRange 65226
 #define IdResourceStrings_RSFailedTimeZoneInfo 65227
 #define IdResourceStrings_RSWinsockCallError 65228
 #define IdResourceStrings_RSWinsockLoadError 65229
 #define IdResourceStrings_RSStatusResolving 65230
 #define IdResourceStrings_RSStatusConnecting 65231
-#define ExtCtrls_clNameNone 65232
-#define ExtCtrls_clNameScrollBar 65233
-#define ExtCtrls_clName3DDkShadow 65234
-#define ExtCtrls_clName3DLight 65235
-#define ExtCtrls_clNameWindow 65236
-#define ExtCtrls_clNameWindowFrame 65237
-#define ExtCtrls_clNameWindowText 65238
-#define ComStrs_sTabFailClear 65239
-#define ComStrs_sTabFailDelete 65240
-#define ComStrs_sTabFailRetrieve 65241
-#define ComStrs_sTabFailGetObject 65242
-#define ComStrs_sTabFailSet 65243
-#define ComStrs_sTabFailSetObject 65244
-#define ComStrs_sTabMustBeMultiLine 65245
-#define ComStrs_sRichEditInsertError 65246
-#define ComStrs_sRichEditLoadFail 65247
-#define ExtCtrls_clNameBtnFace 65248
-#define ExtCtrls_clNameBtnHighlight 65249
-#define ExtCtrls_clNameBtnShadow 65250
-#define ExtCtrls_clNameBtnText 65251
-#define ExtCtrls_clNameCaptionText 65252
-#define ExtCtrls_clNameDefault 65253
-#define ExtCtrls_clNameGrayText 65254
-#define ExtCtrls_clNameHighlight 65255
-#define ExtCtrls_clNameHighlightText 65256
-#define ExtCtrls_clNameInactiveBorder 65257
-#define ExtCtrls_clNameInactiveCaption 65258
-#define ExtCtrls_clNameInactiveCaptionText 65259
-#define ExtCtrls_clNameInfoBk 65260
-#define ExtCtrls_clNameInfoText 65261
-#define ExtCtrls_clNameMenu 65262
-#define ExtCtrls_clNameMenuText 65263
-#define ExtCtrls_clNameSilver 65264
-#define ExtCtrls_clNameRed 65265
-#define ExtCtrls_clNameLime 65266
-#define ExtCtrls_clNameYellow 65267
-#define ExtCtrls_clNameBlue 65268
-#define ExtCtrls_clNameFuchsia 65269
-#define ExtCtrls_clNameAqua 65270
-#define ExtCtrls_clNameWhite 65271
-#define ExtCtrls_clNameMoneyGreen 65272
-#define ExtCtrls_clNameSkyBlue 65273
-#define ExtCtrls_clNameCream 65274
-#define ExtCtrls_clNameMedGray 65275
-#define ExtCtrls_clNameActiveBorder 65276
-#define ExtCtrls_clNameActiveCaption 65277
-#define ExtCtrls_clNameAppWorkSpace 65278
-#define ExtCtrls_clNameBackground 65279
-#define Consts_SDockZoneNotFound 65280
-#define Consts_SDockZoneHasNoCtl 65281
-#define Consts_SErrorSettingCount 65282
-#define Consts_SListBoxMustBeVirtual 65283
-#define HelpIntfs_hNoTableOfContents 65284
-#define HelpIntfs_hNothingFound 65285
-#define HelpIntfs_hNoContext 65286
-#define HelpIntfs_hNoTopics 65287
-#define ExtCtrls_clNameBlack 65288
-#define ExtCtrls_clNameMaroon 65289
-#define ExtCtrls_clNameGreen 65290
-#define ExtCtrls_clNameOlive 65291
-#define ExtCtrls_clNameNavy 65292
-#define ExtCtrls_clNamePurple 65293
-#define ExtCtrls_clNameTeal 65294
-#define ExtCtrls_clNameGray 65295
-#define Consts_SmkcDown 65296
-#define Consts_SmkcIns 65297
-#define Consts_SmkcDel 65298
-#define Consts_SmkcShift 65299
-#define Consts_SmkcCtrl 65300
-#define Consts_SmkcAlt 65301
-#define Consts_SOutOfRange 65302
-#define Consts_SInsertLineError 65303
-#define Consts_SInvalidClipFmt 65304
-#define Consts_SIconToClipboard 65305
-#define Consts_SCannotOpenClipboard 65306
-#define Consts_SInvalidMemoSize 65307
-#define Consts_SNoDefaultPrinter 65308
-#define Consts_SDuplicateMenus 65309
-#define Consts_SDockedCtlNeedsName 65310
-#define Consts_SDockTreeRemoveError 65311
-#define Consts_SMsgDlgIgnore 65312
-#define Consts_SMsgDlgAll 65313
-#define Consts_SMsgDlgNoToAll 65314
-#define Consts_SMsgDlgYesToAll 65315
-#define Consts_SmkcBkSp 65316
-#define Consts_SmkcTab 65317
-#define Consts_SmkcEsc 65318
-#define Consts_SmkcEnter 65319
-#define Consts_SmkcSpace 65320
-#define Consts_SmkcPgUp 65321
-#define Consts_SmkcPgDn 65322
-#define Consts_SmkcEnd 65323
-#define Consts_SmkcHome 65324
-#define Consts_SmkcLeft 65325
-#define Consts_SmkcUp 65326
-#define Consts_SmkcRight 65327
-#define Consts_SVEnhMetafiles 65328
-#define Consts_SVIcons 65329
-#define Consts_SVBitmaps 65330
-#define Consts_SMaskErr 65331
-#define Consts_SMaskEditErr 65332
-#define Consts_SMsgDlgWarning 65333
-#define Consts_SMsgDlgError 65334
-#define Consts_SMsgDlgInformation 65335
-#define Consts_SMsgDlgConfirm 65336
-#define Consts_SMsgDlgYes 65337
-#define Consts_SMsgDlgNo 65338
-#define Consts_SMsgDlgOK 65339
-#define Consts_SMsgDlgCancel 65340
-#define Consts_SMsgDlgHelp 65341
-#define Consts_SMsgDlgAbort 65342
-#define Consts_SMsgDlgRetry 65343
-#define Consts_SDeviceOnPort 65344
-#define Consts_SGroupIndexTooLow 65345
-#define Consts_SNoMDIForm 65346
-#define Consts_SControlParentSetToSelf 65347
-#define Consts_SOKButton 65348
-#define Consts_SCancelButton 65349
-#define Consts_SYesButton 65350
-#define Consts_SNoButton 65351
-#define Consts_SHelpButton 65352
-#define Consts_SCloseButton 65353
-#define Consts_SIgnoreButton 65354
-#define Consts_SRetryButton 65355
-#define Consts_SAbortButton 65356
-#define Consts_SAllButton 65357
-#define Consts_SCannotDragForm 65358
-#define Consts_SVMetafiles 65359
-#define Consts_SWindowDCError 65360
-#define Consts_SWindowClass 65361
-#define Consts_SCannotFocus 65362
-#define Consts_SParentRequired 65363
-#define Consts_SParentGivenNotAParent 65364
-#define Consts_SMDIChildNotVisible 65365
-#define Consts_SVisibleChanged 65366
-#define Consts_SCannotShowModal 65367
-#define Consts_SPropertyOutOfRange 65368
-#define Consts_SMenuIndexError 65369
-#define Consts_SMenuReinserted 65370
-#define Consts_SMenuNotFound 65371
-#define Consts_SNoTimers 65372
-#define Consts_SNotPrinting 65373
-#define Consts_SPrinting 65374
-#define Consts_SInvalidPrinter 65375
-#define Consts_SInvalidTabStyle 65376
-#define Consts_SInvalidBitmap 65377
-#define Consts_SInvalidIcon 65378
-#define Consts_SInvalidMetafile 65379
-#define Consts_SInvalidPixelFormat 65380
-#define Consts_SChangeIconSize 65381
-#define Consts_SOleGraphic 65382
-#define Consts_SUnknownClipboardFormat 65383
-#define Consts_SOutOfResources 65384
-#define Consts_SNoCanvasHandle 65385
-#define Consts_SInvalidImageSize 65386
-#define Consts_SInvalidImageList 65387
-#define Consts_SReplaceImage 65388
-#define Consts_SImageIndexError 65389
-#define Consts_SImageReadFail 65390
-#define Consts_SImageWriteFail 65391
+#define ExtCtrls_clNameMenuText 65232
+#define ExtCtrls_clNameNone 65233
+#define ExtCtrls_clNameScrollBar 65234
+#define ExtCtrls_clName3DDkShadow 65235
+#define ExtCtrls_clName3DLight 65236
+#define ExtCtrls_clNameWindow 65237
+#define ExtCtrls_clNameWindowFrame 65238
+#define ExtCtrls_clNameWindowText 65239
+#define ComStrs_sTabFailClear 65240
+#define ComStrs_sTabFailDelete 65241
+#define ComStrs_sTabFailRetrieve 65242
+#define ComStrs_sTabFailGetObject 65243
+#define ComStrs_sTabFailSet 65244
+#define ComStrs_sTabFailSetObject 65245
+#define ComStrs_sTabMustBeMultiLine 65246
+#define ComStrs_sRichEditInsertError 65247
+#define ExtCtrls_clNameBackground 65248
+#define ExtCtrls_clNameBtnFace 65249
+#define ExtCtrls_clNameBtnHighlight 65250
+#define ExtCtrls_clNameBtnShadow 65251
+#define ExtCtrls_clNameBtnText 65252
+#define ExtCtrls_clNameCaptionText 65253
+#define ExtCtrls_clNameDefault 65254
+#define ExtCtrls_clNameGrayText 65255
+#define ExtCtrls_clNameHighlight 65256
+#define ExtCtrls_clNameHighlightText 65257
+#define ExtCtrls_clNameInactiveBorder 65258
+#define ExtCtrls_clNameInactiveCaption 65259
+#define ExtCtrls_clNameInactiveCaptionText 65260
+#define ExtCtrls_clNameInfoBk 65261
+#define ExtCtrls_clNameInfoText 65262
+#define ExtCtrls_clNameMenu 65263
+#define ExtCtrls_clNameGray 65264
+#define ExtCtrls_clNameSilver 65265
+#define ExtCtrls_clNameRed 65266
+#define ExtCtrls_clNameLime 65267
+#define ExtCtrls_clNameYellow 65268
+#define ExtCtrls_clNameBlue 65269
+#define ExtCtrls_clNameFuchsia 65270
+#define ExtCtrls_clNameAqua 65271
+#define ExtCtrls_clNameWhite 65272
+#define ExtCtrls_clNameMoneyGreen 65273
+#define ExtCtrls_clNameSkyBlue 65274
+#define ExtCtrls_clNameCream 65275
+#define ExtCtrls_clNameMedGray 65276
+#define ExtCtrls_clNameActiveBorder 65277
+#define ExtCtrls_clNameActiveCaption 65278
+#define ExtCtrls_clNameAppWorkSpace 65279
+#define Consts_SNoDefaultPrinter 65280
+#define Consts_SDuplicateMenus 65281
+#define Consts_SDockedCtlNeedsName 65282
+#define Consts_SDockTreeRemoveError 65283
+#define Consts_SDockZoneNotFound 65284
+#define Consts_SDockZoneHasNoCtl 65285
+#define Consts_SErrorSettingCount 65286
+#define Consts_SListBoxMustBeVirtual 65287
+#define WinHelpViewer_hNoKeyword 65288
+#define ExtCtrls_clNameBlack 65289
+#define ExtCtrls_clNameMaroon 65290
+#define ExtCtrls_clNameGreen 65291
+#define ExtCtrls_clNameOlive 65292
+#define ExtCtrls_clNameNavy 65293
+#define ExtCtrls_clNamePurple 65294
+#define ExtCtrls_clNameTeal 65295
+#define Consts_SmkcHome 65296
+#define Consts_SmkcLeft 65297
+#define Consts_SmkcUp 65298
+#define Consts_SmkcRight 65299
+#define Consts_SmkcDown 65300
+#define Consts_SmkcIns 65301
+#define Consts_SmkcDel 65302
+#define Consts_SmkcShift 65303
+#define Consts_SmkcCtrl 65304
+#define Consts_SmkcAlt 65305
+#define Consts_SOutOfRange 65306
+#define Consts_SInsertLineError 65307
+#define Consts_SInvalidClipFmt 65308
+#define Consts_SIconToClipboard 65309
+#define Consts_SCannotOpenClipboard 65310
+#define Consts_SInvalidMemoSize 65311
+#define Consts_SMsgDlgCancel 65312
+#define Consts_SMsgDlgHelp 65313
+#define Consts_SMsgDlgAbort 65314
+#define Consts_SMsgDlgRetry 65315
+#define Consts_SMsgDlgIgnore 65316
+#define Consts_SMsgDlgAll 65317
+#define Consts_SMsgDlgNoToAll 65318
+#define Consts_SMsgDlgYesToAll 65319
+#define Consts_SmkcBkSp 65320
+#define Consts_SmkcTab 65321
+#define Consts_SmkcEsc 65322
+#define Consts_SmkcEnter 65323
+#define Consts_SmkcSpace 65324
+#define Consts_SmkcPgUp 65325
+#define Consts_SmkcPgDn 65326
+#define Consts_SmkcEnd 65327
+#define Consts_SAbortButton 65328
+#define Consts_SAllButton 65329
+#define Consts_SCannotDragForm 65330
+#define Consts_SVMetafiles 65331
+#define Consts_SVEnhMetafiles 65332
+#define Consts_SVIcons 65333
+#define Consts_SVBitmaps 65334
+#define Consts_SMaskErr 65335
+#define Consts_SMaskEditErr 65336
+#define Consts_SMsgDlgWarning 65337
+#define Consts_SMsgDlgError 65338
+#define Consts_SMsgDlgInformation 65339
+#define Consts_SMsgDlgConfirm 65340
+#define Consts_SMsgDlgYes 65341
+#define Consts_SMsgDlgNo 65342
+#define Consts_SMsgDlgOK 65343
+#define Consts_SNoTimers 65344
+#define Consts_SNotPrinting 65345
+#define Consts_SPrinting 65346
+#define Consts_SInvalidPrinter 65347
+#define Consts_SDeviceOnPort 65348
+#define Consts_SGroupIndexTooLow 65349
+#define Consts_SNoMDIForm 65350
+#define Consts_SControlParentSetToSelf 65351
+#define Consts_SOKButton 65352
+#define Consts_SCancelButton 65353
+#define Consts_SYesButton 65354
+#define Consts_SNoButton 65355
+#define Consts_SHelpButton 65356
+#define Consts_SCloseButton 65357
+#define Consts_SIgnoreButton 65358
+#define Consts_SRetryButton 65359
+#define Consts_SReplaceImage 65360
+#define Consts_SImageIndexError 65361
+#define Consts_SImageReadFail 65362
+#define Consts_SImageWriteFail 65363
+#define Consts_SWindowDCError 65364
+#define Consts_SWindowClass 65365
+#define Consts_SCannotFocus 65366
+#define Consts_SParentRequired 65367
+#define Consts_SParentGivenNotAParent 65368
+#define Consts_SMDIChildNotVisible 65369
+#define Consts_SVisibleChanged 65370
+#define Consts_SCannotShowModal 65371
+#define Consts_SPropertyOutOfRange 65372
+#define Consts_SMenuIndexError 65373
+#define Consts_SMenuReinserted 65374
+#define Consts_SMenuNotFound 65375
+#define HelpIntfs_hNothingFound 65376
+#define HelpIntfs_hNoContext 65377
+#define HelpIntfs_hNoTopics 65378
+#define Consts_SInvalidTabPosition 65379
+#define Consts_SInvalidTabStyle 65380
+#define Consts_SInvalidBitmap 65381
+#define Consts_SInvalidIcon 65382
+#define Consts_SInvalidMetafile 65383
+#define Consts_SInvalidPixelFormat 65384
+#define Consts_SChangeIconSize 65385
+#define Consts_SOleGraphic 65386
+#define Consts_SUnknownClipboardFormat 65387
+#define Consts_SOutOfResources 65388
+#define Consts_SNoCanvasHandle 65389
+#define Consts_SInvalidImageSize 65390
+#define Consts_SInvalidImageList 65391
 #define RTLConsts_SPropertyException 65392
 #define RTLConsts_SReadError 65393
 #define RTLConsts_SReadOnlyProperty 65394
@@ -567,7 +567,7 @@
 #define RTLConsts_SThreadError 65404
 #define RTLConsts_SMissingDateTimeField 65405
 #define RTLConsts_SInvalidDateTime 65406
-#define Consts_SInvalidTabPosition 65407
+#define HelpIntfs_hNoTableOfContents 65407
 #define RTLConsts_SFixedRowTooBig 65408
 #define RTLConsts_SFOpenErrorEx 65409
 #define RTLConsts_SGridTooLarge 65410
@@ -703,17 +703,17 @@ BEGIN
 	UnitFormGuild_RS_UP,	"Monter"
 	UnitFormGuild_RS_DOWN,	"Descendre"
 	UnitFormGuild_RS_RESET_OK,	"Réinitialisation terminée"
+	UnitFormLog_RS_DELETECONFIRMATION1,	"Attention aucune sauvegarde ne sera faite !"
+	UnitFormLog_RS_DELETECONFIRMATION2,	"Etes-vous sûr de vouloir nettoyer votre fichier de log ?"
+	UnitFormLog_RS_MENUDELETEOLD,	"Supprimer les vieux messages (avant %s)"
+	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
+	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
+	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
+	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
+	UnitFormProgress_RS_CLEAN_LOG,	"Nettoyage du fichier de log, veuillez patienter..."
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
 	UnitFormMain_RS_VERSION,	"Version"
-	UnitFormLog_RS_DELETECONFIRMATION1,	"Attention, aucune sauvegarde ne sera faite !"
-	UnitFormLog_RS_DELETECONFIRMATION2,	"Etes-vous sûr de vouloir nettoyer votre fichier de log ?"
-	UnitFormLog_RS_MENUDELETEOLD,	"Supprimer les vieux messages (avant le %s)"
-	UnitFormLog_RS_FILESAVED,	"Une sauvegarde de votre fichier de log a été créée"
-	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
-	UnitFormProgress_RS_PROGRESS_ROOM,	"Affichage en cours, veuillez patienter..."
-	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
-	UnitFormProgress_RS_CLEAN_LOG,	"Nettoyage du fichier de log, veuillez patienter..."
 	UnitFormBackup_RS_DESTORE_CONFIRMATION,	"Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?"
 	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
 	UnitFormBackup_RS_DEFAULT_MANUAL_NAME,	"Sauvegarde manuelle"
@@ -1066,6 +1066,7 @@ BEGIN
 	IdResourceStrings_RSStackEALREADY,	"Operation already in progress."
 	IdResourceStrings_RSStackENOTSOCK,	"Socket operation on non-socket."
 	IdResourceStrings_RSStackEDESTADDRREQ,	"Destination address required."
+	ComStrs_sRichEditLoadFail,	"Failed to Load Stream"
 	ComStrs_sRichEditSaveFail,	"Failed to Save Stream"
 	ComStrs_sPageIndexError,	"%d is an invalid PageIndex value.  PageIndex must be between 0 and %d"
 	ComStrs_sInvalidComCtl32,	"This control requires version 4.70 or greater of COMCTL32.DLL"
@@ -1076,12 +1077,12 @@ BEGIN
 	ComStrs_sFailSetCalMaxSelRange,	"Failed to set maximum selection range"
 	ComStrs_sFailSetCalMinMaxRange,	"Failed to set calendar min/max range"
 	ComStrs_sFailsetCalSelRange,	"Failed to set calendar selected range"
-	WinHelpViewer_hNoKeyword,	"No help keyword specified."
 	IdResourceStrings_RSFailedTimeZoneInfo,	"Failed attempting to retrieve time zone information."
 	IdResourceStrings_RSWinsockCallError,	"Error on call to Winsock2 library function %s"
 	IdResourceStrings_RSWinsockLoadError,	"Error on loading Winsock2 library (%s)"
 	IdResourceStrings_RSStatusResolving,	"Resolving hostname %s."
 	IdResourceStrings_RSStatusConnecting,	"Connecting to %s."
+	ExtCtrls_clNameMenuText,	"Menu Text"
 	ExtCtrls_clNameNone,	"None"
 	ExtCtrls_clNameScrollBar,	"Scroll Bar"
 	ExtCtrls_clName3DDkShadow,	"3D Dark Shadow"
@@ -1097,7 +1098,7 @@ BEGIN
 	ComStrs_sTabFailSetObject,	"Failed to set object at index %d"
 	ComStrs_sTabMustBeMultiLine,	"MultiLine must be True when TabPosition is tpLeft or tpRight"
 	ComStrs_sRichEditInsertError,	"RichEdit line insertion error"
-	ComStrs_sRichEditLoadFail,	"Failed to Load Stream"
+	ExtCtrls_clNameBackground,	"Background"
 	ExtCtrls_clNameBtnFace,	"Button Face"
 	ExtCtrls_clNameBtnHighlight,	"Button Highlight"
 	ExtCtrls_clNameBtnShadow,	"Button Shadow"
@@ -1113,7 +1114,7 @@ BEGIN
 	ExtCtrls_clNameInfoBk,	"Info Background"
 	ExtCtrls_clNameInfoText,	"Info Text"
 	ExtCtrls_clNameMenu,	"Menu Background"
-	ExtCtrls_clNameMenuText,	"Menu Text"
+	ExtCtrls_clNameGray,	"Gray"
 	ExtCtrls_clNameSilver,	"Silver"
 	ExtCtrls_clNameRed,	"Red"
 	ExtCtrls_clNameLime,	"Lime"
@@ -1129,15 +1130,15 @@ BEGIN
 	ExtCtrls_clNameActiveBorder,	"Active Border"
 	ExtCtrls_clNameActiveCaption,	"Active Caption"
 	ExtCtrls_clNameAppWorkSpace,	"Application Workspace"
-	ExtCtrls_clNameBackground,	"Background"
+	Consts_SNoDefaultPrinter,	"There is no default printer currently selected"
+	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
+	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
+	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
 	Consts_SDockZoneNotFound,	" - Dock zone not found"
 	Consts_SDockZoneHasNoCtl,	" - Dock zone has no control"
 	Consts_SErrorSettingCount,	"Error setting %s.Count"
 	Consts_SListBoxMustBeVirtual,	"Listbox (%s) style must be virtual in order to set Count"
-	HelpIntfs_hNoTableOfContents,	"Unable to find a Table of Contents"
-	HelpIntfs_hNothingFound,	"No help found for %s"
-	HelpIntfs_hNoContext,	"No context-sensitive help installed"
-	HelpIntfs_hNoTopics,	"No topic-based help system installed"
+	WinHelpViewer_hNoKeyword,	"No help keyword specified."
 	ExtCtrls_clNameBlack,	"Black"
 	ExtCtrls_clNameMaroon,	"Maroon"
 	ExtCtrls_clNameGreen,	"Green"
@@ -1145,7 +1146,10 @@ BEGIN
 	ExtCtrls_clNameNavy,	"Navy"
 	ExtCtrls_clNamePurple,	"Purple"
 	ExtCtrls_clNameTeal,	"Teal"
-	ExtCtrls_clNameGray,	"Gray"
+	Consts_SmkcHome,	"Home"
+	Consts_SmkcLeft,	"Left"
+	Consts_SmkcUp,	"Up"
+	Consts_SmkcRight,	"Right"
 	Consts_SmkcDown,	"Down"
 	Consts_SmkcIns,	"Ins"
 	Consts_SmkcDel,	"Del"
@@ -1158,10 +1162,10 @@ BEGIN
 	Consts_SIconToClipboard,	"Clipboard does not support Icons"
 	Consts_SCannotOpenClipboard,	"Cannot open clipboard"
 	Consts_SInvalidMemoSize,	"Text exceeds memo capacity"
-	Consts_SNoDefaultPrinter,	"There is no default printer currently selected"
-	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
-	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
-	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
+	Consts_SMsgDlgCancel,	"Annuler"
+	Consts_SMsgDlgHelp,	"&Aide"
+	Consts_SMsgDlgAbort,	"&Abandonner"
+	Consts_SMsgDlgRetry,	"&Réessayer"
 	Consts_SMsgDlgIgnore,	"&Ignorer"
 	Consts_SMsgDlgAll,	"&All"
 	Consts_SMsgDlgNoToAll,	"N&o to All"
@@ -1174,10 +1178,10 @@ BEGIN
 	Consts_SmkcPgUp,	"PgUp"
 	Consts_SmkcPgDn,	"PgDn"
 	Consts_SmkcEnd,	"End"
-	Consts_SmkcHome,	"Home"
-	Consts_SmkcLeft,	"Left"
-	Consts_SmkcUp,	"Up"
-	Consts_SmkcRight,	"Right"
+	Consts_SAbortButton,	"Abort"
+	Consts_SAllButton,	"&All"
+	Consts_SCannotDragForm,	"Cannot drag a form"
+	Consts_SVMetafiles,	"Metafiles"
 	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
 	Consts_SVIcons,	"Icons"
 	Consts_SVBitmaps,	"Bitmaps"
@@ -1190,10 +1194,10 @@ BEGIN
 	Consts_SMsgDlgYes,	"&Oui"
 	Consts_SMsgDlgNo,	"&Non"
 	Consts_SMsgDlgOK,	"OK"
-	Consts_SMsgDlgCancel,	"Annuler"
-	Consts_SMsgDlgHelp,	"&Aide"
-	Consts_SMsgDlgAbort,	"&Abandonner"
-	Consts_SMsgDlgRetry,	"&Réessayer"
+	Consts_SNoTimers,	"Not enough timers available"
+	Consts_SNotPrinting,	"Printer is not currently printing"
+	Consts_SPrinting,	"Printing in progress"
+	Consts_SInvalidPrinter,	"Printer selected is not valid"
 	Consts_SDeviceOnPort,	"%s on %s"
 	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
 	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
@@ -1206,10 +1210,10 @@ BEGIN
 	Consts_SCloseButton,	"&Close"
 	Consts_SIgnoreButton,	"&Ignore"
 	Consts_SRetryButton,	"&Retry"
-	Consts_SAbortButton,	"Abort"
-	Consts_SAllButton,	"&All"
-	Consts_SCannotDragForm,	"Cannot drag a form"
-	Consts_SVMetafiles,	"Metafiles"
+	Consts_SReplaceImage,	"Unable to Replace Image"
+	Consts_SImageIndexError,	"Invalid ImageList Index"
+	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
+	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
 	Consts_SWindowDCError,	"Error creating window device context"
 	Consts_SWindowClass,	"Error creating window class"
 	Consts_SCannotFocus,	"Cannot focus a disabled or invisible window"
@@ -1222,10 +1226,10 @@ BEGIN
 	Consts_SMenuIndexError,	"Menu index out of range"
 	Consts_SMenuReinserted,	"Menu inserted twice"
 	Consts_SMenuNotFound,	"Sub-menu is not in menu"
-	Consts_SNoTimers,	"Not enough timers available"
-	Consts_SNotPrinting,	"Printer is not currently printing"
-	Consts_SPrinting,	"Printing in progress"
-	Consts_SInvalidPrinter,	"Printer selected is not valid"
+	HelpIntfs_hNothingFound,	"No help found for %s"
+	HelpIntfs_hNoContext,	"No context-sensitive help installed"
+	HelpIntfs_hNoTopics,	"No topic-based help system installed"
+	Consts_SInvalidTabPosition,	"Tab position incompatible with current tab style"
 	Consts_SInvalidTabStyle,	"Tab style incompatible with current tab position"
 	Consts_SInvalidBitmap,	"Bitmap image is not valid"
 	Consts_SInvalidIcon,	"Icon image is not valid"
@@ -1238,10 +1242,6 @@ BEGIN
 	Consts_SNoCanvasHandle,	"Canvas does not allow drawing"
 	Consts_SInvalidImageSize,	"Invalid image size"
 	Consts_SInvalidImageList,	"Invalid ImageList"
-	Consts_SReplaceImage,	"Unable to Replace Image"
-	Consts_SImageIndexError,	"Invalid ImageList Index"
-	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
-	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
 	RTLConsts_SPropertyException,	"Error reading %s%s%s: %s"
 	RTLConsts_SReadError,	"Stream read error"
 	RTLConsts_SReadOnlyProperty,	"Property is read-only"
@@ -1257,7 +1257,7 @@ BEGIN
 	RTLConsts_SThreadError,	"Thread Error: %s (%d)"
 	RTLConsts_SMissingDateTimeField,	"?"
 	RTLConsts_SInvalidDateTime,	"''%s'' is not a valid date and time"
-	Consts_SInvalidTabPosition,	"Tab position incompatible with current tab style"
+	HelpIntfs_hNoTableOfContents,	"Unable to find a Table of Contents"
 	RTLConsts_SFixedRowTooBig,	"Fixed row count must be less than row count"
 	RTLConsts_SFOpenErrorEx,	"Cannot open file \"%s\". %s"
 	RTLConsts_SGridTooLarge,	"Grid too large for operation"

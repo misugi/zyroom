@@ -22,10 +22,14 @@ function MdkFileVersionInfo(AFileName: String; AInfoType: TFileVersionInfo): Str
 function MdkFileSize(AFileName: String): DWORD;
 function MdkRemoveAccents(ASource: String): String;
 function MdkArrayToString(AArray: array of String; ASep: String = ', '): String;
+function IsLowerOrEqual(AValue1: Double; AValue2: Double; AEpsilon: Double = 0): Boolean;
+function IsGreater(AValue1: Double; AValue2: Double; AEpsilon: Double = 0): Boolean;
 
 procedure MdkWriteFile(AFileName: String; ABuffer: String; ANewLine: Boolean = True; AOverwrite: Boolean = False);
 
 implementation
+
+uses Math;
 
 {*******************************************************************************
 Read file content
@@ -304,6 +308,22 @@ begin
     else
       Result := AArray[i];
   end;
+end;
+
+{*******************************************************************************
+Double <= Double
+*******************************************************************************}
+function IsLowerOrEqual(AValue1: Double; AValue2: Double; AEpsilon: Double = 0): Boolean;
+begin
+  Result := (CompareValue(AValue1, AValue2, AEpsilon) < 0) or (CompareValue(AValue1, AValue2, AEpsilon) = 0);
+end;
+
+{*******************************************************************************
+Double > Double
+*******************************************************************************}
+function IsGreater(AValue1: Double; AValue2: Double; AEpsilon: Double = 0): Boolean;
+begin
+  Result := CompareValue(AValue1, AValue2, AEpsilon) > 0;
 end;
 
 end.

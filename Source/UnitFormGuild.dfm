@@ -219,7 +219,7 @@ object FormGuild: TFormGuild
       Top = 0
       Width = 85
       Height = 23
-      Caption = 'Coffre'
+      Caption = 'Inventaire'
       TabOrder = 3
       OnClick = BtRoomClick
       Border.ColorNormal = 7368816

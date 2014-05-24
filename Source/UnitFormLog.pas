@@ -31,10 +31,9 @@ uses
   Windows, Clipbrd, ActiveX, ShellAPI, Menus;
 
 resourcestring
-  RS_DELETECONFIRMATION1 = 'Attention, aucune sauvegarde ne sera faite !';
+  RS_DELETECONFIRMATION1 = 'Attention aucune sauvegarde ne sera faite !';
   RS_DELETECONFIRMATION2 = 'Etes-vous sûr de vouloir nettoyer votre fichier de log ?';
-  RS_MENUDELETEOLD = 'Supprimer les vieux messages (avant le %s)';
-  RS_FILESAVED = 'Une sauvegarde de votre fichier de log a été créée';
+  RS_MENUDELETEOLD = 'Supprimer les vieux messages (avant %s)';
 
 type
   TFormLog = class(TForm)
@@ -109,11 +108,9 @@ type
     procedure MenuAutoDeleteOldClick(Sender: TObject);
     procedure BtSaveClick(Sender: TObject);
   private
-    FLogFile: String;
     FLogFileHtml: String;
     FLogFileBbode: String;
     FLogFileText: String;
-    FLogFileBrowser: String;
     FFilterFile: String;
     
     FDateStart: TDateTime;
@@ -129,7 +126,6 @@ type
     property LogFileHtml: String read FLogFileHtml write FLogFileHtml;
     property LogFileBbode: String read FLogFileBbode write FLogFileBbode;
     property LogFileText: String read FLogFileText write FLogFileText;
-    property LogFileBrowser: String read FLogFileBrowser write FLogFileBrowser;
   end;
 
 var
@@ -145,8 +141,7 @@ uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress,
 //DONE: - for chat, a "purge sys info messages" could be useful; after a few months, the log accumulates a lot of useless lines and it takes longer and longer to parse; stripping the system info parts would be immensely helpful, I believe
 //DONE: - is the log loader threaded? the Cancel button does not respond while loading the log, and so is quite useless
 //DONE: - can the generation of html/BBcode versions be optional instead of automated? I assume it's part of the reason why it takes so much time to load the log..
-//todo: - shouldn't the Guilds page have an 'inventory' button, and the Characters page a 'Room button? they seem to be switched right now
-//todo: - loading zyRoom after Ryzom has loaded seems to crash the game, I assume it's because of the log being written to, so the automated backup somehow fails?
+//DONE: - shouldn't the Guilds page have an 'inventory' button, and the Characters page a 'Room button? they seem to be switched right now
 
 {*******************************************************************************
 Create the form
@@ -161,11 +156,9 @@ begin
   PnOptions.DoubleBuffered := True;
 
   ForceDirectories(GConfig.CurrentPath + _LOG_DIR);
-  FLogFile := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_CHATLOG_FILENAME;
   FLogFileHtml := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_HTML_FILENAME;
   FLogFileBbode := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_BBCODE_FILENAME;
   FLogFileText := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_TEXT_FILENAME;
-  FLogFileBrowser := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_BROWSER_FILENAME;
   FFilterFile := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_FILTER_FILENAME;
 
   // Load filters
@@ -222,9 +215,6 @@ Reload the source file
 *******************************************************************************}
 procedure TFormLog.ReloadSourceFile;
 begin
-  // Copy log file
-  CopyFile(PChar(OdBrowseLogFile.FileName), PChar(FLogFile), False);
-
   // Default filter and load file
   SetDefault(False);
   LoadLogFile(True);
@@ -320,7 +310,7 @@ begin
   end;
   PnColorBackground.Color := $00425E50;
   PnColorSystem.Color := $00000000;
-  CbShowDate.Checked := True;
+  CbShowDate.Checked := False;
   CbSystemMessage.Checked := False;
   ChangeChecked(ListChannels, True);
   ChangeChecked(ListCharacters, True);
@@ -339,7 +329,7 @@ Load the log file
 *******************************************************************************}
 procedure TFormLog.LoadLogFile(AFirstLoading: Boolean);
 begin
-  FormProgress.ShowParseLog(FLogFile, AFirstLoading);
+  FormProgress.ShowParseLog(OdBrowseLogFile.FileName, AFirstLoading);
   ListChannels.Refresh; // refresh background color
 end;
 
@@ -482,12 +472,10 @@ end;
 Sauvegarde du fichier de log en cours et suppression de tous les messages
 *******************************************************************************}
 procedure TFormLog.BtSaveClick(Sender: TObject);
-var
-  wBakFile: String;
 begin
-  wBakFile := ChangeFileExt(OdBrowseLogFile.FileName, FormatDateTime('-yyyymmdd-hhnnss', Now) + ExtractFileExt(OdBrowseLogFile.FileName));
-  if Windows.CopyFile(PChar(OdBrowseLogFile.FileName), PChar(wBakFile), False) then
-    FormConfirm.ShowInformation(RS_FILESAVED);
+  OdSaveFile.FileName := ChangeFileExt(OdBrowseLogFile.FileName, FormatDateTime(' (yyyy-mm-dd hhnnss)', Now) + ExtractFileExt(OdBrowseLogFile.FileName));
+  if OdSaveFile.Execute then
+    Windows.CopyFile(PChar(OdBrowseLogFile.FileName), PChar(OdSaveFile.FileName), False);
 end;
 
 initialization

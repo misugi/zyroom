@@ -1,6 +1,17 @@
 zyRoom - History of changes
 ===========================
 
+# version 5.1.0 (2014-05-25)
+New: the real values for characteristics of the objects are back!
+New: the resistance and protection are now displayed for jewels
+New: the magic characteristics are now displayed for amplifiers
+New: you can now filter and sort items on the quantity
+New: you can now save and clean your log files
+New: locked items are now supported and displayed with a padlock
+Change: some optimizations on parsing of the log file (faster, less memory)
+Fixed: you can now stop parsing of the log file with the Cancel button
+Fixed: wrong volume for few items
+
 # version 5.0.0 (2013-12-15)
 New: zyRoom is now compatible with the new Ryzom API !!!
 Change: review of source code

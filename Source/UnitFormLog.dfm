@@ -669,8 +669,8 @@ object FormLog: TFormLog
       end
     end
     object BtDefault: TSevenButton
-      Left = 5
-      Top = 550
+      Left = 3
+      Top = 556
       Width = 85
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -722,8 +722,8 @@ object FormLog: TFormLog
       Marging = 5
     end
     object BtOK: TSevenButton
-      Left = 95
-      Top = 550
+      Left = 93
+      Top = 556
       Width = 85
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -1088,6 +1088,7 @@ object FormLog: TFormLog
     Top = 37
   end
   object OdSaveFile: TSaveDialog
+    Filter = 'Fichiers log (*.txt)|*.txt|Tous les fichiers (*.*)|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
     Left = 625
     Top = 37

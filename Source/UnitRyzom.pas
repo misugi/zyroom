@@ -156,7 +156,7 @@ const
 
   _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([a-f])01\.sitem';
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-f])01\.sitem';
-  _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_)(\w*)\.sitem';
+  _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_|mp_karavan_ep2_)(\w*)\.sitem';
   _EXPR_TOOL = '^(icoka[rm]t|sfxitforage|it).*\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
   _EXPR_EQUIPMENT_ARMOR = '^ic.a([lmhc]).*';
@@ -557,6 +557,7 @@ procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
   wNodeValue: String;
   wLocked: String;
+  wEnergy: Double;
 
   // lecture des 3 protections sur les bijoux
   procedure SetProtection;
@@ -693,20 +694,17 @@ begin
                         or (AItemInfo.ItemStb <> 0) or (AItemInfo.ItemFob <> 0);
 
     // Energy
-    //todo : API trouver l'info dans le nouveau XML ? (noeud "statenergy" ?) => sinon l'info est récupérée avec GetItemInfoFromName
-    {StatEnergy should be average value from all resource stats. I'm not sure how that is used, but it's in xml, so I included it too.
-StatEnergy in general defines grade, basic, fine, etc. Probably used in naming item.
-}
-  {  wNode := ANode.Attributes.GetNamedItem('e');
-    if Assigned(wNode) then begin
-      case Ord(wNode.NodeValue[1]) of
-        98:  AItemInfo.ItemClass := icBasic; // b = base
-        102: AItemInfo.ItemClass := icFine; // f = fine
-        99:  AItemInfo.ItemClass := icChoice; // c = choice
-        101: AItemInfo.ItemClass := icExcellent; // e = excelent
-        115: AItemInfo.ItemClass := icSupreme; // s = supreme
-      end;
-    end;}
+    //DONE : API trouver l'info dans le nouveau XML ? => noeud "statenergy"
+    wNodeValue := ANode.SelectString('.//craftparameters/statenergy');
+    if Length(wNodeValue) > 0 then begin
+      wEnergy := StrToFloat2(wNodeValue);
+      wEnergy := RoundTo(wEnergy, -2); // full xl = 0.650001
+      if IsLowerOrEqual(wEnergy, 0.2) then AItemInfo.ItemClass := icBasic;
+      if IsGreater(wEnergy, 0.2) and IsLowerOrEqual(wEnergy, 0.35) then AItemInfo.ItemClass := icFine;
+      if IsGreater(wEnergy, 0.35) and IsLowerOrEqual(wEnergy, 0.5) then AItemInfo.ItemClass := icChoice;
+      if IsGreater(wEnergy, 0.5) and IsLowerOrEqual(wEnergy, 0.65) then AItemInfo.ItemClass := icExcellent;
+      if IsGreater(wEnergy, 0.65) then AItemInfo.ItemClass := icSupreme;
+    end;
 
     // Continent
     wNodeValue := ANode.SelectString('continent');
@@ -1080,7 +1078,7 @@ begin
       end;
     end;
 
-    //todo: pb de volumes sur les objets suivants :
+    //DONE: pb de volumes sur les objets suivants :
     // canne a pêche (winch.sitem): vol 5
     // 2 armes spéciales (icbm1sa_2.sitem et icbm1bs.sitem): vol 20
     // botte de fourrage basique : vol 15 / botte (vérifier les autres types de botte)
@@ -1093,9 +1091,9 @@ begin
       if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower (ipoc_int.sitem, ipoc_str.sitem, etc.)
       if Pos('ipm', AItemInfo.ItemName) = 1 then wCoef := 1.0; // egg (ipme04.sitem, ipmc03.sitem, ipmf04.sitem)
       if Pos('ipk_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // potion (ipk_minor_life.sitem, ipk_minor_mage.sitem, etc.)
-      if CompareText(AItemInfo.ItemName, 'if1.sitem') = 0 then wCoef := 50.0; // food basic
-      if CompareText(AItemInfo.ItemName, 'if2.sitem') = 0 then wCoef := 20.0; // food concentrated
-      if CompareText(AItemInfo.ItemName, 'if3.sitem') = 0 then wCoef := 30.0; // food small
+      if CompareText(AItemInfo.ItemName, 'if1.sitem') = 0 then wCoef := 15.0; // food basic
+      if CompareText(AItemInfo.ItemName, 'if2.sitem') = 0 then wCoef := 5.0; // food concentrated
+      if CompareText(AItemInfo.ItemName, 'if3.sitem') = 0 then wCoef := 9.0; // food small
       if CompareText(AItemInfo.ItemName, 'winch.sitem') = 0 then wCoef := 5.0; // canne à pêche
 
       // Special weapons 
@@ -1104,7 +1102,6 @@ begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqWeaponMelee;
         AItemInfo.ItemEcosys := ieCommon;
-        AItemInfo.ItemClass := icSupreme;
         AItemInfo.ItemSkin := isSkin3;
         wCoef := 20.0;
       end;
@@ -1115,7 +1112,6 @@ begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqLightArmor;
         AItemInfo.ItemEcosys := ieCommon;
-        AItemInfo.ItemClass := icSupreme;
         AItemInfo.ItemSkin := isSkin3;
         wCoef := 7.0;
       end;
@@ -1129,13 +1125,14 @@ begin
         SetLength(AItemInfo.MatSpec1, 1);
         AItemInfo.MatSpec1[0][0] := 0;
         AItemInfo.MatColor1 := 1;
-        if CompareText(wRegExpr.Match[1], 'mp_kami_ep2_') = 0 then
+        if Pos('system_mp', wRegExpr.Match[1]) = 0 then
           AItemInfo.MatColor1 := 8;
 
         AItemInfo.ItemClass := icBasic;
         if wRegExpr.Match[2] <> '' then begin
           if Pos('fine', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icFine;
           if Pos('choice', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icChoice;
+          if Pos('xl', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icExcellent;
           if Pos('excellent', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icExcellent;
           if Pos('supreme', wRegExpr.Match[2]) = 1 then AItemInfo.ItemClass := icSupreme;
           AItemInfo.MatSpec1[0][1] := 2;

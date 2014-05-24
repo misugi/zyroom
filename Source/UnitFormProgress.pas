@@ -96,12 +96,13 @@ type
     function  GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
 
-    procedure ParseLogFile(ALogFile: String; AFirstLoading: Boolean);
+    procedure ParseLogFile(AFirstLoading: Boolean);
     procedure CleanLogFile(ADate: TDateTime = 0);
     function  DelphiToHtmlColor(ADelphiColor: TColor): String;
     function  ColorTextHtml(AHtmlColor: String; AText: String): String;
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
     function  CheckSystemFilter(AMessage: String): Boolean;
+    function  IsSystemLine(ALine: String): Boolean;
   public
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -396,7 +397,7 @@ begin
       _TASK_ROOM: FillRoom(FGuildID);
       _TASK_SYNCHRONIZE_CHAR: SynchronizeChar(FCharID);
       _TASK_INVENT: FillInvent(FCharID);
-      _TASK_PARSE_LOG: ParseLogFile(FLogFile, FFirstLoading);
+      _TASK_PARSE_LOG: ParseLogFile(FFirstLoading);
       _TASK_CLEAN_LOG: CleanLogFile(FCleanDate);
     end;
   finally
@@ -841,21 +842,23 @@ end;
 {*******************************************************************************
 Parse the log file
 *******************************************************************************}
-procedure TFormProgress.ParseLogFile(ALogFile: String; AFirstLoading: Boolean);
+procedure TFormProgress.ParseLogFile(AFirstLoading: Boolean);
 var
   wReg: TRegExpr;
   wReg2: TRegExpr;
-  wChatLog: TStringList;
-  wHtmlFile: TStringList;
-  wBbcodeFile: TStringList;
-  wTextFile: TStringList;
+  wChatLog: TextFile;
+  wHtmlFile: TextFile;
+  wBbcodeFile: TextFile;
+  wTextFile: TextFile;
+  wChatSize: Cardinal;
+  wTotalBytes: Integer;
   
-  i: Integer;
   wDate: String;
   wText: String;
   wTextHtml, wTextBbcode, wTextBrut: String;
-  wLine: String;
+  wLine, wLine2: String;
   wCharacter: String;
+  wUtf8File: Boolean;
 
   wSysColor, wBackColor: String;
   wColorText1, wColorText2: String;
@@ -865,7 +868,6 @@ var
   wListChannels, wListCharacters: TStringList;
 
   wSystemMessage: Boolean;
-  wSystemListingPlayer: Boolean;
   wWriteEnabled: Boolean;
 begin
   with FormLog do begin
@@ -877,106 +879,123 @@ begin
     // Create objects
     wReg := TRegExpr.Create;
     wReg2 := TRegExpr.Create;
-    wChatLog := TStringList.Create;
-    wHtmlFile := TStringList.Create;
-    wBbcodeFile := TStringList.Create;
-    wTextFile := TStringList.Create;
     wListChannels := TStringList.Create;
     wListCharacters := TStringList.Create;
+
+    // Open files
+    AssignFile(wChatLog, FLogFile);
+    Reset(wChatLog);
+    
+    AssignFile(wHtmlFile, LogFileHtml);
+    Rewrite(wHtmlFile);
+    
+    AssignFile(wBbcodeFile, LogFileBbode);
+    Rewrite(wBbcodeFile);
+    
+    AssignFile(wTextFile, LogFileText);
+    Rewrite(wTextFile);
     try
       wReg.ModifierM := True;
       wReg.ModifierG := False;
       wReg2.ModifierG := False;
 
-      // Load and try to decode the log file (UTF-8)
-      wChatLog.LoadFromFile(ALogFile);
-      wText := UTF8Decode(wChatLog.Text); // if function failed, return empty string
-      if Length(wText) > 0 then wChatLog.Text := wText;
-
       // Header
-      wHtmlFile.Append(Format('<html><head><title></title></head><body bgcolor="%s"><font face="Arial" size=2 color="%s">', [wBackColor, wSysColor]));
-      wBbcodeFile.Append('[quote]');
+      WriteLn(wHtmlFile, Format('<html><head><title></title></head><body bgcolor="%s"><font face="Arial" size=2 color="%s">', [wBackColor, wSysColor]));
+      WriteLn(wBbcodeFile, '[quote]');
 
       // All lines
       wDateStart := 0;
       wDateEnd := 0;
       wDateLine := 0;
-      for i := 0 to wChatLog.Count - 1 do begin
+      wUtf8File := True;
+
+      wTotalBytes := 0;
+      wChatSize := MdkFileSize(FLogFile);
+      ReadLn(wChatLog, wLine);
+      while not Eof(wChatLog) do begin
         if Self.ModalResult = mrCancel then Exit;
 
+        // Decode the line (UTF-8)
+        if wUtf8File then begin
+          wLine2 := UTF8Decode(wLine); // if function failed, return empty string
+          if Length(wLine2) > 0 then
+            wLine := wLine2
+          else
+            wUtf8File := False;
+        end;
+
         // Empty line ?
-        if Length(wChatLog.Strings[i]) = 0 then Continue;
-        wSystemMessage := False;
-        wSystemListingPlayer := False;
-        
+        if Length(wLine) = 0 then Continue;
+
         wReg.Expression := '^(\d{4})/(\d{2})/(\d{2}) (\d{2}):(\d{2}):(\d{2}) \* (.*)$';
-        if wReg.Exec(wChatLog.Strings[i]) then begin
+        if wReg.Exec(wLine) then begin
           // Date at the beginning of the line
           wDateLine := EncodeDateTime(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]),
                                       StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
           if wDateStart = 0 then
             wDateStart := wDateLine;
+
           if CbShowDate.Checked then
             wDate := FormatDateTime('yyyy-mm-dd hh:nn:ss', wDateLine) + ' * ';
 
-          // Initialization
-          wTextHtml := '';
-          wTextBbcode := '';
-          wLine := wReg.Match[7];
-          wColorPos1 := 0;
-          wColorPos2 := 0;
-
-          // Find character
-          wReg2.Expression := '@\{\w{4}\}.*(\w+)\s';
-          if wReg2.Exec(wLine) then begin
-            wCharacter := wReg2.Match[1];
-            wCharacter := UpperCase(wCharacter[1]) + RightStr(wCharacter, Length(wCharacter)-1);
-            if wListCharacters.IndexOf(wCharacter) < 0 then
-              wListCharacters.Append(wCharacter);
-          end;
-
-          // Find channels identified by a color code: @{FFFF}
-          wReg2.Expression := '@\{\w{4}\}';
-          if wReg2.Exec(wLine) then begin
-            wColorPos1 := wReg2.MatchPos[0];
-            wColorText1 := wReg2.Match[0];
-            if wReg2.ExecNext then begin
-              wColorPos2 := wReg2.MatchPos[0];
-              wColorText2 := wReg2.Match[0];
-            end;
-          end;
-
-          // First color
-          if wColorPos1 > 0 then begin
-            wText := Copy(wLine, wColorPos1 + 7, wColorPos2-8);
-            wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText1), wText);
-            wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText1), wText);
-            wTextBrut := wText;
-          end else begin
-            // System message
-            wReg2.Expression := '[A-Z][a-z]+\.';
-            wSystemListingPlayer := wReg2.Exec(wLine) and (wReg2.MatchPos[0] = 1);
-            wSystemMessage := True;
+          // Message système ?
+          wSystemMessage := IsSystemLine(wLine);
+          if wSystemMessage then begin
             wTextHtml := wLine;
             wTextBbcode := wLine;
             wTextBrut := wLine;
-          end;
+          end else begin
+            // Initialization
+            wTextHtml := '';
+            wTextBbcode := '';
+            wLine := wReg.Match[7];
+            wColorPos1 := 0;
+            wColorPos2 := 0;
 
-          // Second color
-          if wColorPos2 > 0 then begin
-            if (wListChannels.IndexOf(wColorText2) < 0) then
-              wListChannels.Append(wColorText2);
-            wText := Copy(wLine, wColorPos2 + 7, Length(wLine)-wColorPos2-6);
-            wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText2), wText);
-            wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText2), wText);
-            wTextBrut := wTextBrut + wText;
+            // Find character
+            wReg2.Expression := '@\{\w{4}\}.*(\w+)\s';
+            if wReg2.Exec(wLine) then begin
+              wCharacter := wReg2.Match[1];
+              wCharacter := UpperCase(wCharacter[1]) + RightStr(wCharacter, Length(wCharacter)-1);
+              if wListCharacters.IndexOf(wCharacter) < 0 then
+                wListCharacters.Append(wCharacter);
+            end;
+
+            // Find channels identified by a color code: @{FFFF}
+            wReg2.Expression := '@\{\w{4}\}';
+            if wReg2.Exec(wLine) then begin
+              wColorPos1 := wReg2.MatchPos[0];
+              wColorText1 := wReg2.Match[0];
+              if wReg2.ExecNext then begin
+                wColorPos2 := wReg2.MatchPos[0];
+                wColorText2 := wReg2.Match[0];
+              end;
+            end;
+
+            // First color
+            if wColorPos1 > 0 then begin
+              wText := Copy(wLine, wColorPos1 + 7, wColorPos2-8);
+              wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText1), wText);
+              wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText1), wText);
+              wTextBrut := wText;
+            end;
+
+            // Second color
+            if wColorPos2 > 0 then begin
+              if (wListChannels.IndexOf(wColorText2) < 0) then
+                wListChannels.Append(wColorText2);
+              wText := Copy(wLine, wColorPos2 + 7, Length(wLine)-wColorPos2-6);
+              wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText2), wText);
+              wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText2), wText);
+              wTextBrut := wTextBrut + wText;
+            end;
           end;
         end else begin
           // No date at the beginning of the line
           wDate := '';
-          wTextHtml := ColorTextHtml(LogToHtmlColor(wColorText2), wChatLog.Strings[i]);
-          wTextBbcode := ColorTextBbcode(LogToHtmlColor(wColorText2), wChatLog.Strings[i]);
-          wTextBrut := wChatLog.Strings[i];
+          wTextHtml := ColorTextHtml(LogToHtmlColor(wColorText2), wLine);
+          wTextBbcode := ColorTextBbcode(LogToHtmlColor(wColorText2), wLine);
+          wTextBrut := wLine;
         end;
 
         // Check date
@@ -987,7 +1006,7 @@ begin
         end;
 
         // Write HTML code
-        wWriteEnabled := ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked and CheckSystemFilter(wTextBrut) and (not wSystemListingPlayer)));
+        wWriteEnabled := ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked and CheckSystemFilter(wTextBrut)));
         if not AFirstLoading then
           // Check options
           wWriteEnabled :=
@@ -999,18 +1018,21 @@ begin
 
         // Writing OK
         if wWriteEnabled then begin
-          wHtmlFile.Append(wTextHtml + '<br>');
-          wBbcodeFile.Append(wTextBbcode);
-          wTextFile.Append(wTextBrut);
+          WriteLn(wHtmlFile, wTextHtml + '<br>');
+          WriteLn(wBbcodeFile, wTextBbcode);
+          WriteLn(wTextFile, wTextBrut);
         end;
 
         // Stop if the end date has passed
         if (not AFirstLoading) and (wDateLine > (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) then Break;
 
         // Progression
-        ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
+        wTotalBytes := wTotalBytes + Length(wLine)+2;
+        ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
-      end; // end for
+
+        ReadLn(wChatLog, wLine);
+      end; // end while
 
       // Date end
       if (wDateStart > 0) then
@@ -1038,28 +1060,24 @@ begin
       end;
 
       // Footer
-      wHtmlFile.Append('</font></body></html>');
-      wBbcodeFile.Append('[/quote]');
-
-      // Save files (HTML, BBCode, Text)
-      wHtmlFile.SaveToFile(LogFileHtml);
-      wHtmlFile.SaveToFile(LogFileBrowser);
-      wBbcodeFile.SaveToFile(LogFileBbode);
-      wTextFile.SaveToFile(LogFileText);
-
-      // Load HTML file in the browser
-      WebLog.Navigate(LogFileBrowser);
+      WriteLn(wHtmlFile, '</font></body></html>');
+      WriteLn(wBbcodeFile, '[/quote]');
     finally
       // Free objects
       wListCharacters.Free;
       wListChannels.Free;
-      wBbcodeFile.Free;
-      wHtmlFile.Free;
-      wTextFile.Free;
-      wChatLog.Free;
       wReg2.Free;
       wReg.Free;
+
+      // Close files
+      CloseFile(wBbcodeFile);
+      CloseFile(wHtmlFile);
+      CloseFile(wTextFile);
+      CloseFile(wChatLog);
     end;
+
+    // Load HTML file in the browser
+    WebLog.Navigate(LogFileHtml);
   end;
 end;
 
@@ -1086,57 +1104,79 @@ Nettoyage du fichier de log
 *******************************************************************************}
 procedure TFormProgress.CleanLogFile(ADate: TDateTime);
 var
-  wChatLog: TStringList;
-  wNewFile: TStringList;
+  wChatLog: TextFile;
+  wNewFile: TextFile;
+  wNewFileName: String;
+  wLine: String;
   wDateLine: TDate;
+  wChatSize: Cardinal;
+  wTotalBytes: Integer;
   wYear, wMonth, wDay: Integer;
-  i: Integer;
 begin
-  wChatLog := TStringList.Create;
-  wNewFile := TStringList.Create;
+  wNewFileName := ChangeFileExt(FLogFile, '-clean' + ExtractFileExt(FLogFile));
+  AssignFile(wChatLog, FLogFile);
+  AssignFile(wNewFile, wNewFileName);
+  Reset(wChatLog);
+  Rewrite(wNewFile);
   try
-    wChatLog.LoadFromFile(FLogFile);
+    wTotalBytes := 0;
+    wChatSize := MdkFileSize(FLogFile);
+    ReadLn(wChatLog, wLine);
 
     if ADate = 0 then begin
       // suppression des messages système
-      for i := 0 to wChatLog.Count - 1 do begin
+      while not Eof(wChatLog) do begin
         if ModalResult = mrCancel then Exit;
 
-        // Si on trouve le caractère @ à la position 23 ou si la ligne ne commence pas par la date (année sur 4 chiffres) => on garde la ligne
-        if (Pos('@', wChatLog[i]) = 23) or (StrToIntDef(Copy(wChatLog[i], 1, 4), -1) < 0) then
-          wNewFile.Append(wChatLog[i]);
+        if not IsSystemLine(wLine) then
+          WriteLn(wNewFile, wLine);
 
         // Progression
-        ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
+        wTotalBytes := wTotalBytes + Length(wLine)+2;
+        ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
+
+        ReadLn(wChatLog, wLine);
       end;
     end else begin
       // suppression des vieux messages
-      for i := 0 to wChatLog.Count - 1 do begin
+      while not Eof(wChatLog) do begin
         if ModalResult = mrCancel then Exit;
 
         wDateLine := 0;
-        wYear := StrToIntDef(Copy(wChatLog[i], 1, 4), -1);
+        wYear := StrToIntDef(Copy(wLine, 1, 4), -1);
         if wYear >= 0 then begin
-          wMonth := StrToInt(Copy(wChatLog[i], 6, 2));
-          wDay := StrToInt(Copy(wChatLog[i], 9, 2));
+          wMonth := StrToInt(Copy(wLine, 6, 2));
+          wDay := StrToInt(Copy(wLine, 9, 2));
           wDateLine := EncodeDate(wYear, wMonth, wDay);
         end;
 
         if (wDateLine = 0) or (wDateLine >= ADate) then
-          wNewFile.Append(wChatLog[i]);
+          WriteLn(wNewFile, wLine);
 
         // Progression
-        ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
+        wTotalBytes := wTotalBytes + Length(wLine)+2;
+        ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
+
+        ReadLn(wChatLog, wLine);
       end;
     end;
-    
-    wNewFile.SaveToFile(FLogFile);
   finally
-    wNewFile.Free;
-    wChatLog.Free;
+    CloseFile(wChatLog);
+    CloseFile(wNewFile);
   end;
+
+  Windows.MoveFileEx(PChar(wNewFileName), PChar(FLogFile), MOVEFILE_REPLACE_EXISTING);
+end;
+
+{*******************************************************************************
+Indique si la ligne du log est une ligne système
+*******************************************************************************}
+function TFormProgress.IsSystemLine(ALine: String): Boolean;
+begin
+  // Une ligne système = pas de caractère @ et début avec la date
+  Result := (Pos('@', ALine) <> 23) and (StrToIntDef(Copy(ALine, 1, 4), -1) >= 0);
 end;
 
 end.

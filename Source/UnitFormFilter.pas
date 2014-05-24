@@ -684,8 +684,10 @@ begin
       FLbList.Add(LbValueVolume);
 
       // Durability
-      if (ItemHp > 0) and (ItemDur > 0) then begin
-        LbValueDura.Caption := Format('%d/%d', [ItemHp, ItemDur]);
+      if (ItemHp > 0) then begin
+        LbValueDura.Caption := IntToStr(ItemHp);
+        if (ItemDur > 0) then
+          LbValueDura.Caption := LbValueDura.Caption + '/' + IntToStr(ItemDur);
         FLbList.Add(LbDura);
         FLbList.Add(LbValueDura);
       end;
