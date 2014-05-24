@@ -8,22 +8,29 @@
   resources were bound to the produced executable.
 */
 
+#define UnitFormLog_RS_DELETECONFIRMATION2 64832
+#define UnitFormLog_RS_MENUDELETEOLD 64833
+#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64834
+#define UnitFormProgress_RS_PROGRESS_ROOM 64835
+#define UnitFormProgress_RS_CONNEXION_ERROR 64836
+#define UnitFormProgress_RS_PARSE_LOG 64837
+#define UnitFormProgress_RS_CLEAN_LOG 64838
 #define UnitFormGuild_RS_GUILD_KEY 64848
 #define UnitFormGuild_RS_CHECK_CHANGE 64849
 #define UnitFormGuild_RS_UP 64850
 #define UnitFormGuild_RS_DOWN 64851
 #define UnitFormGuild_RS_RESET_OK 64852
-#define UnitFormLog_RS_DELETECONFIRMATION1 64853
-#define UnitFormLog_RS_DELETECONFIRMATION2 64854
-#define UnitFormLog_RS_MENUDELETEOLD 64855
-#define UnitFormProgress_RS_PROGRESS_SYNCHRONIZE 64856
-#define UnitFormProgress_RS_PROGRESS_ROOM 64857
-#define UnitFormProgress_RS_CONNEXION_ERROR 64858
-#define UnitFormProgress_RS_PARSE_LOG 64859
-#define UnitFormProgress_RS_CLEAN_LOG 64860
-#define UnitFormMain_RS_STATUS_OPEN 64861
-#define UnitFormMain_RS_NEW_VERSION 64862
-#define UnitFormMain_RS_VERSION 64863
+#define UnitFormMain_RS_STATUS_CLOSED 64853
+#define UnitFormMain_RS_STATUS_OPEN 64854
+#define UnitFormMain_RS_NEW_VERSION 64855
+#define UnitFormMain_RS_SEASON_SPRING 64856
+#define UnitFormMain_RS_SEASON_SUMMER 64857
+#define UnitFormMain_RS_SEASON_AUTUMN 64858
+#define UnitFormMain_RS_SEASON_WINTER 64859
+#define UnitFormMain_RS_VERSION 64860
+#define UnitFormMain_RS_NEXT_SEASON 64861
+#define UnitFormMain_RS_AT 64862
+#define UnitFormLog_RS_DELETECONFIRMATION1 64863
 #define UnitFormBackup_RS_DESTORE_CONFIRMATION 64864
 #define UnitFormBackup_RS_DEFAULT_AUTO_NAME 64865
 #define UnitFormBackup_RS_DEFAULT_MANUAL_NAME 64866
@@ -88,15 +95,15 @@
 #define ComConst_SNoMethod 64925
 #define ComConst_SVarNotObject 64926
 #define ComConst_STooManyParams 64927
-#define UnitRyzom_RS_DAPPERS 64928
-#define UnitRyzom_RS_MENU_WATCH 64929
-#define UnitRyzom_RS_MENU_UNWATCH 64930
-#define UnitRyzom_RS_TAB_PET 64931
-#define UnitRyzom_RS_TAB_MOUNT 64932
-#define UnitRyzom_RS_DAYS 64933
-#define UnitRyzom_RS_HOURS 64934
-#define UnitRyzom_RS_MINUTES 64935
-#define UnitRyzom_RS_AND 64936
+#define UnitRyzom_RS_HOURS 64928
+#define UnitRyzom_RS_MINUTES 64929
+#define UnitRyzom_RS_AND 64930
+#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 64931
+#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 64932
+#define UnitConfig_RS_ERROR_KEY_NOTFOUND 64933
+#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 64934
+#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 64935
+#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 64936
 #define pnglang_EPngInvalidCRCText 64937
 #define pnglang_EPNGInvalidIHDRText 64938
 #define pnglang_EPNGMissingMultipleIDATText 64939
@@ -104,86 +111,86 @@
 #define pnglang_EPNGInvalidPaletteText 64941
 #define pnglang_EPNGInvalidFileHeaderText 64942
 #define pnglang_EPNGIHDRNotFirstText 64943
-#define UnitRyzom_RS_CLASS_FINE 64944
-#define UnitRyzom_RS_CLASS_CHOICE 64945
-#define UnitRyzom_RS_CLASS_EXCELLENT 64946
-#define UnitRyzom_RS_CLASS_SUPREME 64947
-#define UnitRyzom_RS_RACE_ALL 64948
-#define UnitRyzom_RS_RACE_FYROS 64949
-#define UnitRyzom_RS_RACE_ZORAI 64950
-#define UnitRyzom_RS_RACE_TRYKER 64951
-#define UnitRyzom_RS_RACE_MATIS 64952
-#define UnitRyzom_RS_ECOSYS_COMMON 64953
-#define UnitRyzom_RS_ECOSYS_PRIME 64954
-#define UnitRyzom_RS_ECOSYS_DESERT 64955
-#define UnitRyzom_RS_ECOSYS_JUNGLE 64956
-#define UnitRyzom_RS_ECOSYS_FOREST 64957
-#define UnitRyzom_RS_ECOSYS_LAKES 64958
-#define UnitRyzom_RS_VOLUME 64959
-#define UnitRyzom_RS_CAT_TRIGGER 64960
-#define UnitRyzom_RS_CAT_JEWELSETTING 64961
-#define UnitRyzom_RS_CAT_GRIP 64962
-#define UnitRyzom_RS_CAT_CLOTHES 64963
-#define UnitRyzom_RS_CAT_JEWEL 64964
-#define UnitRyzom_RS_CAT_MAGICFOCUS 64965
-#define UnitRyzom_RS_CAT_ALL 64966
-#define UnitRyzom_RS_COLOR_BEIGE 64967
-#define UnitRyzom_RS_COLOR_BLACK 64968
-#define UnitRyzom_RS_COLOR_BLUE 64969
-#define UnitRyzom_RS_COLOR_GREEN 64970
-#define UnitRyzom_RS_COLOR_PURPLE 64971
-#define UnitRyzom_RS_COLOR_RED 64972
-#define UnitRyzom_RS_COLOR_TURQUOISE 64973
-#define UnitRyzom_RS_COLOR_WHITE 64974
-#define UnitRyzom_RS_CLASS_BASE 64975
-#define UnitRyzom_RS_SPEC_PRIME_RESIST 64976
-#define UnitRyzom_RS_SPEC_ALL 64977
-#define UnitRyzom_RS_CAT_BLADE 64978
-#define UnitRyzom_RS_CAT_POINT 64979
-#define UnitRyzom_RS_CAT_HAMMER 64980
-#define UnitRyzom_RS_CAT_COUNTERWEIGHT 64981
-#define UnitRyzom_RS_CAT_SHAFT 64982
-#define UnitRyzom_RS_CAT_AMMOBULLET 64983
-#define UnitRyzom_RS_CAT_BARREL 64984
-#define UnitRyzom_RS_CAT_ARMORSHELL 64985
-#define UnitRyzom_RS_CAT_AMMOJACKET 64986
-#define UnitRyzom_RS_CAT_LINING 64987
-#define UnitRyzom_RS_CAT_EXPLOSIVE 64988
-#define UnitRyzom_RS_CAT_STUFFING 64989
-#define UnitRyzom_RS_CAT_FIRINGPIN 64990
-#define UnitRyzom_RS_CAT_ARMORCLIP 64991
-#define UnitRyzom_RS_SPEC_FIRE_PROTEC 64992
-#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 64993
-#define UnitRyzom_RS_SPEC_POISON_PROTEC 64994
-#define UnitRyzom_RS_SPEC_ELEC_PROTEC 64995
-#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 64996
-#define UnitRyzom_RS_SPEC_ELE_POWER 64997
-#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 64998
-#define UnitRyzom_RS_SPEC_OFFAFF_POWER 64999
-#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 65000
-#define UnitRyzom_RS_SPEC_DEFAFF_POWER 65001
-#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 65002
-#define UnitRyzom_RS_SPEC_HEAL_POWER 65003
-#define UnitRyzom_RS_SPEC_DESERT_RESIST 65004
-#define UnitRyzom_RS_SPEC_FOREST_RESIST 65005
-#define UnitRyzom_RS_SPEC_LAKES_RESIST 65006
-#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65007
-#define UnitRyzom_RS_SPEC_LIGHTNESS 65008
-#define UnitRyzom_RS_SPEC_SAPLOAD 65009
-#define UnitRyzom_RS_SPEC_DAMAGE 65010
-#define UnitRyzom_RS_SPEC_SPEED 65011
-#define UnitRyzom_RS_SPEC_RANGE 65012
-#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65013
-#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65014
-#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65015
-#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65016
-#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65017
-#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65018
-#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65019
-#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65020
-#define UnitRyzom_RS_SPEC_ACID_PROTEC 65021
-#define UnitRyzom_RS_SPEC_COLD_PROTEC 65022
-#define UnitRyzom_RS_SPEC_ROT_PROTEC 65023
+#define UnitRyzom_RS_RACE_ZORAI 64944
+#define UnitRyzom_RS_RACE_TRYKER 64945
+#define UnitRyzom_RS_RACE_MATIS 64946
+#define UnitRyzom_RS_ECOSYS_COMMON 64947
+#define UnitRyzom_RS_ECOSYS_PRIME 64948
+#define UnitRyzom_RS_ECOSYS_DESERT 64949
+#define UnitRyzom_RS_ECOSYS_JUNGLE 64950
+#define UnitRyzom_RS_ECOSYS_FOREST 64951
+#define UnitRyzom_RS_ECOSYS_LAKES 64952
+#define UnitRyzom_RS_VOLUME 64953
+#define UnitRyzom_RS_DAPPERS 64954
+#define UnitRyzom_RS_MENU_WATCH 64955
+#define UnitRyzom_RS_MENU_UNWATCH 64956
+#define UnitRyzom_RS_TAB_PET 64957
+#define UnitRyzom_RS_TAB_MOUNT 64958
+#define UnitRyzom_RS_DAYS 64959
+#define UnitRyzom_RS_CAT_ALL 64960
+#define UnitRyzom_RS_COLOR_BEIGE 64961
+#define UnitRyzom_RS_COLOR_BLACK 64962
+#define UnitRyzom_RS_COLOR_BLUE 64963
+#define UnitRyzom_RS_COLOR_GREEN 64964
+#define UnitRyzom_RS_COLOR_PURPLE 64965
+#define UnitRyzom_RS_COLOR_RED 64966
+#define UnitRyzom_RS_COLOR_TURQUOISE 64967
+#define UnitRyzom_RS_COLOR_WHITE 64968
+#define UnitRyzom_RS_CLASS_BASE 64969
+#define UnitRyzom_RS_CLASS_FINE 64970
+#define UnitRyzom_RS_CLASS_CHOICE 64971
+#define UnitRyzom_RS_CLASS_EXCELLENT 64972
+#define UnitRyzom_RS_CLASS_SUPREME 64973
+#define UnitRyzom_RS_RACE_ALL 64974
+#define UnitRyzom_RS_RACE_FYROS 64975
+#define UnitRyzom_RS_CAT_SHAFT 64976
+#define UnitRyzom_RS_CAT_AMMOBULLET 64977
+#define UnitRyzom_RS_CAT_BARREL 64978
+#define UnitRyzom_RS_CAT_ARMORSHELL 64979
+#define UnitRyzom_RS_CAT_AMMOJACKET 64980
+#define UnitRyzom_RS_CAT_LINING 64981
+#define UnitRyzom_RS_CAT_EXPLOSIVE 64982
+#define UnitRyzom_RS_CAT_STUFFING 64983
+#define UnitRyzom_RS_CAT_FIRINGPIN 64984
+#define UnitRyzom_RS_CAT_ARMORCLIP 64985
+#define UnitRyzom_RS_CAT_TRIGGER 64986
+#define UnitRyzom_RS_CAT_JEWELSETTING 64987
+#define UnitRyzom_RS_CAT_GRIP 64988
+#define UnitRyzom_RS_CAT_CLOTHES 64989
+#define UnitRyzom_RS_CAT_JEWEL 64990
+#define UnitRyzom_RS_CAT_MAGICFOCUS 64991
+#define UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED 64992
+#define UnitRyzom_RS_SPEC_OFFAFF_POWER 64993
+#define UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED 64994
+#define UnitRyzom_RS_SPEC_DEFAFF_POWER 64995
+#define UnitRyzom_RS_SPEC_HEAL_CAST_SPEED 64996
+#define UnitRyzom_RS_SPEC_HEAL_POWER 64997
+#define UnitRyzom_RS_SPEC_DESERT_RESIST 64998
+#define UnitRyzom_RS_SPEC_FOREST_RESIST 64999
+#define UnitRyzom_RS_SPEC_LAKES_RESIST 65000
+#define UnitRyzom_RS_SPEC_JUNGLE_RESIST 65001
+#define UnitRyzom_RS_SPEC_PRIME_RESIST 65002
+#define UnitRyzom_RS_SPEC_ALL 65003
+#define UnitRyzom_RS_CAT_BLADE 65004
+#define UnitRyzom_RS_CAT_POINT 65005
+#define UnitRyzom_RS_CAT_HAMMER 65006
+#define UnitRyzom_RS_CAT_COUNTERWEIGHT 65007
+#define UnitRyzom_RS_SPEC_PARRY_MODIFIER 65008
+#define UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER 65009
+#define UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER 65010
+#define UnitRyzom_RS_SPEC_PROTEC_FACTOR 65011
+#define UnitRyzom_RS_SPEC_MAX_SLASH_PROTEC 65012
+#define UnitRyzom_RS_SPEC_MAX_SMASH_PROTEC 65013
+#define UnitRyzom_RS_SPEC_MAX_PIERC_PROTEC 65014
+#define UnitRyzom_RS_SPEC_ACID_PROTEC 65015
+#define UnitRyzom_RS_SPEC_COLD_PROTEC 65016
+#define UnitRyzom_RS_SPEC_ROT_PROTEC 65017
+#define UnitRyzom_RS_SPEC_FIRE_PROTEC 65018
+#define UnitRyzom_RS_SPEC_SHOCK_PROTEC 65019
+#define UnitRyzom_RS_SPEC_POISON_PROTEC 65020
+#define UnitRyzom_RS_SPEC_ELEC_PROTEC 65021
+#define UnitRyzom_RS_SPEC_ELE_CAST_SPEED 65022
+#define UnitRyzom_RS_SPEC_ELE_POWER 65023
 #define XpExcept_sXPathNotUnparsedEnt 65024
 #define XpExcept_sXPathUnparsedEntCount 65025
 #define XpExcept_sXPathNoDTD 65026
@@ -193,13 +200,13 @@
 #define XpExcept_sBadUTF8Char 65030
 #define RyzomApi_RS_ERROR_LOADING_XML 65031
 #define RyzomApi_RS_REQUIRED_MODULES 65032
-#define UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS 65033
-#define UnitConfig_RS_ERROR_GUILD_NOTFOUND 65034
-#define UnitConfig_RS_ERROR_KEY_NOTFOUND 65035
-#define UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS 65036
-#define UnitConfig_RS_ERROR_CHAR_NOTFOUND 65037
-#define UnitConfig_RS_ERROR_CHARNAME_NOTFOUND 65038
-#define UnitRyzom_RS_SPEC_DURABILITY 65039
+#define UnitRyzom_RS_SPEC_DURABILITY 65033
+#define UnitRyzom_RS_SPEC_LIGHTNESS 65034
+#define UnitRyzom_RS_SPEC_SAPLOAD 65035
+#define UnitRyzom_RS_SPEC_DAMAGE 65036
+#define UnitRyzom_RS_SPEC_SPEED 65037
+#define UnitRyzom_RS_SPEC_RANGE 65038
+#define UnitRyzom_RS_SPEC_DODGE_MODIFIER 65039
 #define XpExcept_sInvStandAloneVal 65040
 #define XpExcept_sInvEncName 65041
 #define XpExcept_sInvVerNum 65042
@@ -376,182 +383,182 @@
 #define IdResourceStrings_RSStackEALREADY 65213
 #define IdResourceStrings_RSStackENOTSOCK 65214
 #define IdResourceStrings_RSStackEDESTADDRREQ 65215
-#define ComStrs_sRichEditLoadFail 65216
-#define ComStrs_sRichEditSaveFail 65217
-#define ComStrs_sPageIndexError 65218
-#define ComStrs_sInvalidComCtl32 65219
-#define ComStrs_sDateTimeMax 65220
-#define ComStrs_sDateTimeMin 65221
-#define ComStrs_sNeedAllowNone 65222
-#define ComStrs_sFailSetCalDateTime 65223
-#define ComStrs_sFailSetCalMaxSelRange 65224
-#define ComStrs_sFailSetCalMinMaxRange 65225
-#define ComStrs_sFailsetCalSelRange 65226
+#define ComStrs_sRichEditSaveFail 65216
+#define ComStrs_sPageIndexError 65217
+#define ComStrs_sInvalidComCtl32 65218
+#define ComStrs_sDateTimeMax 65219
+#define ComStrs_sDateTimeMin 65220
+#define ComStrs_sNeedAllowNone 65221
+#define ComStrs_sFailSetCalDateTime 65222
+#define ComStrs_sFailSetCalMaxSelRange 65223
+#define ComStrs_sFailSetCalMinMaxRange 65224
+#define ComStrs_sFailsetCalSelRange 65225
+#define WinHelpViewer_hNoKeyword 65226
 #define IdResourceStrings_RSFailedTimeZoneInfo 65227
 #define IdResourceStrings_RSWinsockCallError 65228
 #define IdResourceStrings_RSWinsockLoadError 65229
 #define IdResourceStrings_RSStatusResolving 65230
 #define IdResourceStrings_RSStatusConnecting 65231
-#define ExtCtrls_clNameMenuText 65232
-#define ExtCtrls_clNameNone 65233
-#define ExtCtrls_clNameScrollBar 65234
-#define ExtCtrls_clName3DDkShadow 65235
-#define ExtCtrls_clName3DLight 65236
-#define ExtCtrls_clNameWindow 65237
-#define ExtCtrls_clNameWindowFrame 65238
-#define ExtCtrls_clNameWindowText 65239
-#define ComStrs_sTabFailClear 65240
-#define ComStrs_sTabFailDelete 65241
-#define ComStrs_sTabFailRetrieve 65242
-#define ComStrs_sTabFailGetObject 65243
-#define ComStrs_sTabFailSet 65244
-#define ComStrs_sTabFailSetObject 65245
-#define ComStrs_sTabMustBeMultiLine 65246
-#define ComStrs_sRichEditInsertError 65247
-#define ExtCtrls_clNameBackground 65248
-#define ExtCtrls_clNameBtnFace 65249
-#define ExtCtrls_clNameBtnHighlight 65250
-#define ExtCtrls_clNameBtnShadow 65251
-#define ExtCtrls_clNameBtnText 65252
-#define ExtCtrls_clNameCaptionText 65253
-#define ExtCtrls_clNameDefault 65254
-#define ExtCtrls_clNameGrayText 65255
-#define ExtCtrls_clNameHighlight 65256
-#define ExtCtrls_clNameHighlightText 65257
-#define ExtCtrls_clNameInactiveBorder 65258
-#define ExtCtrls_clNameInactiveCaption 65259
-#define ExtCtrls_clNameInactiveCaptionText 65260
-#define ExtCtrls_clNameInfoBk 65261
-#define ExtCtrls_clNameInfoText 65262
-#define ExtCtrls_clNameMenu 65263
-#define ExtCtrls_clNameGray 65264
-#define ExtCtrls_clNameSilver 65265
-#define ExtCtrls_clNameRed 65266
-#define ExtCtrls_clNameLime 65267
-#define ExtCtrls_clNameYellow 65268
-#define ExtCtrls_clNameBlue 65269
-#define ExtCtrls_clNameFuchsia 65270
-#define ExtCtrls_clNameAqua 65271
-#define ExtCtrls_clNameWhite 65272
-#define ExtCtrls_clNameMoneyGreen 65273
-#define ExtCtrls_clNameSkyBlue 65274
-#define ExtCtrls_clNameCream 65275
-#define ExtCtrls_clNameMedGray 65276
-#define ExtCtrls_clNameActiveBorder 65277
-#define ExtCtrls_clNameActiveCaption 65278
-#define ExtCtrls_clNameAppWorkSpace 65279
-#define Consts_SNoDefaultPrinter 65280
-#define Consts_SDuplicateMenus 65281
-#define Consts_SDockedCtlNeedsName 65282
-#define Consts_SDockTreeRemoveError 65283
-#define Consts_SDockZoneNotFound 65284
-#define Consts_SDockZoneHasNoCtl 65285
-#define Consts_SErrorSettingCount 65286
-#define Consts_SListBoxMustBeVirtual 65287
-#define WinHelpViewer_hNoKeyword 65288
-#define ExtCtrls_clNameBlack 65289
-#define ExtCtrls_clNameMaroon 65290
-#define ExtCtrls_clNameGreen 65291
-#define ExtCtrls_clNameOlive 65292
-#define ExtCtrls_clNameNavy 65293
-#define ExtCtrls_clNamePurple 65294
-#define ExtCtrls_clNameTeal 65295
-#define Consts_SmkcHome 65296
-#define Consts_SmkcLeft 65297
-#define Consts_SmkcUp 65298
-#define Consts_SmkcRight 65299
-#define Consts_SmkcDown 65300
-#define Consts_SmkcIns 65301
-#define Consts_SmkcDel 65302
-#define Consts_SmkcShift 65303
-#define Consts_SmkcCtrl 65304
-#define Consts_SmkcAlt 65305
-#define Consts_SOutOfRange 65306
-#define Consts_SInsertLineError 65307
-#define Consts_SInvalidClipFmt 65308
-#define Consts_SIconToClipboard 65309
-#define Consts_SCannotOpenClipboard 65310
-#define Consts_SInvalidMemoSize 65311
-#define Consts_SMsgDlgCancel 65312
-#define Consts_SMsgDlgHelp 65313
-#define Consts_SMsgDlgAbort 65314
-#define Consts_SMsgDlgRetry 65315
-#define Consts_SMsgDlgIgnore 65316
-#define Consts_SMsgDlgAll 65317
-#define Consts_SMsgDlgNoToAll 65318
-#define Consts_SMsgDlgYesToAll 65319
-#define Consts_SmkcBkSp 65320
-#define Consts_SmkcTab 65321
-#define Consts_SmkcEsc 65322
-#define Consts_SmkcEnter 65323
-#define Consts_SmkcSpace 65324
-#define Consts_SmkcPgUp 65325
-#define Consts_SmkcPgDn 65326
-#define Consts_SmkcEnd 65327
-#define Consts_SAbortButton 65328
-#define Consts_SAllButton 65329
-#define Consts_SCannotDragForm 65330
-#define Consts_SVMetafiles 65331
-#define Consts_SVEnhMetafiles 65332
-#define Consts_SVIcons 65333
-#define Consts_SVBitmaps 65334
-#define Consts_SMaskErr 65335
-#define Consts_SMaskEditErr 65336
-#define Consts_SMsgDlgWarning 65337
-#define Consts_SMsgDlgError 65338
-#define Consts_SMsgDlgInformation 65339
-#define Consts_SMsgDlgConfirm 65340
-#define Consts_SMsgDlgYes 65341
-#define Consts_SMsgDlgNo 65342
-#define Consts_SMsgDlgOK 65343
-#define Consts_SNoTimers 65344
-#define Consts_SNotPrinting 65345
-#define Consts_SPrinting 65346
-#define Consts_SInvalidPrinter 65347
-#define Consts_SDeviceOnPort 65348
-#define Consts_SGroupIndexTooLow 65349
-#define Consts_SNoMDIForm 65350
-#define Consts_SControlParentSetToSelf 65351
-#define Consts_SOKButton 65352
-#define Consts_SCancelButton 65353
-#define Consts_SYesButton 65354
-#define Consts_SNoButton 65355
-#define Consts_SHelpButton 65356
-#define Consts_SCloseButton 65357
-#define Consts_SIgnoreButton 65358
-#define Consts_SRetryButton 65359
-#define Consts_SReplaceImage 65360
-#define Consts_SImageIndexError 65361
-#define Consts_SImageReadFail 65362
-#define Consts_SImageWriteFail 65363
-#define Consts_SWindowDCError 65364
-#define Consts_SWindowClass 65365
-#define Consts_SCannotFocus 65366
-#define Consts_SParentRequired 65367
-#define Consts_SParentGivenNotAParent 65368
-#define Consts_SMDIChildNotVisible 65369
-#define Consts_SVisibleChanged 65370
-#define Consts_SCannotShowModal 65371
-#define Consts_SPropertyOutOfRange 65372
-#define Consts_SMenuIndexError 65373
-#define Consts_SMenuReinserted 65374
-#define Consts_SMenuNotFound 65375
-#define HelpIntfs_hNothingFound 65376
-#define HelpIntfs_hNoContext 65377
-#define HelpIntfs_hNoTopics 65378
-#define Consts_SInvalidTabPosition 65379
-#define Consts_SInvalidTabStyle 65380
-#define Consts_SInvalidBitmap 65381
-#define Consts_SInvalidIcon 65382
-#define Consts_SInvalidMetafile 65383
-#define Consts_SInvalidPixelFormat 65384
-#define Consts_SChangeIconSize 65385
-#define Consts_SOleGraphic 65386
-#define Consts_SUnknownClipboardFormat 65387
-#define Consts_SOutOfResources 65388
-#define Consts_SNoCanvasHandle 65389
-#define Consts_SInvalidImageSize 65390
-#define Consts_SInvalidImageList 65391
+#define ExtCtrls_clNameNone 65232
+#define ExtCtrls_clNameScrollBar 65233
+#define ExtCtrls_clName3DDkShadow 65234
+#define ExtCtrls_clName3DLight 65235
+#define ExtCtrls_clNameWindow 65236
+#define ExtCtrls_clNameWindowFrame 65237
+#define ExtCtrls_clNameWindowText 65238
+#define ComStrs_sTabFailClear 65239
+#define ComStrs_sTabFailDelete 65240
+#define ComStrs_sTabFailRetrieve 65241
+#define ComStrs_sTabFailGetObject 65242
+#define ComStrs_sTabFailSet 65243
+#define ComStrs_sTabFailSetObject 65244
+#define ComStrs_sTabMustBeMultiLine 65245
+#define ComStrs_sRichEditInsertError 65246
+#define ComStrs_sRichEditLoadFail 65247
+#define ExtCtrls_clNameBtnFace 65248
+#define ExtCtrls_clNameBtnHighlight 65249
+#define ExtCtrls_clNameBtnShadow 65250
+#define ExtCtrls_clNameBtnText 65251
+#define ExtCtrls_clNameCaptionText 65252
+#define ExtCtrls_clNameDefault 65253
+#define ExtCtrls_clNameGrayText 65254
+#define ExtCtrls_clNameHighlight 65255
+#define ExtCtrls_clNameHighlightText 65256
+#define ExtCtrls_clNameInactiveBorder 65257
+#define ExtCtrls_clNameInactiveCaption 65258
+#define ExtCtrls_clNameInactiveCaptionText 65259
+#define ExtCtrls_clNameInfoBk 65260
+#define ExtCtrls_clNameInfoText 65261
+#define ExtCtrls_clNameMenu 65262
+#define ExtCtrls_clNameMenuText 65263
+#define ExtCtrls_clNameSilver 65264
+#define ExtCtrls_clNameRed 65265
+#define ExtCtrls_clNameLime 65266
+#define ExtCtrls_clNameYellow 65267
+#define ExtCtrls_clNameBlue 65268
+#define ExtCtrls_clNameFuchsia 65269
+#define ExtCtrls_clNameAqua 65270
+#define ExtCtrls_clNameWhite 65271
+#define ExtCtrls_clNameMoneyGreen 65272
+#define ExtCtrls_clNameSkyBlue 65273
+#define ExtCtrls_clNameCream 65274
+#define ExtCtrls_clNameMedGray 65275
+#define ExtCtrls_clNameActiveBorder 65276
+#define ExtCtrls_clNameActiveCaption 65277
+#define ExtCtrls_clNameAppWorkSpace 65278
+#define ExtCtrls_clNameBackground 65279
+#define Consts_SDockZoneNotFound 65280
+#define Consts_SDockZoneHasNoCtl 65281
+#define Consts_SErrorSettingCount 65282
+#define Consts_SListBoxMustBeVirtual 65283
+#define HelpIntfs_hNoTableOfContents 65284
+#define HelpIntfs_hNothingFound 65285
+#define HelpIntfs_hNoContext 65286
+#define HelpIntfs_hNoTopics 65287
+#define ExtCtrls_clNameBlack 65288
+#define ExtCtrls_clNameMaroon 65289
+#define ExtCtrls_clNameGreen 65290
+#define ExtCtrls_clNameOlive 65291
+#define ExtCtrls_clNameNavy 65292
+#define ExtCtrls_clNamePurple 65293
+#define ExtCtrls_clNameTeal 65294
+#define ExtCtrls_clNameGray 65295
+#define Consts_SmkcDown 65296
+#define Consts_SmkcIns 65297
+#define Consts_SmkcDel 65298
+#define Consts_SmkcShift 65299
+#define Consts_SmkcCtrl 65300
+#define Consts_SmkcAlt 65301
+#define Consts_SOutOfRange 65302
+#define Consts_SInsertLineError 65303
+#define Consts_SInvalidClipFmt 65304
+#define Consts_SIconToClipboard 65305
+#define Consts_SCannotOpenClipboard 65306
+#define Consts_SInvalidMemoSize 65307
+#define Consts_SNoDefaultPrinter 65308
+#define Consts_SDuplicateMenus 65309
+#define Consts_SDockedCtlNeedsName 65310
+#define Consts_SDockTreeRemoveError 65311
+#define Consts_SMsgDlgIgnore 65312
+#define Consts_SMsgDlgAll 65313
+#define Consts_SMsgDlgNoToAll 65314
+#define Consts_SMsgDlgYesToAll 65315
+#define Consts_SmkcBkSp 65316
+#define Consts_SmkcTab 65317
+#define Consts_SmkcEsc 65318
+#define Consts_SmkcEnter 65319
+#define Consts_SmkcSpace 65320
+#define Consts_SmkcPgUp 65321
+#define Consts_SmkcPgDn 65322
+#define Consts_SmkcEnd 65323
+#define Consts_SmkcHome 65324
+#define Consts_SmkcLeft 65325
+#define Consts_SmkcUp 65326
+#define Consts_SmkcRight 65327
+#define Consts_SVEnhMetafiles 65328
+#define Consts_SVIcons 65329
+#define Consts_SVBitmaps 65330
+#define Consts_SMaskErr 65331
+#define Consts_SMaskEditErr 65332
+#define Consts_SMsgDlgWarning 65333
+#define Consts_SMsgDlgError 65334
+#define Consts_SMsgDlgInformation 65335
+#define Consts_SMsgDlgConfirm 65336
+#define Consts_SMsgDlgYes 65337
+#define Consts_SMsgDlgNo 65338
+#define Consts_SMsgDlgOK 65339
+#define Consts_SMsgDlgCancel 65340
+#define Consts_SMsgDlgHelp 65341
+#define Consts_SMsgDlgAbort 65342
+#define Consts_SMsgDlgRetry 65343
+#define Consts_SDeviceOnPort 65344
+#define Consts_SGroupIndexTooLow 65345
+#define Consts_SNoMDIForm 65346
+#define Consts_SControlParentSetToSelf 65347
+#define Consts_SOKButton 65348
+#define Consts_SCancelButton 65349
+#define Consts_SYesButton 65350
+#define Consts_SNoButton 65351
+#define Consts_SHelpButton 65352
+#define Consts_SCloseButton 65353
+#define Consts_SIgnoreButton 65354
+#define Consts_SRetryButton 65355
+#define Consts_SAbortButton 65356
+#define Consts_SAllButton 65357
+#define Consts_SCannotDragForm 65358
+#define Consts_SVMetafiles 65359
+#define Consts_SWindowDCError 65360
+#define Consts_SWindowClass 65361
+#define Consts_SCannotFocus 65362
+#define Consts_SParentRequired 65363
+#define Consts_SParentGivenNotAParent 65364
+#define Consts_SMDIChildNotVisible 65365
+#define Consts_SVisibleChanged 65366
+#define Consts_SCannotShowModal 65367
+#define Consts_SPropertyOutOfRange 65368
+#define Consts_SMenuIndexError 65369
+#define Consts_SMenuReinserted 65370
+#define Consts_SMenuNotFound 65371
+#define Consts_SNoTimers 65372
+#define Consts_SNotPrinting 65373
+#define Consts_SPrinting 65374
+#define Consts_SInvalidPrinter 65375
+#define Consts_SInvalidTabStyle 65376
+#define Consts_SInvalidBitmap 65377
+#define Consts_SInvalidIcon 65378
+#define Consts_SInvalidMetafile 65379
+#define Consts_SInvalidPixelFormat 65380
+#define Consts_SChangeIconSize 65381
+#define Consts_SOleGraphic 65382
+#define Consts_SUnknownClipboardFormat 65383
+#define Consts_SOutOfResources 65384
+#define Consts_SNoCanvasHandle 65385
+#define Consts_SInvalidImageSize 65386
+#define Consts_SInvalidImageList 65387
+#define Consts_SReplaceImage 65388
+#define Consts_SImageIndexError 65389
+#define Consts_SImageReadFail 65390
+#define Consts_SImageWriteFail 65391
 #define RTLConsts_SPropertyException 65392
 #define RTLConsts_SReadError 65393
 #define RTLConsts_SReadOnlyProperty 65394
@@ -567,7 +574,7 @@
 #define RTLConsts_SThreadError 65404
 #define RTLConsts_SMissingDateTimeField 65405
 #define RTLConsts_SInvalidDateTime 65406
-#define HelpIntfs_hNoTableOfContents 65407
+#define Consts_SInvalidTabPosition 65407
 #define RTLConsts_SFixedRowTooBig 65408
 #define RTLConsts_SFOpenErrorEx 65409
 #define RTLConsts_SGridTooLarge 65410
@@ -698,12 +705,6 @@
 #define SysConst_SInvalidInput 65535
 STRINGTABLE
 BEGIN
-	UnitFormGuild_RS_GUILD_KEY,	"Clé API de guilde :"
-	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
-	UnitFormGuild_RS_UP,	"Monter"
-	UnitFormGuild_RS_DOWN,	"Descendre"
-	UnitFormGuild_RS_RESET_OK,	"Réinitialisation terminée"
-	UnitFormLog_RS_DELETECONFIRMATION1,	"Attention aucune sauvegarde ne sera faite !"
 	UnitFormLog_RS_DELETECONFIRMATION2,	"Etes-vous sûr de vouloir nettoyer votre fichier de log ?"
 	UnitFormLog_RS_MENUDELETEOLD,	"Supprimer les vieux messages (avant %s)"
 	UnitFormProgress_RS_PROGRESS_SYNCHRONIZE,	"Synchronisation en cours, veuillez patienter..."
@@ -711,9 +712,22 @@ BEGIN
 	UnitFormProgress_RS_CONNEXION_ERROR,	"Trop d'erreurs API, arrêt de la synchronisation"
 	UnitFormProgress_RS_PARSE_LOG,	"Analyse du fichier de log, veuillez patienter..."
 	UnitFormProgress_RS_CLEAN_LOG,	"Nettoyage du fichier de log, veuillez patienter..."
+	UnitFormGuild_RS_GUILD_KEY,	"Clé API de guilde :"
+	UnitFormGuild_RS_CHECK_CHANGE,	"Surveiller les objets"
+	UnitFormGuild_RS_UP,	"Monter"
+	UnitFormGuild_RS_DOWN,	"Descendre"
+	UnitFormGuild_RS_RESET_OK,	"Réinitialisation terminée"
+	UnitFormMain_RS_STATUS_CLOSED,	"Fermé"
 	UnitFormMain_RS_STATUS_OPEN,	"Ouvert"
 	UnitFormMain_RS_NEW_VERSION,	"Nouvelle version disponible !"
+	UnitFormMain_RS_SEASON_SPRING,	"Printemps"
+	UnitFormMain_RS_SEASON_SUMMER,	"Eté"
+	UnitFormMain_RS_SEASON_AUTUMN,	"Automne"
+	UnitFormMain_RS_SEASON_WINTER,	"Hiver"
 	UnitFormMain_RS_VERSION,	"Version"
+	UnitFormMain_RS_NEXT_SEASON,	"Prochain changement de saison le"
+	UnitFormMain_RS_AT,	"à"
+	UnitFormLog_RS_DELETECONFIRMATION1,	"Attention aucune sauvegarde ne sera faite !"
 	UnitFormBackup_RS_DESTORE_CONFIRMATION,	"Etes-vous sûr de vouloir restaurer les personnages sélectionnés ?"
 	UnitFormBackup_RS_DEFAULT_AUTO_NAME,	"Sauvegarde automatique"
 	UnitFormBackup_RS_DEFAULT_MANUAL_NAME,	"Sauvegarde manuelle"
@@ -778,15 +792,15 @@ BEGIN
 	ComConst_SNoMethod,	"Method '%s' not supported by automation object"
 	ComConst_SVarNotObject,	"Variant does not reference an automation object"
 	ComConst_STooManyParams,	"Dispatch methods do not support more than 64 parameters"
-	UnitRyzom_RS_DAPPERS,	"Dappers"
-	UnitRyzom_RS_MENU_WATCH,	"Surveiller"
-	UnitRyzom_RS_MENU_UNWATCH,	"Ne plus surveiller"
-	UnitRyzom_RS_TAB_PET,	"Mektoub"
-	UnitRyzom_RS_TAB_MOUNT,	"Monture"
-	UnitRyzom_RS_DAYS,	"jours"
 	UnitRyzom_RS_HOURS,	"heures"
 	UnitRyzom_RS_MINUTES,	"minutes"
 	UnitRyzom_RS_AND,	"et"
+	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
+	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
+	UnitConfig_RS_ERROR_KEY_NOTFOUND,	"La clé API est introuvable"
+	UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS,	"Le personnage existe déjà"
+	UnitConfig_RS_ERROR_CHAR_NOTFOUND,	"Le personnage est introuvable"
+	UnitConfig_RS_ERROR_CHARNAME_NOTFOUND,	"Le nom du personnage est introuvable"
 	pnglang_EPngInvalidCRCText,	"This \"Portable Network Graphics\" image is not valid because it contains invalid pieces of data (crc error)"
 	pnglang_EPNGInvalidIHDRText,	"The \"Portable Network Graphics\" image could not be loaded because one of its main piece of data (ihdr) might be corrupted"
 	pnglang_EPNGMissingMultipleIDATText,	"This \"Portable Network Graphics\" image is invalid because it has missing image parts."
@@ -794,12 +808,6 @@ BEGIN
 	pnglang_EPNGInvalidPaletteText,	"The \"Portable Network Graphics\" image contains an invalid palette."
 	pnglang_EPNGInvalidFileHeaderText,	"The file being readed is not a valid \"Portable Network Graphics\" image because it contains an invalid header. This file may be corruped, try obtaining it again."
 	pnglang_EPNGIHDRNotFirstText,	"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
-	UnitRyzom_RS_CLASS_FINE,	"Fin"
-	UnitRyzom_RS_CLASS_CHOICE,	"Choix"
-	UnitRyzom_RS_CLASS_EXCELLENT,	"Excellent"
-	UnitRyzom_RS_CLASS_SUPREME,	"Suprême"
-	UnitRyzom_RS_RACE_ALL,	"Toute race"
-	UnitRyzom_RS_RACE_FYROS,	"Fyros"
 	UnitRyzom_RS_RACE_ZORAI,	"Zoraï"
 	UnitRyzom_RS_RACE_TRYKER,	"Tryker"
 	UnitRyzom_RS_RACE_MATIS,	"Matis"
@@ -810,12 +818,12 @@ BEGIN
 	UnitRyzom_RS_ECOSYS_FOREST,	"Forêt"
 	UnitRyzom_RS_ECOSYS_LAKES,	"Lacs"
 	UnitRyzom_RS_VOLUME,	"Volume"
-	UnitRyzom_RS_CAT_TRIGGER,	"Détente"
-	UnitRyzom_RS_CAT_JEWELSETTING,	"Configuration des bijoux"
-	UnitRyzom_RS_CAT_GRIP,	"Prise"
-	UnitRyzom_RS_CAT_CLOTHES,	"Vêtements"
-	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
-	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
+	UnitRyzom_RS_DAPPERS,	"Dappers"
+	UnitRyzom_RS_MENU_WATCH,	"Surveiller"
+	UnitRyzom_RS_MENU_UNWATCH,	"Ne plus surveiller"
+	UnitRyzom_RS_TAB_PET,	"Mektoub"
+	UnitRyzom_RS_TAB_MOUNT,	"Monture"
+	UnitRyzom_RS_DAYS,	"jours"
 	UnitRyzom_RS_CAT_ALL,	"Toute catégorie"
 	UnitRyzom_RS_COLOR_BEIGE,	"Beige"
 	UnitRyzom_RS_COLOR_BLACK,	"Noir"
@@ -826,12 +834,12 @@ BEGIN
 	UnitRyzom_RS_COLOR_TURQUOISE,	"Turquoise"
 	UnitRyzom_RS_COLOR_WHITE,	"Blanc"
 	UnitRyzom_RS_CLASS_BASE,	"Base"
-	UnitRyzom_RS_SPEC_PRIME_RESIST,	"Résistance primes racines"
-	UnitRyzom_RS_SPEC_ALL,	"Toute caractéristique"
-	UnitRyzom_RS_CAT_BLADE,	"Lame"
-	UnitRyzom_RS_CAT_POINT,	"Pointe"
-	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
-	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
+	UnitRyzom_RS_CLASS_FINE,	"Fin"
+	UnitRyzom_RS_CLASS_CHOICE,	"Choix"
+	UnitRyzom_RS_CLASS_EXCELLENT,	"Excellent"
+	UnitRyzom_RS_CLASS_SUPREME,	"Suprême"
+	UnitRyzom_RS_RACE_ALL,	"Toute race"
+	UnitRyzom_RS_RACE_FYROS,	"Fyros"
 	UnitRyzom_RS_CAT_SHAFT,	"Flèche"
 	UnitRyzom_RS_CAT_AMMOBULLET,	"Balle de munitions"
 	UnitRyzom_RS_CAT_BARREL,	"Canon"
@@ -842,12 +850,12 @@ BEGIN
 	UnitRyzom_RS_CAT_STUFFING,	"Rembourrage"
 	UnitRyzom_RS_CAT_FIRINGPIN,	"Percuteur"
 	UnitRyzom_RS_CAT_ARMORCLIP,	"Fixation pour armures"
-	UnitRyzom_RS_SPEC_FIRE_PROTEC,	"Protection feu"
-	UnitRyzom_RS_SPEC_SHOCK_PROTEC,	"Protection ondes de choc"
-	UnitRyzom_RS_SPEC_POISON_PROTEC,	"Protection poison"
-	UnitRyzom_RS_SPEC_ELEC_PROTEC,	"Protection électricité"
-	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
-	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
+	UnitRyzom_RS_CAT_TRIGGER,	"Détente"
+	UnitRyzom_RS_CAT_JEWELSETTING,	"Configuration des bijoux"
+	UnitRyzom_RS_CAT_GRIP,	"Prise"
+	UnitRyzom_RS_CAT_CLOTHES,	"Vêtements"
+	UnitRyzom_RS_CAT_JEWEL,	"Bijou"
+	UnitRyzom_RS_CAT_MAGICFOCUS,	"Concentration magique"
 	UnitRyzom_RS_SPEC_OFFAFF_CAST_SPEED,	"Vitesse magie débilitante"
 	UnitRyzom_RS_SPEC_OFFAFF_POWER,	"Puissance magie débilitante"
 	UnitRyzom_RS_SPEC_DEFAFF_CAST_SPEED,	"Vitesse magie neutralisante"
@@ -858,12 +866,12 @@ BEGIN
 	UnitRyzom_RS_SPEC_FOREST_RESIST,	"Résistance forêt"
 	UnitRyzom_RS_SPEC_LAKES_RESIST,	"Résistance lacs"
 	UnitRyzom_RS_SPEC_JUNGLE_RESIST,	"Résistance jungle"
-	UnitRyzom_RS_SPEC_LIGHTNESS,	"Légereté"
-	UnitRyzom_RS_SPEC_SAPLOAD,	"Charge en sève"
-	UnitRyzom_RS_SPEC_DAMAGE,	"Dégâts"
-	UnitRyzom_RS_SPEC_SPEED,	"Vitesse"
-	UnitRyzom_RS_SPEC_RANGE,	"Portée"
-	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
+	UnitRyzom_RS_SPEC_PRIME_RESIST,	"Résistance primes racines"
+	UnitRyzom_RS_SPEC_ALL,	"Toute caractéristique"
+	UnitRyzom_RS_CAT_BLADE,	"Lame"
+	UnitRyzom_RS_CAT_POINT,	"Pointe"
+	UnitRyzom_RS_CAT_HAMMER,	"Marteau"
+	UnitRyzom_RS_CAT_COUNTERWEIGHT,	"Contrepoids"
 	UnitRyzom_RS_SPEC_PARRY_MODIFIER,	"Modif. parades"
 	UnitRyzom_RS_SPEC_ADV_DODGE_MODIFIER,	"Modif. esquives adversaire"
 	UnitRyzom_RS_SPEC_ADV_PARRY_MODIFIER,	"Modif. parades adversaire"
@@ -874,6 +882,12 @@ BEGIN
 	UnitRyzom_RS_SPEC_ACID_PROTEC,	"Protection acide"
 	UnitRyzom_RS_SPEC_COLD_PROTEC,	"Protection froid"
 	UnitRyzom_RS_SPEC_ROT_PROTEC,	"Protection pourriture"
+	UnitRyzom_RS_SPEC_FIRE_PROTEC,	"Protection feu"
+	UnitRyzom_RS_SPEC_SHOCK_PROTEC,	"Protection ondes de choc"
+	UnitRyzom_RS_SPEC_POISON_PROTEC,	"Protection poison"
+	UnitRyzom_RS_SPEC_ELEC_PROTEC,	"Protection électricité"
+	UnitRyzom_RS_SPEC_ELE_CAST_SPEED,	"Vitesse magie élémentaire"
+	UnitRyzom_RS_SPEC_ELE_POWER,	"Puissance magie élémentaire"
 	XpExcept_sXPathNotUnparsedEnt,	"Entity %s is not an unparsed entity."
 	XpExcept_sXPathUnparsedEntCount,	"Multiple entity declarations found for name %s"
 	XpExcept_sXPathNoDTD,	"No DTD in document for unparsed-entity-uri(%s)"
@@ -883,13 +897,13 @@ BEGIN
 	XpExcept_sBadUTF8Char,	"Badly formed UTF-8 character in stream"
 	RyzomApi_RS_ERROR_LOADING_XML,	"Erreur de chargement du flux XML"
 	RyzomApi_RS_REQUIRED_MODULES,	"Veuillez activer tous les modules requis sur votre clé API : %s"
-	UnitConfig_RS_ERROR_GUILD_ALREADY_EXISTS,	"La guilde existe déjà"
-	UnitConfig_RS_ERROR_GUILD_NOTFOUND,	"La guilde est introuvable"
-	UnitConfig_RS_ERROR_KEY_NOTFOUND,	"La clé API est introuvable"
-	UnitConfig_RS_ERROR_CHAR_ALREADY_EXISTS,	"Le personnage existe déjà"
-	UnitConfig_RS_ERROR_CHAR_NOTFOUND,	"Le personnage est introuvable"
-	UnitConfig_RS_ERROR_CHARNAME_NOTFOUND,	"Le nom du personnage est introuvable"
 	UnitRyzom_RS_SPEC_DURABILITY,	"Durabilité"
+	UnitRyzom_RS_SPEC_LIGHTNESS,	"Légereté"
+	UnitRyzom_RS_SPEC_SAPLOAD,	"Charge en sève"
+	UnitRyzom_RS_SPEC_DAMAGE,	"Dégâts"
+	UnitRyzom_RS_SPEC_SPEED,	"Vitesse"
+	UnitRyzom_RS_SPEC_RANGE,	"Portée"
+	UnitRyzom_RS_SPEC_DODGE_MODIFIER,	"Modif. esquives"
 	XpExcept_sInvStandAloneVal,	"Standalone value must equal 'yes' or 'no'"
 	XpExcept_sInvEncName,	"Invalid encoding declaration: "
 	XpExcept_sInvVerNum,	"Invalid XML version number: "
@@ -1066,7 +1080,6 @@ BEGIN
 	IdResourceStrings_RSStackEALREADY,	"Operation already in progress."
 	IdResourceStrings_RSStackENOTSOCK,	"Socket operation on non-socket."
 	IdResourceStrings_RSStackEDESTADDRREQ,	"Destination address required."
-	ComStrs_sRichEditLoadFail,	"Failed to Load Stream"
 	ComStrs_sRichEditSaveFail,	"Failed to Save Stream"
 	ComStrs_sPageIndexError,	"%d is an invalid PageIndex value.  PageIndex must be between 0 and %d"
 	ComStrs_sInvalidComCtl32,	"This control requires version 4.70 or greater of COMCTL32.DLL"
@@ -1077,12 +1090,12 @@ BEGIN
 	ComStrs_sFailSetCalMaxSelRange,	"Failed to set maximum selection range"
 	ComStrs_sFailSetCalMinMaxRange,	"Failed to set calendar min/max range"
 	ComStrs_sFailsetCalSelRange,	"Failed to set calendar selected range"
+	WinHelpViewer_hNoKeyword,	"No help keyword specified."
 	IdResourceStrings_RSFailedTimeZoneInfo,	"Failed attempting to retrieve time zone information."
 	IdResourceStrings_RSWinsockCallError,	"Error on call to Winsock2 library function %s"
 	IdResourceStrings_RSWinsockLoadError,	"Error on loading Winsock2 library (%s)"
 	IdResourceStrings_RSStatusResolving,	"Resolving hostname %s."
 	IdResourceStrings_RSStatusConnecting,	"Connecting to %s."
-	ExtCtrls_clNameMenuText,	"Menu Text"
 	ExtCtrls_clNameNone,	"None"
 	ExtCtrls_clNameScrollBar,	"Scroll Bar"
 	ExtCtrls_clName3DDkShadow,	"3D Dark Shadow"
@@ -1098,7 +1111,7 @@ BEGIN
 	ComStrs_sTabFailSetObject,	"Failed to set object at index %d"
 	ComStrs_sTabMustBeMultiLine,	"MultiLine must be True when TabPosition is tpLeft or tpRight"
 	ComStrs_sRichEditInsertError,	"RichEdit line insertion error"
-	ExtCtrls_clNameBackground,	"Background"
+	ComStrs_sRichEditLoadFail,	"Failed to Load Stream"
 	ExtCtrls_clNameBtnFace,	"Button Face"
 	ExtCtrls_clNameBtnHighlight,	"Button Highlight"
 	ExtCtrls_clNameBtnShadow,	"Button Shadow"
@@ -1114,7 +1127,7 @@ BEGIN
 	ExtCtrls_clNameInfoBk,	"Info Background"
 	ExtCtrls_clNameInfoText,	"Info Text"
 	ExtCtrls_clNameMenu,	"Menu Background"
-	ExtCtrls_clNameGray,	"Gray"
+	ExtCtrls_clNameMenuText,	"Menu Text"
 	ExtCtrls_clNameSilver,	"Silver"
 	ExtCtrls_clNameRed,	"Red"
 	ExtCtrls_clNameLime,	"Lime"
@@ -1130,15 +1143,15 @@ BEGIN
 	ExtCtrls_clNameActiveBorder,	"Active Border"
 	ExtCtrls_clNameActiveCaption,	"Active Caption"
 	ExtCtrls_clNameAppWorkSpace,	"Application Workspace"
-	Consts_SNoDefaultPrinter,	"There is no default printer currently selected"
-	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
-	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
-	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
+	ExtCtrls_clNameBackground,	"Background"
 	Consts_SDockZoneNotFound,	" - Dock zone not found"
 	Consts_SDockZoneHasNoCtl,	" - Dock zone has no control"
 	Consts_SErrorSettingCount,	"Error setting %s.Count"
 	Consts_SListBoxMustBeVirtual,	"Listbox (%s) style must be virtual in order to set Count"
-	WinHelpViewer_hNoKeyword,	"No help keyword specified."
+	HelpIntfs_hNoTableOfContents,	"Unable to find a Table of Contents"
+	HelpIntfs_hNothingFound,	"No help found for %s"
+	HelpIntfs_hNoContext,	"No context-sensitive help installed"
+	HelpIntfs_hNoTopics,	"No topic-based help system installed"
 	ExtCtrls_clNameBlack,	"Black"
 	ExtCtrls_clNameMaroon,	"Maroon"
 	ExtCtrls_clNameGreen,	"Green"
@@ -1146,10 +1159,7 @@ BEGIN
 	ExtCtrls_clNameNavy,	"Navy"
 	ExtCtrls_clNamePurple,	"Purple"
 	ExtCtrls_clNameTeal,	"Teal"
-	Consts_SmkcHome,	"Home"
-	Consts_SmkcLeft,	"Left"
-	Consts_SmkcUp,	"Up"
-	Consts_SmkcRight,	"Right"
+	ExtCtrls_clNameGray,	"Gray"
 	Consts_SmkcDown,	"Down"
 	Consts_SmkcIns,	"Ins"
 	Consts_SmkcDel,	"Del"
@@ -1162,10 +1172,10 @@ BEGIN
 	Consts_SIconToClipboard,	"Clipboard does not support Icons"
 	Consts_SCannotOpenClipboard,	"Cannot open clipboard"
 	Consts_SInvalidMemoSize,	"Text exceeds memo capacity"
-	Consts_SMsgDlgCancel,	"Annuler"
-	Consts_SMsgDlgHelp,	"&Aide"
-	Consts_SMsgDlgAbort,	"&Abandonner"
-	Consts_SMsgDlgRetry,	"&Réessayer"
+	Consts_SNoDefaultPrinter,	"There is no default printer currently selected"
+	Consts_SDuplicateMenus,	"Menu '%s' is already being used by another form"
+	Consts_SDockedCtlNeedsName,	"Docked control must have a name"
+	Consts_SDockTreeRemoveError,	"Error removing control from dock tree"
 	Consts_SMsgDlgIgnore,	"&Ignorer"
 	Consts_SMsgDlgAll,	"&All"
 	Consts_SMsgDlgNoToAll,	"N&o to All"
@@ -1178,10 +1188,10 @@ BEGIN
 	Consts_SmkcPgUp,	"PgUp"
 	Consts_SmkcPgDn,	"PgDn"
 	Consts_SmkcEnd,	"End"
-	Consts_SAbortButton,	"Abort"
-	Consts_SAllButton,	"&All"
-	Consts_SCannotDragForm,	"Cannot drag a form"
-	Consts_SVMetafiles,	"Metafiles"
+	Consts_SmkcHome,	"Home"
+	Consts_SmkcLeft,	"Left"
+	Consts_SmkcUp,	"Up"
+	Consts_SmkcRight,	"Right"
 	Consts_SVEnhMetafiles,	"Enhanced Metafiles"
 	Consts_SVIcons,	"Icons"
 	Consts_SVBitmaps,	"Bitmaps"
@@ -1194,10 +1204,10 @@ BEGIN
 	Consts_SMsgDlgYes,	"&Oui"
 	Consts_SMsgDlgNo,	"&Non"
 	Consts_SMsgDlgOK,	"OK"
-	Consts_SNoTimers,	"Not enough timers available"
-	Consts_SNotPrinting,	"Printer is not currently printing"
-	Consts_SPrinting,	"Printing in progress"
-	Consts_SInvalidPrinter,	"Printer selected is not valid"
+	Consts_SMsgDlgCancel,	"Annuler"
+	Consts_SMsgDlgHelp,	"&Aide"
+	Consts_SMsgDlgAbort,	"&Abandonner"
+	Consts_SMsgDlgRetry,	"&Réessayer"
 	Consts_SDeviceOnPort,	"%s on %s"
 	Consts_SGroupIndexTooLow,	"GroupIndex cannot be less than a previous menu item's GroupIndex"
 	Consts_SNoMDIForm,	"Cannot create form. No MDI forms are currently active"
@@ -1210,10 +1220,10 @@ BEGIN
 	Consts_SCloseButton,	"&Close"
 	Consts_SIgnoreButton,	"&Ignore"
 	Consts_SRetryButton,	"&Retry"
-	Consts_SReplaceImage,	"Unable to Replace Image"
-	Consts_SImageIndexError,	"Invalid ImageList Index"
-	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
-	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
+	Consts_SAbortButton,	"Abort"
+	Consts_SAllButton,	"&All"
+	Consts_SCannotDragForm,	"Cannot drag a form"
+	Consts_SVMetafiles,	"Metafiles"
 	Consts_SWindowDCError,	"Error creating window device context"
 	Consts_SWindowClass,	"Error creating window class"
 	Consts_SCannotFocus,	"Cannot focus a disabled or invisible window"
@@ -1226,10 +1236,10 @@ BEGIN
 	Consts_SMenuIndexError,	"Menu index out of range"
 	Consts_SMenuReinserted,	"Menu inserted twice"
 	Consts_SMenuNotFound,	"Sub-menu is not in menu"
-	HelpIntfs_hNothingFound,	"No help found for %s"
-	HelpIntfs_hNoContext,	"No context-sensitive help installed"
-	HelpIntfs_hNoTopics,	"No topic-based help system installed"
-	Consts_SInvalidTabPosition,	"Tab position incompatible with current tab style"
+	Consts_SNoTimers,	"Not enough timers available"
+	Consts_SNotPrinting,	"Printer is not currently printing"
+	Consts_SPrinting,	"Printing in progress"
+	Consts_SInvalidPrinter,	"Printer selected is not valid"
 	Consts_SInvalidTabStyle,	"Tab style incompatible with current tab position"
 	Consts_SInvalidBitmap,	"Bitmap image is not valid"
 	Consts_SInvalidIcon,	"Icon image is not valid"
@@ -1242,6 +1252,10 @@ BEGIN
 	Consts_SNoCanvasHandle,	"Canvas does not allow drawing"
 	Consts_SInvalidImageSize,	"Invalid image size"
 	Consts_SInvalidImageList,	"Invalid ImageList"
+	Consts_SReplaceImage,	"Unable to Replace Image"
+	Consts_SImageIndexError,	"Invalid ImageList Index"
+	Consts_SImageReadFail,	"Failed to read ImageList data from stream"
+	Consts_SImageWriteFail,	"Failed to write ImageList data to stream"
 	RTLConsts_SPropertyException,	"Error reading %s%s%s: %s"
 	RTLConsts_SReadError,	"Stream read error"
 	RTLConsts_SReadOnlyProperty,	"Property is read-only"
@@ -1257,7 +1271,7 @@ BEGIN
 	RTLConsts_SThreadError,	"Thread Error: %s (%d)"
 	RTLConsts_SMissingDateTimeField,	"?"
 	RTLConsts_SInvalidDateTime,	"''%s'' is not a valid date and time"
-	HelpIntfs_hNoTableOfContents,	"Unable to find a Table of Contents"
+	Consts_SInvalidTabPosition,	"Tab position incompatible with current tab style"
 	RTLConsts_SFixedRowTooBig,	"Fixed row count must be less than row count"
 	RTLConsts_SFOpenErrorEx,	"Cannot open file \"%s\". %s"
 	RTLConsts_SGridTooLarge,	"Grid too large for operation"
