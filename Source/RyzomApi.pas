@@ -77,7 +77,7 @@ type
     procedure ApiCharacter(AKey: String; AResponse: TStream);
     procedure ApiGuildIcon(AIcon: String; ASize: String; AResponse: TStream);
     procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor = icWhite;
-      AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False);
+      AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False; ALocked: Boolean = False);
     procedure ApiBallisticMystix(ARace: String; AGender: String; AHairType: Integer; AHairColor: Integer;
       ATatoo: Integer; AEyesColor: Integer; AGabarit, AMorph: String; AResponse: TStream);
     procedure ApiTime(AFormat: String; AResponse: TStream);
@@ -244,7 +244,7 @@ Default is 0.
 *******************************************************************************}
 procedure TRyzomApi.ApiItemIcon(AId: String; AResponse: TStream;
   AColor: TItemColor; AQuality, ASize, ASap: Integer;
-  ADestroyed: Boolean);
+  ADestroyed: Boolean; ALocked: Boolean);
 var
   wOptions: String;
 begin
@@ -256,6 +256,7 @@ begin
     if ASize > 0 then wOptions := wOptions + Format('&s=%d', [ASize]);
     if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);
     if ADestroyed then wOptions := wOptions + '&destroyed=1';
+    if ALocked then wOptions := wOptions + '&locked=1';
   
     CallAPI(Format('%s/item_icon.php%s', [_API_BASE_URL, wOptions]), AResponse);
   except

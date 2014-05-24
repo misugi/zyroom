@@ -1,8 +1,8 @@
 object FormFilter: TFormFilter
-  Left = 401
-  Top = 263
+  Left = 543
+  Top = 114
   Width = 325
-  Height = 597
+  Height = 725
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object FormFilter: TFormFilter
     Left = 0
     Top = 0
     Width = 280
-    Height = 559
+    Height = 687
     ActivePage = TabFilter
     Align = alLeft
     MultiLine = True
@@ -417,14 +417,14 @@ object FormFilter: TFormFilter
         Left = 0
         Top = 194
         Width = 270
-        Height = 199
+        Height = 462
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
         TabOrder = 2
         object LbAutoSpeed: TLabel
           Left = 5
-          Top = 3
+          Top = 18
           Width = 43
           Height = 14
           Caption = 'Vitesse :'
@@ -437,7 +437,7 @@ object FormFilter: TFormFilter
         end
         object LbValueSpeed: TLabel
           Left = 212
-          Top = 3
+          Top = 18
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -452,7 +452,7 @@ object FormFilter: TFormFilter
         end
         object LbValueDodge: TLabel
           Left = 212
-          Top = 33
+          Top = 48
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -467,7 +467,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoRange: TLabel
           Left = 5
-          Top = 18
+          Top = 33
           Width = 37
           Height = 14
           Caption = 'Port'#233'e :'
@@ -480,7 +480,7 @@ object FormFilter: TFormFilter
         end
         object LbValueRange: TLabel
           Left = 212
-          Top = 18
+          Top = 33
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -495,7 +495,7 @@ object FormFilter: TFormFilter
         end
         object LbValueParry: TLabel
           Left = 212
-          Top = 49
+          Top = 64
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -510,7 +510,7 @@ object FormFilter: TFormFilter
         end
         object LbValueAdvDodge: TLabel
           Left = 212
-          Top = 65
+          Top = 80
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -525,7 +525,7 @@ object FormFilter: TFormFilter
         end
         object LbValueAdvParry: TLabel
           Left = 212
-          Top = 81
+          Top = 96
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -540,7 +540,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoSlashingProt: TLabel
           Left = 5
-          Top = 113
+          Top = 128
           Width = 130
           Height = 14
           Caption = 'Protect. max/cp tranchant :'
@@ -553,7 +553,7 @@ object FormFilter: TFormFilter
         end
         object LbValueSlashingProt: TLabel
           Left = 212
-          Top = 113
+          Top = 128
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -568,7 +568,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoSmashingProt: TLabel
           Left = 5
-          Top = 129
+          Top = 144
           Width = 138
           Height = 14
           Caption = 'Protect. max/cp contondant :'
@@ -581,7 +581,7 @@ object FormFilter: TFormFilter
         end
         object LbValueSmashingProt: TLabel
           Left = 212
-          Top = 129
+          Top = 144
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -596,7 +596,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoPiercingProt: TLabel
           Left = 5
-          Top = 145
+          Top = 160
           Width = 129
           Height = 14
           Caption = 'Protect. max/cp perforant :'
@@ -609,7 +609,7 @@ object FormFilter: TFormFilter
         end
         object LbValuePiercingProt: TLabel
           Left = 212
-          Top = 145
+          Top = 160
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -624,7 +624,7 @@ object FormFilter: TFormFilter
         end
         object ImgHpb: TImage
           Left = 8
-          Top = 171
+          Top = 431
           Width = 24
           Height = 24
           ParentShowHint = False
@@ -668,7 +668,7 @@ object FormFilter: TFormFilter
         end
         object ImgFob: TImage
           Left = 212
-          Top = 171
+          Top = 431
           Width = 24
           Height = 24
           ParentShowHint = False
@@ -712,7 +712,7 @@ object FormFilter: TFormFilter
         end
         object ImgStb: TImage
           Left = 144
-          Top = 171
+          Top = 431
           Width = 24
           Height = 24
           ParentShowHint = False
@@ -757,7 +757,7 @@ object FormFilter: TFormFilter
         end
         object ImgSab: TImage
           Left = 76
-          Top = 171
+          Top = 431
           Width = 24
           Height = 24
           ParentShowHint = False
@@ -801,7 +801,7 @@ object FormFilter: TFormFilter
         end
         object LbValueHpb: TLabel
           Left = 36
-          Top = 177
+          Top = 437
           Width = 18
           Height = 14
           Caption = '125'
@@ -814,7 +814,7 @@ object FormFilter: TFormFilter
         end
         object LbValueSab: TLabel
           Left = 104
-          Top = 177
+          Top = 437
           Width = 18
           Height = 14
           Caption = '125'
@@ -827,7 +827,7 @@ object FormFilter: TFormFilter
         end
         object LbValueStb: TLabel
           Left = 172
-          Top = 177
+          Top = 437
           Width = 18
           Height = 14
           Caption = '125'
@@ -840,7 +840,7 @@ object FormFilter: TFormFilter
         end
         object LbValueFob: TLabel
           Left = 240
-          Top = 177
+          Top = 437
           Width = 18
           Height = 14
           Caption = '125'
@@ -853,7 +853,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoDodge: TLabel
           Left = 5
-          Top = 34
+          Top = 49
           Width = 176
           Height = 13
           AutoSize = False
@@ -867,7 +867,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoParry: TLabel
           Left = 5
-          Top = 49
+          Top = 64
           Width = 176
           Height = 13
           AutoSize = False
@@ -881,7 +881,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoAdvDodge: TLabel
           Left = 5
-          Top = 64
+          Top = 79
           Width = 176
           Height = 13
           AutoSize = False
@@ -895,7 +895,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoAdvParry: TLabel
           Left = 5
-          Top = 79
+          Top = 94
           Width = 176
           Height = 13
           AutoSize = False
@@ -909,7 +909,7 @@ object FormFilter: TFormFilter
         end
         object LbAutoFactorProt: TLabel
           Left = 5
-          Top = 97
+          Top = 112
           Width = 109
           Height = 14
           Caption = 'Facteur de protection :'
@@ -922,7 +922,429 @@ object FormFilter: TFormFilter
         end
         object LbValueFactorProt: TLabel
           Left = 212
-          Top = 97
+          Top = 112
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoDmg: TLabel
+          Left = 5
+          Top = 3
+          Width = 40
+          Height = 14
+          Caption = 'D'#233'g'#226'ts :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueDmg: TLabel
+          Left = 212
+          Top = 3
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '250'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbValueProtect1: TLabel
+          Left = 212
+          Top = 231
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoProtect3: TLabel
+          Left = 5
+          Top = 263
+          Width = 80
+          Height = 14
+          Caption = 'Ondes de choc :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueProtect3: TLabel
+          Left = 212
+          Top = 263
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoProtect1: TLabel
+          Left = 5
+          Top = 229
+          Width = 176
+          Height = 13
+          AutoSize = False
+          Caption = 'Froid :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbAutoProtect2: TLabel
+          Left = 5
+          Top = 247
+          Width = 38
+          Height = 14
+          Caption = 'Poison :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueProtect2: TLabel
+          Left = 212
+          Top = 247
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoResist1: TLabel
+          Left = 5
+          Top = 179
+          Width = 38
+          Height = 14
+          Caption = 'D'#233'sert :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueResist1: TLabel
+          Left = 212
+          Top = 179
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoResist2: TLabel
+          Left = 5
+          Top = 195
+          Width = 31
+          Height = 14
+          Caption = 'For'#234't :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueResist2: TLabel
+          Left = 212
+          Top = 195
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoResist3: TLabel
+          Left = 5
+          Top = 210
+          Width = 30
+          Height = 14
+          Caption = 'Lacs :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueResist3: TLabel
+          Left = 212
+          Top = 210
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoElementalSpeed: TLabel
+          Left = 5
+          Top = 284
+          Width = 135
+          Height = 14
+          Caption = 'Vitesse magie destructrice :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueElementalSpeed: TLabel
+          Left = 212
+          Top = 284
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoElementalPower: TLabel
+          Left = 5
+          Top = 300
+          Width = 148
+          Height = 14
+          Caption = 'Puissance magie destructrice :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueElementalPower: TLabel
+          Left = 212
+          Top = 300
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbValueHealPower: TLabel
+          Left = 212
+          Top = 371
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoDefensivePower: TLabel
+          Left = 5
+          Top = 403
+          Width = 152
+          Height = 14
+          Caption = 'Puissance magie neutralisante :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueDefensivePower: TLabel
+          Left = 212
+          Top = 403
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoHealPower: TLabel
+          Left = 5
+          Top = 369
+          Width = 176
+          Height = 13
+          AutoSize = False
+          Caption = 'Puissance magie curative :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbAutoDefensiveSpeed: TLabel
+          Left = 5
+          Top = 387
+          Width = 139
+          Height = 14
+          Caption = 'Vitesse magie neutralisante :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueDefensiveSpeed: TLabel
+          Left = 212
+          Top = 387
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoOffensiveSpeed: TLabel
+          Left = 5
+          Top = 319
+          Width = 125
+          Height = 14
+          Caption = 'Vitesse magie d'#233'bilitante :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueOffensiveSpeed: TLabel
+          Left = 212
+          Top = 319
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoOffensivePower: TLabel
+          Left = 5
+          Top = 335
+          Width = 138
+          Height = 14
+          Caption = 'Puissance magie d'#233'bilitante :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueOffensivePower: TLabel
+          Left = 212
+          Top = 335
+          Width = 50
+          Height = 14
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object LbAutoHealSpeed: TLabel
+          Left = 5
+          Top = 350
+          Width = 116
+          Height = 14
+          Caption = 'Vitesse magie curative :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbValueHealSpeed: TLabel
+          Left = 212
+          Top = 350
           Width = 50
           Height = 14
           Alignment = taRightJustify
@@ -940,8 +1362,8 @@ object FormFilter: TFormFilter
     object TabFilter: TTabSheet
       Caption = 'Filtre'
       object GbQuality: TGroupBox
-        Left = 138
-        Top = 172
+        Left = 0
+        Top = 216
         Width = 132
         Height = 72
         Caption = 'Qualit'#233
@@ -1014,8 +1436,8 @@ object FormFilter: TFormFilter
       object GbClass: TGroupBox
         Left = 0
         Top = 172
-        Width = 132
-        Height = 72
+        Width = 270
+        Height = 44
         Caption = 'Classe'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1038,8 +1460,8 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbClassMax: TLabel
-          Left = 8
-          Top = 46
+          Left = 145
+          Top = 20
           Width = 26
           Height = 14
           Caption = 'Max :'
@@ -1074,8 +1496,8 @@ object FormFilter: TFormFilter
             'Supr'#234'me')
         end
         object EdClassMax: TComboBox
-          Left = 40
-          Top = 42
+          Left = 177
+          Top = 16
           Width = 85
           Height = 22
           Style = csDropDownList
@@ -1099,7 +1521,7 @@ object FormFilter: TFormFilter
       end
       object GbName: TGroupBox
         Left = 0
-        Top = 430
+        Top = 474
         Width = 270
         Height = 61
         Caption = 'Nom'
@@ -1162,7 +1584,7 @@ object FormFilter: TFormFilter
       end
       object GbEquipment: TGroupBox
         Left = 0
-        Top = 244
+        Top = 288
         Width = 270
         Height = 44
         Caption = 'Equipement'
@@ -1205,7 +1627,7 @@ object FormFilter: TFormFilter
       end
       object GbCategory: TGroupBox
         Left = 0
-        Top = 288
+        Top = 332
         Width = 270
         Height = 44
         Caption = 'Cat'#233'gorie'
@@ -1291,13 +1713,14 @@ object FormFilter: TFormFilter
             'Classe'
             'Qualit'#233
             'Volume'
+            'Quantit'#233
             'Prix'
             'Temps')
         end
       end
       object GbSales: TGroupBox
         Left = 0
-        Top = 332
+        Top = 376
         Width = 270
         Height = 54
         Caption = 'Ventes'
@@ -1396,7 +1819,7 @@ object FormFilter: TFormFilter
       end
       object GbBonus: TGroupBox
         Left = 0
-        Top = 386
+        Top = 430
         Width = 270
         Height = 44
         Caption = 'Bonus'
@@ -1833,7 +2256,7 @@ object FormFilter: TFormFilter
       end
       object BtDefault: TSevenButton
         Left = 95
-        Top = 495
+        Top = 539
         Width = 85
         Height = 23
         Caption = 'D'#233'faut'
@@ -1884,7 +2307,7 @@ object FormFilter: TFormFilter
       end
       object BtOK: TSevenButton
         Left = 185
-        Top = 495
+        Top = 539
         Width = 85
         Height = 23
         Caption = 'Appliquer'
@@ -1939,6 +2362,78 @@ object FormFilter: TFormFilter
         Default = True
         Spacing = 5
         Marging = 5
+      end
+      object GbQuantity: TGroupBox
+        Left = 138
+        Top = 216
+        Width = 132
+        Height = 72
+        Caption = 'Quantit'#233
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 12
+        object LbQuantityMin: TLabel
+          Left = 8
+          Top = 20
+          Width = 22
+          Height = 14
+          Caption = 'Min :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbQuantityMax: TLabel
+          Left = 8
+          Top = 46
+          Width = 26
+          Height = 14
+          Caption = 'Max :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object EdQuantityMin: TSpinEdit
+          Left = 40
+          Top = 16
+          Width = 85
+          Height = 23
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          MaxValue = 999
+          MinValue = 0
+          ParentFont = False
+          TabOrder = 0
+          Value = 250
+        end
+        object EdQuantityMax: TSpinEdit
+          Left = 40
+          Top = 42
+          Width = 85
+          Height = 23
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          MaxValue = 999
+          MinValue = 0
+          ParentFont = False
+          TabOrder = 1
+          Value = 250
+        end
       end
     end
     object TabTemp: TTabSheet

@@ -321,7 +321,7 @@ Displays the list of guilds
 procedure TFormMain.BtGuildClick(Sender: TObject);
 begin
   ShowMenuForm(FormGuild);
-  Constraints.MinHeight := 645;
+  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -330,7 +330,7 @@ Displays the list of characters
 procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
-  Constraints.MinHeight := 645;
+  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -432,7 +432,7 @@ Show alerts
 procedure TFormMain.BtAlertClick(Sender: TObject);
 begin
   ShowMenuForm(FormAlert);
-  Constraints.MinHeight := 645;
+  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -499,7 +499,7 @@ Show log window
 procedure TFormMain.BtLogClick(Sender: TObject);
 begin
   ShowMenuForm(FormLog);
-  Constraints.MinHeight := 645;
+  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -508,7 +508,7 @@ Show backup window
 procedure TFormMain.BtBackupClick(Sender: TObject);
 begin
   ShowMenuForm(FormBackup);
-  Constraints.MinHeight := 645;
+  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 end.

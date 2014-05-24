@@ -49,6 +49,7 @@ const
   _BACKUP_NAME_FILE = 'name.txt';
   _CHARACTER_DIR = 'character';
   _PACK_FILEPATH = '\save\string_client.pack';
+  _WIN_HEIGTH = 700;
   _LANGUAGE_FILENAME = 'languages.lcf';
   _LANGUAGE_FRENCH_ID = 1036;
   _LANGUAGE_GERMAN_ID = 1031;
@@ -119,6 +120,8 @@ const
   _WATCH_FILENAME = 'watch.dat';
   _MIN_QUALITY = 0;
   _MAX_QUALITY = 270;
+  _MIN_QUANTITY = 1;
+  _MAX_QUANTITY = 999;
 
   _LOG_HOMEPAGE_FILENAME = 'chatlog.html';
   _LOG_HTML_FILENAME = 'log-html.txt';

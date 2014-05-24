@@ -151,6 +151,9 @@ const
 
   _ITEM_CLASS : array [0..4] of String = ('base', 'fine', 'choice', 'excellent', 'supreme');
 
+  _ITEM_PROTECTIONS : array [0..6] of String = ('acid', 'cold', 'fire', 'rot', 'shockwave', 'poison', 'electricity');
+  _ITEM_RESISTANCES : array [0..4] of String = ('desert', 'forest', 'lacustre', 'jungle', 'primaryroot');
+
   _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([a-f])01\.sitem';
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-f])01\.sitem';
   _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_)(\w*)\.sitem';
@@ -173,9 +176,11 @@ type
   TItemWeapon = (iwOneHand, iwTwoHands);
   TItemSkin = (isSkin1, isSkin2, isSkin3, isUnknown);
   TItemEquipSet = set of TItemEquip;
-  TItemSorting = (ioType, ioEcosys, ioClass, ioQuality, ioVolume, ioPrice, ioTime);
+  TItemSorting = (ioType, ioEcosys, ioClass, ioQuality, ioVolume, ioQuantity, ioPrice, ioTime);
   TItemBonus = (ibHp, ibSab, ibStamina, ibFocus);
   TItemBonusSet = set of TItemBonus;
+  TItemProtection = (ipAcid, ipCold, ipFire, ipRot, ipShockwave, ipPoison, ipElectricity, ipNone);
+  TItemResistance = (irDesert, irForest, irLakes, irJungle, irPrime, irNone);
 
   TItemFilter = record
     Enabled: Boolean;
@@ -194,9 +199,11 @@ type
     PriceMax: Integer;
     Bonus: TItemBonusSet;
     Sorting: TItemSorting;
+    QuantityMin: Integer;
+    QuantityMax: Integer;
   end;
   
-  //todo: 5.1 Rajouter l'info locked sur un item et dans ApiItemIcon (anticipation sur l'API item_icon.php qui pourrait bien le supporter)
+  //DONE: 5.1 Rajouter l'info locked sur un item et dans ApiItemIcon (anticipation sur l'API item_icon.php qui pourrait bien le supporter)
   TItemInfo = class(TObject)
   public
     ItemSlot: Integer;
@@ -231,11 +238,14 @@ type
     ItemTime: TDateTime;
     ItemGuarded: Boolean;
     ItemGuardValue: Integer;
+    ItemLocked: Boolean;
     MatColor1: Integer;
     MatColor2: Integer;
     MatColor3: Integer;
     MatSpec1: array of array [0..1] of Integer;
     MatSpec2: array of array [0..1] of Integer;
+
+    CDmg: Integer;
     CSpeed: Integer;
     CRange: Integer;
     CDodgeModifier: Integer;
@@ -246,6 +256,21 @@ type
     CSlashingProt: Integer;
     CBluntProt: Integer;
     CPiercingProt: Integer;
+
+    BProtect: array [1..3] of TItemProtection;
+    BProtectValue: array [1..3] of Integer;
+    
+    BResist: array [1..3] of TItemResistance;
+    BResistValue: array [1..3] of Double;
+
+    AElementalSpeed: Integer;
+    AElementalPower: Integer;
+    AOffensiveSpeed: Integer;
+    AOffensivePower: Integer;
+    AHealSpeed: Integer;
+    AHealPower: Integer;
+    ADefensiveSpeed: Integer;
+    ADefensivePower: Integer;
 
     constructor Create;
     destructor Destroy; override;
@@ -285,6 +310,8 @@ type
   function GetClassName(AIndex: Integer): String;
   function GetEcosysName(AIndex: Integer): String;
   function GetRaceName(AIndex: Integer): String;
+  function GetProtectName(AProtect: TItemProtection): String;
+  function GetResistName(AResist: TItemResistance): String;
 
 var
   GRyzomApi: TRyzom;
@@ -294,6 +321,38 @@ var
 implementation
 
 uses MisuDevKit, Math;
+
+{*******************************************************************************
+Retourne le nom de la protection d'un bijou
+*******************************************************************************}
+function GetProtectName(AProtect: TItemProtection): String;
+begin
+  case AProtect of
+    ipNone: Result := '-';
+    ipAcid: Result := RS_SPEC_ACID_PROTEC;
+    ipCold: Result := RS_SPEC_COLD_PROTEC;
+    ipFire: Result := RS_SPEC_FIRE_PROTEC;
+    ipRot: Result := RS_SPEC_ROT_PROTEC;
+    ipShockwave: Result := RS_SPEC_SHOCK_PROTEC;
+    ipPoison: Result := RS_SPEC_POISON_PROTEC;
+    ipElectricity: Result := RS_SPEC_ELEC_PROTEC;
+  end;
+end;
+
+{*******************************************************************************
+Retourne le nom de la résistance d'un bijou
+*******************************************************************************}
+function GetResistName(AResist: TItemResistance): String;
+begin
+  case AResist of
+    irNone: Result := '-';
+    irDesert: Result := RS_SPEC_DESERT_RESIST;
+    irForest: Result := RS_SPEC_FOREST_RESIST;
+    irLakes:  Result := RS_SPEC_LAKES_RESIST;
+    irJungle: Result := RS_SPEC_JUNGLE_RESIST;
+    irPrime:  Result := RS_SPEC_PRIME_RESIST;
+  end;
+end;
 
 {*******************************************************************************
 Returns the specification name
@@ -497,8 +556,69 @@ Returns information of an item
 procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
   wNodeValue: String;
+  wLocked: String;
+
+  // lecture des 3 protections sur les bijoux
+  procedure SetProtection;
+  var
+    wValue: Integer;
+    wIndex: Integer;
+    wProtect: String;
+    i: Integer;
+  begin
+    for i := 1 to 3 do begin
+      wProtect := ANode.SelectString(Format('.//craftparameters/protection%d', [i]));
+      wIndex := AnsiIndexText(wProtect, _ITEM_PROTECTIONS);
+      if wIndex < 0 then Continue;
+
+      wNodeValue := ANode.SelectString(Format('.//craftparameters/protection%dfactor/@value', [i]));
+      if Length(wNodeValue) > 0 then begin
+        wValue := StrToInt(wNodeValue);
+        AItemInfo.BProtect[i] := TItemProtection(wIndex);
+        AItemInfo.BProtectValue[i] := wValue;
+      end;
+    end;
+  end;
+
+  // lecture des 3 résistances sur les bijoux
+  procedure SetResistance;
+  const
+    _NODE_RESISTANCE = 'resistancefactor';
+  var
+    wValue: Double;
+    wNodes: TXpNodeList;
+    wNodeName: String;
+    wIndex: Integer;
+    i: Integer;
+  begin
+    wNodes := ANode.SelectNodes(Format('.//craftparameters/*[contains(name(),''%s'')][@value>0]', [_NODE_RESISTANCE]));
+    try
+      if wNodes.Length <> 3 then Exit;
+
+      for i := 0 to 2 do begin
+        wNodeName := wNodes.Item(i).NodeName;
+        wNodeName := StringReplace(wNodeName, _NODE_RESISTANCE, '', [rfIgnoreCase]);
+        wIndex := AnsiIndexText(wNodeName, _ITEM_RESISTANCES);
+        if wIndex < 0 then Continue;
+        wNodeValue := wNodes.Item(i).SelectString('@value');
+        if Length(wNodeValue) > 0 then begin
+          wValue := StrToFloat2(wNodeValue);
+          AItemInfo.BResist[i+1] := TItemResistance(wIndex);
+          AItemInfo.BResistValue[i+1] := wValue;
+        end;
+      end;
+    finally
+      wNodes.Free;
+    end;
+  end;
 begin
   try
+    { ATTENTION
+    Certaines informations sont récupérées avec ".//" car, dans le cas des items en vente (/ryzomapi/character/shop),
+    on a un noeud shopitem ET un sous-noeud item (alors que pour les autres on a un seul noeud item avec toutes les infos)
+    Cette technique permet d'avoir un seul XPath (commun)
+    }
+    
     // Name
     AItemInfo.ItemName := ANode.SelectString('.//sheet');
     if Pos('#', AItemInfo.ItemName) = 1 then
@@ -517,12 +637,21 @@ begin
     if Length(wNodeValue) > 0 then AItemInfo.ItemQuality := StrToInt(wNodeValue);
 
     // Weight
-    wNodeValue := ANode.SelectString('.//craftparameters/weight');
+    wNodeValue := ANode.SelectString('.//craftparameters/weight/@value');
     if Length(wNodeValue) > 0 then AItemInfo.ItemWeight := StrToFloat2(wNodeValue);
 
     // Size
     wNodeValue := ANode.SelectString('stack');
     if Length(wNodeValue) > 0 then AItemInfo.ItemSize := StrToInt(wNodeValue);
+
+    // Locked
+    wLocked := '';
+    wNodeValue := ANode.SelectString('.//locked');
+    if Length(wNodeValue) > 0 then begin
+      AItemInfo.ItemLocked := StrToInt(wNodeValue) > 0;
+      if AItemInfo.ItemLocked then
+        wLocked := 'l'; // lettre "l" pour "locked" utilisé dans le nom du fichier image (compatibilité: valeur vide par défaut)
+    end;
 
     // Sap load
     // Attention, 2 noeuds sapload:
@@ -541,7 +670,7 @@ begin
     end;
 
     // Durability
-    wNodeValue := ANode.SelectString('.//craftparameters/durability');
+    wNodeValue := ANode.SelectString('.//craftparameters/durability/@value');
     if Length(wNodeValue) > 0 then AItemInfo.ItemDur := StrToIntDef(wNodeValue, 0);
 
     // HP Bonus
@@ -565,6 +694,9 @@ begin
 
     // Energy
     //todo : API trouver l'info dans le nouveau XML ? (noeud "statenergy" ?) => sinon l'info est récupérée avec GetItemInfoFromName
+    {StatEnergy should be average value from all resource stats. I'm not sure how that is used, but it's in xml, so I included it too.
+StatEnergy in general defines grade, basic, fine, etc. Probably used in naming item.
+}
   {  wNode := ANode.Attributes.GetNamedItem('e');
     if Assigned(wNode) then begin
       case Ord(wNode.NodeValue[1]) of
@@ -595,36 +727,56 @@ begin
     if Length(wNodeValue) > 0 then AItemInfo.ItemTime := IncHour(IncDay(UnixToDateTime(StrToInt64(wNodeValue)), 7), 2);
 
     // Specifications
-    //todo: API plein de valeurs sont maintenant flottantes ???
-    wNodeValue := ANode.SelectString('.//craftparameters/speed');
+    //DONE: API plein de valeurs sont maintenant flottantes ? => nouvelle propriété @value avec la valeur affichée en jeu
+    wNodeValue := ANode.SelectString('.//craftparameters/dmg/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.CDmg := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/speed/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CSpeed := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/range');
+    wNodeValue := ANode.SelectString('.//craftparameters/range/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CRange := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/dodgemodifier');
+    wNodeValue := ANode.SelectString('.//craftparameters/dodgemodifier/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CDodgeModifier := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/parrymodifier');
+    wNodeValue := ANode.SelectString('.//craftparameters/parrymodifier/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CParryModifier := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/adversarydodgemodifier');
+    wNodeValue := ANode.SelectString('.//craftparameters/adversarydodgemodifier/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CAdvDodgeModifier := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/adversaryparrymodifier');
+    wNodeValue := ANode.SelectString('.//craftparameters/adversaryparrymodifier/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CAdvParryModifier := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/protectionfactor');
+    wNodeValue := ANode.SelectString('.//craftparameters/protectionfactor/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CFactorProt := StrToFloat2(wNodeValue);
-    wNodeValue := ANode.SelectString('.//craftparameters/maxslashingprotection');
+    wNodeValue := ANode.SelectString('.//craftparameters/maxslashingprotection/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CSlashingProt := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/maxbluntprotection');
+    wNodeValue := ANode.SelectString('.//craftparameters/maxbluntprotection/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CBluntProt := StrToIntDef(wNodeValue, 0);
-    wNodeValue := ANode.SelectString('.//craftparameters/maxpiercingprotection');
+    wNodeValue := ANode.SelectString('.//craftparameters/maxpiercingprotection/@value');
     if Length(wNodeValue) > 0 then AItemInfo.CPiercingProt := StrToIntDef(wNodeValue, 0);
 
-    //todo: 5.1 Lire les infos de résistance/protection sur les bijoux
+    //DONE: 5.1 Lire les infos de protection/résistance sur les bijoux
+    SetProtection;
+    SetResistance;
 
-    //todo: 5.1 Lire les caractéristiques magiques des amplis
+    //DONE: 5.1 Lire les caractéristiques magiques des amplis
+    wNodeValue := ANode.SelectString('.//craftparameters/elementalcastingtimefactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.AElementalSpeed := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/elementalpowerfactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.AElementalPower := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/offensiveafflictioncastingtimefactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.AOffensiveSpeed := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/offensiveafflictionpowerfactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.AOffensivePower := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/healcastingtimefactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.AHealSpeed := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/healpowerfactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.AHealPower := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/defensiveafflictioncastingtimefactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.ADefensiveSpeed := StrToIntDef(wNodeValue, 0);
+    wNodeValue := ANode.SelectString('.//craftparameters/defensiveafflictionpowerfactor/@value');
+    if Length(wNodeValue) > 0 then AItemInfo.ADefensivePower := StrToIntDef(wNodeValue, 0);
 
     // Image filename
-    AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s',
+    AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s%s',
       [AItemInfo.ItemName, Ord(AItemInfo.ItemColor), AItemInfo.ItemQuality, AItemInfo.ItemSize,
-      MdkBoolToInteger(AItemInfo.ItemDestroyed), _ICON_FORMAT]);
+      MdkBoolToInteger(AItemInfo.ItemDestroyed), wLocked, _ICON_FORMAT]);
   except
     on E: Exception do Exception.CreateFmt('[GetItemInfoFromXML] %s', [E.Message]);
   end;
@@ -651,6 +803,8 @@ begin
   AFilter.PriceMax := 0;
   AFilter.Bonus := [];
   AFilter.Sorting := ioType;
+  AFilter.QuantityMin := _MIN_QUANTITY;
+  AFilter.QuantityMax := _MAX_QUANTITY;
 end;
 
 {*******************************************************************************
@@ -926,17 +1080,34 @@ begin
       end;
     end;
 
+    //todo: pb de volumes sur les objets suivants :
+    // canne a pêche (winch.sitem): vol 5
+    // 2 armes spéciales (icbm1sa_2.sitem et icbm1bs.sitem): vol 20
+    // botte de fourrage basique : vol 15 / botte (vérifier les autres types de botte)
+
     // Others
     if AItemInfo.ItemType = itOther then begin
-      if Pos('pre_order', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-      if Pos('teddyubo', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-      if Pos('louche', AItemInfo.ItemName) = 1 then wCoef := 5.0;
-      if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower
-      if Pos('ipm', AItemInfo.ItemName) = 1 then wCoef := 1.0; // egg
-      if Pos('ipk_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // potion
-      if Pos('if1', AItemInfo.ItemName) = 1 then wCoef := 50.0; // food basic
-      if Pos('if2', AItemInfo.ItemName) = 1 then wCoef := 20.0; // food concentrated
-      if Pos('if3', AItemInfo.ItemName) = 1 then wCoef := 30.0; // food small
+      if CompareText(AItemInfo.ItemName, 'pre_order.sitem') = 0 then wCoef := 5.0; // bouclier de pré-commande (pour la sortie du jeu en 2004)
+      if CompareText(AItemInfo.ItemName, 'teddyubo.sitem') = 0 then wCoef := 5.0; // peluche de Yubo
+      if CompareText(AItemInfo.ItemName, 'louche.sitem') = 0 then wCoef := 5.0; // louche
+      if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower (ipoc_int.sitem, ipoc_str.sitem, etc.)
+      if Pos('ipm', AItemInfo.ItemName) = 1 then wCoef := 1.0; // egg (ipme04.sitem, ipmc03.sitem, ipmf04.sitem)
+      if Pos('ipk_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // potion (ipk_minor_life.sitem, ipk_minor_mage.sitem, etc.)
+      if CompareText(AItemInfo.ItemName, 'if1.sitem') = 0 then wCoef := 50.0; // food basic
+      if CompareText(AItemInfo.ItemName, 'if2.sitem') = 0 then wCoef := 20.0; // food concentrated
+      if CompareText(AItemInfo.ItemName, 'if3.sitem') = 0 then wCoef := 30.0; // food small
+      if CompareText(AItemInfo.ItemName, 'winch.sitem') = 0 then wCoef := 5.0; // canne à pêche
+
+      // Special weapons 
+      if (CompareText(AItemInfo.ItemName, 'icbm1sa_2.sitem') = 0) {Hache Cleven des Renégats} or
+         (CompareText(AItemInfo.ItemName, 'icbm1bs.sitem') = 0) {Bâton Shopan de l'Arbre éternel} then begin
+        AItemInfo.ItemType := itEquipment;
+        AItemInfo.ItemEquip := iqWeaponMelee;
+        AItemInfo.ItemEcosys := ieCommon;
+        AItemInfo.ItemClass := icSupreme;
+        AItemInfo.ItemSkin := isSkin3;
+        wCoef := 20.0;
+      end;
 
       // Kara/Kami dress
       if (Pos('ikaracp_ep', AItemInfo.ItemName) = 1) or
@@ -1006,6 +1177,9 @@ begin
   // Quality
   if AItemInfo.ItemQuality <= _MAX_QUALITY then // for sap charges eg
     if (AItemInfo.ItemQuality < AFilter.QualityMin) or (AItemInfo.ItemQuality > AFilter.QualityMax) then Exit;
+
+  // Quantity
+  if (AItemInfo.ItemSize < AFilter.QuantityMin) or (AItemInfo.ItemSize > AFilter.QuantityMax) then Exit;
 
   // If the name does not match
   if AFilter.ItemName <> '' then begin
@@ -1118,9 +1292,11 @@ begin
   ItemTime := 0;  
   ItemGuarded := False;
   ItemGuardValue := -1;
+  ItemLocked := False;
   MatColor1 := 0;
   MatColor2 := 0;
   MatColor3 := 0;
+  CDmg := 0;
   CSpeed := 0;
   CRange := 0;
   CDodgeModifier := 0;
@@ -1131,6 +1307,29 @@ begin
   CSlashingProt := 0;
   CBluntProt := 0;
   CPiercingProt := 0;
+
+  BProtect[1] := ipNone;
+  BProtect[2] := ipNone;
+  BProtect[3] := ipNone;
+  BProtectValue[1] := 0;
+  BProtectValue[2] := 0;
+  BProtectValue[3] := 0;
+
+  BResist[1] := irNone;
+  BResist[2] := irNone;
+  BResist[3] := irNone;
+  BResistValue[1] := 0;
+  BResistValue[2] := 0;
+  BResistValue[3] := 0;
+
+  AElementalSpeed := 0;
+  AElementalPower := 0;
+  AOffensiveSpeed := 0;
+  AOffensivePower := 0;
+  AHealSpeed := 0;
+  AHealPower := 0;
+  ADefensiveSpeed := 0;
+  ADefensivePower := 0;
 end;
 
 {*******************************************************************************

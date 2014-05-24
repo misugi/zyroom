@@ -34,10 +34,13 @@ type
     LbMessage: TLabel;
     BtYes: TSevenButton;
     BtNo: TSevenButton;
+    BtOK: TSevenButton;
     procedure FormShow(Sender: TObject);
   private
+    procedure ShowButtonOK(AVisible: Boolean);
   public
     function ShowConfirmation(AMessage: String): Integer;
+    procedure ShowInformation(AMessage: String);
   end;
 
 var
@@ -47,12 +50,22 @@ implementation
 
 {$R *.dfm}
 
+procedure TFormConfirm.ShowButtonOK(AVisible: Boolean);
+begin
+  BtOK.Visible := AVisible;
+  BtYes.Visible := not AVisible;
+  BtNo.Visible := not AVisible;
+end;
+
 {*******************************************************************************
 Displays the form
 *******************************************************************************}
 procedure TFormConfirm.FormShow(Sender: TObject);
 begin
-  BtYes.SetFocus;
+  if BtYes.Visible then
+    BtYes.SetFocus
+  else
+    BtOK.SetFocus;
 end;
 
 {*******************************************************************************
@@ -60,8 +73,19 @@ Displays the question
 *******************************************************************************}
 function TFormConfirm.ShowConfirmation(AMessage: String): Integer;
 begin
+  ShowButtonOK(False);
   LbMessage.Caption := AMessage;
   Result := ShowModal;
+end;
+
+{*******************************************************************************
+Displays the info
+*******************************************************************************}
+procedure TFormConfirm.ShowInformation(AMessage: String);
+begin
+  ShowButtonOK(True);
+  LbMessage.Caption := AMessage;
+  ShowModal;
 end;
 
 end.

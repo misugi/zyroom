@@ -28,7 +28,13 @@ interface
 uses
   Forms, SysUtils, Dialogs, OleCtrls, SHDocVw, StdCtrls, SevenButton, Classes,
   Controls, ExtCtrls, RyzomApi, regexpr, ComCtrls, CheckLst, Graphics, Types,
-  Windows, Clipbrd, ActiveX, ShellAPI;
+  Windows, Clipbrd, ActiveX, ShellAPI, Menus;
+
+resourcestring
+  RS_DELETECONFIRMATION1 = 'Attention, aucune sauvegarde ne sera faite !';
+  RS_DELETECONFIRMATION2 = 'Etes-vous sûr de vouloir nettoyer votre fichier de log ?';
+  RS_MENUDELETEOLD = 'Supprimer les vieux messages (avant le %s)';
+  RS_FILESAVED = 'Une sauvegarde de votre fichier de log a été créée';
 
 type
   TFormLog = class(TForm)
@@ -38,8 +44,6 @@ type
     OdBrowseLogFile: TOpenDialog;
     PnOptions: TPanel;
     OdColor: TColorDialog;
-    BtHtml: TSevenButton;
-    BtBbcode: TSevenButton;
     GbChannels: TGroupBox;
     ListChannels: TCheckListBox;
     GbCharacters: TGroupBox;
@@ -58,7 +62,6 @@ type
     CbShowDate: TCheckBox;
     CbSystemMessage: TCheckBox;
     OdSaveFile: TSaveDialog;
-    BtText: TSevenButton;
     GbSystemFilter: TGroupBox;
     BtAddFilter: TSevenButton;
     BtDelFilter: TSevenButton;
@@ -69,6 +72,17 @@ type
     EdFilter: TEdit;
     TimePickerStart: TDateTimePicker;
     TimePickerEnd: TDateTimePicker;
+    PopupMenuCode: TPopupMenu;
+    MenuHtml: TMenuItem;
+    MenuBBCode: TMenuItem;
+    MenuText: TMenuItem;
+    PopupMenuClean: TPopupMenu;
+    MenuDeleteSystem: TMenuItem;
+    MenuAutoDeleteOld: TMenuItem;
+    MenuDeleteAll: TMenuItem;
+    BtCode: TSevenButton;
+    BtSave: TSevenButton;
+    BtClean: TSevenButton;
     procedure BtLoadClick(Sender: TObject);
     procedure CheckListBoxDblClick(Sender: TObject);
     procedure BtCheckChannelsClick(Sender: TObject);
@@ -88,6 +102,12 @@ type
     procedure BtAddFilterClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure ListFilterClick(Sender: TObject);
+    procedure BtCodeClick(Sender: TObject);
+    procedure BtCleanClick(Sender: TObject);
+    procedure MenuDeleteAllClick(Sender: TObject);
+    procedure MenuDeleteSystemClick(Sender: TObject);
+    procedure MenuAutoDeleteOldClick(Sender: TObject);
+    procedure BtSaveClick(Sender: TObject);
   private
     FLogFile: String;
     FLogFileHtml: String;
@@ -101,6 +121,8 @@ type
     
     procedure LoadLogFile(AFirstLoading: Boolean = False);
     procedure SetDefault(ASetDates: Boolean = True);
+    procedure ReloadSourceFile;
+    function  GetConfirmation: Boolean;
   public
     procedure ChangeChecked(AList: TCheckListBox; AChecked: Boolean);
     procedure ChangeEnabled(AEnabled: Boolean);
@@ -116,9 +138,15 @@ var
 implementation
 
 uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress,
-  Math, DateUtils;
+  Math, DateUtils, UnitFormConfirmation;
 
 {$R *.dfm}
+
+//DONE: - for chat, a "purge sys info messages" could be useful; after a few months, the log accumulates a lot of useless lines and it takes longer and longer to parse; stripping the system info parts would be immensely helpful, I believe
+//DONE: - is the log loader threaded? the Cancel button does not respond while loading the log, and so is quite useless
+//DONE: - can the generation of html/BBcode versions be optional instead of automated? I assume it's part of the reason why it takes so much time to load the log..
+//todo: - shouldn't the Guilds page have an 'inventory' button, and the Characters page a 'Room button? they seem to be switched right now
+//todo: - loading zyRoom after Ryzom has loaded seems to crash the game, I assume it's because of the log being written to, so the automated backup somehow fails?
 
 {*******************************************************************************
 Create the form
@@ -177,10 +205,10 @@ procedure TFormLog.ChangeEnabled(AEnabled: Boolean);
 begin
   BtDefault.Enabled := AEnabled;
   BtOK.Enabled := AEnabled;
-  BtHtml.Enabled := AEnabled;
-  BtBbcode.Enabled := AEnabled;
-  BtText.Enabled := AEnabled;
-  GbOptions.Enabled := AEnabled;
+  BtCode.Enabled := AEnabled;
+  BtClean.Enabled := AEnabled;
+  BtSave.Enabled := AEnabled;
+//  GbOptions.Enabled := AEnabled;
   GbChannels.Enabled := AEnabled;
   GbCharacters.Enabled := AEnabled;
   DatePickerStart.Enabled := AEnabled;
@@ -190,22 +218,29 @@ begin
 end;
 
 {*******************************************************************************
+Reload the source file
+*******************************************************************************}
+procedure TFormLog.ReloadSourceFile;
+begin
+  // Copy log file
+  CopyFile(PChar(OdBrowseLogFile.FileName), PChar(FLogFile), False);
+
+  // Default filter and load file
+  SetDefault(False);
+  LoadLogFile(True);
+
+  FDateStart := DateOf(DatePickerStart.DateTime) + TimeOf(TimePickerStart.DateTime);
+  FDateEnd := DateOf(DatePickerEnd.DateTime) + TimeOf(TimePickerEnd.DateTime);
+  ChangeEnabled(True);
+end;
+
+{*******************************************************************************
 Load the log file
 *******************************************************************************}
 procedure TFormLog.BtLoadClick(Sender: TObject);
 begin
-  if OdBrowseLogFile.Execute then begin
-    // Copy log file
-    CopyFile(PChar(OdBrowseLogFile.FileName), PChar(FLogFile), False);
-
-    // Default filter and load file
-    SetDefault(False);
-    LoadLogFile(True);
-
-    FDateStart := DateOf(DatePickerStart.DateTime) + TimeOf(TimePickerStart.DateTime);
-    FDateEnd := DateOf(DatePickerEnd.DateTime) + TimeOf(TimePickerEnd.DateTime);
-    ChangeEnabled(True);
-  end;
+  if OdBrowseLogFile.Execute then
+    ReloadSourceFile;
 end;
 
 {*******************************************************************************
@@ -286,7 +321,7 @@ begin
   PnColorBackground.Color := $00425E50;
   PnColorSystem.Color := $00000000;
   CbShowDate.Checked := True;
-  CbSystemMessage.Checked := True;
+  CbSystemMessage.Checked := False;
   ChangeChecked(ListChannels, True);
   ChangeChecked(ListCharacters, True);
 end;
@@ -386,6 +421,73 @@ procedure TFormLog.ListFilterClick(Sender: TObject);
 begin
   if ListFilter.ItemIndex >= 0 then
     EdFilter.Text := ListFilter.Items[ListFilter.ItemIndex];
+end;
+
+{*******************************************************************************
+Ouvre le popup menu pour choisir le format
+*******************************************************************************}
+procedure TFormLog.BtCodeClick(Sender: TObject);
+begin
+  PopupMenuCode.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+end;
+
+{*******************************************************************************
+Ouvre le popup menu pour choisir le type de suppression
+*******************************************************************************}
+procedure TFormLog.BtCleanClick(Sender: TObject);
+begin
+  MenuAutoDeleteOld.Caption := Format(RS_MENUDELETEOLD, [FormatDateTime('yyyy-dd-mm', DatePickerStart.DateTime)]);
+  PopupMenuClean.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+end;
+
+{*******************************************************************************
+Supprime tous les messages
+*******************************************************************************}
+procedure TFormLog.MenuDeleteAllClick(Sender: TObject);
+begin
+  if not GetConfirmation then Exit;
+  MdkWriteFile(OdBrowseLogFile.FileName, '', False, True);
+  ReloadSourceFile;
+end;
+
+{*******************************************************************************
+Supprime les messages système
+*******************************************************************************}
+procedure TFormLog.MenuDeleteSystemClick(Sender: TObject);
+begin
+  if not GetConfirmation then Exit;
+  FormProgress.ShowCleanLog(OdBrowseLogFile.FileName, 0);
+  ReloadSourceFile;
+end;
+
+{*******************************************************************************
+Supprime les vieux messages
+*******************************************************************************}
+procedure TFormLog.MenuAutoDeleteOldClick(Sender: TObject);
+begin
+  if not GetConfirmation then Exit;
+  FormProgress.ShowCleanLog(OdBrowseLogFile.FileName, DateOf(DatePickerStart.DateTime));
+  ReloadSourceFile;
+end;
+
+{*******************************************************************************
+Demande de confirmation
+*******************************************************************************}
+function TFormLog.GetConfirmation: Boolean;
+begin
+  Result := FormConfirm.ShowConfirmation(RS_DELETECONFIRMATION1 + #13#10 + RS_DELETECONFIRMATION2) = mrYes;
+end;
+
+{*******************************************************************************
+Sauvegarde du fichier de log en cours et suppression de tous les messages
+*******************************************************************************}
+procedure TFormLog.BtSaveClick(Sender: TObject);
+var
+  wBakFile: String;
+begin
+  wBakFile := ChangeFileExt(OdBrowseLogFile.FileName, FormatDateTime('-yyyymmdd-hhnnss', Now) + ExtractFileExt(OdBrowseLogFile.FileName));
+  if Windows.CopyFile(PChar(OdBrowseLogFile.FileName), PChar(wBakFile), False) then
+    FormConfirm.ShowInformation(RS_FILESAVED);
 end;
 
 initialization

@@ -209,6 +209,41 @@ type
     LbValueGuard: TLabel;
     BtDefault: TSevenButton;
     BtOK: TSevenButton;
+    LbAutoDmg: TLabel;
+    LbValueDmg: TLabel;
+    LbValueProtect1: TLabel;
+    LbAutoProtect3: TLabel;
+    LbValueProtect3: TLabel;
+    LbAutoProtect1: TLabel;
+    LbAutoProtect2: TLabel;
+    LbValueProtect2: TLabel;
+    LbAutoResist1: TLabel;
+    LbValueResist1: TLabel;
+    LbAutoResist2: TLabel;
+    LbValueResist2: TLabel;
+    LbAutoResist3: TLabel;
+    LbValueResist3: TLabel;
+    LbAutoElementalSpeed: TLabel;
+    LbValueElementalSpeed: TLabel;
+    LbAutoElementalPower: TLabel;
+    LbValueElementalPower: TLabel;
+    LbValueHealPower: TLabel;
+    LbAutoDefensivePower: TLabel;
+    LbValueDefensivePower: TLabel;
+    LbAutoHealPower: TLabel;
+    LbAutoDefensiveSpeed: TLabel;
+    LbValueDefensiveSpeed: TLabel;
+    LbAutoOffensiveSpeed: TLabel;
+    LbValueOffensiveSpeed: TLabel;
+    LbAutoOffensivePower: TLabel;
+    LbValueOffensivePower: TLabel;
+    LbAutoHealSpeed: TLabel;
+    LbValueHealSpeed: TLabel;
+    GbQuantity: TGroupBox;
+    LbQuantityMin: TLabel;
+    LbQuantityMax: TLabel;
+    EdQuantityMin: TSpinEdit;
+    EdQuantityMax: TSpinEdit;
     procedure BtOKClick(Sender: TObject);
     procedure CbTypeMatClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -250,6 +285,8 @@ implementation
 
 uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
   UnitFormCharacter, UnitConfig, UnitFormOptions;
+
+//DONE: I see, a filter on the amount of items and a new entry in the top list to sort items on the amount, I added this in my todo list
 
 {$R *.dfm}
 
@@ -294,6 +331,7 @@ begin
   EdClassMax.ItemIndex := wIndex;
 
   // Specifications
+  LbAutoDmg.Caption := RS_SPEC_DAMAGE;
   LbAutoSpeed.Caption := RS_SPEC_SPEED;
   LbAutoRange.Caption := RS_SPEC_RANGE;
   LbAutoDodge.Caption := RS_SPEC_DODGE_MODIFIER;
@@ -304,6 +342,14 @@ begin
   LbAutoSlashingProt.Caption := RS_SPEC_MAX_SLASH_PROTEC;
   LbAutoSmashingProt.Caption := RS_SPEC_MAX_SMASH_PROTEC;
   LbAutoPiercingProt.Caption := RS_SPEC_MAX_PIERC_PROTEC;
+  LbAutoElementalSpeed.Caption := RS_SPEC_ELE_CAST_SPEED;
+  LbAutoElementalPower.Caption := RS_SPEC_ELE_POWER;
+  LbAutoOffensiveSpeed.Caption := RS_SPEC_OFFAFF_CAST_SPEED;
+  LbAutoOffensivePower.Caption := RS_SPEC_OFFAFF_POWER;
+  LbAutoHealSpeed.Caption := RS_SPEC_HEAL_CAST_SPEED;
+  LbAutoHealPower.Caption := RS_SPEC_HEAL_POWER;
+  LbAutoDefensiveSpeed.Caption := RS_SPEC_DEFAFF_CAST_SPEED;
+  LbAutoDefensivePower.Caption := RS_SPEC_DEFAFF_POWER;
 end;
 
 {*******************************************************************************
@@ -389,6 +435,10 @@ begin
   EdQualityMin.Value := GCurrentFilter.QualityMin;
   EdQualityMax.Value := GCurrentFilter.QualityMax;
 
+  // Quantity
+  EdQuantityMin.Value := GCurrentFilter.QuantityMin;
+  EdQuantityMax.Value := GCurrentFilter.QuantityMax;
+
   // Item equipment
   EdEquipment.ItemIndex := 0;
   if iqLightArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 1;
@@ -443,8 +493,9 @@ begin
     2: GCurrentFilter.Sorting := ioClass;
     3: GCurrentFilter.Sorting := ioQuality;
     4: GCurrentFilter.Sorting := ioVolume;
-    5: GCurrentFilter.Sorting := ioPrice;
-    6: GCurrentFilter.Sorting := ioTime;
+    5: GCurrentFilter.Sorting := ioQuantity;
+    6: GCurrentFilter.Sorting := ioPrice;
+    7: GCurrentFilter.Sorting := ioTime;
   end;
   
   // Item type
@@ -473,6 +524,11 @@ begin
   if EdQualityMax.Value < EdQualityMin.Value then EdQualityMax.Value := EdQualityMin.Value;
   GCurrentFilter.QualityMin := EdQualityMin.Value;
   GCurrentFilter.QualityMax := EdQualityMax.Value;
+
+  // Item quantity
+  if EdQuantityMax.Value < EdQuantityMin.Value then EdQuantityMax.Value := EdQuantityMin.Value;
+  GCurrentFilter.QuantityMin := EdQuantityMin.Value;
+  GCurrentFilter.QuantityMax := EdQuantityMax.Value;
 
   // Item equipment
   GCurrentFilter.Equipment := [];
@@ -644,6 +700,10 @@ begin
       // Equipements
       if (ItemType = itEquipment) then begin
         if (ItemEquip in [iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
+          LbValueDmg.Caption := IntToStr(CDmg);
+          FLbList2.Add(LbAutoDmg);
+          FLbList2.Add(LbValueDmg);
+          
           LbValueSpeed.Caption := IntToStr(CSpeed);
           FLbList2.Add(LbAutoSpeed);
           FLbList2.Add(LbValueSpeed);
@@ -689,6 +749,80 @@ begin
           LbValuePiercingProt.Caption := IntToStr(CPiercingProt);
           FLbList2.Add(LbAutoPiercingProt);
           FLbList2.Add(LbValuePiercingProt);
+        end;
+
+        // Amplis
+        if (ItemEquip = iqAmplifier) then begin
+          // Magie élémentaire
+          LbValueElementalSpeed.Caption := IntToStr(AElementalSpeed);
+          FLbList2.Add(LbAutoElementalSpeed);
+          FLbList2.Add(LbValueElementalSpeed);
+
+          LbValueElementalPower.Caption := IntToStr(AElementalPower);
+          FLbList2.Add(LbAutoElementalPower);
+          FLbList2.Add(LbValueElementalPower);
+
+          // Magie débilitante
+          LbValueOffensiveSpeed.Caption := IntToStr(AOffensiveSpeed);
+          FLbList2.Add(LbAutoOffensiveSpeed);
+          FLbList2.Add(LbValueOffensiveSpeed);
+
+          LbValueOffensivePower.Caption := IntToStr(AOffensivePower);
+          FLbList2.Add(LbAutoOffensivePower);
+          FLbList2.Add(LbValueOffensivePower);
+
+          // Magie curative
+          LbValueHealSpeed.Caption := IntToStr(AHealSpeed);
+          FLbList2.Add(LbAutoHealSpeed);
+          FLbList2.Add(LbValueHealSpeed);
+
+          LbValueHealPower.Caption := IntToStr(AHealPower);
+          FLbList2.Add(LbAutoHealPower);
+          FLbList2.Add(LbValueHealPower);
+
+          // Magie neutralisante
+          LbValueDefensiveSpeed.Caption := IntToStr(ADefensiveSpeed);
+          FLbList2.Add(LbAutoDefensiveSpeed);
+          FLbList2.Add(LbValueDefensiveSpeed);
+
+          LbValueDefensivePower.Caption := IntToStr(ADefensivePower);
+          FLbList2.Add(LbAutoDefensivePower);
+          FLbList2.Add(LbValueDefensivePower);
+        end;
+
+        // Bijoux
+        if (ItemEquip = iqJewel) then begin
+          // Résistances
+          LbAutoResist1.Caption := GetResistName(BResist[1]);
+          LbValueResist1.Caption := FloatToStr(BResistValue[1]);
+          FLbList2.Add(LbAutoResist1);
+          FLbList2.Add(LbValueResist1);
+
+          LbAutoResist2.Caption := GetResistName(BResist[2]);
+          LbValueResist2.Caption := FloatToStr(BResistValue[2]);
+          FLbList2.Add(LbAutoResist2);
+          FLbList2.Add(LbValueResist2);
+
+          LbAutoResist3.Caption := GetResistName(BResist[3]);
+          LbValueResist3.Caption := FloatToStr(BResistValue[3]);
+          FLbList2.Add(LbAutoResist3);
+          FLbList2.Add(LbValueResist3);
+
+          // Protections
+          LbAutoProtect1.Caption := GetProtectName(BProtect[1]);
+          LbValueProtect1.Caption := FloatToStr(BProtectValue[1]);
+          FLbList2.Add(LbAutoProtect1);
+          FLbList2.Add(LbValueProtect1);
+
+          LbAutoProtect2.Caption := GetProtectName(BProtect[2]);
+          LbValueProtect2.Caption := FloatToStr(BProtectValue[2]);
+          FLbList2.Add(LbAutoProtect2);
+          FLbList2.Add(LbValueProtect2);
+
+          LbAutoProtect3.Caption := GetProtectName(BProtect[3]);
+          LbValueProtect3.Caption := FloatToStr(BProtectValue[3]);
+          FLbList2.Add(LbAutoProtect3);
+          FLbList2.Add(LbValueProtect3);
         end;
       end;
 
@@ -971,6 +1105,12 @@ begin
   EdQualityMin.MaxValue := _MAX_QUALITY;
   EdQualityMax.MinValue := _MIN_QUALITY;
   EdQualityMax.MaxValue := _MAX_QUALITY;
+  
+  // min and max values for the quantity
+  EdQuantityMin.MinValue := _MIN_QUANTITY;
+  EdQuantityMin.MaxValue := _MAX_QUANTITY;
+  EdQuantityMax.MinValue := _MIN_QUANTITY;
+  EdQuantityMax.MaxValue := _MAX_QUANTITY;
 end;
 
 {*******************************************************************************

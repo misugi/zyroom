@@ -36,6 +36,7 @@ resourcestring
   RS_PROGRESS_ROOM = 'Affichage en cours, veuillez patienter...';
   RS_CONNEXION_ERROR = 'Trop d''erreurs API, arrêt de la synchronisation';
   RS_PARSE_LOG = 'Analyse du fichier de log, veuillez patienter...';
+  RS_CLEAN_LOG = 'Nettoyage du fichier de log, veuillez patienter...';
 
 const
   _TASK_SYNCHRONIZE = 0;
@@ -43,6 +44,7 @@ const
   _TASK_SYNCHRONIZE_CHAR = 2;
   _TASK_INVENT = 3;
   _TASK_PARSE_LOG = 4;
+  _TASK_CLEAN_LOG = 5;
 
   _INVENT_ROOM = 0;
   _INVENT_BAG = 1;
@@ -84,6 +86,7 @@ type
     FGuardFile: TIniFile;
     FLogFile: String;
     FFirstLoading: Boolean;
+    FCleanDate: TDateTime;
     FDappers: String;
 
     procedure FillRoom(AGuildID: String);
@@ -94,6 +97,7 @@ type
     procedure CloseForm;
 
     procedure ParseLogFile(ALogFile: String; AFirstLoading: Boolean);
+    procedure CleanLogFile(ADate: TDateTime = 0);
     function  DelphiToHtmlColor(ADelphiColor: TColor): String;
     function  ColorTextHtml(AHtmlColor: String; AText: String): String;
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
@@ -106,6 +110,7 @@ type
     procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
     procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
     procedure ShowParseLog(ALogFile: String; AFirstLoading: Boolean);
+    procedure ShowCleanLog(ALogFile: String; ADate: TDateTime = 0);
 
     function  LogToHtmlColor(ALogColor: String): String;
     function  LogToDelphiColor(ALogColor: String): TColor;
@@ -392,6 +397,7 @@ begin
       _TASK_SYNCHRONIZE_CHAR: SynchronizeChar(FCharID);
       _TASK_INVENT: FillInvent(FCharID);
       _TASK_PARSE_LOG: ParseLogFile(FLogFile, FFirstLoading);
+      _TASK_CLEAN_LOG: CleanLogFile(FCleanDate);
     end;
   finally
     CloseForm;
@@ -456,6 +462,18 @@ begin
   FFirstLoading := AFirstLoading;
   FProcessingType := _TASK_PARSE_LOG;
   LbProgress.Caption := RS_PARSE_LOG;
+  Self.ShowModal;
+end;
+
+{*******************************************************************************
+Clean a log file
+*******************************************************************************}
+procedure TFormProgress.ShowCleanLog(ALogFile: String; ADate: TDateTime);
+begin
+  FLogFile := ALogFile;
+  FCleanDate := ADate;
+  FProcessingType := _TASK_CLEAN_LOG;
+  LbProgress.Caption := RS_CLEAN_LOG;
   Self.ShowModal;
 end;
 
@@ -568,6 +586,7 @@ begin
     ioClass: Result := IntToStr(Ord(AItemInfo.ItemClass));
     ioQuality: Result := Format('%.3d', [AItemInfo.ItemQuality]);
     ioVolume: Result := FormatFloat2('0000.00', AItemInfo.ItemVolume);
+    ioQuantity: Result := Format('%.3d', [AItemInfo.ItemSize]);
     ioPrice: if AItemInfo.ItemPrice > 0 then Result := FormatFloat2('00000000', AItemInfo.ItemPrice);
     ioTime: if AItemInfo.ItemPrice > 0 then Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
   end;
@@ -729,7 +748,7 @@ begin
               wApi.SetProxyParameters('', 0, '', '');
 
             // Get item icon
-            wApi.ApiItemIcon(wItemInfo.ItemName, wIconFile, wItemInfo.ItemColor, wItemInfo.ItemQuality, wItemInfo.ItemSize, IfThen(wItemInfo.ItemSap, 0, -1), wItemInfo.ItemDestroyed);
+            wApi.ApiItemIcon(wItemInfo.ItemName, wIconFile, wItemInfo.ItemColor, wItemInfo.ItemQuality, wItemInfo.ItemSize, IfThen(wItemInfo.ItemSap, 0, -1), wItemInfo.ItemDestroyed, wItemInfo.ItemLocked);
             try
               wPng.LoadFromStream(wIconFile);
               wPng.SaveToFile(FStoragePath + wItemInfo.ItemFileName);
@@ -883,6 +902,8 @@ begin
       wDateEnd := 0;
       wDateLine := 0;
       for i := 0 to wChatLog.Count - 1 do begin
+        if Self.ModalResult = mrCancel then Exit;
+
         // Empty line ?
         if Length(wChatLog.Strings[i]) = 0 then Continue;
         wSystemMessage := False;
@@ -896,7 +917,7 @@ begin
           if wDateStart = 0 then
             wDateStart := wDateLine;
           if CbShowDate.Checked then
-            wDate := Format('%s/%s/%s %s:%s:%s * ', [wReg.Match[3], wReg.Match[2], wReg.Match[1], wReg.Match[4], wReg.Match[5], wReg.Match[6]]);
+            wDate := FormatDateTime('yyyy-mm-dd hh:nn:ss', wDateLine) + ' * ';
 
           // Initialization
           wTextHtml := '';
@@ -993,19 +1014,20 @@ begin
 
       // Date end
       if (wDateStart > 0) then
-        wDateEnd := EncodeDateTime(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]),
-                                   StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
+        wDateEnd := wDateLine;
 
       // Update available options
       if AFirstLoading then begin
-        DatePickerStart.MinDate := DateOf(wDateStart);
-        DatePickerStart.MaxDate := DateOf(wDateEnd);
-        DatePickerStart.Date := DateOf(wDateStart);
-        TimePickerStart.Time := TimeOf(wDateStart);
-        DatePickerEnd.MinDate := DateOf(wDateStart);
-        DatePickerEnd.MaxDate := DateOf(wDateEnd);
-        DatePickerEnd.Date := DateOf(wDateEnd);
-        TimePickerEnd.Time := TimeOf(wDateEnd);
+        if wDateStart > 0 then begin
+          DatePickerStart.MinDate := DateOf(wDateStart);
+          DatePickerStart.MaxDate := DateOf(wDateEnd);
+          DatePickerStart.Date := DateOf(wDateStart);
+          TimePickerStart.Time := TimeOf(wDateStart);
+          DatePickerEnd.MinDate := DateOf(wDateStart);
+          DatePickerEnd.MaxDate := DateOf(wDateEnd);
+          DatePickerEnd.Date := DateOf(wDateEnd);
+          TimePickerEnd.Time := TimeOf(wDateEnd);
+        end;
 
         ListChannels.Items.Assign(wListChannels);
         ChangeChecked(ListChannels, True);
@@ -1056,6 +1078,64 @@ begin
         Break;
       end;
     end;
+  end;
+end;
+
+{*******************************************************************************
+Nettoyage du fichier de log
+*******************************************************************************}
+procedure TFormProgress.CleanLogFile(ADate: TDateTime);
+var
+  wChatLog: TStringList;
+  wNewFile: TStringList;
+  wDateLine: TDate;
+  wYear, wMonth, wDay: Integer;
+  i: Integer;
+begin
+  wChatLog := TStringList.Create;
+  wNewFile := TStringList.Create;
+  try
+    wChatLog.LoadFromFile(FLogFile);
+
+    if ADate = 0 then begin
+      // suppression des messages système
+      for i := 0 to wChatLog.Count - 1 do begin
+        if ModalResult = mrCancel then Exit;
+
+        // Si on trouve le caractère @ à la position 23 ou si la ligne ne commence pas par la date (année sur 4 chiffres) => on garde la ligne
+        if (Pos('@', wChatLog[i]) = 23) or (StrToIntDef(Copy(wChatLog[i], 1, 4), -1) < 0) then
+          wNewFile.Append(wChatLog[i]);
+
+        // Progression
+        ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
+        Application.ProcessMessages;
+      end;
+    end else begin
+      // suppression des vieux messages
+      for i := 0 to wChatLog.Count - 1 do begin
+        if ModalResult = mrCancel then Exit;
+
+        wDateLine := 0;
+        wYear := StrToIntDef(Copy(wChatLog[i], 1, 4), -1);
+        if wYear >= 0 then begin
+          wMonth := StrToInt(Copy(wChatLog[i], 6, 2));
+          wDay := StrToInt(Copy(wChatLog[i], 9, 2));
+          wDateLine := EncodeDate(wYear, wMonth, wDay);
+        end;
+
+        if (wDateLine = 0) or (wDateLine >= ADate) then
+          wNewFile.Append(wChatLog[i]);
+
+        // Progression
+        ProgressBar.Position := Trunc( ((i+1) / wChatLog.Count) * 100);
+        Application.ProcessMessages;
+      end;
+    end;
+    
+    wNewFile.SaveToFile(FLogFile);
+  finally
+    wNewFile.Free;
+    wChatLog.Free;
   end;
 end;
 
