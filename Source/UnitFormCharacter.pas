@@ -621,7 +621,10 @@ begin
       StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/haircolor'), 0),
       StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/tattoo'), 0),
       StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/eyescolor'), 0),
-      wGabarit, wMorph, wStream);
+      wGabarit, wMorph,
+      wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/equipment/chest'),
+      StrToIntDef(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/equipment/chest/@color'), 0),
+      wStream);
     wIconFile := GConfig.GetCharPath(wItemID) + _ICON_FILENAME;
     wStream.SaveToFile(wIconFile);
     if AAction = atUpdate then
@@ -677,8 +680,8 @@ Returns the head of the character
 *******************************************************************************}
 procedure TFormCharacter.GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
 const
-  _HEAD_WIDTH = 80;
-  _HEAD_HEIGHT = 80;
+  _HEAD_WIDTH = 48;
+  _HEAD_HEIGHT = 48;
 var
   wRectSrc: TRect;
   wBmp: TBitmap;
@@ -757,7 +760,8 @@ begin
   wRect.Bottom := wHead.Height;
   wHead.Canvas.CopyRect(wRect, wBmp.Canvas, wRectSrc);
 
-  ACanvas.StretchDraw(ARect, wHead);
+  ACanvas.Draw(ARect.Left, ARect.Top, wHead);
+  
   wBmp.Free;
 end;
 

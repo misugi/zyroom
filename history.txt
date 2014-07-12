@@ -1,6 +1,11 @@
 zyRoom - History of changes
 ===========================
 
+# version 5.1.1 (2014-07-12)
+Fixed: the durability of NPC tools have now a correct value (100)
+Change: it draws the characters with a vest
+Change: use the new address http://api.bmsite.net for the Ballistic Mystix API
+
 # version 5.1.0 (2014-05-25)
 New: the real values for characteristics of the objects are back!
 New: the resistance and protection are now displayed for jewels

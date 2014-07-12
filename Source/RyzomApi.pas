@@ -79,7 +79,7 @@ type
     procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor = icWhite;
       AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False; ALocked: Boolean = False);
     procedure ApiBallisticMystix(ARace: String; AGender: String; AHairType: Integer; AHairColor: Integer;
-      ATatoo: Integer; AEyesColor: Integer; AGabarit, AMorph: String; AResponse: TStream);
+      ATatoo: Integer; AEyesColor: Integer; AGabarit, AMorph: String; AChestItem: String; AChestColor: Integer; AResponse: TStream);
     procedure ApiTime(AFormat: String; AResponse: TStream);
     procedure SetProxyParameters(AProxyAddress: String; AProxyPort: Integer;
       AProxyUsername: String; AProxyPassword: String);
@@ -363,11 +363,12 @@ end;
 Get character image
 *******************************************************************************}
 procedure TRyzomApi.ApiBallisticMystix(ARace, AGender: String; AHairType,
-  AHairColor, ATatoo, AEyesColor: Integer; AGabarit, AMorph: String; AResponse: TStream);
+  AHairColor, ATatoo, AEyesColor: Integer; AGabarit, AMorph: String; AChestItem: String; AChestColor: Integer; AResponse: TStream);
 begin
   try
-    CallAPI(Format('http://ballisticmystix.net/api/dressingroom.php?angle=0&race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d&gabarit=%s&morph=%s',
-      [Copy(ARace, 1, 2), AGender, AHairType, AHairColor, ATatoo, AEyesColor, AGabarit, AMorph]), AResponse);
+    // API documentation at this address : http://api.bmsite.net
+    CallAPI(Format('http://api.bmsite.net/char/render/3d/180?race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d&gabarit=%s&morph=%s&chest=%s/%d',
+      [Copy(ARace, 1, 2), AGender, AHairType, AHairColor, ATatoo, AEyesColor, AGabarit, AMorph, AChestItem, AChestColor]), AResponse);
   except
     on E: Exception do raise Exception.CreateFmt('[ApiBallisticMystix] %s', [E.Message]);
   end;

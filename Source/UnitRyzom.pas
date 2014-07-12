@@ -840,6 +840,7 @@ begin
       if wRegExpr.Exec(AItemInfo.ItemName) and (Pos('_sap_recharge', AItemInfo.ItemName) = 0) then begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqTool;
+        AItemInfo.ItemDur := 100;
         wCoef := 10.0;
       end;
     end;
