@@ -1,6 +1,13 @@
 zyRoom - History of changes
 ===========================
 
+# version 5.1.2 (2016-10-27)
+Fixed: the log analysis did not read the last line
+Fixed: the application completely block during the analysis of the log if the file contained a blank line
+Fixed: the log analysis does not work if the file contained the names of the channels (like "UNIVERSE" or "GUILD")
+Fixed: the durability of crafted tools have now a correct value (120)
+Change: when the log file contains the names of the channels (like "UNIVERSE" or "GUILD"), these names are displayed in the list used to filter messages
+
 # version 5.1.1 (2014-07-12)
 Fixed: the durability of NPC tools have now a correct value (100)
 Change: it draws the characters with a vest
