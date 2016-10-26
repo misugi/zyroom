@@ -115,6 +115,8 @@ type
     
     FDateStart: TDateTime;
     FDateEnd: TDateTime;
+
+    FColorReg: TRegExpr;
     
     procedure LoadLogFile(AFirstLoading: Boolean = False);
     procedure SetDefault(ASetDates: Boolean = True);
@@ -161,6 +163,10 @@ begin
   FLogFileText := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_TEXT_FILENAME;
   FFilterFile := GConfig.CurrentPath + _LOG_DIR + '\' + _LOG_FILTER_FILENAME;
 
+  // Regular expression for color
+  FColorReg := TRegExpr.Create;
+  FColorReg.Expression := '@\{[0-9A-F]{4}\}';
+
   // Load filters
   if FileExists(FFilterFile) then
     ListFilter.Items.LoadFromFile(FFilterFile);
@@ -189,6 +195,7 @@ procedure TFormLog.FormDestroy(Sender: TObject);
 begin
   // Save filters
   ListFilter.Items.SaveToFile(FFilterFile);
+  FColorReg.Free;
 end;
 
 {*******************************************************************************
@@ -338,10 +345,14 @@ Color of channels in the list
 *******************************************************************************}
 procedure TFormLog.ListChannelsDrawItem(Control: TWinControl;
   Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+  wColor: String;
 begin
   with Control as TCheckListBox do with Canvas do begin
+    FColorReg.Exec(Items[Index]);
+    wColor := FColorReg.Match[0];
     Brush.Color := PnColorBackground.Color;
-    Font.Color := FormProgress.LogToDelphiColor(Items[Index]);
+    Font.Color := FormProgress.LogToDelphiColor(wColor);
     FillRect(Rect);
     DrawText(Handle, PChar(Items[Index]), -1, Rect , DT_LEFT or DT_NOPREFIX);
   end;

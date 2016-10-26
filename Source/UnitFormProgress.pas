@@ -103,6 +103,7 @@ type
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
     function  CheckSystemFilter(AMessage: String): Boolean;
     function  IsSystemLine(ALine: String): Boolean;
+    function  RemoveHtmlSpecialChars(ALine: String): String;
   public
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -828,6 +829,7 @@ Add color to the text in HTML
 *******************************************************************************}
 function TFormProgress.ColorTextHtml(AHtmlColor: String; AText: String): String;
 begin
+  AText := RemoveHtmlSpecialChars(AText);
   Result := Format('<font color="%s">%s</font>', [AHtmlColor, AText]);
 end;
 
@@ -843,6 +845,8 @@ end;
 Parse the log file
 *******************************************************************************}
 procedure TFormProgress.ParseLogFile(AFirstLoading: Boolean);
+const
+  _BOM_UTF8 = #$EF#$BB#$BF;
 var
   wReg: TRegExpr;
   wReg2: TRegExpr;
@@ -852,6 +856,7 @@ var
   wTextFile: TextFile;
   wChatSize: Cardinal;
   wTotalBytes: Integer;
+  wFirstLine: Boolean;
   
   wDate: String;
   wText: String;
@@ -863,6 +868,7 @@ var
   wSysColor, wBackColor: String;
   wColorText1, wColorText2: String;
   wColorPos1, wColorPos2: Integer;
+  wChannel: String;
 
   wDateStart, wDateEnd, wDateLine: TDateTime;
   wListChannels, wListCharacters: TStringList;
@@ -908,15 +914,26 @@ begin
       wDateEnd := 0;
       wDateLine := 0;
       wUtf8File := True;
+      wFirstLine := True;
+      wSystemMessage := True;
 
       wTotalBytes := 0;
       wChatSize := MdkFileSize(FLogFile);
-      ReadLn(wChatLog, wLine);
       while not Eof(wChatLog) do begin
         if Self.ModalResult = mrCancel then Exit;
+        ReadLn(wChatLog, wLine);
+
+        // Empty line ?
+        wLine := Trim(wLine);
+        if Length(wLine) = 0 then Continue;
 
         // Decode the line (UTF-8)
         if wUtf8File then begin
+          // Remove the UTF-8 BOM if exists (only for the first line)
+          if wFirstLine and (Pos(_BOM_UTF8, wLine) = 1) then
+            wLine := RightStr(wLine, Length(wLine) - Length(_BOM_UTF8));
+          wFirstLine := False;
+
           wLine2 := UTF8Decode(wLine); // if function failed, return empty string
           if Length(wLine2) > 0 then
             wLine := wLine2
@@ -924,10 +941,7 @@ begin
             wUtf8File := False;
         end;
 
-        // Empty line ?
-        if Length(wLine) = 0 then Continue;
-
-        wReg.Expression := '^(\d{4})/(\d{2})/(\d{2}) (\d{2}):(\d{2}):(\d{2}) \* (.*)$';
+        wReg.Expression := '^(\d{4})/(\d{2})/(\d{2}) (\d{2}):(\d{2}):(\d{2}) (\((.*)\) )?\* (.*)$';
         if wReg.Exec(wLine) then begin
           // Date at the beginning of the line
           wDateLine := EncodeDateTime(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]),
@@ -940,6 +954,7 @@ begin
 
           // Message système ?
           wSystemMessage := IsSystemLine(wLine);
+          wLine := wReg.Match[wReg.SubExprMatchCount];
           if wSystemMessage then begin
             wTextHtml := wLine;
             wTextBbcode := wLine;
@@ -948,7 +963,6 @@ begin
             // Initialization
             wTextHtml := '';
             wTextBbcode := '';
-            wLine := wReg.Match[7];
             wColorPos1 := 0;
             wColorPos2 := 0;
 
@@ -982,8 +996,12 @@ begin
 
             // Second color
             if wColorPos2 > 0 then begin
-              if (wListChannels.IndexOf(wColorText2) < 0) then
-                wListChannels.Append(wColorText2);
+              wChannel := wColorText2;
+              if Length(wReg.Match[8]) > 0 then
+                wChannel := wReg.Match[8] + wColorText2;
+              if (wListChannels.IndexOf(wChannel) < 0) then
+                wListChannels.Append(wChannel);
+
               wText := Copy(wLine, wColorPos2 + 7, Length(wLine)-wColorPos2-6);
               wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText2), wText);
               wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText2), wText);
@@ -1013,7 +1031,7 @@ begin
            (wWriteEnabled) and 
            (wDateLine >= (DateOf(DatePickerStart.Date) + TimeOf(TimePickerStart.Time))) and
            (wDateLine <= (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) and
-           ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wColorText2)])) and
+           ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wChannel)])) and
            ((wSystemMessage) or ((ListCharacters.Count > 0) and ListCharacters.Checked[ListCharacters.Items.IndexOf(wCharacter)]));
 
         // Writing OK
@@ -1030,8 +1048,6 @@ begin
         wTotalBytes := wTotalBytes + Length(wLine)+2;
         ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
-
-        ReadLn(wChatLog, wLine);
       end; // end while
 
       // Date end
@@ -1176,7 +1192,19 @@ Indique si la ligne du log est une ligne système
 function TFormProgress.IsSystemLine(ALine: String): Boolean;
 begin
   // Une ligne système = pas de caractère @ et début avec la date
-  Result := (Pos('@', ALine) <> 23) and (StrToIntDef(Copy(ALine, 1, 4), -1) >= 0);
+  Result := (Pos('* @{', ALine) = 0) and (StrToIntDef(Copy(ALine, 1, 4), -1) >= 0);
+end;
+
+{*==============================================================================
+Replace special chars for HTML
+===============================================================================}
+function TFormProgress.RemoveHtmlSpecialChars(ALine: String): String;
+begin
+  Result := ALine;
+  if (Pos('>', ALine) > 0) or (Pos('<', ALine) > 0) then begin
+    Result := StringReplace(Result, '<', '&lt;', [rfReplaceAll]);
+    Result := StringReplace(Result, '>', '&gt;', [rfReplaceAll]);
+  end;
 end;
 
 end.

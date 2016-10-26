@@ -332,12 +332,12 @@ object FormLog: TFormLog
     Left = 186
     Top = 28
     Width = 571
-    Height = 579
+    Height = 578
     TabStop = False
     Align = alClient
     TabOrder = 1
     ControlData = {
-      4C000000043B0000D73B00000000000000000000000000000000000000000000
+      4C000000043B0000BD3B00000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126203000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
@@ -347,7 +347,7 @@ object FormLog: TFormLog
     Left = 0
     Top = 28
     Width = 186
-    Height = 579
+    Height = 578
     Align = alLeft
     BevelOuter = bvNone
     Font.Charset = DEFAULT_CHARSET
@@ -360,7 +360,7 @@ object FormLog: TFormLog
     TabOrder = 2
     DesignSize = (
       186
-      579)
+      578)
     object GbChannels: TGroupBox
       Left = 0
       Top = 93
@@ -670,7 +670,7 @@ object FormLog: TFormLog
     end
     object BtDefault: TSevenButton
       Left = 3
-      Top = 556
+      Top = 551
       Width = 85
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -723,7 +723,7 @@ object FormLog: TFormLog
     end
     object BtOK: TSevenButton
       Left = 93
-      Top = 556
+      Top = 551
       Width = 85
       Height = 23
       Anchors = [akLeft, akBottom]

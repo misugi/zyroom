@@ -118,8 +118,8 @@ IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=5
 MinorVer=1
-Release=1
-Build=132
+Release=2
+Build=140
 Debug=0
 PreRelease=0
 Special=0
@@ -130,7 +130,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=zyRoom
-FileVersion=5.1.1.132
+FileVersion=5.1.2.140
 InternalName=
 LegalCopyright=Misulud productions
 LegalTrademarks=
@@ -138,26 +138,31 @@ OriginalFilename=
 ProductName=
 ProductVersion=-
 Comments=
+[Excluded Packages]
+c:\program files (x86)\borland\delphi7\Bin\dclindy70.bpl=(Untitled)
+c:\program files (x86)\borland\delphi7\Bin\dclIntraweb_50_70.bpl=(Untitled)
 [HistoryLists\hlConditionals]
-Count=12
-Item0=__NOALERT;__NOSTATUS;__NOUPDATE;__DEBUG
-Item1=__NOALERT;__NOSYNCH;__NOSTATUS;__NOUPDATE
-Item2=__NOUPDATE
-Item3=__NOALERT;__DEBUG
-Item4=__DEBUG
-Item5=__NOALERT;__NOSYNCH;__NOSTATUS;__LOCALINFO;__DEBUG
-Item6=__NOALERT;__DEBUG;__LOCALINFO;__NOSYNCH
-Item7=__NOALERT;__DEBUG;__LOCALINFO
-Item8=__NOALERT
-Item9=__NOALERT;__NOSTATUS;__DEBUG;__LOCALINFO
-Item10=__NOALERT;__NOSTATUS;__DEBUG
-Item11=__NOALERT;__NOSTATUS;__DEBUG;__NOSYNCH
+Count=13
+Item0=__NOALERT;__DEBUG
+Item1=__NOALERT;__NOSTATUS;__NOUPDATE
+Item2=__NOALERT;__NOSTATUS;__NOUPDATE;__DEBUG
+Item3=__NOALERT;__NOSYNCH;__NOSTATUS;__NOUPDATE
+Item4=__NOUPDATE
+Item5=__DEBUG
+Item6=__NOALERT;__NOSYNCH;__NOSTATUS;__LOCALINFO;__DEBUG
+Item7=__NOALERT;__DEBUG;__LOCALINFO;__NOSYNCH
+Item8=__NOALERT;__DEBUG;__LOCALINFO
+Item9=__NOALERT
+Item10=__NOALERT;__NOSTATUS;__DEBUG;__LOCALINFO
+Item11=__NOALERT;__NOSTATUS;__DEBUG
+Item12=__NOALERT;__NOSTATUS;__DEBUG;__NOSYNCH
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=1
-Item0=$(DELPHI)\Lib\Debug
+Count=2
+Item0=D:\Dev\zyRoom\Source
+Item1=$(DELPHI)\Lib\Debug
 [HistoryLists\hlOutputDirectorry]
 Count=4
 Item0=D:\Dev\zyroom.extras\Bin

@@ -840,7 +840,10 @@ begin
       if wRegExpr.Exec(AItemInfo.ItemName) and (Pos('_sap_recharge', AItemInfo.ItemName) = 0) then begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqTool;
-        AItemInfo.ItemDur := 100;
+        //DONE: mettre 100 uniquement si l'objet n'a pas déjà une dura > 0 récupérée grace aux "craftparameters" dans la fonction GetItemInfoFromXML
+        // car un outil crafté a une durabilité de 120 (contre 100 pour un outil acheté)
+        if AItemInfo.ItemDur = 0 then
+          AItemInfo.ItemDur := 100;
         wCoef := 10.0;
       end;
     end;
