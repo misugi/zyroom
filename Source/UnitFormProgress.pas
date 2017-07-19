@@ -103,7 +103,7 @@ type
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
     function  CheckSystemFilter(AMessage: String): Boolean;
     function  IsSystemLine(ALine: String): Boolean;
-    function  RemoveHtmlSpecialChars(ALine: String): String;
+    function  ReplaceHtmlSpecialChars(ALine: String): String;
   public
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -829,7 +829,7 @@ Add color to the text in HTML
 *******************************************************************************}
 function TFormProgress.ColorTextHtml(AHtmlColor: String; AText: String): String;
 begin
-  AText := RemoveHtmlSpecialChars(AText);
+  AText := ReplaceHtmlSpecialChars(AText);
   Result := Format('<font color="%s">%s</font>', [AHtmlColor, AText]);
 end;
 
@@ -1057,12 +1057,16 @@ begin
       // Update available options
       if AFirstLoading then begin
         if wDateStart > 0 then begin
-          DatePickerStart.MinDate := DateOf(wDateStart);
+          // initialisation à 0 pour éviter l'erreur Min > Max
+          DatePickerStart.MinDate := 0;
           DatePickerStart.MaxDate := DateOf(wDateEnd);
+          DatePickerStart.MinDate := DateOf(wDateStart);
           DatePickerStart.Date := DateOf(wDateStart);
           TimePickerStart.Time := TimeOf(wDateStart);
-          DatePickerEnd.MinDate := DateOf(wDateStart);
+
+          DatePickerEnd.MinDate := 0;
           DatePickerEnd.MaxDate := DateOf(wDateEnd);
+          DatePickerEnd.MinDate := DateOf(wDateStart);
           DatePickerEnd.Date := DateOf(wDateEnd);
           TimePickerEnd.Time := TimeOf(wDateEnd);
         end;
@@ -1198,7 +1202,7 @@ end;
 {*==============================================================================
 Replace special chars for HTML
 ===============================================================================}
-function TFormProgress.RemoveHtmlSpecialChars(ALine: String): String;
+function TFormProgress.ReplaceHtmlSpecialChars(ALine: String): String;
 begin
   Result := ALine;
   if (Pos('>', ALine) > 0) or (Pos('<', ALine) > 0) then begin
