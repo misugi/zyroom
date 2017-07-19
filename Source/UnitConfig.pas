@@ -268,6 +268,7 @@ type
 
   function StrToFloat2(AValue: String): Extended;
   function FormatFloat2(AFormat: string; AValue: Extended): String;
+  procedure WriteLog(AMessage: String);
 
 var
   GConfig: TConfig;
@@ -292,6 +293,17 @@ Formats a float into a string unsing point for separator
 function FormatFloat2(AFormat: String; AValue: Extended): String;
 begin
   Result := FormatFloat(AFormat, AValue, GConfig.FormatSettings);
+end;
+
+{*******************************************************************************
+Write a log message
+*******************************************************************************}
+procedure WriteLog(AMessage: String);
+var
+  wLine: String;
+begin
+  wLine := Format('%s | %s', [DateTimeToStr(Now), AMessage]);
+  MdkWriteFile(ChangeFileExt(ParamStr(0), '.log'), wLine);
 end;
 
 { TConfig }
