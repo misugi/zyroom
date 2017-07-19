@@ -1,6 +1,10 @@
 zyRoom - History of changes
 ===========================
 
+# version 5.1.3 (2017-07-20)
+Fixed: initializing dates when loading a log file
+Added: volume for new items
+
 # version 5.1.2 (2016-10-27)
 Fixed: the log analysis did not read the last line
 Fixed: the application completely block during the analysis of the log if the file contained a blank line

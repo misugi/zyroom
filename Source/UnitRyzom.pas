@@ -1091,6 +1091,7 @@ begin
     if AItemInfo.ItemType = itOther then begin
       if CompareText(AItemInfo.ItemName, 'pre_order.sitem') = 0 then wCoef := 5.0; // bouclier de pré-commande (pour la sortie du jeu en 2004)
       if CompareText(AItemInfo.ItemName, 'teddyubo.sitem') = 0 then wCoef := 5.0; // peluche de Yubo
+      if CompareText(AItemInfo.ItemName, 'xmas_gingeryubo.sitem') = 0 then wCoef := 5.0; // yubo pain d'épice
       if CompareText(AItemInfo.ItemName, 'louche.sitem') = 0 then wCoef := 5.0; // louche
       if Pos('ipoc_', AItemInfo.ItemName) = 1 then wCoef := 1.0; // flower (ipoc_int.sitem, ipoc_str.sitem, etc.)
       if Pos('ipm', AItemInfo.ItemName) = 1 then wCoef := 1.0; // egg (ipme04.sitem, ipmc03.sitem, ipmf04.sitem)
