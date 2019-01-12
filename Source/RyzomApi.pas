@@ -31,10 +31,10 @@ uses
 
 resourcestring
   RS_ERROR_LOADING_XML = 'Erreur de chargement du flux XML';
-  RS_REQUIRED_MODULES = 'Veuillez activer tous les modules requis sur votre clé API : %s';
+  RS_REQUIRED_MODULES = 'Veuillez activer tous les modules requis sur votre clÃ© API : %s';
 
 const
-  _API_BASE_URL = 'http://api.ryzom.com';
+  _API_BASE_URL = 'https://api.ryzom.com';
   _REQUIRED_MODULES_CHAR : array [0..4] of String = ('C01','C04','C05','C06','A03');
   _REQUIRED_MODULES_GUILD : array [0..2] of String = ('G01','G02','G03');
 
