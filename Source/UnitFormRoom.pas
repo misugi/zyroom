@@ -90,8 +90,8 @@ begin
   GuildRoom.DoubleBuffered := True;
   DoubleBuffered := True;
   FGuardFile := nil;
-  {$IFNDEF __DEBUG}
-  MenuCopy.Visible := False;
+  {$IFDEF __DEBUG_SITEM}
+  MenuCopy.Visible := True;
   {$ENDIF}
 end;
 

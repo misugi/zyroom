@@ -227,6 +227,7 @@ object FormRoom: TFormRoom
     end
     object MenuCopy: TMenuItem
       Caption = 'Copier'
+      Visible = False
       OnClick = MenuCopyClick
     end
   end

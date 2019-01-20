@@ -27,14 +27,14 @@ interface
 
 uses
   Classes, Windows, SysUtils, IdHTTP, IdCompressorZLib, Math, MisuDevKit,
-  Registry, XpDOM;
+  Registry, XpDOM, IdSSLOpenSSL;
 
 resourcestring
   RS_ERROR_LOADING_XML = 'Erreur de chargement du flux XML';
   RS_REQUIRED_MODULES = 'Veuillez activer tous les modules requis sur votre clé API : %s';
 
 const
-  _API_BASE_URL = 'http://api.ryzom.com';
+  _API_BASE_URL = 'https://api.ryzom.com';
   _REQUIRED_MODULES_CHAR : array [0..4] of String = ('C01','C04','C05','C06','A03');
   _REQUIRED_MODULES_GUILD : array [0..2] of String = ('G01','G02','G03');
 
@@ -65,6 +65,7 @@ type
   private
     FHttpRequest: TIdHTTP;
     FHttpCompressor: TIdCompressorZLib;
+    FSslHandler: TIdSSLIOHandlerSocketOpenSSL;
     FXmlDocument: TXpObjModel;
 
     procedure CheckXmlError(AResponse: TStream);
@@ -165,6 +166,12 @@ begin
   FHttpRequest := TIdHTTP.Create;
   FHttpRequest.Compressor := FHttpCompressor;
   FHttpRequest.ProxyParams.BasicAuthentication := True;
+  FHttpRequest.HandleRedirects := True;
+
+  // SSL
+  FSslHandler := TIdSSLIOHandlerSocketOpenSSL.Create;
+  FSslHandler.SSLOptions.Method := sslvSSLv23;
+  FHttpRequest.IOHandler := FSslHandler;
 end;
 
 {*******************************************************************************
@@ -175,6 +182,7 @@ begin
   FXmlDocument.Free;
   FHttpRequest.Free;
   FHttpCompressor.Free;
+  FSslHandler.Free;
 end;
 
 {*******************************************************************************
