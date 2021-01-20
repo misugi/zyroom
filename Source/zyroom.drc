@@ -1214,7 +1214,7 @@ BEGIN
 	IdResourceStringsProtocols_RSSSLAcceptError,	"Error accepting connection with SSL."
 	IdResourceStringsProtocols_RSSSLConnectError,	"Error connecting with SSL."
 	IdResourceStringsProtocols_RSSSLSettingCipherError,	"SetCipher failed."
-	IdResourceStringsCore_RSInterceptCircularLink,	"%d: Circular links are not allowed"
+	IdResourceStringsCore_RSInterceptCircularLink,	"%s: Circular links are not allowed"
 	IdResourceStringsCore_RSNotEnoughDataInBuffer,	"Not enough data in buffer. (%d/%d)"
 	IdResourceStringsCore_RSTooMuchDataInBuffer,	"Too much data in buffer."
 	IdResourceStringsCore_RSFileNotFound,	"File \"%s\" not found"

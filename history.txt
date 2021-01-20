@@ -1,6 +1,10 @@
 zyRoom - History of changes
 ===========================
 
+# version 5.1.5 (2021-01-20)
+Fixed: the status of server is now correct (red/green icon in the top right corner)
+Fixed: OpenSSL version 1.0.2u to be compatible with the server security
+
 # version 5.1.4 (2019-01-20)
 Fixed: the application is now compatible with secure API (https://api.ryzom.com)
 

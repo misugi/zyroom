@@ -390,7 +390,7 @@ var
   wTimeOfDay: Integer;
   wMinutes: Integer;
   wNextSeason: TDateTime;
-  wServerTick: Integer;
+  wServerTick: Int64;
 begin
   wStream := TMemoryStream.Create;
   wXmlDoc := TXpObjModel.Create(nil);
