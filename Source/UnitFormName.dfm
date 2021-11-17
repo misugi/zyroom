@@ -8,8 +8,8 @@ object FormName: TFormName
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -18,32 +18,20 @@ object FormName: TFormName
     378
     67)
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object LbName: TLabel
     Left = 8
     Top = 12
-    Width = 27
-    Height = 14
+    Width = 38
+    Height = 19
     Caption = 'Nom :'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
   end
   object EdName: TEdit
     Left = 70
     Top = 8
     Width = 304
-    Height = 22
+    Height = 27
     Anchors = [akLeft, akTop, akRight]
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 0
     Text = '<Name of>'
   end
