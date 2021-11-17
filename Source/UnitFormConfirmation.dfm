@@ -3,38 +3,46 @@ object FormConfirm: TFormConfirm
   Top = 347
   BorderStyle = bsDialog
   Caption = 'Information'
-  ClientHeight = 71
+  ClientHeight = 80
   ClientWidth = 350
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnShow = FormShow
+  DesignSize = (
+    350
+    80)
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object LbMessage: TLabel
     Left = 5
     Top = 7
     Width = 340
-    Height = 29
+    Height = 39
     Alignment = taCenter
     AutoSize = False
+    Caption = 
+      'Etes-vous s'#251'r de vouloir restaurer les personnages s'#233'lectionn'#233's ' +
+      '?'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = []
     ParentFont = False
+    WordWrap = True
   end
   object BtYes: TSevenButton
     Left = 97
-    Top = 43
+    Top = 52
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'Oui'
     TabOrder = 0
     Border.ColorNormal = 7368816
@@ -84,9 +92,10 @@ object FormConfirm: TFormConfirm
   end
   object BtNo: TSevenButton
     Left = 178
-    Top = 43
+    Top = 52
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'Non'
     TabOrder = 1
     Border.ColorNormal = 7368816
@@ -136,9 +145,10 @@ object FormConfirm: TFormConfirm
   end
   object BtOK: TSevenButton
     Left = 137
-    Top = 43
+    Top = 52
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 2
     Border.ColorNormal = 7368816
