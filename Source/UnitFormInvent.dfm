@@ -1,14 +1,14 @@
 object FormInvent: TFormInvent
-  Left = 647
-  Top = 404
-  Width = 725
-  Height = 440
+  Left = 302
+  Top = 196
+  Width = 924
+  Height = 556
   Caption = 'Inventaire'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
@@ -16,43 +16,31 @@ object FormInvent: TFormInvent
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object PnFilter1: TPanel
     Left = 0
     Top = 0
     Width = 285
-    Height = 402
+    Height = 517
     Align = alLeft
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 0
   end
   object PnInvent: TPanel
     Left = 285
     Top = 0
-    Width = 424
-    Height = 402
+    Width = 623
+    Height = 517
     Align = alClient
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 1
     object TabInvent: TTabControl
       Left = 0
       Top = 21
-      Width = 424
-      Height = 381
+      Width = 623
+      Height = 496
       Align = alClient
       TabOrder = 0
       Tabs.Strings = (
@@ -68,9 +56,9 @@ object FormInvent: TFormInvent
       OnChange = TabInventChange
       object CharInvent: TScrollRoom
         Left = 4
-        Top = 25
-        Width = 416
-        Height = 352
+        Top = 30
+        Width = 615
+        Height = 462
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
         VertScrollBar.Tracking = True
@@ -94,32 +82,26 @@ object FormInvent: TFormInvent
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 424
+      Width = 623
       Height = 21
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
-        424
+        623
         21)
       object LbValueCharName: TLabel
         Left = 2
         Top = 0
-        Width = 235
+        Width = 434
         Height = 16
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
       end
       object LbValueVolume: TLabel
-        Left = 325
+        Left = 524
         Top = 5
         Width = 80
         Height = 16
@@ -127,17 +109,11 @@ object FormInvent: TFormInvent
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
       object ImgVolume: TImage
-        Left = 408
+        Left = 607
         Top = 4
         Width = 16
         Height = 16
@@ -170,7 +146,7 @@ object FormInvent: TFormInvent
         ShowHint = True
       end
       object ImgDappers: TImage
-        Left = 303
+        Left = 502
         Top = 4
         Width = 16
         Height = 16
@@ -214,7 +190,7 @@ object FormInvent: TFormInvent
         ShowHint = True
       end
       object LbValueDappers: TLabel
-        Left = 230
+        Left = 429
         Top = 5
         Width = 70
         Height = 16
@@ -222,12 +198,6 @@ object FormInvent: TFormInvent
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
