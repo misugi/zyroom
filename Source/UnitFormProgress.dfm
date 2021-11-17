@@ -8,8 +8,8 @@ object FormProgress: TFormProgress
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -18,18 +18,18 @@ object FormProgress: TFormProgress
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object LbProgress: TLabel
     Left = 4
     Top = 5
     Width = 312
-    Height = 13
+    Height = 15
     Alignment = taCenter
     AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
+    Font.Height = -13
+    Font.Name = 'Calibri'
     Font.Style = [fsBold]
     ParentFont = False
   end
