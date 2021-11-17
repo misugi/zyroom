@@ -7,20 +7,20 @@ object FormGuild: TFormGuild
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object GridItem: TStringGrid
     Left = 0
     Top = 28
     Width = 692
-    Height = 359
+    Height = 358
     Align = alClient
     ColCount = 3
     DefaultColWidth = 36
@@ -28,13 +28,7 @@ object FormGuild: TFormGuild
     DefaultDrawing = False
     FixedCols = 0
     RowCount = 2
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
-    ParentFont = False
     TabOrder = 0
     OnDblClick = GridItemDblClick
     OnDrawCell = GridItemDrawCell
@@ -53,13 +47,7 @@ object FormGuild: TFormGuild
     Height = 28
     Align = alTop
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 1
     object BtNew: TSevenButton
       Left = 0
