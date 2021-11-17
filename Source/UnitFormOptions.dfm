@@ -1,504 +1,552 @@
 object FormOptions: TFormOptions
-  Left = 431
-  Top = 293
+  Left = 438
+  Top = 206
+  ActiveControl = CmbLanguage
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 530
-  ClientWidth = 392
+  ClientHeight = 427
+  ClientWidth = 543
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
-  DesignSize = (
-    392
-    530)
   PixelsPerInch = 96
-  TextHeight = 14
-  object GbAlert: TGroupBox
-    Left = 5
-    Top = 321
-    Width = 381
-    Height = 176
-    Caption = 'Alertes'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = [fsBold]
-    ParentFont = False
+  TextHeight = 19
+  object PageControl: TPageControl
+    Left = 0
+    Top = 0
+    Width = 543
+    Height = 393
+    ActivePage = TabGeneral
+    Align = alClient
     TabOrder = 0
-    object LbVolumeMax: TLabel
-      Left = 8
-      Top = 33
-      Width = 140
-      Height = 14
-      Caption = 'Seuil d'#39'alerte pour le volume :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object LbVolumeGuild: TLabel
-      Left = 312
-      Top = 12
-      Width = 61
-      Height = 14
-      Alignment = taCenter
-      AutoSize = False
-      Caption = 'Guilde'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object LbVolumeRoom: TLabel
-      Left = 244
-      Top = 12
-      Width = 61
-      Height = 14
-      Alignment = taCenter
-      AutoSize = False
-      Caption = 'Pi'#232'ce'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object LbSalesCount: TLabel
-      Left = 8
-      Top = 60
-      Width = 225
-      Height = 14
-      Caption = 'Nombre d'#39'alertes pour l'#39'expiration d'#39'une vente :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object LbSeasonCount: TLabel
-      Left = 8
-      Top = 87
-      Width = 280
-      Height = 14
-      Caption = 'Nombre d'#39'alertes pour le prochain changement de saison :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object EdVolumeRoom: TSpinEdit
-      Left = 244
-      Top = 29
-      Width = 61
-      Height = 23
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      MaxValue = 2000
-      MinValue = 0
-      ParentFont = False
-      TabOrder = 0
-      Value = 1900
-      OnChange = CmbLanguageChange
-    end
-    object EdVolumeGuild: TSpinEdit
-      Left = 312
-      Top = 29
-      Width = 61
-      Height = 23
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      MaxValue = 10000
-      MinValue = 0
-      ParentFont = False
-      TabOrder = 1
-      Value = 9800
-      OnChange = CmbLanguageChange
-    end
-    object CbSaveAlertFile: TCheckBox
-      Left = 8
-      Top = 152
-      Width = 365
-      Height = 17
-      Caption = 'Sauvegarder automatiquement les alertes dans un fichier'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-      OnClick = CmbLanguageChange
-    end
-    object EdSalesCount: TSpinEdit
-      Left = 312
-      Top = 56
-      Width = 61
-      Height = 23
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      MaxValue = 24
-      MinValue = 0
-      ParentFont = False
-      TabOrder = 3
-      Value = 1
-      OnChange = CmbLanguageChange
-    end
-    object EdSeasonCount: TSpinEdit
-      Left = 312
-      Top = 83
-      Width = 61
-      Height = 23
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      MaxValue = 24
-      MinValue = 0
-      ParentFont = False
-      TabOrder = 4
-      Value = 1
-      OnChange = CmbLanguageChange
-    end
-    object CbShowHint: TCheckBox
-      Left = 8
-      Top = 132
-      Width = 365
-      Height = 17
-      Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 5
-      OnClick = CmbLanguageChange
-    end
-    object CbIgnoreCata: TCheckBox
-      Left = 8
-      Top = 112
-      Width = 365
-      Height = 17
-      Caption = 'Ignorer les alertes sur les cristaux'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 6
-      OnClick = CmbLanguageChange
-    end
-  end
-  object GbProxy: TGroupBox
-    Left = 5
-    Top = 171
-    Width = 381
-    Height = 149
-    Caption = 'Proxy'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 1
-    object PnProxy: TPanel
-      Left = 26
-      Top = 39
-      Width = 349
-      Height = 106
-      BevelOuter = bvNone
-      Ctl3D = True
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentColor = True
-      ParentCtl3D = False
-      ParentFont = False
-      TabOrder = 0
-      object LbProxyPassword: TLabel
-        Left = 0
-        Top = 83
-        Width = 71
-        Height = 14
-        Caption = 'Mot de passe :'
+    object TabGeneral: TTabSheet
+      Caption = 'G'#233'n'#233'ral'
+      DesignSize = (
+        535
+        359)
+      object LbLanguage: TLabel
+        Left = 5
+        Top = 11
+        Width = 55
+        Height = 19
+        Caption = 'Langue :'
       end
-      object LbProxyAddress: TLabel
-        Left = 0
-        Top = 5
-        Width = 48
-        Height = 14
-        Caption = 'Adresse :'
+      object LbPackFile: TLabel
+        Left = 5
+        Top = 45
+        Width = 408
+        Height = 19
+        Caption = 'Fichier de ressources "string_client.pack" install'#233' avec Ryzom :'
       end
-      object LbPortAddress: TLabel
-        Left = 0
-        Top = 31
-        Width = 25
-        Height = 14
-        Caption = 'Port :'
+      object Label1: TLabel
+        Left = 230
+        Top = 151
+        Width = 216
+        Height = 19
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Couleur de l'#39'interface :'
       end
-      object LbProxyUsername: TLabel
-        Left = 0
-        Top = 57
-        Width = 84
-        Height = 14
-        Caption = 'Nom d'#39'utilisateur :'
+      object Label2: TLabel
+        Left = 5
+        Top = 182
+        Width = 287
+        Height = 19
+        Caption = 'Nombre de threads pour la synchronisation :'
       end
-      object EdProxyUsername: TEdit
-        Left = 98
-        Top = 53
-        Width = 240
-        Height = 22
+      object CmbLanguage: TComboBox
+        Left = 150
+        Top = 7
+        Width = 382
+        Height = 27
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        ItemHeight = 19
+        Sorted = True
         TabOrder = 0
-        Text = 'EdProxyUsername'
         OnChange = CmbLanguageChange
       end
-      object EdProxyPassword: TEdit
-        Left = 98
-        Top = 79
-        Width = 240
-        Height = 22
-        PasswordChar = '*'
+      object EdPackFile: TEdit
+        Left = 5
+        Top = 71
+        Width = 497
+        Height = 27
+        Anchors = [akLeft, akTop, akRight]
+        Color = clBtnFace
+        ReadOnly = True
         TabOrder = 1
-        Text = 'Edit1'
         OnChange = CmbLanguageChange
       end
-      object EdProxyAddress: TEdit
-        Left = 98
-        Top = 1
-        Width = 240
-        Height = 22
+      object PnColor: TPanel
+        Left = 511
+        Top = 151
+        Width = 19
+        Height = 19
+        Cursor = crHandPoint
+        Hint = 'S'#233'lectionner une couleur'
+        Anchors = [akTop, akRight]
+        BevelOuter = bvNone
+        BorderWidth = 1
+        BorderStyle = bsSingle
+        Color = 12631988
+        Ctl3D = False
+        ParentCtl3D = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 2
-        Text = '127.0.0.1'
+        OnClick = PnColorClick
+      end
+      object EdThreadCount: TSpinEdit
+        Left = 471
+        Top = 177
+        Width = 61
+        Height = 29
+        Anchors = [akTop, akRight]
+        MaxValue = 25
+        MinValue = 1
+        TabOrder = 3
+        Value = 10
         OnChange = CmbLanguageChange
       end
-      object EdProxyPort: TSpinEdit
-        Left = 98
-        Top = 27
+      object CbKeepFilter: TCheckBox
+        Left = 5
+        Top = 152
+        Width = 216
+        Height = 17
+        Caption = 'Garder le filtre actif'
+        TabOrder = 4
+        OnClick = CmbLanguageChange
+      end
+      object BtAutoBrowsePackFile: TSevenButton
+        Left = 505
+        Top = 71
+        Width = 27
+        Height = 27
+        Anchors = [akTop, akRight]
+        Caption = '...'
+        TabOrder = 5
+        OnClick = BtAutoBrowsePackFileClick
+        Border.ColorNormal = 7368816
+        Border.ColorHot = 11632444
+        Border.ColorDown = 9134636
+        Border.ColorDisabled = 11907757
+        Border.ColorFocused = 11632444
+        Border.WidthNormal = 1
+        Border.WidthHot = 1
+        Border.WidthDown = 1
+        Border.WidthDisabled = 1
+        Border.WidthFocused = 1
+        Colors.ColorNormalFrom = 16579836
+        Colors.ColorNormalTo = 13619151
+        Colors.ColorHotFrom = 16579836
+        Colors.ColorHotTo = 16112039
+        Colors.ColorDownFrom = 16579836
+        Colors.ColorDownTo = 14398312
+        Colors.ColorDisabledFrom = 16053492
+        Colors.ColorDisabledTo = 16053492
+        Colors.ColorFocusedFrom = 16579836
+        Colors.ColorFocusedTo = 13619151
+        Fonts.FontHot.Charset = DEFAULT_CHARSET
+        Fonts.FontHot.Color = clWindowText
+        Fonts.FontHot.Height = -11
+        Fonts.FontHot.Name = 'Arial'
+        Fonts.FontHot.Style = []
+        Fonts.FontDown.Charset = DEFAULT_CHARSET
+        Fonts.FontDown.Color = clWindowText
+        Fonts.FontDown.Height = -11
+        Fonts.FontDown.Name = 'Arial'
+        Fonts.FontDown.Style = []
+        Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+        Fonts.FontDisabled.Color = clGrayText
+        Fonts.FontDisabled.Height = -11
+        Fonts.FontDisabled.Name = 'Arial'
+        Fonts.FontDisabled.Style = []
+        Fonts.FontFocused.Charset = DEFAULT_CHARSET
+        Fonts.FontFocused.Color = clWindowText
+        Fonts.FontFocused.Height = -11
+        Fonts.FontFocused.Name = 'Arial'
+        Fonts.FontFocused.Style = []
+        Spacing = 5
+        Marging = 5
+      end
+      object LbNeededFile: TStaticText
+        Left = 5
+        Top = 105
+        Width = 461
+        Height = 41
+        AutoSize = False
+        Caption = 
+          'Ce fichier doit '#234'tre valide pour afficher le nom des objets et a' +
+          'ctiver la sauvegarde des fichiers !'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clMaroon
+        Font.Height = -16
+        Font.Name = 'Calibri'
+        Font.Style = [fsItalic]
+        ParentFont = False
+        TabOrder = 6
+      end
+    end
+    object TabProxy: TTabSheet
+      Caption = 'Proxy'
+      ImageIndex = 1
+      DesignSize = (
+        535
+        359)
+      object PnProxy: TPanel
+        Left = 0
+        Top = 34
+        Width = 535
+        Height = 172
+        Anchors = [akLeft, akTop, akRight]
+        BevelOuter = bvNone
+        Ctl3D = True
+        ParentColor = True
+        ParentCtl3D = False
+        TabOrder = 0
+        DesignSize = (
+          535
+          172)
+        object LbProxyPassword: TLabel
+          Left = 5
+          Top = 100
+          Width = 96
+          Height = 19
+          Caption = 'Mot de passe :'
+        end
+        object LbProxyAddress: TLabel
+          Left = 5
+          Top = 5
+          Width = 60
+          Height = 19
+          Caption = 'Adresse :'
+        end
+        object LbPortAddress: TLabel
+          Left = 5
+          Top = 37
+          Width = 34
+          Height = 19
+          Caption = 'Port :'
+        end
+        object LbProxyUsername: TLabel
+          Left = 5
+          Top = 69
+          Width = 120
+          Height = 19
+          Caption = 'Nom d'#39'utilisateur :'
+        end
+        object EdProxyUsername: TEdit
+          Left = 175
+          Top = 65
+          Width = 357
+          Height = 27
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+          Text = 'EdProxyUsername'
+          OnChange = CmbLanguageChange
+        end
+        object EdProxyPassword: TEdit
+          Left = 175
+          Top = 96
+          Width = 357
+          Height = 27
+          Anchors = [akLeft, akTop, akRight]
+          PasswordChar = '*'
+          TabOrder = 1
+          Text = 'Edit1'
+          OnChange = CmbLanguageChange
+        end
+        object EdProxyAddress: TEdit
+          Left = 175
+          Top = 1
+          Width = 357
+          Height = 27
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 2
+          Text = '127.0.0.1'
+          OnChange = CmbLanguageChange
+        end
+        object EdProxyPort: TSpinEdit
+          Left = 175
+          Top = 32
+          Width = 96
+          Height = 29
+          MaxValue = 0
+          MinValue = 0
+          TabOrder = 3
+          Value = 8080
+          OnChange = CmbLanguageChange
+        end
+      end
+      object CbProxyEnabled: TCheckBox
+        Left = 5
+        Top = 11
+        Width = 466
+        Height = 17
+        Caption = 'Utiliser un serveur proxy'
+        TabOrder = 1
+        OnClick = CbProxyEnabledClick
+      end
+    end
+    object TabAlertes: TTabSheet
+      Caption = 'Alertes'
+      ImageIndex = 2
+      DesignSize = (
+        535
+        359)
+      object LbVolumeMax: TLabel
+        Left = 5
+        Top = 33
+        Width = 193
+        Height = 19
+        Caption = 'Seuil d'#39'alerte pour le volume :'
+      end
+      object LbVolumeGuild: TLabel
+        Left = 471
+        Top = 7
         Width = 61
-        Height = 23
-        MaxValue = 0
+        Height = 19
+        Alignment = taCenter
+        Anchors = [akTop, akRight]
+        AutoSize = False
+        Caption = 'Guilde'
+      end
+      object LbVolumeRoom: TLabel
+        Left = 403
+        Top = 7
+        Width = 61
+        Height = 19
+        Alignment = taCenter
+        Anchors = [akTop, akRight]
+        AutoSize = False
+        Caption = 'Pi'#232'ce'
+      end
+      object LbSalesCount: TLabel
+        Left = 5
+        Top = 66
+        Width = 310
+        Height = 19
+        Caption = 'Nombre d'#39'alertes pour l'#39'expiration d'#39'une vente :'
+      end
+      object LbSeasonCount: TLabel
+        Left = 5
+        Top = 99
+        Width = 379
+        Height = 19
+        Caption = 'Nombre d'#39'alertes pour le prochain changement de saison :'
+      end
+      object EdVolumeRoom: TSpinEdit
+        Left = 403
+        Top = 28
+        Width = 61
+        Height = 29
+        Anchors = [akTop, akRight]
+        MaxValue = 2000
+        MinValue = 0
+        TabOrder = 0
+        Value = 1900
+        OnChange = CmbLanguageChange
+      end
+      object EdVolumeGuild: TSpinEdit
+        Left = 471
+        Top = 28
+        Width = 61
+        Height = 29
+        Anchors = [akTop, akRight]
+        MaxValue = 10000
+        MinValue = 0
+        TabOrder = 1
+        Value = 9800
+        OnChange = CmbLanguageChange
+      end
+      object CbSaveAlertFile: TCheckBox
+        Left = 5
+        Top = 177
+        Width = 461
+        Height = 17
+        Caption = 'Sauvegarder automatiquement les alertes dans un fichier'
+        TabOrder = 2
+        OnClick = CmbLanguageChange
+      end
+      object EdSalesCount: TSpinEdit
+        Left = 471
+        Top = 61
+        Width = 61
+        Height = 29
+        Anchors = [akTop, akRight]
+        MaxValue = 24
         MinValue = 0
         TabOrder = 3
-        Value = 8080
+        Value = 1
         OnChange = CmbLanguageChange
       end
-    end
-    object CbProxyEnabled: TCheckBox
-      Left = 8
-      Top = 16
-      Width = 281
-      Height = 17
-      Caption = 'Utiliser un serveur proxy'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 1
-      OnClick = CbProxyEnabledClick
+      object EdSeasonCount: TSpinEdit
+        Left = 471
+        Top = 94
+        Width = 61
+        Height = 29
+        Anchors = [akTop, akRight]
+        MaxValue = 24
+        MinValue = 0
+        TabOrder = 4
+        Value = 1
+        OnChange = CmbLanguageChange
+      end
+      object CbShowHint: TCheckBox
+        Left = 5
+        Top = 152
+        Width = 461
+        Height = 17
+        Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
+        TabOrder = 5
+        OnClick = CmbLanguageChange
+      end
+      object CbIgnoreCata: TCheckBox
+        Left = 5
+        Top = 127
+        Width = 461
+        Height = 17
+        Caption = 'Ignorer les alertes sur les cristaux'
+        TabOrder = 6
+        OnClick = CmbLanguageChange
+      end
     end
   end
-  object GbGeneral: TGroupBox
-    Left = 5
-    Top = 2
-    Width = 381
-    Height = 168
-    Caption = 'G'#233'n'#233'ral'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 2
-    object LbLanguage: TLabel
-      Left = 8
-      Top = 21
-      Width = 42
-      Height = 14
-      Caption = 'Langue :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object LbPackFile: TLabel
-      Left = 8
-      Top = 45
-      Width = 306
-      Height = 14
-      Caption = 'Fichier de ressources "string_client.pack" install'#233' avec Ryzom :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label1: TLabel
-      Left = 212
-      Top = 118
-      Width = 140
-      Height = 14
-      Alignment = taRightJustify
-      AutoSize = False
-      Caption = 'Couleur de l'#39'interface :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object Label2: TLabel
-      Left = 8
-      Top = 142
-      Width = 214
-      Height = 14
-      Caption = 'Nombre de threads pour la synchronisation :'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-    end
-    object CmbLanguage: TComboBox
-      Left = 68
-      Top = 17
-      Width = 305
-      Height = 22
-      Style = csDropDownList
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ItemHeight = 14
-      ParentFont = False
-      Sorted = True
-      TabOrder = 0
-      OnChange = CmbLanguageChange
-    end
-    object EdPackFile: TEdit
-      Left = 8
-      Top = 61
-      Width = 341
-      Height = 22
-      Color = clBtnFace
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 1
-      OnChange = CmbLanguageChange
-    end
-    object PnColor: TPanel
-      Left = 355
-      Top = 116
-      Width = 18
-      Height = 18
-      Cursor = crHandPoint
-      Hint = 'S'#233'lectionner une couleur'
-      BevelOuter = bvNone
-      BorderWidth = 1
-      BorderStyle = bsSingle
-      Color = 12631988
-      Ctl3D = False
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentCtl3D = False
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-      OnClick = PnColorClick
-    end
-    object EdThreadCount: TSpinEdit
-      Left = 312
-      Top = 137
-      Width = 61
+  object PnActions: TPanel
+    Left = 0
+    Top = 393
+    Width = 543
+    Height = 34
+    Align = alBottom
+    BevelOuter = bvNone
+    ParentColor = True
+    TabOrder = 1
+    DesignSize = (
+      543
+      34)
+    object BtOK: TSevenButton
+      Left = 273
+      Top = 6
+      Width = 85
       Height = 23
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      MaxValue = 25
-      MinValue = 1
-      ParentFont = False
-      TabOrder = 3
-      Value = 10
-      OnChange = CmbLanguageChange
+      Anchors = [akRight, akBottom]
+      Caption = 'OK'
+      TabOrder = 0
+      OnClick = BtOKClick
+      Border.ColorNormal = 7368816
+      Border.ColorHot = 11632444
+      Border.ColorDown = 9134636
+      Border.ColorDisabled = 11907757
+      Border.ColorFocused = 11632444
+      Border.WidthNormal = 1
+      Border.WidthHot = 1
+      Border.WidthDown = 1
+      Border.WidthDisabled = 1
+      Border.WidthFocused = 1
+      Colors.ColorNormalFrom = 16579836
+      Colors.ColorNormalTo = 13619151
+      Colors.ColorHotFrom = 16579836
+      Colors.ColorHotTo = 16112039
+      Colors.ColorDownFrom = 16579836
+      Colors.ColorDownTo = 14398312
+      Colors.ColorDisabledFrom = 16053492
+      Colors.ColorDisabledTo = 16053492
+      Colors.ColorFocusedFrom = 16579836
+      Colors.ColorFocusedTo = 13619151
+      Fonts.FontHot.Charset = DEFAULT_CHARSET
+      Fonts.FontHot.Color = clWindowText
+      Fonts.FontHot.Height = -11
+      Fonts.FontHot.Name = 'Arial'
+      Fonts.FontHot.Style = []
+      Fonts.FontDown.Charset = DEFAULT_CHARSET
+      Fonts.FontDown.Color = clWindowText
+      Fonts.FontDown.Height = -11
+      Fonts.FontDown.Name = 'Arial'
+      Fonts.FontDown.Style = []
+      Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+      Fonts.FontDisabled.Color = clGrayText
+      Fonts.FontDisabled.Height = -11
+      Fonts.FontDisabled.Name = 'Arial'
+      Fonts.FontDisabled.Style = []
+      Fonts.FontFocused.Charset = DEFAULT_CHARSET
+      Fonts.FontFocused.Color = clWindowText
+      Fonts.FontFocused.Height = -11
+      Fonts.FontFocused.Name = 'Arial'
+      Fonts.FontFocused.Style = []
+      ModalResult = 1
+      Default = True
+      Spacing = 5
+      Marging = 5
     end
-    object CbKeepFilter: TCheckBox
-      Left = 8
-      Top = 117
-      Width = 201
-      Height = 17
-      Caption = 'Garder le filtre actif'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 4
-      OnClick = CmbLanguageChange
+    object BtCancel: TSevenButton
+      Left = 363
+      Top = 6
+      Width = 85
+      Height = 23
+      Anchors = [akRight, akBottom]
+      Caption = 'Annuler'
+      TabOrder = 1
+      Border.ColorNormal = 7368816
+      Border.ColorHot = 11632444
+      Border.ColorDown = 9134636
+      Border.ColorDisabled = 11907757
+      Border.ColorFocused = 11632444
+      Border.WidthNormal = 1
+      Border.WidthHot = 1
+      Border.WidthDown = 1
+      Border.WidthDisabled = 1
+      Border.WidthFocused = 1
+      Colors.ColorNormalFrom = 16579836
+      Colors.ColorNormalTo = 13619151
+      Colors.ColorHotFrom = 16579836
+      Colors.ColorHotTo = 16112039
+      Colors.ColorDownFrom = 16579836
+      Colors.ColorDownTo = 14398312
+      Colors.ColorDisabledFrom = 16053492
+      Colors.ColorDisabledTo = 16053492
+      Colors.ColorFocusedFrom = 16579836
+      Colors.ColorFocusedTo = 13619151
+      Fonts.FontHot.Charset = DEFAULT_CHARSET
+      Fonts.FontHot.Color = clWindowText
+      Fonts.FontHot.Height = -11
+      Fonts.FontHot.Name = 'Arial'
+      Fonts.FontHot.Style = []
+      Fonts.FontDown.Charset = DEFAULT_CHARSET
+      Fonts.FontDown.Color = clWindowText
+      Fonts.FontDown.Height = -11
+      Fonts.FontDown.Name = 'Arial'
+      Fonts.FontDown.Style = []
+      Fonts.FontDisabled.Charset = DEFAULT_CHARSET
+      Fonts.FontDisabled.Color = clGrayText
+      Fonts.FontDisabled.Height = -11
+      Fonts.FontDisabled.Name = 'Arial'
+      Fonts.FontDisabled.Style = []
+      Fonts.FontFocused.Charset = DEFAULT_CHARSET
+      Fonts.FontFocused.Color = clWindowText
+      Fonts.FontFocused.Height = -11
+      Fonts.FontFocused.Name = 'Arial'
+      Fonts.FontFocused.Style = []
+      ModalResult = 2
+      Cancel = True
+      Spacing = 5
+      Marging = 5
     end
-    object BtAutoBrowsePackFile: TSevenButton
-      Left = 351
-      Top = 61
-      Width = 22
-      Height = 22
-      Caption = '...'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 5
-      OnClick = BtAutoBrowsePackFileClick
+    object BtApply: TSevenButton
+      Left = 453
+      Top = 6
+      Width = 85
+      Height = 23
+      Anchors = [akRight, akBottom]
+      Caption = 'Appliquer'
+      TabOrder = 2
+      OnClick = BtApplyClick
       Border.ColorNormal = 7368816
       Border.ColorHot = 11632444
       Border.ColorDown = 9134636
@@ -542,195 +590,19 @@ object FormOptions: TFormOptions
       Spacing = 5
       Marging = 5
     end
-    object LbNeededFile: TStaticText
-      Left = 8
-      Top = 85
-      Width = 363
-      Height = 30
-      AutoSize = False
-      Caption = 
-        'Ce fichier doit '#234'tre valide pour afficher le nom des objets et a' +
-        'ctiver la sauvegarde des fichiers !'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 6
-    end
-  end
-  object BtOK: TSevenButton
-    Left = 120
-    Top = 503
-    Width = 85
-    Height = 23
-    Anchors = [akLeft, akBottom]
-    Caption = 'OK'
-    TabOrder = 3
-    OnClick = BtOKClick
-    Border.ColorNormal = 7368816
-    Border.ColorHot = 11632444
-    Border.ColorDown = 9134636
-    Border.ColorDisabled = 11907757
-    Border.ColorFocused = 11632444
-    Border.WidthNormal = 1
-    Border.WidthHot = 1
-    Border.WidthDown = 1
-    Border.WidthDisabled = 1
-    Border.WidthFocused = 1
-    Colors.ColorNormalFrom = 16579836
-    Colors.ColorNormalTo = 13619151
-    Colors.ColorHotFrom = 16579836
-    Colors.ColorHotTo = 16112039
-    Colors.ColorDownFrom = 16579836
-    Colors.ColorDownTo = 14398312
-    Colors.ColorDisabledFrom = 16053492
-    Colors.ColorDisabledTo = 16053492
-    Colors.ColorFocusedFrom = 16579836
-    Colors.ColorFocusedTo = 13619151
-    Fonts.FontHot.Charset = DEFAULT_CHARSET
-    Fonts.FontHot.Color = clWindowText
-    Fonts.FontHot.Height = -11
-    Fonts.FontHot.Name = 'Arial'
-    Fonts.FontHot.Style = []
-    Fonts.FontDown.Charset = DEFAULT_CHARSET
-    Fonts.FontDown.Color = clWindowText
-    Fonts.FontDown.Height = -11
-    Fonts.FontDown.Name = 'Arial'
-    Fonts.FontDown.Style = []
-    Fonts.FontDisabled.Charset = DEFAULT_CHARSET
-    Fonts.FontDisabled.Color = clGrayText
-    Fonts.FontDisabled.Height = -11
-    Fonts.FontDisabled.Name = 'Arial'
-    Fonts.FontDisabled.Style = []
-    Fonts.FontFocused.Charset = DEFAULT_CHARSET
-    Fonts.FontFocused.Color = clWindowText
-    Fonts.FontFocused.Height = -11
-    Fonts.FontFocused.Name = 'Arial'
-    Fonts.FontFocused.Style = []
-    ModalResult = 1
-    Default = True
-    Spacing = 5
-    Marging = 5
-  end
-  object BtCancel: TSevenButton
-    Left = 210
-    Top = 503
-    Width = 85
-    Height = 23
-    Anchors = [akLeft, akBottom]
-    Caption = 'Annuler'
-    TabOrder = 4
-    Border.ColorNormal = 7368816
-    Border.ColorHot = 11632444
-    Border.ColorDown = 9134636
-    Border.ColorDisabled = 11907757
-    Border.ColorFocused = 11632444
-    Border.WidthNormal = 1
-    Border.WidthHot = 1
-    Border.WidthDown = 1
-    Border.WidthDisabled = 1
-    Border.WidthFocused = 1
-    Colors.ColorNormalFrom = 16579836
-    Colors.ColorNormalTo = 13619151
-    Colors.ColorHotFrom = 16579836
-    Colors.ColorHotTo = 16112039
-    Colors.ColorDownFrom = 16579836
-    Colors.ColorDownTo = 14398312
-    Colors.ColorDisabledFrom = 16053492
-    Colors.ColorDisabledTo = 16053492
-    Colors.ColorFocusedFrom = 16579836
-    Colors.ColorFocusedTo = 13619151
-    Fonts.FontHot.Charset = DEFAULT_CHARSET
-    Fonts.FontHot.Color = clWindowText
-    Fonts.FontHot.Height = -11
-    Fonts.FontHot.Name = 'Arial'
-    Fonts.FontHot.Style = []
-    Fonts.FontDown.Charset = DEFAULT_CHARSET
-    Fonts.FontDown.Color = clWindowText
-    Fonts.FontDown.Height = -11
-    Fonts.FontDown.Name = 'Arial'
-    Fonts.FontDown.Style = []
-    Fonts.FontDisabled.Charset = DEFAULT_CHARSET
-    Fonts.FontDisabled.Color = clGrayText
-    Fonts.FontDisabled.Height = -11
-    Fonts.FontDisabled.Name = 'Arial'
-    Fonts.FontDisabled.Style = []
-    Fonts.FontFocused.Charset = DEFAULT_CHARSET
-    Fonts.FontFocused.Color = clWindowText
-    Fonts.FontFocused.Height = -11
-    Fonts.FontFocused.Name = 'Arial'
-    Fonts.FontFocused.Style = []
-    ModalResult = 2
-    Cancel = True
-    Spacing = 5
-    Marging = 5
-  end
-  object BtApply: TSevenButton
-    Left = 300
-    Top = 503
-    Width = 85
-    Height = 23
-    Anchors = [akLeft, akBottom]
-    Caption = 'Appliquer'
-    TabOrder = 5
-    OnClick = BtApplyClick
-    Border.ColorNormal = 7368816
-    Border.ColorHot = 11632444
-    Border.ColorDown = 9134636
-    Border.ColorDisabled = 11907757
-    Border.ColorFocused = 11632444
-    Border.WidthNormal = 1
-    Border.WidthHot = 1
-    Border.WidthDown = 1
-    Border.WidthDisabled = 1
-    Border.WidthFocused = 1
-    Colors.ColorNormalFrom = 16579836
-    Colors.ColorNormalTo = 13619151
-    Colors.ColorHotFrom = 16579836
-    Colors.ColorHotTo = 16112039
-    Colors.ColorDownFrom = 16579836
-    Colors.ColorDownTo = 14398312
-    Colors.ColorDisabledFrom = 16053492
-    Colors.ColorDisabledTo = 16053492
-    Colors.ColorFocusedFrom = 16579836
-    Colors.ColorFocusedTo = 13619151
-    Fonts.FontHot.Charset = DEFAULT_CHARSET
-    Fonts.FontHot.Color = clWindowText
-    Fonts.FontHot.Height = -11
-    Fonts.FontHot.Name = 'Arial'
-    Fonts.FontHot.Style = []
-    Fonts.FontDown.Charset = DEFAULT_CHARSET
-    Fonts.FontDown.Color = clWindowText
-    Fonts.FontDown.Height = -11
-    Fonts.FontDown.Name = 'Arial'
-    Fonts.FontDown.Style = []
-    Fonts.FontDisabled.Charset = DEFAULT_CHARSET
-    Fonts.FontDisabled.Color = clGrayText
-    Fonts.FontDisabled.Height = -11
-    Fonts.FontDisabled.Name = 'Arial'
-    Fonts.FontDisabled.Style = []
-    Fonts.FontFocused.Charset = DEFAULT_CHARSET
-    Fonts.FontFocused.Color = clWindowText
-    Fonts.FontFocused.Height = -11
-    Fonts.FontFocused.Name = 'Arial'
-    Fonts.FontFocused.Style = []
-    Spacing = 5
-    Marging = 5
   end
   object OdBrowsePackFile: TOpenDialog
     Filter = 'Fichiers pack (*.pack)|*.pack|Tous les fichiers (*.*)|*.*'
     Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
-    Left = 316
-    Top = 152
+    Left = 6
+    Top = 362
   end
   object OdColor: TColorDialog
     Color = 12631988
     CustomColors.Strings = (
       'ColorA=C0BFB4')
     Options = [cdFullOpen]
-    Left = 348
-    Top = 152
+    Left = 43
+    Top = 362
   end
 end

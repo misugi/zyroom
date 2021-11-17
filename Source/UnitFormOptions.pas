@@ -27,19 +27,27 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, LcUnit, Spin, ExtCtrls, ShlObj, SevenButton;
+  Dialogs, StdCtrls, LcUnit, Spin, ExtCtrls, ShlObj, SevenButton, ComCtrls;
 
 type
   TFormOptions = class(TForm)
     OdBrowsePackFile: TOpenDialog;
     OdColor: TColorDialog;
-    GbAlert: TGroupBox;
-    LbVolumeMax: TLabel;
-    LbVolumeGuild: TLabel;
-    LbVolumeRoom: TLabel;
-    EdVolumeRoom: TSpinEdit;
-    EdVolumeGuild: TSpinEdit;
-    GbProxy: TGroupBox;
+    PageControl: TPageControl;
+    TabGeneral: TTabSheet;
+    TabProxy: TTabSheet;
+    TabAlertes: TTabSheet;
+    LbLanguage: TLabel;
+    LbPackFile: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    CmbLanguage: TComboBox;
+    EdPackFile: TEdit;
+    PnColor: TPanel;
+    EdThreadCount: TSpinEdit;
+    CbKeepFilter: TCheckBox;
+    BtAutoBrowsePackFile: TSevenButton;
+    LbNeededFile: TStaticText;
     PnProxy: TPanel;
     LbProxyPassword: TLabel;
     LbProxyAddress: TLabel;
@@ -50,28 +58,22 @@ type
     EdProxyAddress: TEdit;
     EdProxyPort: TSpinEdit;
     CbProxyEnabled: TCheckBox;
-    GbGeneral: TGroupBox;
-    LbLanguage: TLabel;
-    LbPackFile: TLabel;
-    Label1: TLabel;
-    Label2: TLabel;
-    CmbLanguage: TComboBox;
-    EdPackFile: TEdit;
-    PnColor: TPanel;
-    EdThreadCount: TSpinEdit;
-    CbKeepFilter: TCheckBox;
-    CbSaveAlertFile: TCheckBox;
+    LbVolumeMax: TLabel;
+    LbVolumeGuild: TLabel;
+    LbVolumeRoom: TLabel;
     LbSalesCount: TLabel;
     LbSeasonCount: TLabel;
+    EdVolumeRoom: TSpinEdit;
+    EdVolumeGuild: TSpinEdit;
+    CbSaveAlertFile: TCheckBox;
     EdSalesCount: TSpinEdit;
     EdSeasonCount: TSpinEdit;
     CbShowHint: TCheckBox;
+    CbIgnoreCata: TCheckBox;
+    PnActions: TPanel;
     BtOK: TSevenButton;
     BtCancel: TSevenButton;
     BtApply: TSevenButton;
-    BtAutoBrowsePackFile: TSevenButton;
-    CbIgnoreCata: TCheckBox;
-    LbNeededFile: TStaticText;
     procedure CbProxyEnabledClick(Sender: TObject);
     procedure BtAutoBrowsePackFileClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
