@@ -38,9 +38,9 @@ object FormInvent: TFormInvent
     TabOrder = 1
     object TabInvent: TTabControl
       Left = 0
-      Top = 21
+      Top = 25
       Width = 623
-      Height = 496
+      Height = 492
       Align = alClient
       TabOrder = 0
       Tabs.Strings = (
@@ -58,7 +58,7 @@ object FormInvent: TFormInvent
         Left = 4
         Top = 30
         Width = 615
-        Height = 462
+        Height = 458
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
         VertScrollBar.Tracking = True
@@ -83,22 +83,28 @@ object FormInvent: TFormInvent
       Left = 0
       Top = 0
       Width = 623
-      Height = 21
+      Height = 25
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
         623
-        21)
+        25)
       object LbValueCharName: TLabel
         Left = 2
         Top = 0
-        Width = 434
-        Height = 16
+        Width = 409
+        Height = 19
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object LbValueVolume: TLabel
         Left = 524
@@ -109,12 +115,18 @@ object FormInvent: TFormInvent
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Calibri'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
       object ImgVolume: TImage
         Left = 607
-        Top = 4
+        Top = 5
         Width = 16
         Height = 16
         Anchors = [akTop, akRight]
@@ -147,7 +159,7 @@ object FormInvent: TFormInvent
       end
       object ImgDappers: TImage
         Left = 502
-        Top = 4
+        Top = 5
         Width = 16
         Height = 16
         Anchors = [akTop, akRight]
@@ -198,6 +210,12 @@ object FormInvent: TFormInvent
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Calibri'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end

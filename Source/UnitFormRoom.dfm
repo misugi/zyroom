@@ -7,8 +7,8 @@ object FormRoom: TFormRoom
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
@@ -16,27 +16,21 @@ object FormRoom: TFormRoom
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object PnRoom: TPanel
     Left = 285
     Top = 0
     Width = 424
-    Height = 387
+    Height = 386
     Align = alClient
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 0
     object GuildRoom: TScrollRoom
       Left = 0
-      Top = 21
+      Top = 25
       Width = 424
-      Height = 366
+      Height = 361
       HorzScrollBar.Tracking = True
       VertScrollBar.Increment = 44
       VertScrollBar.Tracking = True
@@ -60,28 +54,22 @@ object FormRoom: TFormRoom
       Left = 0
       Top = 0
       Width = 424
-      Height = 21
+      Height = 25
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
         424
-        21)
+        25)
       object LbValueGuildName: TLabel
         Left = 2
         Top = 0
         Width = 235
-        Height = 16
+        Height = 19
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
       end
       object LbValueVolume: TLabel
         Left = 325
@@ -92,12 +80,6 @@ object FormRoom: TFormRoom
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
@@ -187,12 +169,6 @@ object FormRoom: TFormRoom
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
@@ -202,16 +178,10 @@ object FormRoom: TFormRoom
     Left = 0
     Top = 0
     Width = 285
-    Height = 387
+    Height = 386
     Align = alLeft
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 1
   end
   object PopupWatch: TPopupMenu
