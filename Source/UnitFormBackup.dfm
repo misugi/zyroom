@@ -1,21 +1,21 @@
 object FormBackup: TFormBackup
-  Left = 560
-  Top = 252
+  Left = 388
+  Top = 154
   Width = 773
   Height = 581
   Caption = 'Sauvegarde'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object PnHeader: TPanel
     Left = 0
     Top = 0
@@ -23,22 +23,16 @@ object FormBackup: TFormBackup
     Height = 51
     Align = alTop
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 0
     DesignSize = (
       757
       51)
     object LbAlert: TLabel
-      Left = 335
-      Top = 31
-      Width = 420
-      Height = 14
+      Left = 365
+      Top = 5
+      Width = 385
+      Height = 40
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
       AutoSize = False
@@ -46,11 +40,12 @@ object FormBackup: TFormBackup
         'Vous devez s'#233'lectionner un fichier "string_client.pack" valide d' +
         'ans les options !'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = []
+      Font.Color = clMaroon
+      Font.Height = -16
+      Font.Name = 'Calibri'
+      Font.Style = [fsItalic]
       ParentFont = False
+      WordWrap = True
     end
     object BtSave: TSevenButton
       Left = 0
@@ -219,7 +214,7 @@ object FormBackup: TFormBackup
     object CbAutoBackup: TCheckBox
       Left = 0
       Top = 30
-      Width = 326
+      Width = 351
       Height = 17
       Caption = 'Activer la sauvegarde automatique'
       TabOrder = 3
@@ -285,31 +280,19 @@ object FormBackup: TFormBackup
     Left = 550
     Top = 51
     Width = 207
-    Height = 492
+    Height = 491
     Align = alRight
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 1
     object ListCharacters: TListBox
       Left = 0
       Top = 0
       Width = 207
-      Height = 492
+      Height = 491
       Align = alClient
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Arial'
-      Font.Style = []
-      ItemHeight = 16
+      ItemHeight = 19
       MultiSelect = True
-      ParentFont = False
       Sorted = True
       TabOrder = 0
       OnClick = ListCharactersClick
@@ -319,15 +302,9 @@ object FormBackup: TFormBackup
     Left = 0
     Top = 51
     Width = 550
-    Height = 492
+    Height = 491
     Align = alClient
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Arial'
-    Font.Style = []
-    ItemHeight = 16
-    ParentFont = False
+    ItemHeight = 19
     Sorted = True
     TabOrder = 2
     OnClick = ListBackupClick
