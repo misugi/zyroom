@@ -2,18 +2,18 @@ object FormHome: TFormHome
   Left = 345
   Top = 282
   Width = 752
-  Height = 452
+  Height = 453
   Caption = 'Home'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object ImgRoom: TImage
     Left = 0
     Top = 0
@@ -13128,31 +13128,31 @@ object FormHome: TFormHome
     Left = 243
     Top = 148
     Width = 250
-    Height = 13
+    Height = 19
     Alignment = taCenter
     AutoSize = False
     Caption = 'Projet d'#233'velopp'#233' pour :'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = []
     ParentFont = False
     Transparent = True
   end
   object LbContest: TLabel
     Left = 243
-    Top = 164
+    Top = 168
     Width = 250
-    Height = 15
+    Height = 19
     Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
     Caption = 'Ryzom Summer Coding Contest 2009'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -12
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
@@ -13162,65 +13162,65 @@ object FormHome: TFormHome
   end
   object LbCreatedBy: TLabel
     Left = 243
-    Top = 189
+    Top = 190
     Width = 250
-    Height = 13
+    Height = 19
     Alignment = taCenter
     AutoSize = False
     Caption = 'Cr'#233#233' par :'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = []
     ParentFont = False
     Transparent = True
   end
   object LbAuthor: TLabel
     Left = 243
-    Top = 205
+    Top = 210
     Width = 250
-    Height = 15
+    Height = 19
     Alignment = taCenter
     AutoSize = False
     Caption = 'Misugi'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -12
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = [fsBold]
     ParentFont = False
     Transparent = True
   end
   object LbWebsite: TLabel
     Left = 243
-    Top = 229
+    Top = 232
     Width = 250
-    Height = 13
+    Height = 19
     Alignment = taCenter
     AutoSize = False
     Caption = 'Site web :'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = []
     ParentFont = False
     Transparent = True
   end
   object LbProjectWebsite: TLabel
     Left = 243
-    Top = 245
+    Top = 252
     Width = 250
-    Height = 15
+    Height = 19
     Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
     Caption = 'http://zyroom.misulud.fr'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -12
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
@@ -13230,7 +13230,7 @@ object FormHome: TFormHome
   end
   object ImgRyzom: TImage
     Left = 318
-    Top = 313
+    Top = 318
     Width = 100
     Height = 33
     Cursor = crHandPoint
@@ -13497,32 +13497,32 @@ object FormHome: TFormHome
   end
   object LbVersion: TLabel
     Left = 243
-    Top = 267
+    Top = 274
     Width = 250
-    Height = 13
+    Height = 19
     Alignment = taCenter
     AutoSize = False
     Caption = 'Version :'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -11
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = []
     ParentFont = False
     Transparent = True
   end
   object LbValueVersion: TLabel
     Left = 243
-    Top = 283
+    Top = 294
     Width = 250
-    Height = 15
+    Height = 19
     Alignment = taCenter
     AutoSize = False
     Caption = '-'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clCream
-    Font.Height = -12
-    Font.Name = 'Arial'
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Calibri'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
