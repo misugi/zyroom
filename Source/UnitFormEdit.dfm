@@ -2,38 +2,32 @@ object FormEdit: TFormEdit
   Left = 505
   Top = 457
   BorderStyle = bsDialog
-  ClientHeight = 133
-  ClientWidth = 442
+  ClientHeight = 143
+  ClientWidth = 514
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnShow = FormShow
   DesignSize = (
-    442
-    133)
+    514
+    143)
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object LbAutoKey: TLabel
     Left = 8
     Top = 12
-    Width = 115
-    Height = 14
+    Width = 154
+    Height = 19
     Caption = 'Cl'#233' API de personnage :'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
   end
   object ImgProfilePage: TImage
-    Left = 414
-    Top = 7
+    Left = 486
+    Top = 9
     Width = 24
     Height = 24
     Cursor = crHandPoint
@@ -84,66 +78,48 @@ object FormEdit: TFormEdit
   end
   object LbComment: TLabel
     Left = 8
-    Top = 36
-    Width = 60
-    Height = 14
+    Top = 41
+    Width = 82
+    Height = 19
     Caption = 'Description :'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
   end
   object EdKey: TEdit
-    Left = 140
+    Left = 195
     Top = 8
-    Width = 270
-    Height = 22
+    Width = 287
+    Height = 27
     Anchors = [akLeft, akTop, akRight]
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 0
   end
   object EdComment: TEdit
-    Left = 140
-    Top = 32
-    Width = 270
-    Height = 22
+    Left = 195
+    Top = 37
+    Width = 287
+    Height = 27
     Anchors = [akLeft, akTop, akRight]
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 1
   end
   object CbCheckVolume: TCheckBox
-    Left = 140
-    Top = 61
-    Width = 270
+    Left = 195
+    Top = 66
+    Width = 287
     Height = 17
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Surveiller le volume'
     TabOrder = 2
   end
   object CbCheckChange: TCheckBox
-    Left = 140
-    Top = 78
-    Width = 270
+    Left = 195
+    Top = 88
+    Width = 287
     Height = 17
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Surveiller tout changement'
     TabOrder = 3
   end
   object BtOK: TSevenButton
-    Left = 281
-    Top = 105
+    Left = 353
+    Top = 115
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
@@ -195,8 +171,8 @@ object FormEdit: TFormEdit
     Marging = 5
   end
   object BtCancel: TSevenButton
-    Left = 363
-    Top = 105
+    Left = 435
+    Top = 115
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
