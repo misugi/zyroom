@@ -1,6 +1,6 @@
 object FormMain: TFormMain
-  Left = 716
-  Top = 380
+  Left = 380
+  Top = 185
   Width = 762
   Height = 510
   Caption = 'zyRoom'
@@ -9,8 +9,8 @@ object FormMain: TFormMain
   Constraints.MinWidth = 762
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
@@ -19,22 +19,16 @@ object FormMain: TFormMain
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object PnContainer: TPanel
     Left = 0
     Top = 28
     Width = 746
-    Height = 425
+    Height = 417
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 5
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 0
   end
   object PnHeader: TPanel
@@ -44,20 +38,14 @@ object FormMain: TFormMain
     Height = 28
     Align = alTop
     BevelOuter = bvNone
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Arial'
-    Font.Style = []
     ParentColor = True
-    ParentFont = False
     TabOrder = 1
     DesignSize = (
       746
       28)
     object ImgStatus: TImage
       Left = 724
-      Top = 6
+      Top = 8
       Width = 16
       Height = 16
       Anchors = [akTop, akRight]
@@ -96,22 +84,16 @@ object FormMain: TFormMain
       ShowHint = True
     end
     object LbAutoStatus: TLabel
-      Left = 694
+      Left = 691
       Top = 7
-      Width = 25
-      Height = 14
+      Width = 28
+      Height = 19
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
       Caption = 'Atys'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Arial'
-      Font.Style = [fsBold]
-      ParentFont = False
     end
     object ImgUpdate: TImage
-      Left = 490
+      Left = 520
       Top = 2
       Width = 24
       Height = 24
@@ -302,7 +284,7 @@ object FormMain: TFormMain
     object BtCharacter: TSevenButton
       Left = 123
       Top = 3
-      Width = 85
+      Width = 103
       Height = 23
       Caption = 'Personnages'
       TabOrder = 2
@@ -352,7 +334,7 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtAlert: TSevenButton
-      Left = 213
+      Left = 231
       Top = 3
       Width = 85
       Height = 23
@@ -404,7 +386,7 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtLog: TSevenButton
-      Left = 303
+      Left = 321
       Top = 3
       Width = 85
       Height = 23
@@ -456,9 +438,9 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtBackup: TSevenButton
-      Left = 393
+      Left = 411
       Top = 3
-      Width = 85
+      Width = 103
       Height = 23
       Caption = 'Sauvegarde'
       TabOrder = 5
@@ -510,9 +492,14 @@ object FormMain: TFormMain
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 453
+    Top = 445
     Width = 746
-    Height = 19
+    Height = 26
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Calibri'
+    Font.Style = []
     Panels = <
       item
         Alignment = taCenter
@@ -536,6 +523,7 @@ object FormMain: TFormMain
       end>
     ParentColor = True
     SizeGrip = False
+    UseSystemFont = False
   end
   object TimerStatus: TTimer
     Interval = 180000
