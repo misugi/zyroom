@@ -967,7 +967,7 @@ begin
 
       // Height of info panels
       PnInfo.Height := 8 + ((FLbList.Count div 2)*_LABEL_HEIGHT);
-      PnInfo2.Height := 8 + ((FLbList2.Count div 2)*_LABEL_HEIGHT5);
+      PnInfo2.Height := 8 + ((FLbList2.Count div 2)*_LABEL_HEIGHT);
       if ItemBonus then PnInfo2.Height := PnInfo2.Height + 24;
 
       // Bonus

@@ -341,11 +341,11 @@ object FormLog: TFormLog
       Top = 91
       Width = 222
       Height = 427
-      ActivePage = TabSheet3
+      ActivePage = TabCharacters
       Align = alClient
       MultiLine = True
       TabOrder = 0
-      object TabSheet1: TTabSheet
+      object TabChannels: TTabSheet
         Caption = 'Canaux'
         DesignSize = (
           214
@@ -606,7 +606,7 @@ object FormLog: TFormLog
           TabOrder = 3
         end
       end
-      object TabSheet3: TTabSheet
+      object TabCharacters: TTabSheet
         Caption = 'Personnages'
         ImageIndex = 2
         DesignSize = (

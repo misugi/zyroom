@@ -60,9 +60,9 @@ type
     BtSave: TSevenButton;
     BtClean: TSevenButton;
     PageControl: TPageControl;
-    TabSheet1: TTabSheet;
+    TabChannels: TTabSheet;
     TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
+    TabCharacters: TTabSheet;
     ListChannels: TCheckListBox;
     BtCheckChannels: TSevenButton;
     BtUncheckChannels: TSevenButton;
@@ -213,8 +213,8 @@ begin
   BtClean.Enabled := AEnabled;
   BtSave.Enabled := AEnabled;
 //  GbOptions.Enabled := AEnabled;
-  GbChannels.Enabled := AEnabled;
-  GbCharacters.Enabled := AEnabled;
+  TabChannels.Enabled := AEnabled;
+  TabCharacters.Enabled := AEnabled;
   DatePickerStart.Enabled := AEnabled;
   DatePickerEnd.Enabled := AEnabled;
   TimePickerStart.Enabled := AEnabled;
