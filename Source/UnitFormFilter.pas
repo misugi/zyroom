@@ -140,7 +140,7 @@ type
     LbAutoAdvParry: TLabel;
     LbAutoFactorProt: TLabel;
     LbValueFactorProt: TLabel;
-    TabTemp: TTabSheet;
+    TabMaterial: TTabSheet;
     PnCat1: TPanel;
     LbCat1Spec1: TLabel;
     LbCat1Spec2: TLabel;
@@ -287,6 +287,9 @@ uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
   UnitFormCharacter, UnitConfig, UnitFormOptions;
 
 //DONE: I see, a filter on the amount of items and a new entry in the top list to sort items on the amount, I added this in my todo list
+
+const
+  _LABEL_HEIGHT = 19;
 
 {$R *.dfm}
 
@@ -878,7 +881,7 @@ begin
             TGauge(FindComponent(Format('GaugeCat1Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat1.Height := 35 + Length(MatSpec1)*15;
+          PnCat1.Height := 35 + Length(MatSpec1)*_LABEL_HEIGHT;
           for i := 0 to High(MatSpec1) do begin
             with FindComponent(Format('LbCat1Spec%d', [i+1])) as TLabel do begin
               Visible := True;
@@ -906,7 +909,7 @@ begin
             TGauge(FindComponent(Format('GaugeCat2Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat2.Height := 35 + Length(MatSpec2)*15;
+          PnCat2.Height := 35 + Length(MatSpec2)*_LABEL_HEIGHT;
           for i := 0 to High(MatSpec2) do begin
             with FindComponent(Format('LbCat2Spec%d', [i+1])) as TLabel do begin
               Visible := True;
@@ -963,8 +966,8 @@ begin
       end;
 
       // Height of info panels
-      PnInfo.Height := 8 + ((FLbList.Count div 2)*15);
-      PnInfo2.Height := 8 + ((FLbList2.Count div 2)*15);
+      PnInfo.Height := 8 + ((FLbList.Count div 2)*_LABEL_HEIGHT);
+      PnInfo2.Height := 8 + ((FLbList2.Count div 2)*_LABEL_HEIGHT5);
       if ItemBonus then PnInfo2.Height := PnInfo2.Height + 24;
 
       // Bonus
@@ -1013,7 +1016,7 @@ begin
         TLabel(FLbList.Items[i+1]).Visible := True;
         TLabel(FLbList.Items[i]).Top := wTop;
         TLabel(FLbList.Items[i+1]).Top := wTop;
-        Inc(wTop, 15);
+        Inc(wTop, _LABEL_HEIGHT);
         Inc(i, 2);
       end;
 
@@ -1025,7 +1028,7 @@ begin
         TLabel(FLbList2.Items[i+1]).Visible := True;
         TLabel(FLbList2.Items[i]).Top := wTop;
         TLabel(FLbList2.Items[i+1]).Top := wTop;
-        Inc(wTop, 15);
+        Inc(wTop, _LABEL_HEIGHT);
         Inc(i, 2);
       end;
 
@@ -1100,7 +1103,7 @@ begin
   PnCat1.Parent := TabInfo;
   PnCat2.Parent := TabInfo;
   PnSales.Parent := TabInfo;
-  TabTemp.TabVisible := False;
+  TabMaterial.TabVisible := False;
 
   // min and max values for the quality
   EdQualityMin.MinValue := _MIN_QUALITY;

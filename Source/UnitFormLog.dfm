@@ -919,12 +919,6 @@ object FormLog: TFormLog
         Height = 23
         Anchors = [akLeft, akBottom]
         Caption = 'Appliquer'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
-        Font.Style = [fsBold]
-        ParentFont = False
         TabOrder = 1
         TabStop = False
         OnClick = BtOKClick

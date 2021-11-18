@@ -1,14 +1,14 @@
 object FormFilter: TFormFilter
-  Left = 543
-  Top = 114
-  Width = 325
-  Height = 725
+  Left = 521
+  Top = 36
+  Width = 323
+  Height = 788
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Arial'
+  Font.Height = -16
+  Font.Name = 'Calibri'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
@@ -16,13 +16,13 @@ object FormFilter: TFormFilter
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 19
   object PageControl: TPageControl
     Left = 0
     Top = 0
     Width = 280
-    Height = 687
-    ActivePage = TabFilter
+    Height = 749
+    ActivePage = TabMaterial
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -30,39 +30,27 @@ object FormFilter: TFormFilter
     OnChange = PageControlChange
     object TabInfo: TTabSheet
       Caption = 'Informations'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
       ImageIndex = 1
-      ParentFont = False
       object PnTitle: TPanel
         Left = 0
         Top = 1
         Width = 270
-        Height = 20
+        Height = 24
         Alignment = taLeftJustify
         BevelOuter = bvNone
         BorderWidth = 5
         BorderStyle = bsSingle
         Caption = 'Fragment de Carapace Supr'#234'me/Kidinak des Primes Racines'
-        Color = 3158064
         Ctl3D = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
+        ParentColor = True
         ParentCtl3D = False
-        ParentFont = False
         TabOrder = 0
       end
       object PnInfo: TPanel
         Left = 0
-        Top = 22
+        Top = 27
         Width = 270
-        Height = 167
+        Height = 209
         BevelInner = bvRaised
         BevelOuter = bvLowered
         Constraints.MinHeight = 53
@@ -71,41 +59,23 @@ object FormFilter: TFormFilter
         object LbQuality: TLabel
           Left = 5
           Top = 25
-          Width = 39
-          Height = 14
+          Width = 56
+          Height = 19
           Caption = 'Qualit'#233' :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbVolume: TLabel
           Left = 5
-          Top = 70
-          Width = 41
-          Height = 14
+          Top = 85
+          Width = 56
+          Height = 19
           Caption = 'Volume :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCraft: TLabel
           Left = 5
-          Top = 100
-          Width = 50
-          Height = 14
+          Top = 125
+          Width = 67
+          Height = 19
           Caption = 'Artisanat :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object ImgItem: TItemImage
           Left = 223
@@ -117,93 +87,81 @@ object FormFilter: TFormFilter
           StickerPosY = 0
         end
         object LbValueQuality: TLabel
-          Left = 76
+          Left = 126
           Top = 25
-          Width = 18
-          Height = 14
+          Width = 24
+          Height = 19
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbValueVolume: TLabel
-          Left = 76
-          Top = 70
-          Width = 21
-          Height = 14
+          Left = 126
+          Top = 85
+          Width = 28
+          Height = 19
           Caption = '10.5'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbValueCraft: TLabel
-          Left = 76
-          Top = 100
-          Width = 72
-          Height = 14
+          Left = 126
+          Top = 125
+          Width = 89
+          Height = 19
           Caption = 'Lame, Pointe'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbClass: TLabel
           Left = 5
-          Top = 40
-          Width = 39
-          Height = 14
+          Top = 45
+          Width = 51
+          Height = 19
           Caption = 'Classe :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueClass: TLabel
-          Left = 76
-          Top = 40
-          Width = 49
-          Height = 14
+          Left = 126
+          Top = 45
+          Width = 61
+          Height = 19
           Caption = 'Excellent'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbDura: TLabel
           Left = 5
-          Top = 85
-          Width = 50
-          Height = 14
+          Top = 105
+          Width = 72
+          Height = 19
           Caption = 'Durabilit'#233' :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueDura: TLabel
-          Left = 76
-          Top = 85
-          Width = 39
-          Height = 14
+          Left = 126
+          Top = 105
+          Width = 55
+          Height = 19
           Caption = '156/220'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -284,138 +242,108 @@ object FormFilter: TFormFilter
         end
         object LbColor: TLabel
           Left = 5
-          Top = 115
-          Width = 43
-          Height = 14
+          Top = 165
+          Width = 58
+          Height = 19
           Caption = 'Couleur :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueColor: TLabel
-          Left = 76
-          Top = 115
-          Width = 35
-          Height = 14
+          Left = 126
+          Top = 165
+          Width = 43
+          Height = 19
           Caption = 'Rouge'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbRace: TLabel
           Left = 5
-          Top = 130
-          Width = 31
-          Height = 14
+          Top = 145
+          Width = 40
+          Height = 19
           Caption = 'Race :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueRace: TLabel
-          Left = 76
-          Top = 130
-          Width = 92
-          Height = 14
+          Left = 126
+          Top = 145
+          Width = 106
+          Height = 19
           Caption = 'Toutes les races'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbWeight: TLabel
           Left = 5
-          Top = 54
-          Width = 32
-          Height = 14
+          Top = 65
+          Width = 43
+          Height = 19
           Caption = 'Poids :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueWeight: TLabel
-          Left = 76
-          Top = 54
-          Width = 38
-          Height = 14
+          Left = 126
+          Top = 65
+          Width = 49
+          Height = 19
           Caption = '10.5 Kg'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbEcosys: TLabel
           Left = 5
-          Top = 7
-          Width = 65
-          Height = 14
+          Top = 5
+          Width = 85
+          Height = 19
           Caption = 'Ecosyst'#232'me :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueEcosys: TLabel
-          Left = 76
-          Top = 7
-          Width = 51
-          Height = 14
+          Left = 126
+          Top = 5
+          Width = 61
+          Height = 19
           Caption = 'Commun'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbGuard: TLabel
           Left = 5
-          Top = 146
-          Width = 65
-          Height = 14
+          Top = 185
+          Width = 86
+          Height = 19
           Caption = 'Surveillance :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueGuard: TLabel
-          Left = 76
-          Top = 146
-          Width = 92
-          Height = 14
-          Caption = 'Toutes les races'
+          Left = 126
+          Top = 185
+          Width = 24
+          Height = 19
+          Caption = '999'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = 204
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Color = clMaroon
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
       end
       object PnInfo2: TPanel
         Left = 0
-        Top = 194
+        Top = 239
         Width = 270
         Height = 462
         BevelInner = bvRaised
@@ -425,15 +353,9 @@ object FormFilter: TFormFilter
         object LbAutoSpeed: TLabel
           Left = 5
           Top = 18
-          Width = 43
-          Height = 14
+          Width = 56
+          Height = 19
           Caption = 'Vitesse :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueSpeed: TLabel
           Left = 212
@@ -445,8 +367,8 @@ object FormFilter: TFormFilter
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -460,23 +382,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoRange: TLabel
           Left = 5
           Top = 33
-          Width = 37
-          Height = 14
+          Width = 50
+          Height = 19
           Caption = 'Port'#233'e :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueRange: TLabel
           Left = 212
@@ -488,8 +404,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -503,8 +419,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -518,8 +434,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -533,23 +449,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoSlashingProt: TLabel
           Left = 5
           Top = 128
-          Width = 130
-          Height = 14
+          Width = 176
+          Height = 19
           Caption = 'Protect. max/cp tranchant :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueSlashingProt: TLabel
           Left = 212
@@ -561,23 +471,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoSmashingProt: TLabel
           Left = 5
           Top = 144
-          Width = 138
-          Height = 14
+          Width = 187
+          Height = 19
           Caption = 'Protect. max/cp contondant :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueSmashingProt: TLabel
           Left = 212
@@ -589,23 +493,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoPiercingProt: TLabel
           Left = 5
           Top = 160
-          Width = 129
-          Height = 14
+          Width = 174
+          Height = 19
           Caption = 'Protect. max/cp perforant :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValuePiercingProt: TLabel
           Left = 212
@@ -617,8 +515,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -801,55 +699,31 @@ object FormFilter: TFormFilter
         end
         object LbValueHpb: TLabel
           Left = 36
-          Top = 437
-          Width = 18
-          Height = 14
+          Top = 434
+          Width = 24
+          Height = 19
           Caption = '125'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueSab: TLabel
           Left = 104
-          Top = 437
-          Width = 18
-          Height = 14
+          Top = 434
+          Width = 24
+          Height = 19
           Caption = '125'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueStb: TLabel
           Left = 172
-          Top = 437
-          Width = 18
-          Height = 14
+          Top = 434
+          Width = 24
+          Height = 19
           Caption = '125'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueFob: TLabel
           Left = 240
-          Top = 437
-          Width = 18
-          Height = 14
+          Top = 434
+          Width = 24
+          Height = 19
           Caption = '125'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoDodge: TLabel
           Left = 5
@@ -858,12 +732,6 @@ object FormFilter: TFormFilter
           Height = 13
           AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoParry: TLabel
           Left = 5
@@ -872,12 +740,6 @@ object FormFilter: TFormFilter
           Height = 13
           AutoSize = False
           Caption = 'Modif. de Parades'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoAdvDodge: TLabel
           Left = 5
@@ -886,12 +748,6 @@ object FormFilter: TFormFilter
           Height = 13
           AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoAdvParry: TLabel
           Left = 5
@@ -900,25 +756,13 @@ object FormFilter: TFormFilter
           Height = 13
           AutoSize = False
           Caption = 'Modif. Parades Adversaire'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoFactorProt: TLabel
           Left = 5
           Top = 112
-          Width = 109
-          Height = 14
+          Width = 146
+          Height = 19
           Caption = 'Facteur de protection :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueFactorProt: TLabel
           Left = 212
@@ -930,23 +774,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoDmg: TLabel
           Left = 5
           Top = 3
-          Width = 40
-          Height = 14
+          Width = 54
+          Height = 19
           Caption = 'D'#233'g'#226'ts :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueDmg: TLabel
           Left = 212
@@ -958,8 +796,8 @@ object FormFilter: TFormFilter
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -973,23 +811,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoProtect3: TLabel
           Left = 5
           Top = 263
-          Width = 80
-          Height = 14
+          Width = 104
+          Height = 19
           Caption = 'Ondes de choc :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueProtect3: TLabel
           Left = 212
@@ -1001,8 +833,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -1013,25 +845,13 @@ object FormFilter: TFormFilter
           Height = 13
           AutoSize = False
           Caption = 'Froid :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoProtect2: TLabel
           Left = 5
           Top = 247
-          Width = 38
-          Height = 14
+          Width = 51
+          Height = 19
           Caption = 'Poison :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueProtect2: TLabel
           Left = 212
@@ -1043,23 +863,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoResist1: TLabel
           Left = 5
           Top = 179
-          Width = 38
-          Height = 14
+          Width = 51
+          Height = 19
           Caption = 'D'#233'sert :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueResist1: TLabel
           Left = 212
@@ -1071,23 +885,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoResist2: TLabel
           Left = 5
           Top = 195
-          Width = 31
-          Height = 14
+          Width = 41
+          Height = 19
           Caption = 'For'#234't :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueResist2: TLabel
           Left = 212
@@ -1099,23 +907,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoResist3: TLabel
           Left = 5
           Top = 210
-          Width = 30
-          Height = 14
+          Width = 37
+          Height = 19
           Caption = 'Lacs :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueResist3: TLabel
           Left = 212
@@ -1127,23 +929,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoElementalSpeed: TLabel
           Left = 5
           Top = 284
-          Width = 135
-          Height = 14
+          Width = 181
+          Height = 19
           Caption = 'Vitesse magie destructrice :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueElementalSpeed: TLabel
           Left = 212
@@ -1155,23 +951,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoElementalPower: TLabel
           Left = 5
           Top = 300
-          Width = 148
-          Height = 14
+          Width = 198
+          Height = 19
           Caption = 'Puissance magie destructrice :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueElementalPower: TLabel
           Left = 212
@@ -1183,8 +973,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -1198,23 +988,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoDefensivePower: TLabel
           Left = 5
           Top = 403
-          Width = 152
-          Height = 14
+          Width = 207
+          Height = 19
           Caption = 'Puissance magie neutralisante :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueDefensivePower: TLabel
           Left = 212
@@ -1226,8 +1010,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -1238,25 +1022,13 @@ object FormFilter: TFormFilter
           Height = 13
           AutoSize = False
           Caption = 'Puissance magie curative :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbAutoDefensiveSpeed: TLabel
           Left = 5
           Top = 387
-          Width = 139
-          Height = 14
+          Width = 190
+          Height = 19
           Caption = 'Vitesse magie neutralisante :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueDefensiveSpeed: TLabel
           Left = 212
@@ -1268,23 +1040,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoOffensiveSpeed: TLabel
           Left = 5
           Top = 319
-          Width = 125
-          Height = 14
+          Width = 174
+          Height = 19
           Caption = 'Vitesse magie d'#233'bilitante :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueOffensiveSpeed: TLabel
           Left = 212
@@ -1296,23 +1062,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoOffensivePower: TLabel
           Left = 5
           Top = 335
-          Width = 138
-          Height = 14
+          Width = 191
+          Height = 19
           Caption = 'Puissance magie d'#233'bilitante :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueOffensivePower: TLabel
           Left = 212
@@ -1324,23 +1084,17 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoHealSpeed: TLabel
           Left = 5
           Top = 350
-          Width = 116
-          Height = 14
+          Width = 156
+          Height = 19
           Caption = 'Vitesse magie curative :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueHealSpeed: TLabel
           Left = 212
@@ -1352,8 +1106,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -1361,348 +1115,31 @@ object FormFilter: TFormFilter
     end
     object TabFilter: TTabSheet
       Caption = 'Filtre'
-      object GbQuality: TGroupBox
-        Left = 0
-        Top = 216
-        Width = 132
-        Height = 72
-        Caption = 'Qualit'#233
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 1
-        object LbQualityMin: TLabel
-          Left = 8
-          Top = 20
-          Width = 22
-          Height = 14
-          Caption = 'Min :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object LbQualityMax: TLabel
-          Left = 8
-          Top = 46
-          Width = 26
-          Height = 14
-          Caption = 'Max :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object EdQualityMin: TSpinEdit
-          Left = 40
-          Top = 16
-          Width = 85
-          Height = 23
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          MaxValue = 270
-          MinValue = 0
-          ParentFont = False
-          TabOrder = 0
-          Value = 250
-        end
-        object EdQualityMax: TSpinEdit
-          Left = 40
-          Top = 42
-          Width = 85
-          Height = 23
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          MaxValue = 300
-          MinValue = 0
-          ParentFont = False
-          TabOrder = 1
-          Value = 250
-        end
-      end
-      object GbClass: TGroupBox
-        Left = 0
-        Top = 172
-        Width = 270
-        Height = 44
-        Caption = 'Classe'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        object LbClassMin: TLabel
-          Left = 8
-          Top = 20
-          Width = 22
-          Height = 14
-          Caption = 'Min :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object LbClassMax: TLabel
-          Left = 145
-          Top = 20
-          Width = 26
-          Height = 14
-          Caption = 'Max :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object EdClassMin: TComboBox
-          Left = 40
-          Top = 16
-          Width = 85
-          Height = 22
-          Style = csDropDownList
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ItemHeight = 14
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 0
-          Text = 'Base'
-          Items.Strings = (
-            'Base'
-            'Fin'
-            'Choix'
-            'Excellent'
-            'Supr'#234'me')
-        end
-        object EdClassMax: TComboBox
-          Left = 177
-          Top = 16
-          Width = 85
-          Height = 22
-          Style = csDropDownList
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ItemHeight = 14
-          ItemIndex = 4
-          ParentFont = False
-          TabOrder = 1
-          Text = 'Supr'#234'me'
-          Items.Strings = (
-            'Base'
-            'Fin'
-            'Choix'
-            'Excellent'
-            'Supr'#234'me')
-        end
-      end
-      object GbName: TGroupBox
-        Left = 0
-        Top = 474
-        Width = 270
-        Height = 61
-        Caption = 'Nom'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 4
-        DesignSize = (
-          270
-          61)
-        object EdName: TEdit
-          Left = 8
-          Top = 16
-          Width = 254
-          Height = 22
-          Anchors = [akLeft, akTop, akRight]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-        end
-        object RbAllWords: TRadioButton
-          Left = 8
-          Top = 40
-          Width = 125
-          Height = 17
-          Caption = 'Tous les mots'
-          Checked = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
-          TabStop = True
-        end
-        object RbOneWord: TRadioButton
-          Left = 136
-          Top = 40
-          Width = 125
-          Height = 17
-          BiDiMode = bdLeftToRight
-          Caption = 'Un des mots'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentBiDiMode = False
-          ParentFont = False
-          TabOrder = 2
-        end
-      end
-      object GbEquipment: TGroupBox
-        Left = 0
-        Top = 288
-        Width = 270
-        Height = 44
-        Caption = 'Equipement'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 5
-        object EdEquipment: TComboBox
-          Left = 8
-          Top = 16
-          Width = 254
-          Height = 22
-          Style = csDropDownList
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ItemHeight = 14
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 0
-          Text = 'Tout '#233'quipement'
-          Items.Strings = (
-            'Tout '#233'quipement'
-            'Armures l'#233'g'#232'res'
-            'Armures moyennes'
-            'Armures lourdes'
-            'Armes de m'#233'l'#233'e'
-            'Armes de tir'
-            'Amplificateurs'
-            'Bijoux'
-            'Boucliers'
-            'Outils'
-            'Autres')
-        end
-      end
-      object GbCategory: TGroupBox
-        Left = 0
-        Top = 332
-        Width = 270
-        Height = 44
-        Caption = 'Cat'#233'gorie'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 6
-        object EdCategory: TComboBox
-          Left = 8
-          Top = 16
-          Width = 254
-          Height = 22
-          Style = csDropDownList
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ItemHeight = 14
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 0
-          Text = 'Toute cat'#233'gorie'
-          Items.Strings = (
-            'Toute cat'#233'gorie'
-            'Lame'
-            'Pointe'
-            'Marteau'
-            'Contrepoids'
-            'Fl'#232'che'
-            'Balle de munitions'
-            'Canon'
-            'Carapace pour armures'
-            'Cartouche de munitions'
-            'Doublure'
-            'Explosif'
-            'Rembourrage'
-            'Percuteur'
-            'Fixation pour armures'
-            'D'#233'tente'
-            'Configuration des bijoux'
-            'Prise'
-            'V'#234'tements'
-            'Bijou'
-            'Concentration magique')
-        end
-      end
       object GbSorting: TGroupBox
         Left = 0
         Top = 0
         Width = 271
-        Height = 44
+        Height = 53
         Caption = 'Tri'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
+        Font.Height = -16
+        Font.Name = 'Calibri'
+        Font.Style = []
         ParentFont = False
         TabOrder = 7
         object EdSorting: TComboBox
           Left = 8
-          Top = 16
+          Top = 20
           Width = 254
-          Height = 22
+          Height = 27
           Style = csDropDownList
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = []
-          ItemHeight = 14
+          ItemHeight = 19
           ItemIndex = 0
           ParentFont = False
           TabOrder = 0
@@ -1718,545 +1155,121 @@ object FormFilter: TFormFilter
             'Temps')
         end
       end
-      object GbSales: TGroupBox
-        Left = 0
-        Top = 376
-        Width = 270
-        Height = 54
-        Caption = 'Ventes'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 8
-        object LbPriceMin: TLabel
-          Left = 116
-          Top = 9
-          Width = 71
-          Height = 14
-          Alignment = taCenter
-          AutoSize = False
-          Caption = 'Prix min'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object LbPriceMax: TLabel
-          Left = 191
-          Top = 9
-          Width = 71
-          Height = 14
-          Alignment = taCenter
-          AutoSize = False
-          Caption = 'Prix max'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object EdContinent: TComboBox
-          Left = 8
-          Top = 25
-          Width = 105
-          Height = 22
-          Style = csDropDownList
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ItemHeight = 14
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 0
-          Text = 'Tout continent'
-          Items.Strings = (
-            'Tout continent'
-            'Fyros'
-            'Zorai'
-            'Tryker'
-            'Matis')
-        end
-        object EdPriceMin: TSpinEdit
-          Left = 116
-          Top = 25
-          Width = 71
-          Height = 23
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          MaxValue = 0
-          MinValue = 0
-          ParentFont = False
-          TabOrder = 1
-          Value = 0
-        end
-        object EdPriceMax: TSpinEdit
-          Left = 191
-          Top = 25
-          Width = 71
-          Height = 23
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          MaxValue = 0
-          MinValue = 0
-          ParentFont = False
-          TabOrder = 2
-          Value = 0
-        end
-      end
-      object GbBonus: TGroupBox
-        Left = 0
-        Top = 430
-        Width = 270
-        Height = 44
-        Caption = 'Bonus'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 9
-        object ImgHpbF: TImage
-          Left = 8
-          Top = 15
-          Width = 24
-          Height = 24
-          ParentShowHint = False
-          Picture.Data = {
-            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
-            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
-            650064696D2E203235206F63742E20323030392031303A35333A3334202B3031
-            30306A07DFA90000000774494D4507D90A1909360AF85CA41700000009704859
-            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
-            03A54944415478DAB596FF4B137118C73FE7DDCE69F376DB2C6CED5CCD885891
-            4DA96C8EC42031CAA0D23283CA0A11FA35F087FE02FB358A0882FA218A8A8A64
-            563F848DCE6A5138BFCCA810F56643AECE36F7CD6DDEAEE7DA69A3B672421F78
-            F3D9E7793E3CAFE7F33C779F1B86FEF3C0F2D97CA6AB4BDE8F8348499270C52C
-            62189690E7EBDDDDD2B2014AF042502904671291082DDB09B55A28C0F1498008
-            00985F162023B811826F8F8E7FB6170778266C5A1F975485432534FD0C00A300
-            882D1740C0540672240233FB77BD7B5C331411698ED9348D33154FB57AFD5D38
-            C5F0B2004AF61A902D1C08B4967A5E34D47E1F63DCB3A2E851E93DC603ADB7D4
-            45454E004CE55DA28CD230A006A3DB79F454E8B3CD1D12350008038035379FB8
-            A622C917E00FE4D5E4CCBA83EC2BBDFD4DFB046FAD31112D0300AE005C96A3ED
-            57217B17040F658BF33740BAEEA99443F48F371D537DB5EF31E98D1F1EF69223
-            51118D84C5F02841B1F489CE6BB02FBF1364D63D159C69B54C0E345CA866E432
-            9100400A20365AB0C2439F3A770BEC4ED0D27BA0646F4ACECD354A832FDB6E3A
-            CC3619E89EF882A88141748797DF2B247A13055344EB59273CA632C40380E83F
-            0119D95745FDBE369BEF7DE37987750DACF1DF006824260503F54D7D16AB552E
-            139BAD0FD9003FB3073532ECA3B69386B8CDBC63A726E4E7D0D49B7EF4294AA0
-            117EB112E1DB3A0BBBF3704BCE3E640314C3B435297C3D7EDADBB36F6BD50613
-            652CC7BFBC61D1ACDF87581E437C341D63553116BB1CA73DDBDA3B72F6211BA0
-            0426476CEC6347D7A79E7ABDD9A8A5CACBD12CC7FD01D8BDB6506C1F8A4F55B6
-            7738299D2E6B1F7201EA4ABDAF3BDBB8FE3A42256A32FD0F267EFDDEBC8A4017
-            C7E783D481237DA675EBB2F62127A060F85DE7B681BEBA7942D218D4E99B5998
-            1311974CEF731848C4C54474693A15A6EDBB5DD6EAEAAB60762D15E00871131D
-            BAA7F7EA4D644A6B20D3DB8484842218B608608504BA226041FBC1E6BE35799C
-            406E726524143A463DBBBF9709F3E5B02617FC326021F8644C4AB8483D577BA8
-            E50945D3B7C13DB8941E2C5ECD00D9BFB1F7460D1E8B966DA008B581C4F13939
-            4D253822703F4BAF7DD5D0DCDC239B41D34B798A322FB9ED333CBF6BF2F993CD
-            8501DE0C6B6D308EE1B31212258AFEA6B354B82B6B6A7AE1BA7E0D3E3F28FECF
-            F7E0374829C802B202688BC0F3AB93F1B80A3E30C9129DCE07657905BEB7B982
-            E7046440E4C7A70864504EA4556C222800F281BEE50AFE57401610A9CC0B4386
-            E4FC37B1307E008EE2D7280B2D36670000000049454E44AE426082}
-          ShowHint = True
-        end
-        object ImgSabF: TImage
-          Left = 76
-          Top = 15
-          Width = 24
-          Height = 24
-          ParentShowHint = False
-          Picture.Data = {
-            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
-            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
-            650064696D2E203235206F63742E20323030392031303A35333A3334202B3031
-            30306A07DFA90000000774494D4507D90A1909371AFCF0853200000009704859
-            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
-            03A94944415478DAB5967D4813611CC79FF3DCF97ABB735ACDB94DCD5E60BD9A
-            21638DCCA8692F12A5961A04518811FDDDBFF5677FF547FF84104420417F0562
-            F6EA5CCD85BDB98A32492B4F2732B6B973AF77DB79FD6EDE62C5564EE8812FCF
-            F63CBFFB7DBECFEFB77B1886FEF3C0B2093E77F9B2148F83085114717959C030
-            8C97E65BD7AE89AB06C8C9F34065905C170985680995A7C8F7E6E0F83440BC00
-            88AF0A90925C03C9EBA7D949938FF0EAF45C354760C40792A21F01E0330022AB
-            05E4C2A40699D9B0EFE8F0D641237CA6AB866AE67545350F6995EA1E9CE2E3AA
-            00B2FB62506D60D1DFF1D6E0B0CC36303AFE4648504E50CEC3DB3AFAF20B0A06
-            00309B7589524AA303599E173E3DC51C9FAC9580000802C07EACEE4CAF822086
-            61CD9F559353EB0E328DE5BF6E99327FDB135DB7A016DEC57061849700B613F5
-            676F827B1B240FA4CBF33740A2EE4BE292D915986E618F074DAA036ACD90B38F
-            10C60524388560D194D27E6A634F2FC4657782D4BAB3DC42C717E5678BEECA26
-            A94C0400900C88144C16393B375DEC83F501D0CA7B20BBD7725CB4F92B39D1A5
-            BAAAA99581280520E44CE4CCB6969F1F20695A82380110FE2720C5FDAE79BFAB
-            CBD3EA6B86D254A0E5373801E0EFF28958F18BC8EE432DD61A83412A933D5D1F
-            D20112EE41CDCF4A07BBC456ACD654BDA798596410E39F46EE2906715636191E
-            D4F6AFB73735B767EC433A40214C3B7D11CFE9E193D623862D06AD9ED2E31260
-            84798172C76328FE71B91258596E84BC433ADB0F7667EC433A000993F9FBC2D7
-            6EDB255BA386D4507ABA32E17E0620D85008899EE51C798D94C05D6067DBF775
-            0F284B4AD2F62113A0E13DF9A667EC98B34110E3C5BF3D2003C03DC2CB0914BF
-            1E669BF427ADDAEAEAB47DC808F8C4BFEB19DD3CD28093A818A715893D7E3284
-            10B31C47988A90E08A21E1463468ACDC6F33D4D5DD8465DB4A016697F747F7A3
-            DDFD8D88E3A9E49EE807E78BE0BC9240788502F10E00F62EB14D87DAAC15599C
-            406AF28E5020D0F938E7FE21DF9A39BD64F8D7030048BA8F3BC23C6557319623
-            ED834A9ABE0BDBEF57D2835F5733408EDE5F7BDB18C5C2EADC0D85F9502A1C45
-            51C2B9E88AF33886CF695E55392C6D6DFD927BD0FC4A7E45A9975CBDCFEDDEFB
-            62FCC9569FC25709DF29E4E57014408212A33D5A75CDE80EA3F1015CD72F616F
-            0EC4FDF33DF80352065A0F320068BBD7ED2E8F719C8252A9626449C90C94C501
-            7BAF3225CF08488148D74301A8543E1125AF09203F6806E4C994FCAF80342042
-            9E93438264FC37911C3F0106F0D0281230DB170000000049454E44AE426082}
-          ShowHint = True
-        end
-        object ImgStbF: TImage
-          Left = 144
-          Top = 15
-          Width = 24
-          Height = 24
-          ParentShowHint = False
-          Picture.Data = {
-            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
-            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
-            650064696D2E203235206F63742E20323030392031303A35323A3339202B3031
-            3030E412D5570000000774494D4507D90A1909351ACEC6E7B000000009704859
-            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
-            03B54944415478DAB596EF4F526114C7CFE522A25DE1822E412105ABA56BA156
-            4668596D19A5AE376666ADD68F315B2FDA7A917F436BBDA937D6E6EA8DABF563
-            737364AD96B128A335C252C97EACCC6B3A52E397FCEC42E712386A50E2D6C3BE
-            7B78CE79763EE739E7721F08F8CF83C864F3F1CE4E6E3F891244A351326E6609
-            82087173F7B973D12503E2C1B35105185C199A0FD09C9D2FCC9AE591E4384266
-            11F0634980A4E04518BCC6F7DEA9CB750894DE95A1206413AF295A7C1F01A308
-            F02F15C0C74986AA0BCCCD376DEE556BF13BDD5FF17C3ABB8CBA27964A6FE229
-            DE2C0910CF9E4255799DEEB60D2655C39EF7B5CA8B6C373B94FFCEA66AD3F408
-            73728C0860322E51526994A886E546DEFE43F6A62A0E88002F02CCAB0F6FBC92
-            25103C469B33A32627D71DA5933CE535EB4736D6CADD85324BD44A5A22AF3880
-            A9FCA8B60BB33761704FAA387F03FCAA7B04EAE093BF79ED7091EE74A5A1E8D5
-            2DBB60383A0AC311BBD72EFE682EEC587305F7657682E4BAC35CB86D952DBFE1
-            6CD949AE4C0204401CE0B7531F6C85A7CA7BD06E442DBE07F1EC15E14050CF7F
-            E26BEFC86DADDAA0A8A65E3256200773120076841C63A8130A631E4D73101B02
-            7CFF0424655FED9B70B5D7584BF5589A625C935D4FBA61D3B40E6EB077627B87
-            E1AD2BD0CC1F505794736532A7EA432A402C7B945ED9BBACFD48B8B9AA644709
-            E5F9EC06E6E124D8791FC01A194B6CF7F6AA8DE6CDFBF469FB900A908B5365F8
-            9BFFE0B1BEBD8D951AB542542A26271F30E01EF7FC06904381FFBCE4926DA7A1
-            356D1F5201F270AAF38F7D3774F69DD82E5508C5091F07780416988299D8BA91
-            D4B147D9338CC6B0CD28924852F6211DA0BE6050D8D1FEB4B19ECF86A9647F4F
-            2CD158F620E7E5C38548974BD4AA1C50A85429FB9016002FFD1D9A8195F552A0
-            289A10C57C9F5806BEE0871B9BC86A60A2537019AE7AE91D45A68AF5EBBBD06C
-            5A2CA0CEFD79D6B0E5D6BAED4424B250222778C00DDFA19827070521070B6B85
-            CBBC6E97AE65D740710627E09AAC99F7780EE4DEFEB15BE550AEC0B560A10F08
-            48646F89584326A9F94BEDBE3DFD229ABE8EEEA1C5F460E1D58C90A635D7645A
-            D247C854BC6221968A0C402096390353212089AFE652CBB38696963E2E7BD4F4
-            629EA2E4975CCD9CC3B175BC7F646DB6835F826BB18B70929330C9E225332329
-            9359345AED5D7C5D0FA2EF2B2AF8CFDFC11F9002941A5581A075B30E873C1C0C
-            66E10513CE934826B02CCFD0F7225DF0B480240877B1E7A0F2E32712C76D6CAC
-            E70013A89974C1FF0A480112C4E7C4E02069FF4D24C64FC286BB2845B614E500
-            00000049454E44AE426082}
-          ShowHint = True
-        end
-        object ImgFobF: TImage
-          Left = 212
-          Top = 15
-          Width = 24
-          Height = 24
-          ParentShowHint = False
-          Picture.Data = {
-            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
-            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
-            650064696D2E203235206F63742E20323030392031303A35333A3334202B3031
-            30306A07DFA90000000774494D4507D90A1909380F16B57D1600000009704859
-            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
-            03A64944415478DAB596DB4F134114C6673BED02D2EE6EA122D6B65EAA11888A
-            48D45A1B41A22D22A85111C5471363F40F3026BE1B9F7DD098F842424C7C3046
-            53AF51A856085EA978C3884A6991545ABBBDD06EE9BA9EAD5B524D5729899B7C
-            99EDCCD9F33BF39DEDB404FACF175148F0919327C5780C220541C0D2344F1044
-            4A1C2F9D3D2BCC1920252F02E920B931914C32E27C914A1554603C0A902000D2
-            7302E424D743F20DA3C1B035A4208D2694E24805F14A43D37700F0160089B902
-            943054826C6C3CDEDA5BB1D202F7CC92578F268C94E63653A6BD02BB189A1340
-            AA5E0DAA8B4622079F2F5861F7AD6E30A62E9FE729DFFBC196FADAEEE2921227
-            007C055B94638D11647F98263BBCD63D752210003100B8776F5A7F514592BD30
-            172EA8C9B9BE83AC2F7955DB48B575739259205A8525806BAFCD7201AA7741F2
-            68BE3C7F03647CFF2108363F3BD536B5659775FEA66DFA9B4FFB49FEF35BC40F
-            BF8B958E8FB83BD6565D84B8C27690EB3B9B4C1DFCA0D4D9CD274E8936910040
-            122051E2FF3878A8AEBA1BE69DA0D9F740AADEC0715CF388B2ACB3F2F8E98CEF
-            FE17FDC8C3A32C80578C0EFBF6AD3038350C2342060130F54F404EF5EB26426C
-            27DBB8B719AC5924FAFE0700095FDEB38D6A658FB9A65AB4C99DAF0F845CF5A0
-            E6FB04DD293475D659979BD45E368A1E7FF2A1A2F057C40D3DC886C70CF79D6E
-            474BB36C1FF201E6C1B036144F1CEEB51ED85953B5CA6062289C0528BD1E941E
-            7DFDEB61AA22A1B9DE35D8EED82EDB877C000D0CB6CFDFC2475D6D27B6EA355A
-            DA544E216F3082C6D808223CF790100964628B5637F1DC99E3BEF6A64627A5D5
-            E6ED831CA0C143941E7BB9714F03FF03AB7F7B400240F5086B2B50BAFB1CEB58
-            66EC312C5D9AB70FB28037B1C4B101FDF2064CD26A4C9567D6F84810A1C9AF99
-            7B5C61407CC087F82B5D318B59EFAAA9AFBF00D3AED9026CFE6FC1A377CC6BB6
-            A2789AC65A09F03D88309F9A01A43C03085DED621D2D8E9E4505EC406C726D3C
-            1A3D74772ABD23A4D699E033995D57965233D5A73D03297AE899D7DEDA728B62
-            98CBB0EC994D0F668E6680B45EC38C2529A04A82D215C34E3056E04CE542C097
-            C20A625C3FECE9B3EFDF7F43AC1E34319BB728F790DB100A04B63C72F7AD0A21
-            B41831E5348A8731F2FB794AA99C3498CD03B516CB4D38AEFB21761CC4FDF37B
-            F00744075A06AA01D09A6020B0709AE3547459D9B446AB1D035BFA60ED895C72
-            59400E44FC612F01954B3BA2A5393830501834069A944BFE57401E10298DD94B
-            84C8FE9BC85E3F01984BCA284B4581840000000049454E44AE426082}
-          ShowHint = True
-        end
-        object CbHpb: TCheckBox
-          Left = 36
-          Top = 19
-          Width = 13
-          Height = 17
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          OnClick = CbTypeMatClick
-        end
-        object CbSab: TCheckBox
-          Left = 104
-          Top = 19
-          Width = 13
-          Height = 17
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
-          OnClick = CbTypeMatClick
-        end
-        object CbStb: TCheckBox
-          Left = 172
-          Top = 19
-          Width = 13
-          Height = 17
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 2
-          OnClick = CbTypeMatClick
-        end
-        object CbFob: TCheckBox
-          Left = 240
-          Top = 19
-          Width = 13
-          Height = 17
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-          OnClick = CbTypeMatClick
-        end
-      end
       object GbType: TGroupBox
         Left = 0
-        Top = 44
+        Top = 54
         Width = 132
-        Height = 128
+        Height = 134
         Caption = 'Type'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         TabOrder = 0
         object CbTypeMat: TCheckBox
           Left = 8
-          Top = 16
+          Top = 21
           Width = 121
           Height = 17
           Caption = 'Mati'#232'res'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 0
           OnClick = CbTypeMatClick
         end
         object CbTypeCata: TCheckBox
           Left = 8
-          Top = 52
+          Top = 57
           Width = 121
           Height = 17
           Caption = 'Cristaux'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 1
         end
         object CbTypeOthers: TCheckBox
           Left = 8
-          Top = 88
+          Top = 93
           Width = 121
           Height = 17
           Caption = 'Autres'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 2
         end
         object CbTypeEquipment: TCheckBox
           Left = 8
-          Top = 34
+          Top = 39
           Width = 121
           Height = 17
           Caption = 'Equipement'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 3
           OnClick = CbTypeMatClick
         end
         object CbTypeTeleporter: TCheckBox
           Left = 8
-          Top = 70
+          Top = 75
           Width = 121
           Height = 17
           Caption = 'T'#233'l'#233'porteurs'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 4
         end
       end
       object GbEcosys: TGroupBox
         Left = 138
-        Top = 44
+        Top = 54
         Width = 132
-        Height = 128
+        Height = 134
         Caption = 'Ecosyst'#232'me'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         TabOrder = 3
         object CbEcoPrime: TCheckBox
           Left = 8
-          Top = 34
+          Top = 39
           Width = 121
           Height = 17
           Caption = 'Primes racines'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 0
         end
         object CbEcoCommon: TCheckBox
           Left = 8
-          Top = 16
+          Top = 21
           Width = 121
           Height = 17
           Caption = 'Commun'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 1
         end
         object CbEcoDesert: TCheckBox
           Left = 8
-          Top = 70
+          Top = 75
           Width = 121
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'D'#233'sert'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
           ParentBiDiMode = False
-          ParentFont = False
           TabOrder = 2
         end
         object CbEcoForest: TCheckBox
           Left = 8
-          Top = 52
+          Top = 57
           Width = 121
           Height = 17
           Caption = 'For'#234't'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
           TabOrder = 3
         end
         object CbEcoLakes: TCheckBox
           Left = 8
-          Top = 88
+          Top = 93
           Width = 121
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Lacs'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
           ParentBiDiMode = False
-          ParentFont = False
           TabOrder = 4
         end
         object CbEcoJungle: TCheckBox
           Left = 8
-          Top = 106
+          Top = 111
           Width = 121
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Jungle'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
           ParentBiDiMode = False
-          ParentFont = False
           TabOrder = 5
         end
       end
       object BtDefault: TSevenButton
         Left = 95
-        Top = 539
+        Top = 639
         Width = 85
         Height = 23
         Caption = 'D'#233'faut'
@@ -2307,16 +1320,10 @@ object FormFilter: TFormFilter
       end
       object BtOK: TSevenButton
         Left = 185
-        Top = 539
+        Top = 639
         Width = 85
         Height = 23
         Caption = 'Appliquer'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         TabOrder = 11
         OnClick = BtOKClick
         Border.ColorNormal = 7368816
@@ -2365,85 +1372,580 @@ object FormFilter: TFormFilter
       end
       object GbQuantity: TGroupBox
         Left = 138
-        Top = 216
+        Top = 243
         Width = 132
-        Height = 72
+        Height = 89
         Caption = 'Quantit'#233
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
         TabOrder = 12
         object LbQuantityMin: TLabel
-          Left = 8
-          Top = 20
-          Width = 22
-          Height = 14
+          Left = 5
+          Top = 27
+          Width = 33
+          Height = 19
           Caption = 'Min :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbQuantityMax: TLabel
-          Left = 8
-          Top = 46
-          Width = 26
-          Height = 14
+          Left = 5
+          Top = 58
+          Width = 36
+          Height = 19
           Caption = 'Max :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object EdQuantityMin: TSpinEdit
-          Left = 40
-          Top = 16
-          Width = 85
-          Height = 23
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
+          Left = 45
+          Top = 22
+          Width = 80
+          Height = 29
           MaxValue = 999
           MinValue = 0
-          ParentFont = False
           TabOrder = 0
           Value = 250
         end
         object EdQuantityMax: TSpinEdit
-          Left = 40
-          Top = 42
+          Left = 45
+          Top = 54
+          Width = 80
+          Height = 29
+          MaxValue = 999
+          MinValue = 0
+          TabOrder = 1
+          Value = 250
+        end
+      end
+      object GbClass: TGroupBox
+        Left = 0
+        Top = 189
+        Width = 270
+        Height = 53
+        Caption = 'Classe'
+        TabOrder = 2
+        object LbClassMin: TLabel
+          Left = 5
+          Top = 24
+          Width = 33
+          Height = 19
+          Caption = 'Min :'
+        end
+        object LbClassMax: TLabel
+          Left = 138
+          Top = 24
+          Width = 36
+          Height = 19
+          Caption = 'Max :'
+        end
+        object EdClassMin: TComboBox
+          Left = 45
+          Top = 20
           Width = 85
-          Height = 23
+          Height = 27
+          Style = csDropDownList
+          ItemHeight = 19
+          ItemIndex = 0
+          TabOrder = 0
+          Text = 'Base'
+          Items.Strings = (
+            'Base'
+            'Fin'
+            'Choix'
+            'Excellent'
+            'Supr'#234'me')
+        end
+        object EdClassMax: TComboBox
+          Left = 178
+          Top = 20
+          Width = 85
+          Height = 27
+          Style = csDropDownList
+          ItemHeight = 19
+          ItemIndex = 4
+          TabOrder = 1
+          Text = 'Supr'#234'me'
+          Items.Strings = (
+            'Base'
+            'Fin'
+            'Choix'
+            'Excellent'
+            'Supr'#234'me')
+        end
+      end
+      object GbQuality: TGroupBox
+        Left = 0
+        Top = 243
+        Width = 132
+        Height = 89
+        Caption = 'Qualit'#233
+        TabOrder = 1
+        object LbQualityMin: TLabel
+          Left = 5
+          Top = 25
+          Width = 33
+          Height = 19
+          Caption = 'Min :'
+        end
+        object LbQualityMax: TLabel
+          Left = 5
+          Top = 58
+          Width = 36
+          Height = 19
+          Caption = 'Max :'
+        end
+        object EdQualityMin: TSpinEdit
+          Left = 45
+          Top = 20
+          Width = 80
+          Height = 29
+          MaxValue = 270
+          MinValue = 0
+          TabOrder = 0
+          Value = 250
+        end
+        object EdQualityMax: TSpinEdit
+          Left = 45
+          Top = 54
+          Width = 80
+          Height = 29
+          MaxValue = 300
+          MinValue = 0
+          TabOrder = 1
+          Value = 250
+        end
+      end
+      object GbEquipment: TGroupBox
+        Left = 0
+        Top = 333
+        Width = 270
+        Height = 53
+        Caption = 'Equipement'
+        TabOrder = 5
+        object EdEquipment: TComboBox
+          Left = 8
+          Top = 20
+          Width = 254
+          Height = 27
+          Style = csDropDownList
+          ItemHeight = 19
+          ItemIndex = 0
+          TabOrder = 0
+          Text = 'Tout '#233'quipement'
+          Items.Strings = (
+            'Tout '#233'quipement'
+            'Armures l'#233'g'#232'res'
+            'Armures moyennes'
+            'Armures lourdes'
+            'Armes de m'#233'l'#233'e'
+            'Armes de tir'
+            'Amplificateurs'
+            'Bijoux'
+            'Boucliers'
+            'Outils'
+            'Autres')
+        end
+      end
+      object GbCategory: TGroupBox
+        Left = 0
+        Top = 387
+        Width = 270
+        Height = 53
+        Caption = 'Cat'#233'gorie'
+        TabOrder = 6
+        object EdCategory: TComboBox
+          Left = 8
+          Top = 20
+          Width = 254
+          Height = 27
+          Style = csDropDownList
+          ItemHeight = 19
+          ItemIndex = 0
+          TabOrder = 0
+          Text = 'Toute cat'#233'gorie'
+          Items.Strings = (
+            'Toute cat'#233'gorie'
+            'Lame'
+            'Pointe'
+            'Marteau'
+            'Contrepoids'
+            'Fl'#232'che'
+            'Balle de munitions'
+            'Canon'
+            'Carapace pour armures'
+            'Cartouche de munitions'
+            'Doublure'
+            'Explosif'
+            'Rembourrage'
+            'Percuteur'
+            'Fixation pour armures'
+            'D'#233'tente'
+            'Configuration des bijoux'
+            'Prise'
+            'V'#234'tements'
+            'Bijou'
+            'Concentration magique')
+        end
+      end
+      object GbSales: TGroupBox
+        Left = 0
+        Top = 441
+        Width = 270
+        Height = 62
+        Caption = 'Ventes'
+        TabOrder = 8
+        object LbPriceMin: TLabel
+          Left = 116
+          Top = 11
+          Width = 71
+          Height = 14
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'Prix min'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Calibri'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbPriceMax: TLabel
+          Left = 191
+          Top = 11
+          Width = 71
+          Height = 14
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'Prix max'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Calibri'
+          Font.Style = []
+          ParentFont = False
+        end
+        object EdContinent: TComboBox
+          Left = 8
+          Top = 28
+          Width = 105
+          Height = 27
+          Style = csDropDownList
+          ItemHeight = 19
+          ItemIndex = 0
+          TabOrder = 0
+          Text = 'Atys'
+          Items.Strings = (
+            'Atys'
+            'Fyros'
+            'Zorai'
+            'Tryker'
+            'Matis')
+        end
+        object EdPriceMin: TSpinEdit
+          Left = 116
+          Top = 27
+          Width = 71
+          Height = 29
+          MaxValue = 0
+          MinValue = 0
+          TabOrder = 1
+          Value = 0
+        end
+        object EdPriceMax: TSpinEdit
+          Left = 191
+          Top = 27
+          Width = 71
+          Height = 29
+          MaxValue = 0
+          MinValue = 0
+          TabOrder = 2
+          Value = 0
+        end
+      end
+      object GbBonus: TGroupBox
+        Left = 0
+        Top = 504
+        Width = 270
+        Height = 52
+        Caption = 'Bonus'
+        TabOrder = 9
+        object ImgHpbF: TImage
+          Left = 8
+          Top = 22
+          Width = 24
+          Height = 24
+          ParentShowHint = False
+          Picture.Data = {
+            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
+            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
+            650064696D2E203235206F63742E20323030392031303A35333A3334202B3031
+            30306A07DFA90000000774494D4507D90A1909360AF85CA41700000009704859
+            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
+            03A54944415478DAB596FF4B137118C73FE7DDCE69F376DB2C6CED5CCD885891
+            4DA96C8EC42031CAA0D23283CA0A11FA35F087FE02FB358A0882FA218A8A8A64
+            563F848DCE6A5138BFCCA810F56643AECE36F7CD6DDEAEE7DA69A3B672421F78
+            F3D9E7793E3CAFE7F33C779F1B86FEF3C0F2D97CA6AB4BDE8F8348499270C52C
+            62189690E7EBDDDDD2B2014AF042502904671291082DDB09B55A28C0F1498008
+            00985F162023B811826F8F8E7FB6170778266C5A1F975485432534FD0C00A300
+            882D1740C0540672240233FB77BD7B5C331411698ED9348D33154FB57AFD5D38
+            C5F0B2004AF61A902D1C08B4967A5E34D47E1F63DCB3A2E851E93DC603ADB7D4
+            45454E004CE55DA28CD230A006A3DB79F454E8B3CD1D12350008038035379FB8
+            A622C917E00FE4D5E4CCBA83EC2BBDFD4DFB046FAD31112D0300AE005C96A3ED
+            57217B17040F658BF33740BAEEA99443F48F371D537DB5EF31E98D1F1EF69223
+            51118D84C5F02841B1F489CE6BB02FBF1364D63D159C69B54C0E345CA866E432
+            9100400A20365AB0C2439F3A770BEC4ED0D27BA0646F4ACECD354A832FDB6E3A
+            CC3619E89EF882A88141748797DF2B247A13055344EB59273CA632C40380E83F
+            0119D95745FDBE369BEF7DE37987750DACF1DF006824260503F54D7D16AB552E
+            139BAD0FD9003FB3073532ECA3B69386B8CDBC63A726E4E7D0D49B7EF4294AA0
+            117EB112E1DB3A0BBBF3704BCE3E640314C3B435297C3D7EDADBB36F6BD50613
+            652CC7BFBC61D1ACDF87581E437C341D63553116BB1CA73DDBDA3B72F6211BA0
+            0426476CEC6347D7A79E7ABDD9A8A5CACBD12CC7FD01D8BDB6506C1F8A4F55B6
+            7738299D2E6B1F7201EA4ABDAF3BDBB8FE3A42256A32FD0F267EFDDEBC8A4017
+            C7E783D481237DA675EBB2F62127A060F85DE7B681BEBA7942D218D4E99B5998
+            1311974CEF731848C4C54474693A15A6EDBB5DD6EAEAAB60762D15E00871131D
+            BAA7F7EA4D644A6B20D3DB8484842218B608608504BA226041FBC1E6BE35799C
+            406E726524143A463DBBBF9709F3E5B02617FC326021F8644C4AB8483D577BA8
+            E50945D3B7C13DB8941E2C5ECD00D9BFB1F7460D1E8B966DA008B581C4F13939
+            4D253822703F4BAF7DD5D0DCDC239B41D34B798A322FB9ED333CBF6BF2F993CD
+            8501DE0C6B6D308EE1B31212258AFEA6B354B82B6B6A7AE1BA7E0D3E3F28FECF
+            F7E0374829C802B202688BC0F3AB93F1B80A3E30C9129DCE07657905BEB7B982
+            E7046440E4C7A70864504EA4556C222800F281BEE50AFE57401610A9CC0B4386
+            E4FC37B1307E008EE2D7280B2D36670000000049454E44AE426082}
+          ShowHint = True
+        end
+        object ImgSabF: TImage
+          Left = 76
+          Top = 22
+          Width = 24
+          Height = 24
+          ParentShowHint = False
+          Picture.Data = {
+            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
+            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
+            650064696D2E203235206F63742E20323030392031303A35333A3334202B3031
+            30306A07DFA90000000774494D4507D90A1909371AFCF0853200000009704859
+            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
+            03A94944415478DAB5967D4813611CC79FF3DCF97ABB735ACDB94DCD5E60BD9A
+            21638DCCA8692F12A5961A04518811FDDDBFF5677FF547FF84104420417F0562
+            F6EA5CCD85BDB98A32492B4F2732B6B973AF77DB79FD6EDE62C5564EE8812FCF
+            F63CBFFB7DBECFEFB77B1886FEF3C0B2093E77F9B2148F83085114717959C030
+            8C97E65BD7AE89AB06C8C9F34065905C170985680995A7C8F7E6E0F83440BC00
+            88AF0A90925C03C9EBA7D949938FF0EAF45C354760C40792A21F01E0330022AB
+            05E4C2A40699D9B0EFE8F0D641237CA6AB866AE67545350F6995EA1E9CE2E3AA
+            00B2FB62506D60D1DFF1D6E0B0CC36303AFE4648504E50CEC3DB3AFAF20B0A06
+            00309B7589524AA303599E173E3DC51C9FAC9580000802C07EACEE4CAF822086
+            61CD9F559353EB0E328DE5BF6E99327FDB135DB7A016DEC57061849700B613F5
+            676F827B1B240FA4CBF33740A2EE4BE292D915986E618F074DAA036ACD90B38F
+            10C60524388560D194D27E6A634F2FC4657782D4BAB3DC42C717E5678BEECA26
+            A94C0400900C88144C16393B375DEC83F501D0CA7B20BBD7725CB4F92B39D1A5
+            BAAAA99581280520E44CE4CCB6969F1F20695A82380110FE2720C5FDAE79BFAB
+            CBD3EA6B86D254A0E5373801E0EFF28958F18BC8EE432DD61A83412A933D5D1F
+            D20112EE41CDCF4A07BBC456ACD654BDA798596410E39F46EE2906715636191E
+            D4F6AFB73735B767EC433A40214C3B7D11CFE9E193D623862D06AD9ED2E31260
+            84798172C76328FE71B91258596E84BC433ADB0F7667EC433A000993F9FBC2D7
+            6EDB255BA386D4507ABA32E17E0620D85008899EE51C798D94C05D6067DBF775
+            0F284B4AD2F62113A0E13DF9A667EC98B34110E3C5BF3D2003C03DC2CB0914BF
+            1E669BF427ADDAEAEAB47DC808F8C4BFEB19DD3CD28093A818A715893D7E3284
+            10B31C47988A90E08A21E1463468ACDC6F33D4D5DD8465DB4A016697F747F7A3
+            DDFD8D88E3A9E49EE807E78BE0BC9240788502F10E00F62EB14D87DAAC15599C
+            406AF28E5020D0F938E7FE21DF9A39BD64F8D7030048BA8F3BC23C6557319623
+            ED834A9ABE0BDBEF57D2835F5733408EDE5F7BDB18C5C2EADC0D85F9502A1C45
+            51C2B9E88AF33886CF695E55392C6D6DFD927BD0FC4A7E45A9975CBDCFEDDEFB
+            62FCC9569FC25709DF29E4E57014408212A33D5A75CDE80EA3F1015CD72F616F
+            0EC4FDF33DF80352065A0F320068BBD7ED2E8F719C8252A9626449C90C94C501
+            7BAF3225CF08488148D74301A8543E1125AF09203F6806E4C994FCAF80342042
+            9E93438264FC37911C3F0106F0D0281230DB170000000049454E44AE426082}
+          ShowHint = True
+        end
+        object ImgStbF: TImage
+          Left = 144
+          Top = 22
+          Width = 24
+          Height = 24
+          ParentShowHint = False
+          Picture.Data = {
+            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
+            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
+            650064696D2E203235206F63742E20323030392031303A35323A3339202B3031
+            3030E412D5570000000774494D4507D90A1909351ACEC6E7B000000009704859
+            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
+            03B54944415478DAB596EF4F526114C7CFE522A25DE1822E412105ABA56BA156
+            4668596D19A5AE376666ADD68F315B2FDA7A917F436BBDA937D6E6EA8DABF563
+            737364AD96B128A335C252C97EACCC6B3A52E397FCEC42E712386A50E2D6C3BE
+            7B78CE79763EE739E7721F08F8CF83C864F3F1CE4E6E3F891244A351326E6609
+            82087173F7B973D12503E2C1B35105185C199A0FD09C9D2FCC9AE591E4384266
+            11F0634980A4E04518BCC6F7DEA9CB750894DE95A1206413AF295A7C1F01A308
+            F02F15C0C74986AA0BCCCD376DEE556BF13BDD5FF17C3ABB8CBA27964A6FE229
+            DE2C0910CF9E4255799DEEB60D2655C39EF7B5CA8B6C373B94FFCEA66AD3F408
+            73728C0860322E51526994A886E546DEFE43F6A62A0E88002F02CCAB0F6FBC92
+            25103C469B33A32627D71DA5933CE535EB4736D6CADD85324BD44A5A22AF3880
+            A9FCA8B60BB33761704FAA387F03FCAA7B04EAE093BF79ED7091EE74A5A1E8D5
+            2DBB60383A0AC311BBD72EFE682EEC587305F7657682E4BAC35CB86D952DBFE1
+            6CD949AE4C0204401CE0B7531F6C85A7CA7BD06E442DBE07F1EC15E14050CF7F
+            E26BEFC86DADDAA0A8A65E3256200773120076841C63A8130A631E4D73101B02
+            7CFF0424655FED9B70B5D7584BF5589A625C935D4FBA61D3B40E6EB077627B87
+            E1AD2BD0CC1F505794736532A7EA432A402C7B945ED9BBACFD48B8B9AA644709
+            E5F9EC06E6E124D8791FC01A194B6CF7F6AA8DE6CDFBF469FB900A908B5365F8
+            9BFFE0B1BEBD8D951AB542542A26271F30E01EF7FC06904381FFBCE4926DA7A1
+            356D1F5201F270AAF38F7D3774F69DD82E5508C5091F07780416988299D8BA91
+            D4B147D9338CC6B0CD28924852F6211DA0BE6050D8D1FEB4B19ECF86A9647F4F
+            2CD158F620E7E5C38548974BD4AA1C50A85429FB9016002FFD1D9A8195F552A0
+            289A10C57C9F5806BEE0871B9BC86A60A2537019AE7AE91D45A68AF5EBBBD06C
+            5A2CA0CEFD79D6B0E5D6BAED4424B250222778C00DDFA19827070521070B6B85
+            CBBC6E97AE65D740710627E09AAC99F7780EE4DEFEB15BE550AEC0B560A10F08
+            48646F89584326A9F94BEDBE3DFD229ABE8EEEA1C5F460E1D58C90A635D7645A
+            D247C854BC6221968A0C402096390353212089AFE652CBB38696963E2E7BD4F4
+            629EA2E4975CCD9CC3B175BC7F646DB6835F826BB18B70929330C9E225332329
+            9359345AED5D7C5D0FA2EF2B2AF8CFDFC11F9002941A5581A075B30E873C1C0C
+            66E10513CE934826B02CCFD0F7225DF0B480240877B1E7A0F2E32712C76D6CAC
+            E70013A89974C1FF0A480112C4E7C4E02069FF4D24C64FC286BB2845B614E500
+            00000049454E44AE426082}
+          ShowHint = True
+        end
+        object ImgFobF: TImage
+          Left = 212
+          Top = 22
+          Width = 24
+          Height = 24
+          ParentShowHint = False
+          Picture.Data = {
+            0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000001800
+            0000180806000000E0773DF80000002E744558744372656174696F6E2054696D
+            650064696D2E203235206F63742E20323030392031303A35333A3334202B3031
+            30306A07DFA90000000774494D4507D90A1909380F16B57D1600000009704859
+            7300000AF000000AF00142AC34980000000467414D410000B18F0BFC61050000
+            03A64944415478DAB596DB4F134114C6673BED02D2EE6EA122D6B65EAA11888A
+            48D45A1B41A22D22A85111C5471363F40F3026BE1B9F7DD098F842424C7C3046
+            53AF51A856085EA978C3884A6991545ABBBDD06EE9BA9EAD5B524D5729899B7C
+            99EDCCD9F33BF39DEDB404FACF175148F0919327C5780C220541C0D2344F1044
+            4A1C2F9D3D2BCC1920252F02E920B931914C32E27C914A1554603C0A902000D2
+            7302E424D743F20DA3C1B035A4208D2694E24805F14A43D37700F0160089B902
+            943054826C6C3CDEDA5BB1D202F7CC92578F268C94E63653A6BD02BB189A1340
+            AA5E0DAA8B4622079F2F5861F7AD6E30A62E9FE729DFFBC196FADAEEE2921227
+            007C055B94638D11647F98263BBCD63D752210003100B8776F5A7F514592BD30
+            172EA8C9B9BE83AC2F7955DB48B575739259205A8525806BAFCD7201AA7741F2
+            68BE3C7F03647CFF2108363F3BD536B5659775FEA66DFA9B4FFB49FEF35BC40F
+            BF8B958E8FB83BD6565D84B8C27690EB3B9B4C1DFCA0D4D9CD274E8936910040
+            122051E2FF3878A8AEBA1BE69DA0D9F740AADEC0715CF388B2ACB3F2F8E98CEF
+            FE17FDC8C3A32C80578C0EFBF6AD3038350C2342060130F54F404EF5EB26426C
+            27DBB8B719AC5924FAFE0700095FDEB38D6A658FB9A65AB4C99DAF0F845CF5A0
+            E6FB04DD293475D659979BD45E368A1E7FF2A1A2F057C40D3DC886C70CF79D6E
+            474BB36C1FF201E6C1B036144F1CEEB51ED85953B5CA6062289C0528BD1E941E
+            7DFDEB61AA22A1B9DE35D8EED82EDB877C000D0CB6CFDFC2475D6D27B6EA355A
+            DA544E216F3082C6D808223CF790100964628B5637F1DC99E3BEF6A64627A5D5
+            E6ED831CA0C143941E7BB9714F03FF03AB7F7B400240F5086B2B50BAFB1CEB58
+            66EC312C5D9AB70FB28037B1C4B101FDF2064CD26A4C9567D6F84810A1C9AF99
+            7B5C61407CC087F82B5D318B59EFAAA9AFBF00D3AED9026CFE6FC1A377CC6BB6
+            A2789AC65A09F03D88309F9A01A43C03085DED621D2D8E9E4505EC406C726D3C
+            1A3D74772ABD23A4D699E033995D57965233D5A73D03297AE899D7DEDA728B62
+            98CBB0EC994D0F668E6680B45EC38C2529A04A82D215C34E3056E04CE542C097
+            C20A625C3FECE9B3EFDF7F43AC1E34319BB728F790DB100A04B63C72F7AD0A21
+            B41831E5348A8731F2FB794AA99C3498CD03B516CB4D38AEFB21761CC4FDF37B
+            F00744075A06AA01D09A6020B0709AE3547459D9B446AB1D035BFA60ED895C72
+            59400E44FC612F01954B3BA2A5393830501834069A944BFE57401E10298DD94B
+            84C8FE9BC85E3F01984BCA284B4581840000000049454E44AE426082}
+          ShowHint = True
+        end
+        object CbHpb: TCheckBox
+          Left = 36
+          Top = 26
+          Width = 13
+          Height = 17
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = []
-          MaxValue = 999
-          MinValue = 0
+          ParentFont = False
+          TabOrder = 0
+          OnClick = CbTypeMatClick
+        end
+        object CbSab: TCheckBox
+          Left = 104
+          Top = 26
+          Width = 13
+          Height = 17
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
           ParentFont = False
           TabOrder = 1
-          Value = 250
+          OnClick = CbTypeMatClick
+        end
+        object CbStb: TCheckBox
+          Left = 172
+          Top = 26
+          Width = 13
+          Height = 17
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+          OnClick = CbTypeMatClick
+        end
+        object CbFob: TCheckBox
+          Left = 240
+          Top = 26
+          Width = 13
+          Height = 17
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 3
+          OnClick = CbTypeMatClick
+        end
+      end
+      object GbName: TGroupBox
+        Left = 0
+        Top = 557
+        Width = 270
+        Height = 74
+        Caption = 'Nom'
+        TabOrder = 4
+        DesignSize = (
+          270
+          74)
+        object EdName: TEdit
+          Left = 8
+          Top = 20
+          Width = 254
+          Height = 27
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+        end
+        object RbAllWords: TRadioButton
+          Left = 8
+          Top = 50
+          Width = 125
+          Height = 17
+          Caption = 'Tous les mots'
+          Checked = True
+          TabOrder = 1
+          TabStop = True
+        end
+        object RbOneWord: TRadioButton
+          Left = 136
+          Top = 50
+          Width = 125
+          Height = 17
+          BiDiMode = bdLeftToRight
+          Caption = 'Un des mots'
+          ParentBiDiMode = False
+          TabOrder = 2
         end
       end
     end
-    object TabTemp: TTabSheet
-      Caption = 'TabTemp'
+    object TabMaterial: TTabSheet
+      Caption = 'Mati'#232're'
       ImageIndex = 2
       object PnCat1: TPanel
         Left = 0
         Top = 3
         Width = 270
-        Height = 200
+        Height = 258
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
@@ -2452,161 +1954,95 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 31
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Durabilit'#233
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec2: TLabel
           Left = 5
-          Top = 46
+          Top = 51
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'L'#233'geret'#233
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec3: TLabel
           Left = 5
-          Top = 61
+          Top = 71
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Charge en s'#232've'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec4: TLabel
           Left = 5
-          Top = 76
+          Top = 91
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'DMG'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec5: TLabel
           Left = 5
-          Top = 91
+          Top = 111
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Vitesse'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec6: TLabel
           Left = 5
-          Top = 106
+          Top = 131
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec7: TLabel
           Left = 5
-          Top = 121
+          Top = 151
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. de Parades'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec8: TLabel
           Left = 5
-          Top = 136
+          Top = 171
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec9: TLabel
           Left = 5
-          Top = 151
+          Top = 191
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. Parades Adversaire'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec10: TLabel
           Left = 5
-          Top = 166
+          Top = 211
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Temps restant'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat1Spec11: TLabel
           Left = 5
-          Top = 181
+          Top = 231
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Temps restant'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object GaugeCat1Spec1: TGauge
           Left = 183
           Top = 36
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2615,9 +2051,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec2: TGauge
           Left = 183
-          Top = 51
+          Top = 56
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2626,9 +2062,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec3: TGauge
           Left = 183
-          Top = 66
+          Top = 76
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2637,9 +2073,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec4: TGauge
           Left = 183
-          Top = 81
+          Top = 96
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2648,9 +2084,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec5: TGauge
           Left = 183
-          Top = 96
+          Top = 116
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2659,9 +2095,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec7: TGauge
           Left = 183
-          Top = 126
+          Top = 156
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2670,9 +2106,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec6: TGauge
           Left = 183
-          Top = 111
+          Top = 136
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2681,9 +2117,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec8: TGauge
           Left = 183
-          Top = 141
+          Top = 176
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2692,9 +2128,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec10: TGauge
           Left = 183
-          Top = 171
+          Top = 216
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2703,9 +2139,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec11: TGauge
           Left = 183
-          Top = 186
+          Top = 236
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2714,9 +2150,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat1Spec9: TGauge
           Left = 183
-          Top = 156
+          Top = 196
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2780,23 +2216,17 @@ object FormFilter: TFormFilter
         end
         object LbCat1: TLabel
           Left = 32
-          Top = 9
-          Width = 52
-          Height = 16
+          Top = 8
+          Width = 55
+          Height = 19
           Caption = 'Marteau'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
         end
       end
       object PnCat2: TPanel
         Left = 0
-        Top = 208
+        Top = 268
         Width = 270
-        Height = 200
+        Height = 253
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
@@ -2805,161 +2235,95 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 31
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Durabilit'#233
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec2: TLabel
           Left = 5
-          Top = 46
+          Top = 51
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'L'#233'geret'#233
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec3: TLabel
           Left = 5
-          Top = 61
+          Top = 71
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Charge en s'#232've'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec4: TLabel
           Left = 5
-          Top = 76
+          Top = 91
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'DMG'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec5: TLabel
           Left = 5
-          Top = 91
+          Top = 111
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Vitesse'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec6: TLabel
           Left = 5
-          Top = 106
+          Top = 131
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec7: TLabel
           Left = 5
-          Top = 121
+          Top = 151
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. de Parades'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec8: TLabel
           Left = 5
-          Top = 136
+          Top = 171
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec9: TLabel
           Left = 5
-          Top = 151
+          Top = 191
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Modif. Parades Adversaire'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec10: TLabel
           Left = 5
-          Top = 166
+          Top = 211
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Temps restant'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbCat2Spec11: TLabel
           Left = 5
-          Top = 181
+          Top = 231
           Width = 176
-          Height = 13
+          Height = 19
           AutoSize = False
           Caption = 'Temps restant'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object GaugeCat2Spec1: TGauge
           Left = 183
           Top = 36
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2970,9 +2334,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec2: TGauge
           Left = 183
-          Top = 51
+          Top = 56
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2983,9 +2347,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec3: TGauge
           Left = 183
-          Top = 66
+          Top = 76
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2996,9 +2360,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec4: TGauge
           Left = 183
-          Top = 81
+          Top = 96
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3009,9 +2373,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec5: TGauge
           Left = 183
-          Top = 96
+          Top = 116
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3022,9 +2386,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec7: TGauge
           Left = 183
-          Top = 126
+          Top = 156
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3035,9 +2399,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec6: TGauge
           Left = 183
-          Top = 111
+          Top = 136
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3048,9 +2412,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec8: TGauge
           Left = 183
-          Top = 141
+          Top = 176
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3061,9 +2425,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec10: TGauge
           Left = 183
-          Top = 171
+          Top = 216
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3074,9 +2438,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec11: TGauge
           Left = 183
-          Top = 186
+          Top = 236
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3087,9 +2451,9 @@ object FormFilter: TFormFilter
         end
         object GaugeCat2Spec9: TGauge
           Left = 183
-          Top = 156
+          Top = 196
           Width = 80
-          Height = 4
+          Height = 9
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -3148,23 +2512,17 @@ object FormFilter: TFormFilter
         end
         object LbCat2: TLabel
           Left = 32
-          Top = 9
-          Width = 76
-          Height = 16
+          Top = 8
+          Width = 78
+          Height = 19
           Caption = 'Contrepoids'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
         end
       end
       object PnSales: TPanel
         Left = 0
-        Top = 414
+        Top = 534
         Width = 270
-        Height = 80
+        Height = 97
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
@@ -3172,80 +2530,44 @@ object FormFilter: TFormFilter
         object LbPrice: TLabel
           Left = 5
           Top = 31
-          Width = 24
-          Height = 14
+          Width = 32
+          Height = 19
           Caption = 'Prix :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbContinent: TLabel
           Left = 5
-          Top = 61
-          Width = 51
-          Height = 14
+          Top = 71
+          Width = 71
+          Height = 19
           Caption = 'Continent :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValuePrice: TLabel
-          Left = 76
+          Left = 86
           Top = 31
-          Width = 18
-          Height = 14
+          Width = 24
+          Height = 19
           Caption = '250'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
         end
         object LbValueContinent: TLabel
-          Left = 76
-          Top = 61
-          Width = 51
-          Height = 14
+          Left = 86
+          Top = 71
+          Width = 57
+          Height = 19
           Caption = 'Commun'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
         end
         object LbTime: TLabel
           Left = 5
-          Top = 46
-          Width = 37
-          Height = 14
+          Top = 51
+          Width = 50
+          Height = 19
           Caption = 'Temps :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
         end
         object LbValueTime: TLabel
-          Left = 76
-          Top = 46
-          Width = 189
-          Height = 14
+          Left = 86
+          Top = 51
+          Width = 229
+          Height = 19
           Caption = '3 Tage, 22 Stunden und 45 Minuten'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
         end
         object Image1: TImage
           Left = 4
@@ -3294,16 +2616,10 @@ object FormFilter: TFormFilter
         end
         object LbSale: TLabel
           Left = 32
-          Top = 9
-          Width = 36
-          Height = 16
+          Top = 8
+          Width = 37
+          Height = 19
           Caption = 'Vente'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
         end
       end
     end
