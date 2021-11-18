@@ -517,7 +517,7 @@ object FormMain: TFormMain
         Width = 325
       end
       item
-        Alignment = taCenter
+        Alignment = taRightJustify
         Text = 'Version 2.7.0'
         Width = 0
       end>
