@@ -906,7 +906,7 @@ begin
       wReg2.ModifierG := False;
 
       // Header
-      WriteLn(wHtmlFile, Format('<html><head><title></title></head><body bgcolor="%s"><font face="Arial" size=2 color="%s">', [wBackColor, wSysColor]));
+      WriteLn(wHtmlFile, Format('<html><head><title></title></head><body bgcolor="%s"><font face="%s" size=2 color="%s">', [wBackColor, _FONT_NAME, wSysColor]));
       WriteLn(wBbcodeFile, '[quote]');
 
       // All lines

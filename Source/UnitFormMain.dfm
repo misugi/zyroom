@@ -9,8 +9,8 @@ object FormMain: TFormMain
   Constraints.MinWidth = 762
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
@@ -19,7 +19,7 @@ object FormMain: TFormMain
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PnContainer: TPanel
     Left = 0
     Top = 28
@@ -87,7 +87,7 @@ object FormMain: TFormMain
       Left = 691
       Top = 7
       Width = 28
-      Height = 19
+      Height = 20
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
       Caption = 'Atys'

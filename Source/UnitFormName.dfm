@@ -8,8 +8,8 @@ object FormName: TFormName
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -18,19 +18,19 @@ object FormName: TFormName
     378
     67)
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object LbName: TLabel
     Left = 8
     Top = 12
-    Width = 38
-    Height = 19
+    Width = 40
+    Height = 20
     Caption = 'Nom :'
   end
   object EdName: TEdit
     Left = 70
     Top = 8
     Width = 304
-    Height = 27
+    Height = 28
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
     Text = '<Name of>'

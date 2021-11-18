@@ -7,8 +7,8 @@ object FormInvent: TFormInvent
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
@@ -16,7 +16,7 @@ object FormInvent: TFormInvent
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PnFilter1: TPanel
     Left = 0
     Top = 0
@@ -56,9 +56,9 @@ object FormInvent: TFormInvent
       OnChange = TabInventChange
       object CharInvent: TScrollRoom
         Left = 4
-        Top = 30
+        Top = 31
         Width = 615
-        Height = 458
+        Height = 457
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
         VertScrollBar.Tracking = True

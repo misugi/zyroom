@@ -7,15 +7,15 @@ object FormGuild: TFormGuild
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object GridItem: TStringGrid
     Left = 0
     Top = 28

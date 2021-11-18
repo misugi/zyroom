@@ -2,27 +2,27 @@ object FormEdit: TFormEdit
   Left = 505
   Top = 457
   BorderStyle = bsDialog
-  ClientHeight = 143
+  ClientHeight = 150
   ClientWidth = 514
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnShow = FormShow
   DesignSize = (
     514
-    143)
+    150)
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object LbAutoKey: TLabel
     Left = 8
     Top = 12
-    Width = 154
-    Height = 19
+    Width = 157
+    Height = 20
     Caption = 'Cl'#233' API de personnage :'
   end
   object ImgProfilePage: TImage
@@ -78,30 +78,30 @@ object FormEdit: TFormEdit
   end
   object LbComment: TLabel
     Left = 8
-    Top = 41
-    Width = 82
-    Height = 19
+    Top = 43
+    Width = 83
+    Height = 20
     Caption = 'Description :'
   end
   object EdKey: TEdit
     Left = 195
     Top = 8
     Width = 287
-    Height = 27
+    Height = 28
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
   end
   object EdComment: TEdit
     Left = 195
-    Top = 37
+    Top = 39
     Width = 287
-    Height = 27
+    Height = 28
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 1
   end
   object CbCheckVolume: TCheckBox
     Left = 195
-    Top = 66
+    Top = 70
     Width = 287
     Height = 17
     Anchors = [akLeft, akTop, akRight]
@@ -110,7 +110,7 @@ object FormEdit: TFormEdit
   end
   object CbCheckChange: TCheckBox
     Left = 195
-    Top = 88
+    Top = 92
     Width = 287
     Height = 17
     Anchors = [akLeft, akTop, akRight]
@@ -119,7 +119,7 @@ object FormEdit: TFormEdit
   end
   object BtOK: TSevenButton
     Left = 353
-    Top = 115
+    Top = 122
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
@@ -172,7 +172,7 @@ object FormEdit: TFormEdit
   end
   object BtCancel: TSevenButton
     Left = 435
-    Top = 115
+    Top = 122
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]

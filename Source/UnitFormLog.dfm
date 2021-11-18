@@ -7,14 +7,14 @@ object FormLog: TFormLog
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PnHeader: TPanel
     Left = 0
     Top = 0
@@ -29,9 +29,10 @@ object FormLog: TFormLog
       28)
     object Shape1: TShape
       Left = 738
-      Top = 11
+      Top = 12
       Width = 10
       Height = 2
+      Anchors = [akTop, akRight]
     end
     object BtLoad: TSevenButton
       Left = 0
@@ -89,14 +90,14 @@ object FormLog: TFormLog
       Left = 550
       Top = 0
       Width = 100
-      Height = 23
+      Height = 25
       Anchors = [akTop, akRight]
       Date = 2.000000000000000000
       Time = 2.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
-      Font.Name = 'Calibri'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
       ParentShowHint = False
@@ -107,14 +108,14 @@ object FormLog: TFormLog
       Left = 753
       Top = 0
       Width = 100
-      Height = 23
+      Height = 25
       Anchors = [akTop, akRight]
       Date = 2.000000000000000000
       Time = 2.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
-      Font.Name = 'Calibri'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
       TabOrder = 3
@@ -123,14 +124,14 @@ object FormLog: TFormLog
       Left = 652
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       Anchors = [akTop, akRight]
       Date = 40704.000000000000000000
       Time = 40704.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
-      Font.Name = 'Calibri'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       Kind = dtkTime
       ParentFont = False
@@ -142,14 +143,14 @@ object FormLog: TFormLog
       Left = 855
       Top = 0
       Width = 80
-      Height = 23
+      Height = 25
       Anchors = [akTop, akRight]
       Date = 40704.000000000000000000
       Time = 40704.000000000000000000
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
-      Font.Name = 'Calibri'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       Kind = dtkTime
       ParentFont = False
@@ -341,7 +342,7 @@ object FormLog: TFormLog
       Top = 91
       Width = 222
       Height = 427
-      ActivePage = TabCharacters
+      ActivePage = TabChannels
       Align = alClient
       MultiLine = True
       TabOrder = 0
@@ -349,12 +350,12 @@ object FormLog: TFormLog
         Caption = 'Canaux'
         DesignSize = (
           214
-          369)
+          367)
         object ListChannels: TCheckListBox
           Left = 0
           Top = 1
           Width = 214
-          Height = 337
+          Height = 335
           TabStop = False
           Anchors = [akLeft, akTop, akRight, akBottom]
           ItemHeight = 14
@@ -365,7 +366,7 @@ object FormLog: TFormLog
         end
         object BtCheckChannels: TSevenButton
           Left = 33
-          Top = 344
+          Top = 342
           Width = 70
           Height = 23
           Anchors = [akLeft, akBottom]
@@ -418,7 +419,7 @@ object FormLog: TFormLog
         end
         object BtUncheckChannels: TSevenButton
           Left = 108
-          Top = 344
+          Top = 342
           Width = 70
           Height = 23
           Anchors = [akLeft, akBottom]
@@ -475,10 +476,10 @@ object FormLog: TFormLog
         ImageIndex = 1
         DesignSize = (
           214
-          369)
+          367)
         object BtAddFilter: TSevenButton
           Left = 33
-          Top = 344
+          Top = 342
           Width = 70
           Height = 23
           Anchors = [akLeft, akBottom]
@@ -531,7 +532,7 @@ object FormLog: TFormLog
         end
         object BtDelFilter: TSevenButton
           Left = 108
-          Top = 344
+          Top = 342
           Width = 87
           Height = 23
           Anchors = [akLeft, akBottom]
@@ -586,10 +587,10 @@ object FormLog: TFormLog
           Left = 0
           Top = 0
           Width = 214
-          Height = 307
+          Height = 305
           TabStop = False
           Anchors = [akLeft, akTop, akRight, akBottom]
-          ItemHeight = 19
+          ItemHeight = 20
           ParentShowHint = False
           ShowHint = True
           Sorted = True
@@ -598,9 +599,9 @@ object FormLog: TFormLog
         end
         object EdFilter: TEdit
           Left = 0
-          Top = 311
+          Top = 309
           Width = 214
-          Height = 27
+          Height = 28
           TabStop = False
           Anchors = [akLeft, akRight, akBottom]
           TabOrder = 3
@@ -611,21 +612,21 @@ object FormLog: TFormLog
         ImageIndex = 2
         DesignSize = (
           214
-          369)
+          367)
         object ListCharacters: TCheckListBox
           Left = 0
           Top = 0
           Width = 214
-          Height = 338
+          Height = 336
           TabStop = False
           Anchors = [akLeft, akTop, akRight, akBottom]
-          ItemHeight = 19
+          ItemHeight = 20
           TabOrder = 0
           OnDblClick = CheckListBoxDblClick
         end
         object BtCheckCharacters: TSevenButton
           Left = 33
-          Top = 344
+          Top = 342
           Width = 70
           Height = 23
           Anchors = [akLeft, akBottom]
@@ -678,7 +679,7 @@ object FormLog: TFormLog
         end
         object BtUncheckCharacters: TSevenButton
           Left = 108
-          Top = 344
+          Top = 342
           Width = 70
           Height = 23
           Anchors = [akLeft, akBottom]
@@ -743,28 +744,16 @@ object FormLog: TFormLog
       object LbColorBackground: TLabel
         Left = 5
         Top = 5
-        Width = 111
-        Height = 19
+        Width = 114
+        Height = 20
         Caption = 'Couleur de fond :'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
-        Font.Style = []
-        ParentFont = False
       end
       object LbColorSystem: TLabel
         Left = 5
         Top = 26
-        Width = 116
-        Height = 19
+        Width = 115
+        Height = 20
         Caption = 'Couleur syst'#232'me :'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
-        Font.Style = []
-        ParentFont = False
       end
       object PnColorBackground: TPanel
         Left = 197
@@ -822,12 +811,6 @@ object FormLog: TFormLog
         TabStop = False
         Caption = 'Afficher la date'
         Checked = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
-        Font.Style = []
-        ParentFont = False
         State = cbChecked
         TabOrder = 2
       end
@@ -838,12 +821,6 @@ object FormLog: TFormLog
         Height = 19
         TabStop = False
         Caption = 'Messages syst'#232'me'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
-        Font.Style = []
-        ParentFont = False
         TabOrder = 3
       end
     end

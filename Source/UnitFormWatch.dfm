@@ -3,44 +3,44 @@ object FormWatch: TFormWatch
   Top = 457
   BorderStyle = bsDialog
   Caption = 'Surveiller'
-  ClientHeight = 67
+  ClientHeight = 73
   ClientWidth = 303
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnShow = FormShow
   DesignSize = (
     303
-    67)
+    73)
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object LbAutoValue: TLabel
     Left = 8
     Top = 12
-    Width = 136
-    Height = 19
+    Width = 139
+    Height = 20
     Caption = 'Durabilit'#233' minimale :'
   end
   object EdValue: TEdit
     Left = 195
     Top = 8
     Width = 102
-    Height = 27
+    Height = 28
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
     Text = '999'
   end
   object BtOK: TSevenButton
     Left = 140
-    Top = 39
+    Top = 44
     Width = 75
     Height = 23
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'OK'
     TabOrder = 1
     Border.ColorNormal = 7368816
@@ -90,10 +90,10 @@ object FormWatch: TFormWatch
   end
   object BtCancel: TSevenButton
     Left = 222
-    Top = 39
+    Top = 44
     Width = 75
     Height = 23
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'Annuler'
     TabOrder = 2
     Border.ColorNormal = 7368816

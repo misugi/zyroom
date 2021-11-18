@@ -7,15 +7,15 @@ object FormBackup: TFormBackup
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PnHeader: TPanel
     Left = 0
     Top = 0
@@ -41,9 +41,9 @@ object FormBackup: TFormBackup
         'ans les options !'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clMaroon
-      Font.Height = -16
-      Font.Name = 'Calibri'
-      Font.Style = [fsItalic]
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
       ParentFont = False
       WordWrap = True
     end
@@ -291,7 +291,7 @@ object FormBackup: TFormBackup
       Width = 207
       Height = 491
       Align = alClient
-      ItemHeight = 19
+      ItemHeight = 20
       MultiSelect = True
       Sorted = True
       TabOrder = 0
@@ -304,7 +304,7 @@ object FormBackup: TFormBackup
     Width = 550
     Height = 491
     Align = alClient
-    ItemHeight = 19
+    ItemHeight = 20
     Sorted = True
     TabOrder = 2
     OnClick = ListBackupClick

@@ -7,8 +7,8 @@ object FormRoom: TFormRoom
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
@@ -16,7 +16,7 @@ object FormRoom: TFormRoom
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PnRoom: TPanel
     Left = 285
     Top = 0

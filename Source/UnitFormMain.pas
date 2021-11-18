@@ -76,7 +76,6 @@ type
     procedure BtGuildClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ImgLogoClick(Sender: TObject);
     procedure BtCharacterClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ImgUpdateClick(Sender: TObject);
@@ -331,16 +330,6 @@ procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
   Constraints.MinHeight := _WIN_HEIGTH;
-end;
-
-{*******************************************************************************
-Displays the home form
-*******************************************************************************}
-procedure TFormMain.ImgLogoClick(Sender: TObject);
-begin
-  ShowMenuForm(FormHome);
-  BtGuild.Font.Style := [];
-  BtCharacter.Font.Style := [];
 end;
 
 {*******************************************************************************

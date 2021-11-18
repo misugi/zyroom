@@ -9,15 +9,15 @@ object FormOptions: TFormOptions
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PageControl: TPageControl
     Left = 0
     Top = 0
@@ -30,19 +30,19 @@ object FormOptions: TFormOptions
       Caption = 'G'#233'n'#233'ral'
       DesignSize = (
         535
-        359)
+        358)
       object LbLanguage: TLabel
         Left = 5
         Top = 11
         Width = 55
-        Height = 19
+        Height = 20
         Caption = 'Langue :'
       end
       object LbPackFile: TLabel
         Left = 5
         Top = 45
-        Width = 408
-        Height = 19
+        Width = 406
+        Height = 20
         Caption = 'Fichier de ressources "string_client.pack" install'#233' avec Ryzom :'
       end
       object Label1: TLabel
@@ -57,18 +57,18 @@ object FormOptions: TFormOptions
       object Label2: TLabel
         Left = 5
         Top = 182
-        Width = 287
-        Height = 19
+        Width = 293
+        Height = 20
         Caption = 'Nombre de threads pour la synchronisation :'
       end
       object CmbLanguage: TComboBox
         Left = 150
         Top = 7
         Width = 382
-        Height = 27
+        Height = 28
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 19
+        ItemHeight = 20
         Sorted = True
         TabOrder = 0
         OnChange = CmbLanguageChange
@@ -77,7 +77,7 @@ object FormOptions: TFormOptions
         Left = 5
         Top = 71
         Width = 497
-        Height = 27
+        Height = 28
         Anchors = [akLeft, akTop, akRight]
         Color = clBtnFace
         ReadOnly = True
@@ -107,7 +107,7 @@ object FormOptions: TFormOptions
         Left = 471
         Top = 177
         Width = 61
-        Height = 29
+        Height = 30
         Anchors = [akTop, akRight]
         MaxValue = 25
         MinValue = 1
@@ -187,9 +187,9 @@ object FormOptions: TFormOptions
           'ctiver la sauvegarde des fichiers !'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clMaroon
-        Font.Height = -16
-        Font.Name = 'Calibri'
-        Font.Style = [fsItalic]
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         ParentFont = False
         TabOrder = 6
       end
@@ -199,7 +199,7 @@ object FormOptions: TFormOptions
       ImageIndex = 1
       DesignSize = (
         535
-        359)
+        358)
       object PnProxy: TPanel
         Left = 0
         Top = 34
@@ -218,35 +218,35 @@ object FormOptions: TFormOptions
           Left = 5
           Top = 100
           Width = 96
-          Height = 19
+          Height = 20
           Caption = 'Mot de passe :'
         end
         object LbProxyAddress: TLabel
           Left = 5
           Top = 5
-          Width = 60
-          Height = 19
+          Width = 59
+          Height = 20
           Caption = 'Adresse :'
         end
         object LbPortAddress: TLabel
           Left = 5
           Top = 37
-          Width = 34
-          Height = 19
+          Width = 33
+          Height = 20
           Caption = 'Port :'
         end
         object LbProxyUsername: TLabel
           Left = 5
           Top = 69
-          Width = 120
-          Height = 19
+          Width = 121
+          Height = 20
           Caption = 'Nom d'#39'utilisateur :'
         end
         object EdProxyUsername: TEdit
           Left = 175
           Top = 65
           Width = 357
-          Height = 27
+          Height = 28
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
           Text = 'EdProxyUsername'
@@ -256,7 +256,7 @@ object FormOptions: TFormOptions
           Left = 175
           Top = 96
           Width = 357
-          Height = 27
+          Height = 28
           Anchors = [akLeft, akTop, akRight]
           PasswordChar = '*'
           TabOrder = 1
@@ -267,7 +267,7 @@ object FormOptions: TFormOptions
           Left = 175
           Top = 1
           Width = 357
-          Height = 27
+          Height = 28
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 2
           Text = '127.0.0.1'
@@ -277,7 +277,7 @@ object FormOptions: TFormOptions
           Left = 175
           Top = 32
           Width = 96
-          Height = 29
+          Height = 30
           MaxValue = 0
           MinValue = 0
           TabOrder = 3
@@ -300,12 +300,12 @@ object FormOptions: TFormOptions
       ImageIndex = 2
       DesignSize = (
         535
-        359)
+        358)
       object LbVolumeMax: TLabel
         Left = 5
         Top = 33
-        Width = 193
-        Height = 19
+        Width = 197
+        Height = 20
         Caption = 'Seuil d'#39'alerte pour le volume :'
       end
       object LbVolumeGuild: TLabel
@@ -331,22 +331,22 @@ object FormOptions: TFormOptions
       object LbSalesCount: TLabel
         Left = 5
         Top = 66
-        Width = 310
-        Height = 19
+        Width = 315
+        Height = 20
         Caption = 'Nombre d'#39'alertes pour l'#39'expiration d'#39'une vente :'
       end
       object LbSeasonCount: TLabel
         Left = 5
         Top = 99
-        Width = 379
-        Height = 19
+        Width = 387
+        Height = 20
         Caption = 'Nombre d'#39'alertes pour le prochain changement de saison :'
       end
       object EdVolumeRoom: TSpinEdit
         Left = 403
         Top = 28
         Width = 61
-        Height = 29
+        Height = 30
         Anchors = [akTop, akRight]
         MaxValue = 2000
         MinValue = 0
@@ -358,7 +358,7 @@ object FormOptions: TFormOptions
         Left = 471
         Top = 28
         Width = 61
-        Height = 29
+        Height = 30
         Anchors = [akTop, akRight]
         MaxValue = 10000
         MinValue = 0
@@ -379,7 +379,7 @@ object FormOptions: TFormOptions
         Left = 471
         Top = 61
         Width = 61
-        Height = 29
+        Height = 30
         Anchors = [akTop, akRight]
         MaxValue = 24
         MinValue = 0
@@ -391,7 +391,7 @@ object FormOptions: TFormOptions
         Left = 471
         Top = 94
         Width = 61
-        Height = 29
+        Height = 30
         Anchors = [akTop, akRight]
         MaxValue = 24
         MinValue = 0

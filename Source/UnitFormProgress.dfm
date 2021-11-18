@@ -3,13 +3,13 @@ object FormProgress: TFormProgress
   Top = 463
   BorderIcons = []
   BorderStyle = bsToolWindow
-  ClientHeight = 82
+  ClientHeight = 87
   ClientWidth = 321
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -17,25 +17,23 @@ object FormProgress: TFormProgress
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  DesignSize = (
+    321
+    87)
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object LbProgress: TLabel
     Left = 4
     Top = 5
     Width = 312
-    Height = 15
+    Height = 20
     Alignment = taCenter
     AutoSize = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Calibri'
-    Font.Style = [fsBold]
-    ParentFont = False
+    Caption = 'Traitement en cours'
   end
   object ProgressBar: TProgressBar
     Left = 4
-    Top = 25
+    Top = 30
     Width = 312
     Height = 20
     ParentShowHint = False
@@ -47,9 +45,10 @@ object FormProgress: TFormProgress
   end
   object BtCancel: TSevenButton
     Left = 123
-    Top = 54
+    Top = 59
     Width = 75
     Height = 23
+    Anchors = [akLeft, akBottom]
     Caption = 'Annuler'
     TabOrder = 1
     Border.ColorNormal = 7368816

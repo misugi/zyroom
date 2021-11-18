@@ -139,10 +139,10 @@ begin
     if ARow = 0 then begin
       Brush.Color := clBtnFace;
       FillRect(Rect);
-      Font.Size := 8;
+      Font.Size := _FONT_SIZE;
       Font.Color := clBlack;
       Font.Style := [];
-      Font.Name := 'Arial';
+      Font.Name := _FONT_NAME;
       Rect.Left := Rect.Left + 2;
       DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
               DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
@@ -166,7 +166,7 @@ begin
 
       // Name
       if (ACol = 1) then begin
-        Font.Size := 10;
+        Font.Size := _FONT_SIZE + 2;
         Font.Style := [fsBold];
         Rect.Top := Rect.Top - 25;
         Rect.Left := Rect.Left + 5;
@@ -174,7 +174,7 @@ begin
           DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
 
         // Guild
-        Font.Size := 8;
+        Font.Size := _FONT_SIZE;
         Font.Style := [];
         Rect.Top := Rect.Top + 30;
         wGuild := GCharacter.GetGuildName(Cells[3,ARow]);
@@ -190,7 +190,7 @@ begin
 
       // Comment
       if (ACol = 2) then begin
-        Font.Size := 8;
+        Font.Size := _FONT_SIZE;
         Font.Style := [];
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
@@ -199,7 +199,7 @@ begin
 
       // Number
       if (ACol = 3) then begin
-        Font.Size := 8;
+        Font.Size := _FONT_SIZE;
         Font.Style := [];
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
           DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );

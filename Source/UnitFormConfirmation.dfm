@@ -8,8 +8,8 @@ object FormConfirm: TFormConfirm
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -18,7 +18,7 @@ object FormConfirm: TFormConfirm
     350
     80)
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object LbMessage: TLabel
     Left = 5
     Top = 7
@@ -29,12 +29,6 @@ object FormConfirm: TFormConfirm
     Caption = 
       'Etes-vous s'#251'r de vouloir restaurer les personnages s'#233'lectionn'#233's ' +
       '?'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
     WordWrap = True
   end
   object BtYes: TSevenButton

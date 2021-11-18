@@ -288,9 +288,6 @@ uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
 
 //DONE: I see, a filter on the amount of items and a new entry in the top list to sort items on the amount, I added this in my todo list
 
-const
-  _LABEL_HEIGHT = 19;
-
 {$R *.dfm}
 
 {*******************************************************************************

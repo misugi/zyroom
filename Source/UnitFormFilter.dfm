@@ -7,8 +7,8 @@ object FormFilter: TFormFilter
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
@@ -16,13 +16,13 @@ object FormFilter: TFormFilter
   OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object PageControl: TPageControl
     Left = 0
     Top = 0
     Width = 280
     Height = 749
-    ActivePage = TabMaterial
+    ActivePage = TabFilter
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -35,7 +35,7 @@ object FormFilter: TFormFilter
         Left = 0
         Top = 1
         Width = 270
-        Height = 24
+        Height = 26
         Alignment = taLeftJustify
         BevelOuter = bvNone
         BorderWidth = 5
@@ -48,7 +48,7 @@ object FormFilter: TFormFilter
       end
       object PnInfo: TPanel
         Left = 0
-        Top = 27
+        Top = 29
         Width = 270
         Height = 209
         BevelInner = bvRaised
@@ -59,22 +59,22 @@ object FormFilter: TFormFilter
         object LbQuality: TLabel
           Left = 5
           Top = 25
-          Width = 56
-          Height = 19
+          Width = 55
+          Height = 20
           Caption = 'Qualit'#233' :'
         end
         object LbVolume: TLabel
           Left = 5
           Top = 85
-          Width = 56
-          Height = 19
+          Width = 57
+          Height = 20
           Caption = 'Volume :'
         end
         object LbCraft: TLabel
           Left = 5
           Top = 125
-          Width = 67
-          Height = 19
+          Width = 66
+          Height = 20
           Caption = 'Artisanat :'
         end
         object ImgItem: TItemImage
@@ -89,79 +89,79 @@ object FormFilter: TFormFilter
         object LbValueQuality: TLabel
           Left = 126
           Top = 25
-          Width = 24
-          Height = 19
+          Width = 27
+          Height = 20
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbValueVolume: TLabel
           Left = 126
           Top = 85
-          Width = 28
-          Height = 19
+          Width = 31
+          Height = 20
           Caption = '10.5'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbValueCraft: TLabel
           Left = 126
           Top = 125
-          Width = 89
-          Height = 19
+          Width = 91
+          Height = 20
           Caption = 'Lame, Pointe'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbClass: TLabel
           Left = 5
           Top = 45
-          Width = 51
-          Height = 19
+          Width = 48
+          Height = 20
           Caption = 'Classe :'
         end
         object LbValueClass: TLabel
           Left = 126
           Top = 45
-          Width = 61
-          Height = 19
+          Width = 62
+          Height = 20
           Caption = 'Excellent'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbDura: TLabel
           Left = 5
           Top = 105
-          Width = 72
-          Height = 19
+          Width = 73
+          Height = 20
           Caption = 'Durabilit'#233' :'
         end
         object LbValueDura: TLabel
           Left = 126
           Top = 105
-          Width = 55
-          Height = 19
+          Width = 61
+          Height = 20
           Caption = '156/220'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -244,79 +244,79 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 165
           Width = 58
-          Height = 19
+          Height = 20
           Caption = 'Couleur :'
         end
         object LbValueColor: TLabel
           Left = 126
           Top = 165
-          Width = 43
-          Height = 19
+          Width = 45
+          Height = 20
           Caption = 'Rouge'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbRace: TLabel
           Left = 5
           Top = 145
-          Width = 40
-          Height = 19
+          Width = 39
+          Height = 20
           Caption = 'Race :'
         end
         object LbValueRace: TLabel
           Left = 126
           Top = 145
-          Width = 106
-          Height = 19
+          Width = 110
+          Height = 20
           Caption = 'Toutes les races'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbWeight: TLabel
           Left = 5
           Top = 65
-          Width = 43
-          Height = 19
+          Width = 42
+          Height = 20
           Caption = 'Poids :'
         end
         object LbValueWeight: TLabel
           Left = 126
           Top = 65
-          Width = 49
-          Height = 19
+          Width = 54
+          Height = 20
           Caption = '10.5 Kg'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbEcosys: TLabel
           Left = 5
           Top = 5
-          Width = 85
-          Height = 19
+          Width = 84
+          Height = 20
           Caption = 'Ecosyst'#232'me :'
         end
         object LbValueEcosys: TLabel
           Left = 126
           Top = 5
-          Width = 61
-          Height = 19
+          Width = 64
+          Height = 20
           Caption = 'Commun'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -324,26 +324,26 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 185
           Width = 86
-          Height = 19
+          Height = 20
           Caption = 'Surveillance :'
         end
         object LbValueGuard: TLabel
           Left = 126
           Top = 185
-          Width = 24
-          Height = 19
+          Width = 27
+          Height = 20
           Caption = '999'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clMaroon
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
       end
       object PnInfo2: TPanel
         Left = 0
-        Top = 239
+        Top = 244
         Width = 270
         Height = 462
         BevelInner = bvRaised
@@ -353,8 +353,8 @@ object FormFilter: TFormFilter
         object LbAutoSpeed: TLabel
           Left = 5
           Top = 18
-          Width = 56
-          Height = 19
+          Width = 53
+          Height = 20
           Caption = 'Vitesse :'
         end
         object LbValueSpeed: TLabel
@@ -367,8 +367,8 @@ object FormFilter: TFormFilter
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -382,16 +382,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoRange: TLabel
           Left = 5
           Top = 33
-          Width = 50
-          Height = 19
+          Width = 49
+          Height = 20
           Caption = 'Port'#233'e :'
         end
         object LbValueRange: TLabel
@@ -404,8 +404,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -419,8 +419,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -434,8 +434,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -449,16 +449,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoSlashingProt: TLabel
           Left = 5
           Top = 128
-          Width = 176
-          Height = 19
+          Width = 177
+          Height = 20
           Caption = 'Protect. max/cp tranchant :'
         end
         object LbValueSlashingProt: TLabel
@@ -471,16 +471,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoSmashingProt: TLabel
           Left = 5
           Top = 144
-          Width = 187
-          Height = 19
+          Width = 191
+          Height = 20
           Caption = 'Protect. max/cp contondant :'
         end
         object LbValueSmashingProt: TLabel
@@ -493,16 +493,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoPiercingProt: TLabel
           Left = 5
           Top = 160
-          Width = 174
-          Height = 19
+          Width = 177
+          Height = 20
           Caption = 'Protect. max/cp perforant :'
         end
         object LbValuePiercingProt: TLabel
@@ -515,8 +515,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -701,28 +701,28 @@ object FormFilter: TFormFilter
           Left = 36
           Top = 434
           Width = 24
-          Height = 19
+          Height = 20
           Caption = '125'
         end
         object LbValueSab: TLabel
           Left = 104
           Top = 434
           Width = 24
-          Height = 19
+          Height = 20
           Caption = '125'
         end
         object LbValueStb: TLabel
           Left = 172
           Top = 434
           Width = 24
-          Height = 19
+          Height = 20
           Caption = '125'
         end
         object LbValueFob: TLabel
           Left = 240
           Top = 434
           Width = 24
-          Height = 19
+          Height = 20
           Caption = '125'
         end
         object LbAutoDodge: TLabel
@@ -760,8 +760,8 @@ object FormFilter: TFormFilter
         object LbAutoFactorProt: TLabel
           Left = 5
           Top = 112
-          Width = 146
-          Height = 19
+          Width = 148
+          Height = 20
           Caption = 'Facteur de protection :'
         end
         object LbValueFactorProt: TLabel
@@ -774,8 +774,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -783,7 +783,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 3
           Width = 54
-          Height = 19
+          Height = 20
           Caption = 'D'#233'g'#226'ts :'
         end
         object LbValueDmg: TLabel
@@ -796,8 +796,8 @@ object FormFilter: TFormFilter
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -811,16 +811,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoProtect3: TLabel
           Left = 5
           Top = 263
-          Width = 104
-          Height = 19
+          Width = 105
+          Height = 20
           Caption = 'Ondes de choc :'
         end
         object LbValueProtect3: TLabel
@@ -833,8 +833,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -849,8 +849,8 @@ object FormFilter: TFormFilter
         object LbAutoProtect2: TLabel
           Left = 5
           Top = 247
-          Width = 51
-          Height = 19
+          Width = 50
+          Height = 20
           Caption = 'Poison :'
         end
         object LbValueProtect2: TLabel
@@ -863,16 +863,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoResist1: TLabel
           Left = 5
           Top = 179
-          Width = 51
-          Height = 19
+          Width = 50
+          Height = 20
           Caption = 'D'#233'sert :'
         end
         object LbValueResist1: TLabel
@@ -885,8 +885,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -894,7 +894,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 195
           Width = 41
-          Height = 19
+          Height = 20
           Caption = 'For'#234't :'
         end
         object LbValueResist2: TLabel
@@ -907,16 +907,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoResist3: TLabel
           Left = 5
           Top = 210
-          Width = 37
-          Height = 19
+          Width = 35
+          Height = 20
           Caption = 'Lacs :'
         end
         object LbValueResist3: TLabel
@@ -929,16 +929,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoElementalSpeed: TLabel
           Left = 5
           Top = 284
-          Width = 181
-          Height = 19
+          Width = 180
+          Height = 20
           Caption = 'Vitesse magie destructrice :'
         end
         object LbValueElementalSpeed: TLabel
@@ -951,16 +951,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoElementalPower: TLabel
           Left = 5
           Top = 300
-          Width = 198
-          Height = 19
+          Width = 197
+          Height = 20
           Caption = 'Puissance magie destructrice :'
         end
         object LbValueElementalPower: TLabel
@@ -973,8 +973,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -988,16 +988,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoDefensivePower: TLabel
           Left = 5
           Top = 403
-          Width = 207
-          Height = 19
+          Width = 205
+          Height = 20
           Caption = 'Puissance magie neutralisante :'
         end
         object LbValueDefensivePower: TLabel
@@ -1010,8 +1010,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -1026,8 +1026,8 @@ object FormFilter: TFormFilter
         object LbAutoDefensiveSpeed: TLabel
           Left = 5
           Top = 387
-          Width = 190
-          Height = 19
+          Width = 188
+          Height = 20
           Caption = 'Vitesse magie neutralisante :'
         end
         object LbValueDefensiveSpeed: TLabel
@@ -1040,16 +1040,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoOffensiveSpeed: TLabel
           Left = 5
           Top = 319
-          Width = 174
-          Height = 19
+          Width = 175
+          Height = 20
           Caption = 'Vitesse magie d'#233'bilitante :'
         end
         object LbValueOffensiveSpeed: TLabel
@@ -1062,16 +1062,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoOffensivePower: TLabel
           Left = 5
           Top = 335
-          Width = 191
-          Height = 19
+          Width = 192
+          Height = 20
           Caption = 'Puissance magie d'#233'bilitante :'
         end
         object LbValueOffensivePower: TLabel
@@ -1084,16 +1084,16 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object LbAutoHealSpeed: TLabel
           Left = 5
           Top = 350
-          Width = 156
-          Height = 19
+          Width = 155
+          Height = 20
           Caption = 'Vitesse magie curative :'
         end
         object LbValueHealSpeed: TLabel
@@ -1106,8 +1106,8 @@ object FormFilter: TFormFilter
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'Calibri'
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
           Font.Style = [fsBold]
           ParentFont = False
         end
@@ -1380,22 +1380,22 @@ object FormFilter: TFormFilter
         object LbQuantityMin: TLabel
           Left = 5
           Top = 27
-          Width = 33
-          Height = 19
+          Width = 32
+          Height = 20
           Caption = 'Min :'
         end
         object LbQuantityMax: TLabel
           Left = 5
           Top = 58
-          Width = 36
-          Height = 19
+          Width = 35
+          Height = 20
           Caption = 'Max :'
         end
         object EdQuantityMin: TSpinEdit
           Left = 45
           Top = 22
           Width = 80
-          Height = 29
+          Height = 30
           MaxValue = 999
           MinValue = 0
           TabOrder = 0
@@ -1405,7 +1405,7 @@ object FormFilter: TFormFilter
           Left = 45
           Top = 54
           Width = 80
-          Height = 29
+          Height = 30
           MaxValue = 999
           MinValue = 0
           TabOrder = 1
@@ -1422,24 +1422,24 @@ object FormFilter: TFormFilter
         object LbClassMin: TLabel
           Left = 5
           Top = 24
-          Width = 33
-          Height = 19
+          Width = 32
+          Height = 20
           Caption = 'Min :'
         end
         object LbClassMax: TLabel
           Left = 138
           Top = 24
-          Width = 36
-          Height = 19
+          Width = 35
+          Height = 20
           Caption = 'Max :'
         end
         object EdClassMin: TComboBox
           Left = 45
           Top = 20
           Width = 85
-          Height = 27
+          Height = 28
           Style = csDropDownList
-          ItemHeight = 19
+          ItemHeight = 20
           ItemIndex = 0
           TabOrder = 0
           Text = 'Base'
@@ -1454,9 +1454,9 @@ object FormFilter: TFormFilter
           Left = 178
           Top = 20
           Width = 85
-          Height = 27
+          Height = 28
           Style = csDropDownList
-          ItemHeight = 19
+          ItemHeight = 20
           ItemIndex = 4
           TabOrder = 1
           Text = 'Supr'#234'me'
@@ -1478,22 +1478,22 @@ object FormFilter: TFormFilter
         object LbQualityMin: TLabel
           Left = 5
           Top = 25
-          Width = 33
-          Height = 19
+          Width = 32
+          Height = 20
           Caption = 'Min :'
         end
         object LbQualityMax: TLabel
           Left = 5
           Top = 58
-          Width = 36
-          Height = 19
+          Width = 35
+          Height = 20
           Caption = 'Max :'
         end
         object EdQualityMin: TSpinEdit
           Left = 45
           Top = 20
           Width = 80
-          Height = 29
+          Height = 30
           MaxValue = 270
           MinValue = 0
           TabOrder = 0
@@ -1503,7 +1503,7 @@ object FormFilter: TFormFilter
           Left = 45
           Top = 54
           Width = 80
-          Height = 29
+          Height = 30
           MaxValue = 300
           MinValue = 0
           TabOrder = 1
@@ -1521,9 +1521,9 @@ object FormFilter: TFormFilter
           Left = 8
           Top = 20
           Width = 254
-          Height = 27
+          Height = 28
           Style = csDropDownList
-          ItemHeight = 19
+          ItemHeight = 20
           ItemIndex = 0
           TabOrder = 0
           Text = 'Tout '#233'quipement'
@@ -1552,9 +1552,9 @@ object FormFilter: TFormFilter
           Left = 8
           Top = 20
           Width = 254
-          Height = 27
+          Height = 28
           Style = csDropDownList
-          ItemHeight = 19
+          ItemHeight = 20
           ItemIndex = 0
           TabOrder = 0
           Text = 'Toute cat'#233'gorie'
@@ -1600,7 +1600,7 @@ object FormFilter: TFormFilter
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
-          Font.Name = 'Calibri'
+          Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
         end
@@ -1615,7 +1615,7 @@ object FormFilter: TFormFilter
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
-          Font.Name = 'Calibri'
+          Font.Name = 'Segoe UI'
           Font.Style = []
           ParentFont = False
         end
@@ -1623,9 +1623,9 @@ object FormFilter: TFormFilter
           Left = 8
           Top = 28
           Width = 105
-          Height = 27
+          Height = 28
           Style = csDropDownList
-          ItemHeight = 19
+          ItemHeight = 20
           ItemIndex = 0
           TabOrder = 0
           Text = 'Atys'
@@ -1640,7 +1640,7 @@ object FormFilter: TFormFilter
           Left = 116
           Top = 27
           Width = 71
-          Height = 29
+          Height = 30
           MaxValue = 0
           MinValue = 0
           TabOrder = 1
@@ -1650,7 +1650,7 @@ object FormFilter: TFormFilter
           Left = 191
           Top = 27
           Width = 71
-          Height = 29
+          Height = 30
           MaxValue = 0
           MinValue = 0
           TabOrder = 2
@@ -1912,7 +1912,7 @@ object FormFilter: TFormFilter
           Left = 8
           Top = 20
           Width = 254
-          Height = 27
+          Height = 28
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
         end
@@ -2218,7 +2218,7 @@ object FormFilter: TFormFilter
           Left = 32
           Top = 8
           Width = 55
-          Height = 19
+          Height = 20
           Caption = 'Marteau'
         end
       end
@@ -2513,8 +2513,8 @@ object FormFilter: TFormFilter
         object LbCat2: TLabel
           Left = 32
           Top = 8
-          Width = 78
-          Height = 19
+          Width = 81
+          Height = 20
           Caption = 'Contrepoids'
         end
       end
@@ -2530,43 +2530,43 @@ object FormFilter: TFormFilter
         object LbPrice: TLabel
           Left = 5
           Top = 31
-          Width = 32
-          Height = 19
+          Width = 31
+          Height = 20
           Caption = 'Prix :'
         end
         object LbContinent: TLabel
           Left = 5
           Top = 71
           Width = 71
-          Height = 19
+          Height = 20
           Caption = 'Continent :'
         end
         object LbValuePrice: TLabel
           Left = 86
           Top = 31
           Width = 24
-          Height = 19
+          Height = 20
           Caption = '250'
         end
         object LbValueContinent: TLabel
           Left = 86
           Top = 71
-          Width = 57
-          Height = 19
+          Width = 60
+          Height = 20
           Caption = 'Commun'
         end
         object LbTime: TLabel
           Left = 5
           Top = 51
           Width = 50
-          Height = 19
+          Height = 20
           Caption = 'Temps :'
         end
         object LbValueTime: TLabel
           Left = 86
           Top = 51
-          Width = 229
-          Height = 19
+          Width = 231
+          Height = 20
           Caption = '3 Tage, 22 Stunden und 45 Minuten'
         end
         object Image1: TImage
@@ -2618,7 +2618,7 @@ object FormFilter: TFormFilter
           Left = 32
           Top = 8
           Width = 37
-          Height = 19
+          Height = 20
           Caption = 'Vente'
         end
       end

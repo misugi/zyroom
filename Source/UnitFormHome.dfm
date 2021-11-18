@@ -7,13 +7,13 @@ object FormHome: TFormHome
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
-  Font.Name = 'Calibri'
+  Font.Height = -15
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 19
+  TextHeight = 20
   object ImgRoom: TImage
     Left = 0
     Top = 0
@@ -13134,16 +13134,16 @@ object FormHome: TFormHome
     Caption = 'Projet d'#233'velopp'#233' pour :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
     Transparent = True
   end
   object LbContest: TLabel
-    Left = 243
+    Left = 202
     Top = 168
-    Width = 250
+    Width = 333
     Height = 19
     Cursor = crHandPoint
     Alignment = taCenter
@@ -13151,8 +13151,8 @@ object FormHome: TFormHome
     Caption = 'Ryzom Summer Coding Contest 2009'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
@@ -13170,8 +13170,8 @@ object FormHome: TFormHome
     Caption = 'Cr'#233#233' par :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
     Transparent = True
@@ -13186,8 +13186,8 @@ object FormHome: TFormHome
     Caption = 'Misugi'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
     Transparent = True
@@ -13202,8 +13202,8 @@ object FormHome: TFormHome
     Caption = 'Site web :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
     Transparent = True
@@ -13219,8 +13219,8 @@ object FormHome: TFormHome
     Caption = 'http://zyroom.misulud.fr'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
@@ -13505,8 +13505,8 @@ object FormHome: TFormHome
     Caption = 'Version :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
     Transparent = True
@@ -13521,8 +13521,8 @@ object FormHome: TFormHome
     Caption = '-'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
-    Font.Name = 'Calibri'
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
     ParentShowHint = False
