@@ -69,6 +69,7 @@ object FormAlert: TFormAlert
       
         '2010-06-08 | prochain changement de saison dans 3 jours/heures/m' +
         'inutes (Et'#233')')
+    ParentColor = True
     ParentFont = False
     ReadOnly = True
     ScrollBars = ssBoth
