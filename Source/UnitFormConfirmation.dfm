@@ -3,7 +3,7 @@ object FormConfirm: TFormConfirm
   Top = 347
   BorderStyle = bsDialog
   Caption = 'Information'
-  ClientHeight = 80
+  ClientHeight = 84
   ClientWidth = 350
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object FormConfirm: TFormConfirm
   OnShow = FormShow
   DesignSize = (
     350
-    80)
+    84)
   PixelsPerInch = 96
   TextHeight = 20
   object LbMessage: TLabel
@@ -33,7 +33,7 @@ object FormConfirm: TFormConfirm
   end
   object BtYes: TSevenButton
     Left = 97
-    Top = 52
+    Top = 56
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -86,7 +86,7 @@ object FormConfirm: TFormConfirm
   end
   object BtNo: TSevenButton
     Left = 178
-    Top = 52
+    Top = 56
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -139,7 +139,7 @@ object FormConfirm: TFormConfirm
   end
   object BtOK: TSevenButton
     Left = 137
-    Top = 52
+    Top = 56
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]

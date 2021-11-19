@@ -13134,7 +13134,7 @@ object FormHome: TFormHome
     Caption = 'Projet d'#233'velopp'#233' pour :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -15
+    Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -13142,7 +13142,7 @@ object FormHome: TFormHome
   end
   object LbContest: TLabel
     Left = 202
-    Top = 168
+    Top = 163
     Width = 333
     Height = 19
     Cursor = crHandPoint
@@ -13170,7 +13170,7 @@ object FormHome: TFormHome
     Caption = 'Cr'#233#233' par :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -15
+    Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -13178,7 +13178,7 @@ object FormHome: TFormHome
   end
   object LbAuthor: TLabel
     Left = 243
-    Top = 210
+    Top = 205
     Width = 250
     Height = 19
     Alignment = taCenter
@@ -13202,7 +13202,7 @@ object FormHome: TFormHome
     Caption = 'Site web :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -15
+    Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -13210,7 +13210,7 @@ object FormHome: TFormHome
   end
   object LbProjectWebsite: TLabel
     Left = 243
-    Top = 252
+    Top = 247
     Width = 250
     Height = 19
     Cursor = crHandPoint
@@ -13505,7 +13505,7 @@ object FormHome: TFormHome
     Caption = 'Version :'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -15
+    Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
@@ -13513,7 +13513,7 @@ object FormHome: TFormHome
   end
   object LbValueVersion: TLabel
     Left = 243
-    Top = 294
+    Top = 289
     Width = 250
     Height = 19
     Alignment = taCenter

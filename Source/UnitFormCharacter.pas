@@ -133,7 +133,6 @@ procedure TFormCharacter.GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
 var
   wGuild: String;
-  wServer: String;
 begin
   with Sender as TStringGrid do with Canvas do begin
     if ARow = 0 then begin
@@ -145,7 +144,7 @@ begin
       Font.Name := _FONT_NAME;
       Rect.Left := Rect.Left + 2;
       DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-              DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+              DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
     end else begin
       // Background color
       If gdFixed in State
@@ -171,21 +170,15 @@ begin
         Rect.Top := Rect.Top - 25;
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
 
         // Guild
         Font.Size := _FONT_SIZE;
         Font.Style := [];
-        Rect.Top := Rect.Top + 30;
+        Rect.Top := Rect.Top + 45;
         wGuild := GCharacter.GetGuildName(Cells[3,ARow]);
         DrawText(Handle, PChar(wGuild), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
-
-        // Server
-        Rect.Top := Rect.Top + 28;
-        wServer := GCharacter.GetServerName(Cells[3,ARow]);
-        DrawText(Handle, PChar(wServer), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
       end;
 
       // Comment
@@ -194,7 +187,7 @@ begin
         Font.Style := [];
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
       end;
 
       // Number
@@ -202,7 +195,7 @@ begin
         Font.Size := _FONT_SIZE;
         Font.Style := [];
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
       end;
 
       // Drawing image (head)
@@ -257,7 +250,7 @@ begin
     GridItem.RowHeights[0] := 20;
     GridItem.ColWidths[0] := 48;
     GridItem.ColWidths[1] := 250;
-    GridItem.ColWidths[3] := 70;
+    GridItem.ColWidths[3] := 90;
 
     FIconList.Clear;
     wItemList := TStringList.Create;

@@ -1,8 +1,8 @@
 object FormEdit: TFormEdit
-  Left = 505
-  Top = 457
+  Left = 489
+  Top = 395
   BorderStyle = bsDialog
-  ClientHeight = 150
+  ClientHeight = 151
   ClientWidth = 514
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -15,11 +15,11 @@ object FormEdit: TFormEdit
   OnShow = FormShow
   DesignSize = (
     514
-    150)
+    151)
   PixelsPerInch = 96
   TextHeight = 20
   object LbAutoKey: TLabel
-    Left = 8
+    Left = 5
     Top = 12
     Width = 157
     Height = 20
@@ -77,7 +77,7 @@ object FormEdit: TFormEdit
     OnClick = ImgProfilePageClick
   end
   object LbComment: TLabel
-    Left = 8
+    Left = 5
     Top = 43
     Width = 83
     Height = 20
@@ -101,7 +101,7 @@ object FormEdit: TFormEdit
   end
   object CbCheckVolume: TCheckBox
     Left = 195
-    Top = 70
+    Top = 72
     Width = 287
     Height = 17
     Anchors = [akLeft, akTop, akRight]
@@ -110,7 +110,7 @@ object FormEdit: TFormEdit
   end
   object CbCheckChange: TCheckBox
     Left = 195
-    Top = 92
+    Top = 94
     Width = 287
     Height = 17
     Anchors = [akLeft, akTop, akRight]
@@ -118,8 +118,8 @@ object FormEdit: TFormEdit
     TabOrder = 3
   end
   object BtOK: TSevenButton
-    Left = 353
-    Top = 122
+    Left = 354
+    Top = 123
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]
@@ -171,8 +171,8 @@ object FormEdit: TFormEdit
     Marging = 5
   end
   object BtCancel: TSevenButton
-    Left = 435
-    Top = 122
+    Left = 434
+    Top = 123
     Width = 75
     Height = 23
     Anchors = [akRight, akBottom]

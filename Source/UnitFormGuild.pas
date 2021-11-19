@@ -34,7 +34,7 @@ resourcestring
   RS_NEW_GUILD = 'Nouvelle guilde';
   RS_CHANGE_KEY = 'Changement de clé';
   RS_COL_GUILD_LOGO = 'Blason';
-  RS_COL_GUILD_NAME = 'Iteme';
+  RS_COL_GUILD_NAME = 'Guilde';
   RS_COL_GUILD_NUMBER = 'Numéro';
   RS_COL_COMMENT = 'Description';
   RS_DELETE_CONFIRMATION = 'Etes-vous sûr de vouloir supprimer la guilde sélectionnée ?';
@@ -126,8 +126,6 @@ Displays the grid
 *******************************************************************************}
 procedure TFormGuild.GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
-var
-  wServer: String;
 begin
   with Sender as TStringGrid do with Canvas do begin
     if ARow = 0 then begin
@@ -139,7 +137,7 @@ begin
       Font.Name := _FONT_NAME;
       Rect.Left := Rect.Left + 2;
       DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-              DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+              DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
     end else begin
       // Background color
       If gdFixed in State
@@ -162,18 +160,9 @@ begin
       if (ACol = 1) then begin
         Font.Size := _FONT_SIZE + 2;
         Font.Style := [fsBold];
-        Rect.Top := Rect.Top - 15;
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
-
-        // Server
-        Font.Size := _FONT_SIZE;
-        Font.Style := [];
-        Rect.Top := Rect.Top + 35;
-        wServer := GGuild.GetServerName(Cells[3,ARow]);
-        DrawText(Handle, PChar(wServer), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
       end;
 
       // Comment
@@ -182,7 +171,7 @@ begin
         Font.Style := [];
         Rect.Left := Rect.Left + 5;
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
       end;
 
       // Number
@@ -190,7 +179,7 @@ begin
         Font.Size := _FONT_SIZE;
         Font.Style := [];
         DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE  );
+          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
       end;
 
       // Drawing image (logo)
@@ -246,7 +235,7 @@ begin
     GridItem.RowHeights[0] := 20;
     GridItem.ColWidths[0] := 48;
     GridItem.ColWidths[1] := 250;
-    GridItem.ColWidths[3] := 70;
+    GridItem.ColWidths[3] := 90;
 
     FIconList.Clear;
     wItemList := TStringList.Create;

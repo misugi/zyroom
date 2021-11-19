@@ -3,7 +3,7 @@ object FormName: TFormName
   Top = 457
   BorderStyle = bsDialog
   Caption = 'Sauvegarde'
-  ClientHeight = 67
+  ClientHeight = 75
   ClientWidth = 378
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,18 +16,18 @@ object FormName: TFormName
   OnShow = FormShow
   DesignSize = (
     378
-    67)
+    75)
   PixelsPerInch = 96
   TextHeight = 20
   object LbName: TLabel
-    Left = 8
+    Left = 5
     Top = 12
     Width = 40
     Height = 20
     Caption = 'Nom :'
   end
   object EdName: TEdit
-    Left = 70
+    Left = 69
     Top = 8
     Width = 304
     Height = 28
@@ -36,11 +36,11 @@ object FormName: TFormName
     Text = '<Name of>'
   end
   object BtOK: TSevenButton
-    Left = 217
-    Top = 39
+    Left = 218
+    Top = 47
     Width = 75
     Height = 23
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'OK'
     TabOrder = 1
     Border.ColorNormal = 7368816
@@ -89,11 +89,11 @@ object FormName: TFormName
     Marging = 5
   end
   object BtCancel: TSevenButton
-    Left = 299
-    Top = 39
+    Left = 298
+    Top = 47
     Width = 75
     Height = 23
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'Annuler'
     TabOrder = 2
     Border.ColorNormal = 7368816

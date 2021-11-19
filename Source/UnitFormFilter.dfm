@@ -22,7 +22,7 @@ object FormFilter: TFormFilter
     Top = 0
     Width = 280
     Height = 749
-    ActivePage = TabFilter
+    ActivePage = TabMaterial
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -361,7 +361,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 18
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '250'
@@ -376,7 +376,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 48
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -398,7 +398,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 33
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -413,7 +413,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 64
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -428,7 +428,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 80
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -443,7 +443,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 96
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -465,7 +465,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 128
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -487,7 +487,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 144
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -509,7 +509,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 160
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -729,7 +729,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 49
           Width = 176
-          Height = 13
+          Height = 20
           AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
         end
@@ -737,7 +737,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 64
           Width = 176
-          Height = 13
+          Height = 20
           AutoSize = False
           Caption = 'Modif. de Parades'
         end
@@ -745,7 +745,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 79
           Width = 176
-          Height = 13
+          Height = 20
           AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
         end
@@ -753,7 +753,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 94
           Width = 176
-          Height = 13
+          Height = 20
           AutoSize = False
           Caption = 'Modif. Parades Adversaire'
         end
@@ -768,7 +768,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 112
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -790,7 +790,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 3
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '250'
@@ -805,7 +805,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 231
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -827,7 +827,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 263
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -842,7 +842,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 229
           Width = 176
-          Height = 13
+          Height = 20
           AutoSize = False
           Caption = 'Froid :'
         end
@@ -857,7 +857,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 247
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -879,7 +879,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 179
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -901,7 +901,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 195
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -923,7 +923,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 210
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -945,7 +945,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 284
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -967,7 +967,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 300
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -982,7 +982,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 371
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -1004,7 +1004,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 403
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -1019,7 +1019,7 @@ object FormFilter: TFormFilter
           Left = 5
           Top = 369
           Width = 176
-          Height = 13
+          Height = 20
           AutoSize = False
           Caption = 'Puissance magie curative :'
         end
@@ -1034,7 +1034,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 387
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -1056,7 +1056,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 319
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -1078,7 +1078,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 335
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -1100,7 +1100,7 @@ object FormFilter: TFormFilter
           Left = 212
           Top = 350
           Width = 50
-          Height = 14
+          Height = 20
           Alignment = taRightJustify
           AutoSize = False
           Caption = '0'
@@ -1129,9 +1129,9 @@ object FormFilter: TFormFilter
         ParentFont = False
         TabOrder = 7
         object EdSorting: TComboBox
-          Left = 8
+          Left = 5
           Top = 20
-          Width = 254
+          Width = 260
           Height = 27
           Style = csDropDownList
           Font.Charset = DEFAULT_CHARSET
@@ -1163,43 +1163,43 @@ object FormFilter: TFormFilter
         Caption = 'Type'
         TabOrder = 0
         object CbTypeMat: TCheckBox
-          Left = 8
+          Left = 5
           Top = 21
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'Mati'#232'res'
           TabOrder = 0
           OnClick = CbTypeMatClick
         end
         object CbTypeCata: TCheckBox
-          Left = 8
+          Left = 5
           Top = 57
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'Cristaux'
           TabOrder = 1
         end
         object CbTypeOthers: TCheckBox
-          Left = 8
+          Left = 5
           Top = 93
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'Autres'
           TabOrder = 2
         end
         object CbTypeEquipment: TCheckBox
-          Left = 8
+          Left = 5
           Top = 39
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'Equipement'
           TabOrder = 3
           OnClick = CbTypeMatClick
         end
         object CbTypeTeleporter: TCheckBox
-          Left = 8
+          Left = 5
           Top = 75
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'T'#233'l'#233'porteurs'
           TabOrder = 4
@@ -1213,25 +1213,25 @@ object FormFilter: TFormFilter
         Caption = 'Ecosyst'#232'me'
         TabOrder = 3
         object CbEcoPrime: TCheckBox
-          Left = 8
+          Left = 5
           Top = 39
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'Primes racines'
           TabOrder = 0
         end
         object CbEcoCommon: TCheckBox
-          Left = 8
+          Left = 5
           Top = 21
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'Commun'
           TabOrder = 1
         end
         object CbEcoDesert: TCheckBox
-          Left = 8
+          Left = 5
           Top = 75
-          Width = 121
+          Width = 125
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'D'#233'sert'
@@ -1239,17 +1239,17 @@ object FormFilter: TFormFilter
           TabOrder = 2
         end
         object CbEcoForest: TCheckBox
-          Left = 8
+          Left = 5
           Top = 57
-          Width = 121
+          Width = 125
           Height = 17
           Caption = 'For'#234't'
           TabOrder = 3
         end
         object CbEcoLakes: TCheckBox
-          Left = 8
+          Left = 5
           Top = 93
-          Width = 121
+          Width = 125
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Lacs'
@@ -1257,9 +1257,9 @@ object FormFilter: TFormFilter
           TabOrder = 4
         end
         object CbEcoJungle: TCheckBox
-          Left = 8
+          Left = 5
           Top = 111
-          Width = 121
+          Width = 125
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Jungle'
@@ -1392,7 +1392,7 @@ object FormFilter: TFormFilter
           Caption = 'Max :'
         end
         object EdQuantityMin: TSpinEdit
-          Left = 45
+          Left = 47
           Top = 22
           Width = 80
           Height = 30
@@ -1402,7 +1402,7 @@ object FormFilter: TFormFilter
           Value = 250
         end
         object EdQuantityMax: TSpinEdit
-          Left = 45
+          Left = 47
           Top = 54
           Width = 80
           Height = 30
@@ -1451,7 +1451,7 @@ object FormFilter: TFormFilter
             'Supr'#234'me')
         end
         object EdClassMax: TComboBox
-          Left = 178
+          Left = 180
           Top = 20
           Width = 85
           Height = 28
@@ -1518,9 +1518,9 @@ object FormFilter: TFormFilter
         Caption = 'Equipement'
         TabOrder = 5
         object EdEquipment: TComboBox
-          Left = 8
+          Left = 5
           Top = 20
-          Width = 254
+          Width = 260
           Height = 28
           Style = csDropDownList
           ItemHeight = 20
@@ -1549,9 +1549,9 @@ object FormFilter: TFormFilter
         Caption = 'Cat'#233'gorie'
         TabOrder = 6
         object EdCategory: TComboBox
-          Left = 8
+          Left = 5
           Top = 20
-          Width = 254
+          Width = 260
           Height = 28
           Style = csDropDownList
           ItemHeight = 20
@@ -1605,7 +1605,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbPriceMax: TLabel
-          Left = 191
+          Left = 193
           Top = 11
           Width = 71
           Height = 14
@@ -1620,7 +1620,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object EdContinent: TComboBox
-          Left = 8
+          Left = 5
           Top = 28
           Width = 105
           Height = 28
@@ -1647,7 +1647,7 @@ object FormFilter: TFormFilter
           Value = 0
         end
         object EdPriceMax: TSpinEdit
-          Left = 191
+          Left = 193
           Top = 27
           Width = 71
           Height = 30
@@ -1909,15 +1909,15 @@ object FormFilter: TFormFilter
           270
           74)
         object EdName: TEdit
-          Left = 8
+          Left = 5
           Top = 20
-          Width = 254
+          Width = 260
           Height = 28
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
         end
         object RbAllWords: TRadioButton
-          Left = 8
+          Left = 5
           Top = 50
           Width = 125
           Height = 17

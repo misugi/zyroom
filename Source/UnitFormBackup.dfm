@@ -29,9 +29,9 @@ object FormBackup: TFormBackup
       757
       51)
     object LbAlert: TLabel
-      Left = 365
+      Left = 390
       Top = 5
-      Width = 385
+      Width = 360
       Height = 40
       Alignment = taRightJustify
       Anchors = [akTop, akRight]

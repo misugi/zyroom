@@ -46,11 +46,12 @@ object FormOptions: TFormOptions
         Caption = 'Fichier de ressources "string_client.pack" install'#233' avec Ryzom :'
       end
       object Label1: TLabel
-        Left = 230
+        Left = 270
         Top = 151
-        Width = 216
+        Width = 231
         Height = 19
         Alignment = taRightJustify
+        Anchors = [akTop, akRight]
         AutoSize = False
         Caption = 'Couleur de l'#39'interface :'
       end
@@ -118,7 +119,7 @@ object FormOptions: TFormOptions
       object CbKeepFilter: TCheckBox
         Left = 5
         Top = 152
-        Width = 216
+        Width = 251
         Height = 17
         Caption = 'Garder le filtre actif'
         TabOrder = 4
@@ -179,7 +180,7 @@ object FormOptions: TFormOptions
       object LbNeededFile: TStaticText
         Left = 5
         Top = 105
-        Width = 461
+        Width = 526
         Height = 41
         AutoSize = False
         Caption = 
@@ -288,8 +289,9 @@ object FormOptions: TFormOptions
       object CbProxyEnabled: TCheckBox
         Left = 5
         Top = 11
-        Width = 466
+        Width = 526
         Height = 17
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Utiliser un serveur proxy'
         TabOrder = 1
         OnClick = CbProxyEnabledClick
@@ -310,23 +312,35 @@ object FormOptions: TFormOptions
       end
       object LbVolumeGuild: TLabel
         Left = 471
-        Top = 7
+        Top = 9
         Width = 61
         Height = 19
         Alignment = taCenter
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = 'Guilde'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object LbVolumeRoom: TLabel
         Left = 403
-        Top = 7
+        Top = 9
         Width = 61
         Height = 19
         Alignment = taCenter
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = 'Pi'#232'ce'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
       end
       object LbSalesCount: TLabel
         Left = 5

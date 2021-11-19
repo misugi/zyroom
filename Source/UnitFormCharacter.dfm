@@ -29,6 +29,7 @@ object FormCharacter: TFormCharacter
     FixedCols = 0
     RowCount = 2
     Options = [goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking]
+    ParentColor = True
     TabOrder = 0
     OnDblClick = GridItemDblClick
     OnDrawCell = GridItemDrawCell
