@@ -98,7 +98,6 @@ type
 
     procedure ParseLogFile(AFirstLoading: Boolean);
     procedure CleanLogFile(ADate: TDateTime = 0);
-    function  DelphiToHtmlColor(ADelphiColor: TColor): String;
     function  ColorTextHtml(AHtmlColor: String; AText: String): String;
     function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
     function  CheckSystemFilter(AMessage: String): Boolean;
@@ -116,6 +115,7 @@ type
 
     function  LogToHtmlColor(ALogColor: String): String;
     function  LogToDelphiColor(ALogColor: String): TColor;
+    function  DelphiToHtmlColor(ADelphiColor: TColor): String;
 
     property  TotalVolume: Double read FTotalVolume write FTotalVolume;
     property  Dappers: String read FDappers write FDappers;

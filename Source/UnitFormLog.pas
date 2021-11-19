@@ -124,6 +124,7 @@ type
     procedure SetDefault(ASetDates: Boolean = True);
     procedure ReloadSourceFile;
     function  GetConfirmation: Boolean;
+    procedure SetBackgroundColor(AFomeFile: TFileName);
   public
     procedure ChangeChecked(AList: TCheckListBox; AChecked: Boolean);
     procedure ChangeEnabled(AEnabled: Boolean);
@@ -180,9 +181,10 @@ begin
 
   // Home page
   wHomeFile := GConfig.CurrentPath + _LOG_HOMEPAGE_FILENAME;
-  if FileExists(wHomeFile) then
-    WebLog.Navigate(wHomeFile)
-  else
+  if FileExists(wHomeFile) then begin
+    SetBackgroundColor(wHomeFile);
+    WebLog.Navigate(wHomeFile);
+  end else
     WebLog.Navigate('about:blank');
 
   // Init
@@ -491,6 +493,38 @@ begin
   OdSaveFile.FileName := ChangeFileExt(OdBrowseLogFile.FileName, FormatDateTime(' (yyyy-mm-dd hhnnss)', Now) + ExtractFileExt(OdBrowseLogFile.FileName));
   if OdSaveFile.Execute then
     Windows.CopyFile(PChar(OdBrowseLogFile.FileName), PChar(OdSaveFile.FileName), False);
+end;
+
+{*==============================================================================
+Change la police et la couleur du fichier "chatlog.html"
+===============================================================================}
+procedure TFormLog.SetBackgroundColor(AFomeFile: TFileName);
+var
+  wContent: String;
+  wReg: TRegExpr;
+  wFound: Boolean;
+  wBackColor: String;
+begin
+  wReg := TRegExpr.Create;
+  try
+    wReg.ModifierI := True;
+    wReg.ModifierM := True;
+    wReg.ModifierS := False;
+    wReg.ModifierG := False;
+
+    // lecture du fichier
+    wContent := MdkGetFileContent(AFomeFile);
+
+    // couleur
+    wReg.Expression := 'bgcolor="#[0-9A-F]{6}"';
+    wBackColor := Format('bgcolor="%s"', [FormProgress.DelphiToHtmlColor(GConfig.InterfaceColor)]);
+    wContent := wReg.Replace(wContent, wBackColor);
+
+    // écriture du fichier
+    MdkWriteFile(AFomeFile, wContent, False, True);
+  finally
+    wReg.Free;
+  end;
 end;
 
 initialization
