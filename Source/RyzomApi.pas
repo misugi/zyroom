@@ -358,13 +358,14 @@ begin
   try
     with FStream do begin
       Result := '';
-      wPos := Pos(#0 + AStringKey + #1, DataString);
+      wPos := Pos(#0 + AStringKey + #2, DataString); // la clé d'un item (ex: tp_kami_pyr.sitem) est encadré par #0 et #2
       if wPos = 0 then
         Exit;
       Position := wPos + Length(AStringKey) + 1;
-      ReadBuffer(wLength, 4);
-      ReadBuffer(wBuffer, wLength * 2);
-      Result := WideCharLenToString(@wBuffer, wLength);
+      ReadBuffer(wLength, 4); // 4 octets pour stocker la longueur de la chaîne
+      FillChar(wBuffer, SizeOf(wBuffer), 0);
+      ReadBuffer(wBuffer, wLength); // lecture de la chaîne selon la longueur
+      Result := UTF8Decode(wBuffer); // décodage UTF-8
     end;
   except
     on E: Exception do
