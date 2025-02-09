@@ -502,7 +502,6 @@ procedure TFormLog.SetBackgroundColor(AFomeFile: TFileName);
 var
   wContent: String;
   wReg: TRegExpr;
-  wFound: Boolean;
   wBackColor: String;
 begin
   wReg := TRegExpr.Create;
