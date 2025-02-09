@@ -35,17 +35,14 @@ resourcestring
 
 const
   _API_BASE_URL = 'https://api.ryzom.com';
-  _REQUIRED_MODULES_CHAR : array [0..4] of String = ('C01','C04','C05','C06','A03');
-  _REQUIRED_MODULES_GUILD : array [0..2] of String = ('G01','G02','G03');
-
+  _REQUIRED_MODULES_CHAR: array[0..4] of String = ('C01', 'C04', 'C05', 'C06', 'A03');
+  _REQUIRED_MODULES_GUILD: array[0..2] of String = ('G01', 'G02', 'G03');
   _FORMAT_XML = 'xml';
   _FORMAT_RAW = 'raw';
   _FORMAT_TXT = 'txt';
-
   _ICON_SMALL = 's';
   _ICON_BIG = 'b';
   _ICON_FORMAT = '.png';
-
   _XPATH_ROOM_CHAR = '/ryzomapi/character/room/item';
   _XPATH_ROOM_GUILD = '/ryzomapi/guild/room/item';
   _XPATH_BAG = '/ryzomapi/character/bag/item';
@@ -67,21 +64,22 @@ type
     FHttpCompressor: TIdCompressorZLib;
     FSslHandler: TIdSSLIOHandlerSocketOpenSSL;
     FXmlDocument: TXpObjModel;
-
     procedure CheckXmlError(AResponse: TStream);
     procedure CallAPI(AUrl: String; AResponse: TStream);
   public
     constructor Create;
     destructor Destroy; override;
-
     procedure ApiGuild(AKey: String; AResponse: TStream);
     procedure ApiCharacter(AKey: String; AResponse: TStream);
     procedure ApiGuildIcon(AIcon: String; ASize: String; AResponse: TStream);
-    procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor = icWhite;
-      AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1; ADestroyed: Boolean = False; ALocked: Boolean = False);
-    procedure ApiBallisticMystix(ARace: String; AGender: String; AHairType: Integer; AHairColor: Integer;
-      ATatoo: Integer; AEyesColor: Integer; AGabarit, AMorph: String; AChestItem: String; AChestColor: Integer; AResponse: TStream);
+    procedure ApiItemIcon(AId: String; AResponse: TStream; AColor: TItemColor =
+      icWhite; AQuality: Integer = 0; ASize: Integer = 0; ASap: Integer = -1;
+      ADestroyed: Boolean = False; ALocked: Boolean = False);
+    procedure ApiBallisticMystix(ARace: String; AGender: String; AHairType:
+      Integer; AHairColor: Integer; ATatoo: Integer; AEyesColor: Integer;
+      AGabarit, AMorph: String; AChestItem: String; AChestColor: Integer; AResponse: TStream);
     procedure ApiTime(AFormat: String; AResponse: TStream);
+    procedure ApiWeather(AContinent: String; ACycles: Integer; AOffset: Integer; AResponse: TStream);
     procedure SetProxyParameters(AProxyAddress: String; AProxyPort: Integer;
       AProxyUsername: String; AProxyPassword: String);
     procedure SendRequest(ARequest: String; AResponse: TStream);
@@ -98,13 +96,16 @@ type
     function GetString(AStringKey: String): WideString;
   end;
 
-  function ToItemColor(AColor: String): TItemColor;
-  function GetRyzomInstallDir: String;
-  function CheckModules(AModules: String; ARequired: array of String): Boolean;
+function ToItemColor(AColor: String): TItemColor;
+
+function GetRyzomInstallDir: String;
+
+function CheckModules(AModules: String; ARequired: array of String): Boolean;
 
 implementation
 
-uses StrUtils;
+uses
+  StrUtils;
 
 {*******************************************************************************
 Convert a color code to an item color
@@ -146,7 +147,8 @@ begin
     wList.Delimiter := ':';
     wList.DelimitedText := AModules;
     for i := 0 to High(ARequired) do begin
-      if wList.IndexOf(ARequired[i]) < 0 then Exit;
+      if wList.IndexOf(ARequired[i]) < 0 then
+        Exit;
     end;
     Result := True;
   finally
@@ -194,7 +196,8 @@ begin
     CallAPI(Format('%s/guild.php?apikey=%s', [_API_BASE_URL, AKey]), AResponse);
     CheckXmlError(AResponse);
   except
-    on E: Exception do raise Exception.CreateFmt('[ApiGuild] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiGuild] %s', [E.Message]);
   end;
 end;
 
@@ -207,7 +210,8 @@ begin
     CallAPI(Format('%s/character.php?apikey=%s', [_API_BASE_URL, AKey]), AResponse);
     CheckXmlError(AResponse);
   except
-    on E: Exception do raise Exception.CreateFmt('[ApiCharacter] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiCharacter] %s', [E.Message]);
   end;
 end;
 
@@ -219,7 +223,8 @@ begin
   try
     CallAPI(Format('%s/guild_icon.php?icon=%s&size=%s', [_API_BASE_URL, AIcon, ASize]), AResponse);
   except
-    on E: Exception do raise Exception.CreateFmt('[ApiGuildIcon] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiGuildIcon] %s', [E.Message]);
   end;
 end;
 
@@ -250,25 +255,31 @@ Default is 0.
 0: nothing special (example).
 1: display the item as if it was destroyed (with a red cross) (example).
 *******************************************************************************}
-procedure TRyzomApi.ApiItemIcon(AId: String; AResponse: TStream;
-  AColor: TItemColor; AQuality, ASize, ASap: Integer;
-  ADestroyed: Boolean; ALocked: Boolean);
+procedure TRyzomApi.ApiItemIcon(AId: String; AResponse: TStream; AColor:
+  TItemColor; AQuality, ASize, ASap: Integer; ADestroyed: Boolean; ALocked: Boolean);
 var
   wOptions: String;
 begin
   try
     wOptions := Format('?sheetid=%s', [AId]);
-    if AColor = icNone then AColor := icBeige;
+    if AColor = icNone then
+      AColor := icBeige;
     wOptions := wOptions + Format('&c=%d', [Ord(AColor)]);
-    if AQuality > 0 then wOptions := wOptions + Format('&q=%d', [AQuality]);
-    if ASize > 0 then wOptions := wOptions + Format('&s=%d', [ASize]);
-    if ASap >= 0 then wOptions := wOptions + Format('&sap=%d', [ASap]);
-    if ADestroyed then wOptions := wOptions + '&destroyed=1';
-    if ALocked then wOptions := wOptions + '&locked=1';
-  
+    if AQuality > 0 then
+      wOptions := wOptions + Format('&q=%d', [AQuality]);
+    if ASize > 0 then
+      wOptions := wOptions + Format('&s=%d', [ASize]);
+    if ASap >= 0 then
+      wOptions := wOptions + Format('&sap=%d', [ASap]);
+    if ADestroyed then
+      wOptions := wOptions + '&destroyed=1';
+    if ALocked then
+      wOptions := wOptions + '&locked=1';
+
     CallAPI(Format('%s/item_icon.php%s', [_API_BASE_URL, wOptions]), AResponse);
   except
-    on E: Exception do raise Exception.CreateFmt('[ApiItemIcon] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiItemIcon] %s', [E.Message]);
   end;
 end;
 
@@ -281,14 +292,39 @@ begin
     try
       FHttpRequest.Get(Format('%s/time.php?format=%s', [_API_BASE_URL, AFormat]), AResponse);
     except
-      on E: Exception do raise Exception.Create('[API Call Error] '+E.Message);
+      on E: Exception do
+        raise Exception.Create('[API Call Error] ' + E.Message);
     end;
     AResponse.Position := 0;
   except
-    on E: Exception do raise Exception.CreateFmt('[ApiTime] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiTime] %s', [E.Message]);
   end;
 end;
 
+{*==============================================================================
+Calls the "Weather" API
+https://api.ryzom.com/#weather-api
+https://api.bmsite.net/#weather => API à utiliser de préférence !
+Car celle-ci met continuellement à jour l'heure retournée (hour), ce qui permet d'être précis sur le moment présent
+Contrairement à l'API officielle qui met à jour l'heure toutes les 2 minutes environ
+===============================================================================}
+procedure TRyzomApi.ApiWeather(AContinent: String; ACycles: Integer; AOffset: Integer; AResponse: TStream);
+begin
+  try
+    try
+      FHttpRequest.Get(Format('https://api.bmsite.net/atys/weather?continent=%s&cycles=%d&offset=%d',
+        [AContinent, ACycles, AOffset]), AResponse);
+    except
+      on E: Exception do
+        raise Exception.Create('[API Call Error] ' + E.Message);
+    end;
+    AResponse.Position := 0;
+  except
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiWeather] %s', [E.Message]);
+  end;
+end;
 
 { TStringClient }
 
@@ -322,15 +358,17 @@ begin
   try
     with FStream do begin
       Result := '';
-      wPos := Pos(#0+AStringKey+#1, DataString);
-      if wPos = 0 then Exit;
+      wPos := Pos(#0 + AStringKey + #1, DataString);
+      if wPos = 0 then
+        Exit;
       Position := wPos + Length(AStringKey) + 1;
       ReadBuffer(wLength, 4);
-      ReadBuffer(wBuffer, wLength*2);
+      ReadBuffer(wBuffer, wLength * 2);
       Result := WideCharLenToString(@wBuffer, wLength);
     end;
   except
-    on E: Exception do raise Exception.CreateFmt('[TStringClient.GetString] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[TStringClient.GetString] %s', [E.Message]);
   end;
 end;
 
@@ -349,8 +387,8 @@ end;
 {*******************************************************************************
 Sets the proxy parameters
 *******************************************************************************}
-procedure TRyzomApi.SetProxyParameters(AProxyAddress: String; AProxyPort: Integer;
-  AProxyUsername, AProxyPassword: String);
+procedure TRyzomApi.SetProxyParameters(AProxyAddress: String; AProxyPort:
+  Integer; AProxyUsername, AProxyPassword: String);
 begin
   FHttpRequest.ProxyParams.ProxyServer := AProxyAddress;
   FHttpRequest.ProxyParams.ProxyPort := AProxyPort;
@@ -371,14 +409,16 @@ end;
 Get character image
 *******************************************************************************}
 procedure TRyzomApi.ApiBallisticMystix(ARace, AGender: String; AHairType,
-  AHairColor, ATatoo, AEyesColor: Integer; AGabarit, AMorph: String; AChestItem: String; AChestColor: Integer; AResponse: TStream);
+  AHairColor, ATatoo, AEyesColor: Integer; AGabarit, AMorph: String; AChestItem:
+  String; AChestColor: Integer; AResponse: TStream);
 begin
   try
     // API documentation at this address : http://api.bmsite.net
     CallAPI(Format('http://api.bmsite.net/char/render/3d/180?race=%s&gender=%s&hair=%d/%d&tattoo=%d&eyes=%d&gabarit=%s&morph=%s&chest=%s/%d',
       [Copy(ARace, 1, 2), AGender, AHairType, AHairColor, ATatoo, AEyesColor, AGabarit, AMorph, AChestItem, AChestColor]), AResponse);
   except
-    on E: Exception do raise Exception.CreateFmt('[ApiBallisticMystix] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[ApiBallisticMystix] %s', [E.Message]);
   end;
 end;
 
@@ -411,7 +451,8 @@ begin
     FHttpRequest.Get(AUrl, AResponse);
     AResponse.Position := 0;
   except
-    on E: Exception do raise Exception.CreateFmt('[API Call Error] %s', [E.Message]);
+    on E: Exception do
+      raise Exception.CreateFmt('[API Call Error] %s', [E.Message]);
   end;
 end;
 
