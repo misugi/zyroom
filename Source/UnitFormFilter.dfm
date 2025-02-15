@@ -1,9 +1,9 @@
 object FormFilter: TFormFilter
-  Left = 521
-  Top = 36
+  Left = 580
+  Top = 112
   Width = 508
-  Height = 788
-  ActiveControl = PnTitle
+  Height = 775
+  ActiveControl = CbTypeMat
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -22,8 +22,8 @@ object FormFilter: TFormFilter
     Left = 0
     Top = 0
     Width = 360
-    Height = 749
-    ActivePage = TabInfo
+    Height = 736
+    ActivePage = TabFilter
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -34,11 +34,11 @@ object FormFilter: TFormFilter
       ImageIndex = 1
       DesignSize = (
         352
-        714)
+        701)
       object PnTitle: TPanel
         Left = 0
         Top = 1
-        Width = 350
+        Width = 352
         Height = 26
         Alignment = taLeftJustify
         Anchors = [akLeft, akTop, akRight]
@@ -60,7 +60,7 @@ object FormFilter: TFormFilter
       object PnInfo: TPanel
         Left = 0
         Top = 29
-        Width = 350
+        Width = 352
         Height = 209
         Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
@@ -69,7 +69,7 @@ object FormFilter: TFormFilter
         ParentColor = True
         TabOrder = 1
         DesignSize = (
-          350
+          352
           209)
         object LbQuality: TLabel
           Left = 5
@@ -93,7 +93,7 @@ object FormFilter: TFormFilter
           Caption = 'Artisanat :'
         end
         object ImgItem: TItemImage
-          Left = 303
+          Left = 305
           Top = 7
           Width = 40
           Height = 40
@@ -181,7 +181,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object ImgSkin1: TImage
-          Left = 306
+          Left = 308
           Top = 50
           Width = 10
           Height = 10
@@ -207,7 +207,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSkin2: TImage
-          Left = 318
+          Left = 320
           Top = 50
           Width = 10
           Height = 10
@@ -233,7 +233,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSkin3: TImage
-          Left = 330
+          Left = 332
           Top = 50
           Width = 10
           Height = 10
@@ -362,7 +362,7 @@ object FormFilter: TFormFilter
       object PnInfo2: TPanel
         Left = 0
         Top = 244
-        Width = 350
+        Width = 352
         Height = 462
         Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
@@ -370,7 +370,7 @@ object FormFilter: TFormFilter
         ParentColor = True
         TabOrder = 2
         DesignSize = (
-          350
+          352
           462)
         object LbAutoSpeed: TLabel
           Left = 5
@@ -380,7 +380,7 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse :'
         end
         object LbValueSpeed: TLabel
-          Left = 292
+          Left = 294
           Top = 18
           Width = 50
           Height = 20
@@ -396,7 +396,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueDodge: TLabel
-          Left = 292
+          Left = 294
           Top = 48
           Width = 50
           Height = 20
@@ -419,7 +419,7 @@ object FormFilter: TFormFilter
           Caption = 'Port'#233'e :'
         end
         object LbValueRange: TLabel
-          Left = 292
+          Left = 294
           Top = 33
           Width = 50
           Height = 20
@@ -435,7 +435,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueParry: TLabel
-          Left = 292
+          Left = 294
           Top = 64
           Width = 50
           Height = 20
@@ -451,7 +451,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueAdvDodge: TLabel
-          Left = 292
+          Left = 294
           Top = 80
           Width = 50
           Height = 20
@@ -467,7 +467,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueAdvParry: TLabel
-          Left = 292
+          Left = 294
           Top = 96
           Width = 50
           Height = 20
@@ -490,7 +490,7 @@ object FormFilter: TFormFilter
           Caption = 'Protect. max/cp tranchant :'
         end
         object LbValueSlashingProt: TLabel
-          Left = 292
+          Left = 294
           Top = 128
           Width = 50
           Height = 20
@@ -513,7 +513,7 @@ object FormFilter: TFormFilter
           Caption = 'Protect. max/cp contondant :'
         end
         object LbValueSmashingProt: TLabel
-          Left = 292
+          Left = 294
           Top = 144
           Width = 50
           Height = 20
@@ -536,7 +536,7 @@ object FormFilter: TFormFilter
           Caption = 'Protect. max/cp perforant :'
         end
         object LbValuePiercingProt: TLabel
-          Left = 292
+          Left = 294
           Top = 160
           Width = 50
           Height = 20
@@ -552,7 +552,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object ImgHpb: TImage
-          Left = 8
+          Left = 18
           Top = 431
           Width = 24
           Height = 24
@@ -596,7 +596,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgFob: TImage
-          Left = 267
+          Left = 277
           Top = 431
           Width = 24
           Height = 24
@@ -640,7 +640,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgStb: TImage
-          Left = 179
+          Left = 189
           Top = 431
           Width = 24
           Height = 24
@@ -685,7 +685,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSab: TImage
-          Left = 96
+          Left = 106
           Top = 431
           Width = 24
           Height = 24
@@ -729,7 +729,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object LbValueHpb: TLabel
-          Left = 36
+          Left = 46
           Top = 433
           Width = 27
           Height = 20
@@ -742,7 +742,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueSab: TLabel
-          Left = 124
+          Left = 134
           Top = 433
           Width = 27
           Height = 20
@@ -755,7 +755,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueStb: TLabel
-          Left = 207
+          Left = 217
           Top = 433
           Width = 27
           Height = 20
@@ -768,7 +768,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueFob: TLabel
-          Left = 295
+          Left = 305
           Top = 433
           Width = 27
           Height = 20
@@ -816,7 +816,7 @@ object FormFilter: TFormFilter
           Caption = 'Facteur de protection :'
         end
         object LbValueFactorProt: TLabel
-          Left = 292
+          Left = 294
           Top = 112
           Width = 50
           Height = 20
@@ -839,7 +839,7 @@ object FormFilter: TFormFilter
           Caption = 'D'#233'g'#226'ts :'
         end
         object LbValueDmg: TLabel
-          Left = 292
+          Left = 294
           Top = 3
           Width = 50
           Height = 20
@@ -855,7 +855,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueProtect1: TLabel
-          Left = 292
+          Left = 294
           Top = 231
           Width = 50
           Height = 20
@@ -878,7 +878,7 @@ object FormFilter: TFormFilter
           Caption = 'Ondes de choc :'
         end
         object LbValueProtect3: TLabel
-          Left = 292
+          Left = 294
           Top = 263
           Width = 50
           Height = 20
@@ -909,7 +909,7 @@ object FormFilter: TFormFilter
           Caption = 'Poison :'
         end
         object LbValueProtect2: TLabel
-          Left = 292
+          Left = 294
           Top = 247
           Width = 50
           Height = 20
@@ -932,7 +932,7 @@ object FormFilter: TFormFilter
           Caption = 'D'#233'sert :'
         end
         object LbValueResist1: TLabel
-          Left = 292
+          Left = 294
           Top = 179
           Width = 50
           Height = 20
@@ -955,7 +955,7 @@ object FormFilter: TFormFilter
           Caption = 'For'#234't :'
         end
         object LbValueResist2: TLabel
-          Left = 292
+          Left = 294
           Top = 195
           Width = 50
           Height = 20
@@ -978,7 +978,7 @@ object FormFilter: TFormFilter
           Caption = 'Lacs :'
         end
         object LbValueResist3: TLabel
-          Left = 292
+          Left = 294
           Top = 210
           Width = 50
           Height = 20
@@ -1001,7 +1001,7 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie destructrice :'
         end
         object LbValueElementalSpeed: TLabel
-          Left = 292
+          Left = 294
           Top = 284
           Width = 50
           Height = 20
@@ -1024,7 +1024,7 @@ object FormFilter: TFormFilter
           Caption = 'Puissance magie destructrice :'
         end
         object LbValueElementalPower: TLabel
-          Left = 292
+          Left = 294
           Top = 300
           Width = 50
           Height = 20
@@ -1040,7 +1040,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueHealPower: TLabel
-          Left = 292
+          Left = 294
           Top = 371
           Width = 50
           Height = 20
@@ -1063,7 +1063,7 @@ object FormFilter: TFormFilter
           Caption = 'Puissance magie neutralisante :'
         end
         object LbValueDefensivePower: TLabel
-          Left = 292
+          Left = 294
           Top = 403
           Width = 50
           Height = 20
@@ -1093,7 +1093,7 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie neutralisante :'
         end
         object LbValueDefensiveSpeed: TLabel
-          Left = 292
+          Left = 294
           Top = 387
           Width = 50
           Height = 20
@@ -1116,7 +1116,7 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie d'#233'bilitante :'
         end
         object LbValueOffensiveSpeed: TLabel
-          Left = 292
+          Left = 294
           Top = 319
           Width = 50
           Height = 20
@@ -1139,7 +1139,7 @@ object FormFilter: TFormFilter
           Caption = 'Puissance magie d'#233'bilitante :'
         end
         object LbValueOffensivePower: TLabel
-          Left = 292
+          Left = 294
           Top = 335
           Width = 50
           Height = 20
@@ -1162,7 +1162,7 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie curative :'
         end
         object LbValueHealSpeed: TLabel
-          Left = 292
+          Left = 294
           Top = 350
           Width = 50
           Height = 20
@@ -1181,11 +1181,15 @@ object FormFilter: TFormFilter
     end
     object TabFilter: TTabSheet
       Caption = 'Filtre'
+      DesignSize = (
+        352
+        701)
       object GbSorting: TGroupBox
         Left = 0
-        Top = 0
-        Width = 350
+        Top = -4
+        Width = 352
         Height = 53
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Tri'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1194,12 +1198,16 @@ object FormFilter: TFormFilter
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 7
+        DesignSize = (
+          352
+          53)
         object EdSorting: TComboBox
           Left = 5
           Top = 20
-          Width = 338
+          Width = 340
           Height = 28
           Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -1223,8 +1231,8 @@ object FormFilter: TFormFilter
       end
       object GbType: TGroupBox
         Left = 0
-        Top = 54
-        Width = 172
+        Top = 49
+        Width = 173
         Height = 134
         Caption = 'Type'
         Font.Charset = DEFAULT_CHARSET
@@ -1308,9 +1316,9 @@ object FormFilter: TFormFilter
         end
       end
       object GbEcosys: TGroupBox
-        Left = 178
-        Top = 54
-        Width = 172
+        Left = 179
+        Top = 49
+        Width = 173
         Height = 134
         Caption = 'Ecosyst'#232'me'
         Font.Charset = DEFAULT_CHARSET
@@ -1413,7 +1421,7 @@ object FormFilter: TFormFilter
       end
       object BtDefault: TSevenButton
         Left = 89
-        Top = 643
+        Top = 646
         Width = 85
         Height = 23
         Caption = 'D'#233'faut'
@@ -1464,7 +1472,7 @@ object FormFilter: TFormFilter
       end
       object BtOK: TSevenButton
         Left = 182
-        Top = 643
+        Top = 646
         Width = 85
         Height = 23
         Caption = 'Appliquer'
@@ -1514,82 +1522,10 @@ object FormFilter: TFormFilter
         Spacing = 5
         Marging = 5
       end
-      object GbQuantity: TGroupBox
-        Left = 178
-        Top = 243
-        Width = 172
-        Height = 89
-        Caption = 'Quantit'#233
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 12
-        object LbQuantityMin: TLabel
-          Left = 5
-          Top = 27
-          Width = 32
-          Height = 20
-          Caption = 'Min :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-        end
-        object LbQuantityMax: TLabel
-          Left = 5
-          Top = 58
-          Width = 35
-          Height = 20
-          Caption = 'Max :'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ParentFont = False
-        end
-        object EdQuantityMin: TSpinEdit
-          Left = 45
-          Top = 22
-          Width = 120
-          Height = 30
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          MaxValue = 999
-          MinValue = 0
-          ParentFont = False
-          TabOrder = 0
-          Value = 250
-        end
-        object EdQuantityMax: TSpinEdit
-          Left = 45
-          Top = 54
-          Width = 120
-          Height = 30
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          MaxValue = 999
-          MinValue = 0
-          ParentFont = False
-          TabOrder = 1
-          Value = 250
-        end
-      end
       object GbClass: TGroupBox
         Left = 0
-        Top = 189
-        Width = 350
+        Top = 183
+        Width = 352
         Height = 53
         Caption = 'Classe'
         Font.Charset = DEFAULT_CHARSET
@@ -1601,7 +1537,7 @@ object FormFilter: TFormFilter
         TabOrder = 2
         object LbClassMin: TLabel
           Left = 5
-          Top = 24
+          Top = 23
           Width = 32
           Height = 20
           Caption = 'Min :'
@@ -1613,8 +1549,8 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbClassMax: TLabel
-          Left = 183
-          Top = 24
+          Left = 184
+          Top = 23
           Width = 35
           Height = 20
           Caption = 'Max :'
@@ -1627,7 +1563,7 @@ object FormFilter: TFormFilter
         end
         object EdClassMin: TComboBox
           Left = 45
-          Top = 20
+          Top = 19
           Width = 120
           Height = 28
           Style = csDropDownList
@@ -1649,8 +1585,8 @@ object FormFilter: TFormFilter
             'Supr'#234'me')
         end
         object EdClassMax: TComboBox
-          Left = 223
-          Top = 20
+          Left = 224
+          Top = 19
           Width = 120
           Height = 28
           Style = csDropDownList
@@ -1674,9 +1610,9 @@ object FormFilter: TFormFilter
       end
       object GbQuality: TGroupBox
         Left = 0
-        Top = 243
-        Width = 172
-        Height = 89
+        Top = 236
+        Width = 352
+        Height = 53
         Caption = 'Qualit'#233
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1687,7 +1623,7 @@ object FormFilter: TFormFilter
         TabOrder = 1
         object LbQualityMin: TLabel
           Left = 5
-          Top = 25
+          Top = 23
           Width = 32
           Height = 20
           Caption = 'Min :'
@@ -1699,8 +1635,8 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbQualityMax: TLabel
-          Left = 5
-          Top = 58
+          Left = 184
+          Top = 23
           Width = 35
           Height = 20
           Caption = 'Max :'
@@ -1715,10 +1651,10 @@ object FormFilter: TFormFilter
           Left = 45
           Top = 20
           Width = 120
-          Height = 30
+          Height = 27
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -13
           Font.Name = 'Segoe UI'
           Font.Style = []
           MaxValue = 270
@@ -1728,13 +1664,13 @@ object FormFilter: TFormFilter
           Value = 250
         end
         object EdQualityMax: TSpinEdit
-          Left = 45
-          Top = 54
+          Left = 224
+          Top = 20
           Width = 120
-          Height = 30
+          Height = 27
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -13
           Font.Name = 'Segoe UI'
           Font.Style = []
           MaxValue = 300
@@ -1744,11 +1680,84 @@ object FormFilter: TFormFilter
           Value = 250
         end
       end
+      object GbQuantity: TGroupBox
+        Left = -1
+        Top = 289
+        Width = 352
+        Height = 53
+        Caption = 'Quantit'#233
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 12
+        object LbQuantityMin: TLabel
+          Left = 5
+          Top = 23
+          Width = 32
+          Height = 20
+          Caption = 'Min :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+        end
+        object LbQuantityMax: TLabel
+          Left = 185
+          Top = 23
+          Width = 35
+          Height = 20
+          Caption = 'Max :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+        end
+        object EdQuantityMin: TSpinEdit
+          Left = 45
+          Top = 20
+          Width = 120
+          Height = 27
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          MaxValue = 999
+          MinValue = 0
+          ParentFont = False
+          TabOrder = 0
+          Value = 250
+        end
+        object EdQuantityMax: TSpinEdit
+          Left = 225
+          Top = 20
+          Width = 120
+          Height = 27
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          MaxValue = 999
+          MinValue = 0
+          ParentFont = False
+          TabOrder = 1
+          Value = 250
+        end
+      end
       object GbEquipment: TGroupBox
         Left = 0
-        Top = 333
-        Width = 350
+        Top = 342
+        Width = 352
         Height = 53
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Equipement'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1757,12 +1766,16 @@ object FormFilter: TFormFilter
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 5
+        DesignSize = (
+          352
+          53)
         object EdEquipment: TComboBox
           Left = 5
           Top = 20
-          Width = 338
+          Width = 340
           Height = 28
           Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -1789,9 +1802,10 @@ object FormFilter: TFormFilter
       end
       object GbCategory: TGroupBox
         Left = 0
-        Top = 387
-        Width = 350
+        Top = 395
+        Width = 352
         Height = 53
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Cat'#233'gorie'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1800,12 +1814,16 @@ object FormFilter: TFormFilter
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 6
+        DesignSize = (
+          352
+          53)
         object EdCategory: TComboBox
           Left = 5
           Top = 20
-          Width = 338
+          Width = 340
           Height = 28
           Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -15
@@ -1842,8 +1860,8 @@ object FormFilter: TFormFilter
       end
       object GbSales: TGroupBox
         Left = 0
-        Top = 441
-        Width = 350
+        Top = 448
+        Width = 352
         Height = 66
         Caption = 'Ventes'
         Font.Charset = DEFAULT_CHARSET
@@ -1854,7 +1872,7 @@ object FormFilter: TFormFilter
         ParentFont = False
         TabOrder = 8
         object LbPriceMin: TLabel
-          Left = 195
+          Left = 197
           Top = 13
           Width = 71
           Height = 17
@@ -1869,7 +1887,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbPriceMax: TLabel
-          Left = 272
+          Left = 274
           Top = 13
           Width = 71
           Height = 17
@@ -1886,7 +1904,7 @@ object FormFilter: TFormFilter
         object EdContinent: TComboBox
           Left = 5
           Top = 33
-          Width = 181
+          Width = 184
           Height = 28
           Style = csDropDownList
           Font.Charset = DEFAULT_CHARSET
@@ -1907,13 +1925,13 @@ object FormFilter: TFormFilter
             'Matis')
         end
         object EdPriceMin: TSpinEdit
-          Left = 195
+          Left = 197
           Top = 32
           Width = 71
-          Height = 30
+          Height = 27
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -13
           Font.Name = 'Segoe UI'
           Font.Style = []
           MaxValue = 0
@@ -1923,13 +1941,13 @@ object FormFilter: TFormFilter
           Value = 0
         end
         object EdPriceMax: TSpinEdit
-          Left = 272
+          Left = 274
           Top = 32
           Width = 71
-          Height = 30
+          Height = 27
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -13
           Font.Name = 'Segoe UI'
           Font.Style = []
           MaxValue = 0
@@ -1941,8 +1959,8 @@ object FormFilter: TFormFilter
       end
       object GbBonus: TGroupBox
         Left = 0
-        Top = 508
-        Width = 350
+        Top = 514
+        Width = 352
         Height = 52
         Caption = 'Bonus'
         Font.Charset = DEFAULT_CHARSET
@@ -2188,9 +2206,10 @@ object FormFilter: TFormFilter
       end
       object GbName: TGroupBox
         Left = 0
-        Top = 561
-        Width = 350
+        Top = 566
+        Width = 352
         Height = 74
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Nom'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2200,12 +2219,12 @@ object FormFilter: TFormFilter
         ParentFont = False
         TabOrder = 4
         DesignSize = (
-          350
+          352
           74)
         object EdName: TEdit
           Left = 5
           Top = 20
-          Width = 338
+          Width = 340
           Height = 28
           Anchors = [akLeft, akTop, akRight]
           Font.Charset = DEFAULT_CHARSET
@@ -2219,7 +2238,7 @@ object FormFilter: TFormFilter
         object RbAllWords: TRadioButton
           Left = 5
           Top = 50
-          Width = 165
+          Width = 167
           Height = 17
           Caption = 'Tous les mots'
           Checked = True
@@ -2233,9 +2252,9 @@ object FormFilter: TFormFilter
           TabStop = True
         end
         object RbOneWord: TRadioButton
-          Left = 176
+          Left = 178
           Top = 50
-          Width = 165
+          Width = 167
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Un des mots'
@@ -2255,11 +2274,11 @@ object FormFilter: TFormFilter
       ImageIndex = 2
       DesignSize = (
         352
-        714)
+        701)
       object PnCat1: TPanel
         Left = 0
         Top = 3
-        Width = 350
+        Width = 352
         Height = 258
         Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
@@ -2267,7 +2286,7 @@ object FormFilter: TFormFilter
         ParentColor = True
         TabOrder = 0
         DesignSize = (
-          350
+          352
           258)
         object LbCat1Spec1: TLabel
           Left = 5
@@ -2358,9 +2377,9 @@ object FormFilter: TFormFilter
           Caption = 'Temps restant'
         end
         object GaugeCat1Spec1: TGauge
-          Left = 229
+          Left = 226
           Top = 37
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2370,9 +2389,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec2: TGauge
-          Left = 229
+          Left = 226
           Top = 57
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2382,9 +2401,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec3: TGauge
-          Left = 229
+          Left = 226
           Top = 77
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2394,9 +2413,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec4: TGauge
-          Left = 229
+          Left = 226
           Top = 97
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2406,9 +2425,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec5: TGauge
-          Left = 229
+          Left = 226
           Top = 117
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2418,9 +2437,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec7: TGauge
-          Left = 229
+          Left = 226
           Top = 157
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2430,9 +2449,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec6: TGauge
-          Left = 229
+          Left = 226
           Top = 137
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2442,9 +2461,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec8: TGauge
-          Left = 229
+          Left = 226
           Top = 177
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2454,9 +2473,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec10: TGauge
-          Left = 229
+          Left = 226
           Top = 217
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2466,9 +2485,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec11: TGauge
-          Left = 229
+          Left = 226
           Top = 237
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2478,9 +2497,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec9: TGauge
-          Left = 229
+          Left = 226
           Top = 197
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2561,7 +2580,7 @@ object FormFilter: TFormFilter
       object PnCat2: TPanel
         Left = 0
         Top = 268
-        Width = 350
+        Width = 352
         Height = 253
         Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
@@ -2569,7 +2588,7 @@ object FormFilter: TFormFilter
         ParentColor = True
         TabOrder = 1
         DesignSize = (
-          350
+          352
           253)
         object LbCat2Spec1: TLabel
           Left = 5
@@ -2660,9 +2679,9 @@ object FormFilter: TFormFilter
           Caption = 'Temps restant'
         end
         object GaugeCat2Spec1: TGauge
-          Left = 229
+          Left = 226
           Top = 37
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2674,9 +2693,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec2: TGauge
-          Left = 229
+          Left = 226
           Top = 57
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2688,9 +2707,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec3: TGauge
-          Left = 229
+          Left = 226
           Top = 77
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2702,9 +2721,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec4: TGauge
-          Left = 229
+          Left = 226
           Top = 97
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2716,9 +2735,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec5: TGauge
-          Left = 229
+          Left = 226
           Top = 117
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2730,9 +2749,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec7: TGauge
-          Left = 229
+          Left = 226
           Top = 157
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2744,9 +2763,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec6: TGauge
-          Left = 229
+          Left = 226
           Top = 137
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2758,9 +2777,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec8: TGauge
-          Left = 229
+          Left = 226
           Top = 177
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2772,9 +2791,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec10: TGauge
-          Left = 229
+          Left = 226
           Top = 217
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2786,9 +2805,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec11: TGauge
-          Left = 229
+          Left = 226
           Top = 237
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2800,9 +2819,9 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec9: TGauge
-          Left = 229
+          Left = 226
           Top = 197
-          Width = 114
+          Width = 120
           Height = 9
           Anchors = [akTop, akRight]
           BackColor = 3158064
@@ -2878,7 +2897,7 @@ object FormFilter: TFormFilter
       object PnSales: TPanel
         Left = 0
         Top = 528
-        Width = 350
+        Width = 352
         Height = 97
         BevelInner = bvRaised
         BevelOuter = bvLowered
