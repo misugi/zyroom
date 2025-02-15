@@ -27,7 +27,6 @@ uses
   Controls, Forms, StdCtrls, pngimage, Classes, ExtCtrls, ShellAPI, Windows;
 
 const
-  _URL_CONTEST_SITE = 'http://dev.ryzom.com/projects/ryzom-api/wiki/Contest';
   _URL_PROJECT_SITE = 'https://github.com/misugi/zyroom';
   _URL_RYZOM_SITE = 'http://www.ryzom.com';
   _URL_AGPL = 'http://www.gnu.org/licenses/agpl-3.0.html';
@@ -68,8 +67,6 @@ begin
   ImgRyzom.Hint := _URL_RYZOM_SITE;
   ImgAgpl.Hint := _URL_AGPL;
   LbProjectWebsite.Hint := _URL_PROJECT_SITE;
-  LbContest.Hint := _URL_CONTEST_SITE;
-  LbValueVersion.Caption := GConfig.Version;
 end;
 
 {*******************************************************************************

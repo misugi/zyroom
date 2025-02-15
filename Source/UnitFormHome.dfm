@@ -13145,7 +13145,6 @@ object FormHome: TFormHome
     Top = 163
     Width = 333
     Height = 19
-    Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
     Caption = 'Ryzom Summer Coding Contest 2009'
@@ -13155,8 +13154,6 @@ object FormHome: TFormHome
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
     Transparent = True
   end
   object LbCreatedBy: TLabel
