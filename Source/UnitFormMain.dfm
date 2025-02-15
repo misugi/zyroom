@@ -460,18 +460,13 @@ object FormMain: TFormMain
     Panels = <
       item
         Alignment = taCenter
-        Text = '20h - Quinteth, Germinally 30, 4e CA 2546'
-        Width = 255
-      end
-      item
-        Alignment = taCenter
         Text = 'Printemps'
-        Width = 80
+        Width = 120
       end
       item
         Alignment = taCenter
         Text = 'Prochain changement de saison le 24/05/2010 '#224' 12:56'
-        Width = 325
+        Width = 400
       end
       item
         Alignment = taRightJustify

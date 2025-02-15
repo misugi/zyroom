@@ -49,7 +49,8 @@ const
   _BACKUP_NAME_FILE = 'name.txt';
   _CHARACTER_DIR = 'character';
   _PACK_FILEPATH = '\save\string_client.pack';
-  _WIN_HEIGTH = 700;
+  _WIN_HEIGHT = 820;
+  _WIN_WIDTH = 1024;
   _LANGUAGE_FILENAME = 'languages.lcf';
   _LANGUAGE_FRENCH_ID = 1036;
   _LANGUAGE_GERMAN_ID = 1031;

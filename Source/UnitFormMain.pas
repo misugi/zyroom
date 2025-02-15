@@ -93,14 +93,13 @@ type
     FAlert: TAlert;
     {$ENDIF}
     FVisible: Boolean;
-    FPanelTime: TStatusPanel;
     FPanelCurrentSeason: TStatusPanel;
     FPanelNextSeason: TStatusPanel;
     FPanelVersion: TStatusPanel;
     procedure UpdateStatusAndTime;
     procedure GetSeasonInfo;
   public
-    procedure ShowMenuForm(AForm: TForm);
+    procedure ShowMenuForm(AForm: TForm; AdjustSize: Boolean = True);
   end;
 
   TMyHintWindow = class(THintWindow)
@@ -162,10 +161,9 @@ begin
   GAlertCS := TCriticalSection.Create;
   GMsgList := TObjectList.Create(True);
 
-  FPanelTime := StatusBar.Panels.Items[0];
-  FPanelCurrentSeason := StatusBar.Panels.Items[1];
-  FPanelNextSeason := StatusBar.Panels.Items[2];
-  FPanelVersion := StatusBar.Panels.Items[3];
+  FPanelCurrentSeason := StatusBar.Panels.Items[0];
+  FPanelNextSeason := StatusBar.Panels.Items[1];
+  FPanelVersion := StatusBar.Panels.Items[2];
 
   {$IFNDEF __NOALERT}
   // Start thread for alerts
@@ -221,7 +219,7 @@ begin
   FormFilter.Align := alClient;
 
   // Displays the home form by default
-  ShowMenuForm(FormHome);
+  ShowMenuForm(FormHome, False);
 
   // Updates the status and time
   UpdateStatusAndTime;
@@ -303,13 +301,11 @@ begin
     wStream := TStringStream.Create('');
     try
       GRyzomApi.ApiTime(_FORMAT_TXT, wStream);
-      FPanelTime.Text := wStream.DataString;
       GetSeasonInfo;
     finally
       wStream.Free;
     end;
   except
-    FPanelTime.Text := '-';
     FPanelCurrentSeason.Text := '-';
     FPanelNextSeason.Text := '-';
     ImgStatus.Hint := RS_STATUS_CLOSED;
@@ -324,7 +320,6 @@ Displays the list of guilds
 procedure TFormMain.BtGuildClick(Sender: TObject);
 begin
   ShowMenuForm(FormGuild);
-  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -333,14 +328,21 @@ Displays the list of characters
 procedure TFormMain.BtCharacterClick(Sender: TObject);
 begin
   ShowMenuForm(FormCharacter);
-  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
 Displays a project form at the bottom
 *******************************************************************************}
-procedure TFormMain.ShowMenuForm(AForm: TForm);
+procedure TFormMain.ShowMenuForm(AForm: TForm; AdjustSize: Boolean);
 begin
+  // ajuster la taille de la fenêtre ?
+  if AdjustSize and (Constraints.MinHeight < _WIN_HEIGHT) then begin
+    Self.Top := (Screen.Height - _WIN_HEIGHT) div 2;
+    Self.Left := (Screen.Width - _WIN_WIDTH) div 2;
+    Constraints.MinHeight := _WIN_HEIGHT;
+    Constraints.MinWidth := _WIN_WIDTH;
+  end;
+
   if FCurrentForm = AForm then
     Exit;
   if Assigned(FCurrentForm) then
@@ -408,7 +410,6 @@ Show alerts
 procedure TFormMain.BtAlertClick(Sender: TObject);
 begin
   ShowMenuForm(FormAlert);
-  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -475,7 +476,6 @@ Show log window
 procedure TFormMain.BtLogClick(Sender: TObject);
 begin
   ShowMenuForm(FormLog);
-  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 {*******************************************************************************
@@ -484,7 +484,6 @@ Show backup window
 procedure TFormMain.BtBackupClick(Sender: TObject);
 begin
   ShowMenuForm(FormBackup);
-  Constraints.MinHeight := _WIN_HEIGTH;
 end;
 
 end.
