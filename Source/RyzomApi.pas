@@ -27,7 +27,7 @@ interface
 
 uses
   Classes, Windows, SysUtils, IdHTTP, IdCompressorZLib, Math, MisuDevKit,
-  Registry, XpDOM, IdSSLOpenSSL;
+  Registry, XpDOM, IdSSLOpenSSL, SHLObj;
 
 resourcestring
   RS_ERROR_LOADING_XML = 'Erreur de chargement du flux XML';
@@ -120,16 +120,12 @@ Returns the installation directory of Ryzom
 *******************************************************************************}
 function GetRyzomInstallDir: String;
 var
-  wReg: TRegistry;
+  SpecialPath: Array[0..MAX_PATH] Of Char;
 begin
   Result := '';
-  wReg := TRegistry.Create(KEY_READ);
-  try
-    wReg.RootKey := HKEY_LOCAL_MACHINE;
-    if wReg.OpenKeyReadOnly('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Ryzom') then
-      Result := wReg.ReadString('InstallLocation');
-  finally
-    wReg.Free;
+  if SHGetSpecialFolderPath(0, @SpecialPath[0], CSIDL_APPDATA, False) then begin
+    Result := String(PAnsiChar(@SpecialPath[0]));
+    Result := Result + '\Ryzom\0';
   end;
 end;
 

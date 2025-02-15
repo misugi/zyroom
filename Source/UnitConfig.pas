@@ -37,9 +37,9 @@ resourcestring
   RS_ERROR_CHAR_ALREADY_EXISTS = 'Le personnage existe déjà';
   RS_ERROR_CHAR_NOTFOUND = 'Le personnage est introuvable';
   RS_ERROR_CHARNAME_NOTFOUND = 'Le nom du personnage est introuvable';
-  
+
 const
-  _ENCRYPTION_KEY : TKey64 = (10, 158, 47, 92, 35, 221, 29, 203);
+  _ENCRYPTION_KEY: TKey64 = (10, 158, 47, 92, 35, 221, 29, 203);
   _CONFIG_FILENAME = 'config.ini';
   _GUILD_DIR = 'guild';
   _ROOM_DIR = 'room';
@@ -54,17 +54,14 @@ const
   _LANGUAGE_FRENCH_ID = 1036;
   _LANGUAGE_GERMAN_ID = 1031;
   _LANGUAGE_ENGLISH_ID = 2057;
-
   _FONT_NAME = 'Segoe UI';
   _FONT_SIZE = 11;
   _LABEL_HEIGHT = 20;
-  
   _SECTION_GENERAL = 'GENERAL';
   _SECTION_PROXY = 'PROXY';
   _SECTION_POSITION = 'POSITION';
   _SECTION_ALERT = 'ALERT';
   _SECTION_BACKUP = 'BACKUP';
-
   _SECTION_ROOM = 'room';
   _SECTION_BAG = 'bag';
   _SECTION_PET1 = 'pet_animal1';
@@ -72,7 +69,6 @@ const
   _SECTION_PET3 = 'pet_animal3';
   _SECTION_PET4 = 'pet_animal4';
   _SECTION_STORE = 'store';
-
   _KEY_LANGUAGE = 'Language';
   _KEY_PACKFILE = 'PackFile';
   _KEY_PROXY_ENABLED = 'Enabled';
@@ -97,7 +93,6 @@ const
   _KEY_ALERT_SEASON_COUNT = 'SeasonCount';
   _KEY_ALERT_IGNORE_CATA = 'IgnoreCata';
   _KEY_BACKUP_AUTO = 'Auto';
-
   _GUILD_FILENAME = 'guild.ini';
   _CHARACTER_FILENAME = 'character.ini';
   _KEY_KEY = 'Key';
@@ -109,14 +104,12 @@ const
   _KEY_CHECK_VOLUME = 'CheckVolume';
   _KEY_CHECK_CHANGE = 'CheckChange';
   _KEY_CHECK_SALES = 'CheckSales';
-
   _RES_LOGO = 'logo';
   _RES_CLOSED = 'closed';
   _RES_OPEN = 'open';
   _RES_RESTRICTED = 'restricted';
   _RES_NOICON = 'noicon';
   _RES_EYES = 'eyes';
-
   _ICON_FILENAME = 'icon.png';
   _INFO_FILENAME = 'info.xml';
   _INDEX_FILENAME = 'index.dat';
@@ -126,7 +119,6 @@ const
   _MAX_QUALITY = 270;
   _MIN_QUANTITY = 1;
   _MAX_QUANTITY = 999;
-
   _LOG_HOMEPAGE_FILENAME = 'chatlog.html';
   _LOG_HTML_FILENAME = 'log.html';
   _LOG_BBCODE_FILENAME = 'log-bbcode.txt';
@@ -143,15 +135,15 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-
-    function  GetGuildKey(AGuildID: String): String;
-    function  GetGuildName(AGuildID: String): String;
-    function  GetComment(AID: String): String;
-    function  GetServerName(AGuildID: String): String;
-    function  GetCheckVolume(AID: String): Boolean;
-    function  GetCheckChange(AID: String): Boolean;
-    function  GuildExists(AGuildID: String): Boolean;
-    procedure SetGuild(AAction: TActionType; AGuildID, AGuildKey, AGuildName, AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
+    function GetGuildKey(AGuildID: String): String;
+    function GetGuildName(AGuildID: String): String;
+    function GetComment(AID: String): String;
+    function GetServerName(AGuildID: String): String;
+    function GetCheckVolume(AID: String): Boolean;
+    function GetCheckChange(AID: String): Boolean;
+    function GuildExists(AGuildID: String): Boolean;
+    procedure SetGuild(AAction: TActionType; AGuildID, AGuildKey, AGuildName,
+      AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
     procedure DeleteGuild(AGuildID: String);
     procedure GuildList(AGuildIDList: TStrings);
     procedure SetIndex(AGuildID: String; AIndex: Integer);
@@ -164,16 +156,16 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-
-    function  GetCharKey(ACharID: String): String;
-    function  GetCharName(ACharID: String): String;
-    function  GetComment(AID: String): String;
-    function  GetServerName(ACharID: String): String;
-    function  GetGuildName(ACharID: String): String;
-    function  GetCheckVolume(AID: String): Boolean;
-    function  GetCheckSales(AID: String): Boolean;
-    function  CharExists(ACharID: String): Boolean;
-    procedure SetChar(AAction: TActionType; ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
+    function GetCharKey(ACharID: String): String;
+    function GetCharName(ACharID: String): String;
+    function GetComment(AID: String): String;
+    function GetServerName(ACharID: String): String;
+    function GetGuildName(ACharID: String): String;
+    function GetCheckVolume(AID: String): Boolean;
+    function GetCheckSales(AID: String): Boolean;
+    function CharExists(ACharID: String): Boolean;
+    procedure SetChar(AAction: TActionType; ACharID, ACharKey, ACharName,
+      ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
     procedure DeleteChar(ACharID: String);
     procedure CharList(ACharIDList: TStrings);
     procedure SetIndex(ACharID: String; AIndex: Integer);
@@ -189,7 +181,6 @@ type
     FLanguageFileName: String;
     FVersion: String;
     FFormatSettings: TFormatSettings;
-    
     function GetLanguage: Integer;
     function GetPackFile: String;
     function GetProxyAddress: String;
@@ -231,28 +222,23 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-
     property FormatSettings: TFormatSettings read FFormatSettings;
-
     property CurrentDir: String read FCurrentDir;
     property CurrentPath: String read FCurrentPath;
     property ConfigFileName: String read FConfigFileName;
     property LanguageFileName: String read FLanguageFileName;
-
     property Language: Integer read GetLanguage write SetLanguage;
     property PackFile: String read GetPackFile write SetPackFile;
     property InterfaceColor: TColor read GetInterfaceColor write SetInterfaceColor;
     property ThreadCount: Integer read GetThreadCount write SetThreadCount;
     property SaveFilter: Boolean read GetSaveFilter write SetSaveFilter;
     property Version: String read FVersion;
-    
     property ProxyEnabled: Boolean read GetProxyEnabled write SetProxyEnabled;
     property ProxyBasicAuth: Boolean read GetProxyBasicAuth write SetProxyBasicAuth;
     property ProxyAddress: String read GetProxyAddress write SetProxyAddress;
     property ProxyPort: Integer read GetProxyPort write SetProxyPort;
     property ProxyUsername: String read GetProxyUsername write SetProxyUsername;
     property ProxyPassword: String read GetProxyPassword write SetProxyPassword;
-
     property SaveAlert: Boolean read GetSaveAlert write SetSaveAlert;
     property VolumeRoom: Integer read GetVolumeRoom write SetVolumeRoom;
     property VolumeGuild: Integer read GetVolumeGuild write SetVolumeGuild;
@@ -260,9 +246,7 @@ type
     property SalesCount: Integer read GetSalesCount write SetSalesCount;
     property SeasonCount: Integer read GetSeasonCount write SetSeasonCount;
     property IgnoreCata: Boolean read GetIgnoreCata write SetIgnoreCata;
-
     property AutoBackup: Boolean read GetAutoBackup write SetAutoBackup;
-
     function GetGuildPath(AGuildID: String): String;
     function GetGuildRoomPath(AGuildID: String): String;
     function GetCharPath(ACharID: String): String;
@@ -270,9 +254,11 @@ type
     function CheckVersion(var AFileUrl: String): Boolean;
   end;
 
-  function StrToFloat2(AValue: String): Extended;
-  function FormatFloat2(AFormat: string; AValue: Extended): String;
-  procedure WriteLog(AMessage: String);
+function StrToFloat2(AValue: String): Extended;
+
+function FormatFloat2(AFormat: string; AValue: Extended): String;
+
+procedure WriteLog(AMessage: String);
 
 var
   GConfig: TConfig;
@@ -281,7 +267,8 @@ var
 
 implementation
 
-uses RyzomApi, UnitRyzom;
+uses
+  RyzomApi, UnitRyzom;
 
 {*******************************************************************************
 Converts a string into a float unsing point for separator
@@ -413,7 +400,8 @@ begin
   Result := FIniFile.ReadString(_SECTION_GENERAL, _KEY_PACKFILE, '');
   if Result = '' then begin
     wRyzomDir := GetRyzomInstallDir;
-    if wRyzomDir <> '' then Result := wRyzomDir + _PACK_FILEPATH;
+    if DirectoryExists(wRyzomDir) then
+      Result := wRyzomDir + _PACK_FILEPATH;
   end;
 end;
 
@@ -530,7 +518,8 @@ Changes the proxy port
 *******************************************************************************}
 procedure TConfig.SetProxyPort(Value: Integer);
 begin
-  if Value <= 0 then Value := 3128;
+  if Value <= 0 then
+    Value := 3128;
   FIniFile.WriteInteger(_SECTION_PROXY, _KEY_PROXY_PORT, Value);
 end;
 
@@ -704,14 +693,18 @@ end;
 {*******************************************************************************
 Set info for a guild
 *******************************************************************************}
-procedure TGuild.SetGuild(AAction: TActionType; AGuildID, AGuildKey, AGuildName, AComment,
-  AServer: String; ACheckVolume, ACheckChange: Boolean);
+procedure TGuild.SetGuild(AAction: TActionType; AGuildID, AGuildKey, AGuildName,
+  AComment, AServer: String; ACheckVolume, ACheckChange: Boolean);
 var
   wKey: String;
 begin
   case AAction of
-    atAdd: if FIniFile.SectionExists(AGuildID) then raise Exception.Create(RS_ERROR_GUILD_ALREADY_EXISTS);
-    atUpdate: if not FIniFile.SectionExists(AGuildID) then raise Exception.Create(RS_ERROR_GUILD_NOTFOUND);
+    atAdd:
+      if FIniFile.SectionExists(AGuildID) then
+        raise Exception.Create(RS_ERROR_GUILD_ALREADY_EXISTS);
+    atUpdate:
+      if not FIniFile.SectionExists(AGuildID) then
+        raise Exception.Create(RS_ERROR_GUILD_NOTFOUND);
   end;
 
   wKey := DESEncryptStringEx(AGuildKey, _ENCRYPTION_KEY, True);
@@ -792,7 +785,7 @@ begin
   for i := 0 to AGuildIDList.Count - 1 do begin
     wIndex := FIniFile.ReadInteger(AGuildIDList[i], _KEY_INDEX, -1);
     if wIndex < 0 then begin
-      wIndex := i+1;
+      wIndex := i + 1;
       FIniFile.WriteInteger(AGuildIDList[i], _KEY_INDEX, wIndex);
     end;
     wList.Append(Format('%3.3d=%s', [FIniFile.ReadInteger(AGuildIDList[i], _KEY_INDEX, 999), AGuildIDList[i]]));
@@ -837,13 +830,18 @@ end;
 {*******************************************************************************
 Set info for a character
 *******************************************************************************}
-procedure TCharacter.SetChar(AAction: TActionType; ACharID, ACharKey, ACharName, ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
+procedure TCharacter.SetChar(AAction: TActionType; ACharID, ACharKey, ACharName,
+  ACharServer, AComment, AGuild: String; ACheckVolume, ACheckSales: Boolean);
 var
   wKey: String;
 begin
   case AAction of
-    atAdd: if FIniFile.SectionExists(ACharID) then raise Exception.Create(RS_ERROR_CHAR_ALREADY_EXISTS);
-    atUpdate: if not FIniFile.SectionExists(ACharID) then raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
+    atAdd:
+      if FIniFile.SectionExists(ACharID) then
+        raise Exception.Create(RS_ERROR_CHAR_ALREADY_EXISTS);
+    atUpdate:
+      if not FIniFile.SectionExists(ACharID) then
+        raise Exception.Create(RS_ERROR_CHAR_NOTFOUND);
   end;
 
   wKey := DESEncryptStringEx(ACharKey, _ENCRYPTION_KEY, True);
@@ -888,7 +886,7 @@ begin
   for i := 0 to ACharIDList.Count - 1 do begin
     wIndex := FIniFile.ReadInteger(ACharIDList[i], _KEY_INDEX, -1);
     if wIndex < 0 then begin
-      wIndex := i+1;
+      wIndex := i + 1;
       FIniFile.WriteInteger(ACharIDList[i], _KEY_INDEX, wIndex);
     end;
     wList.Append(Format('%3.3d=%s', [FIniFile.ReadInteger(ACharIDList[i], _KEY_INDEX, 999), ACharIDList[i]]));
@@ -1004,3 +1002,4 @@ begin
 end;
 
 end.
+
