@@ -103,6 +103,10 @@ type
     procedure ShowMenuForm(AForm: TForm);
   end;
 
+  TMyHintWindow = class(THintWindow)
+    constructor Create(AOwner: TComponent); override;
+  end;
+
 var
   FormMain: TFormMain;
 
@@ -115,11 +119,24 @@ uses
 
 {$R *.dfm}
 
+{*==============================================================================
+Popup hint - permettant de modifier la police
+===============================================================================}
+constructor TMyHintWindow.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  with Canvas.Font do begin
+    Name := 'Segoe UI';
+    Size := 11;
+  end;
+end;
+
 {*******************************************************************************
 Creates the form
 *******************************************************************************}
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
+  HintWindowClass := TMyHintWindow;
   DoubleBuffered := True;
   StatusBar.DoubleBuffered := True;
   PnHeader.DoubleBuffered := True;
