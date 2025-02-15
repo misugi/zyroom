@@ -251,7 +251,6 @@ type
     function GetGuildRoomPath(AGuildID: String): String;
     function GetCharPath(ACharID: String): String;
     function GetCharRoomPath(ACharID: String): String;
-    function CheckVersion(var AFileUrl: String): Boolean;
   end;
 
 function StrToFloat2(AValue: String): Extended;
@@ -647,27 +646,6 @@ procedure TConfig.SetIgnoreCata(const Value: Boolean);
 begin
   FIniFile.WriteBool(_SECTION_ALERT, _KEY_ALERT_IGNORE_CATA, Value);
 end;
-
-{*******************************************************************************
-Check version on Internet
-*******************************************************************************}
-function TConfig.CheckVersion(var AFileUrl: String): Boolean;
-var
-  wStream: TStringStream;
-begin
-  Result := False;
-  try
-    wStream := TStringStream.Create('');
-    GRyzomApi.SendRequest('http://www.misulud.fr/version.php?sw=zyroom&req=check', wStream);
-    if FVersion <> wStream.DataString then begin
-      AFileUrl := Format('http://www.misulud.fr/version.php?sw=zyroom&req=dl&ver=%s', [wStream.DataString]);
-      Result := True;
-    end;
-  except
-  end;
-end;
-
-
 
 //------------------------------------------------------------------------------
 { TGuild }

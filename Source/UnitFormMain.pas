@@ -35,7 +35,6 @@ resourcestring
   RS_STATUS_CLOSED = 'Fermé';
   RS_STATUS_OPEN = 'Ouvert';
   RS_STATUS_RESTRICTED = 'Limité';
-  RS_NEW_VERSION = 'Nouvelle version disponible !';
   RS_SEASON_SPRING = 'Printemps';
   RS_SEASON_SUMMER = 'Eté';
   RS_SEASON_AUTUMN = 'Automne';
@@ -51,9 +50,7 @@ type
     PnHeader: TPanel;
     ImgStatus: TImage;
     LbAutoStatus: TLabel;
-    TimerUpdate: TTimer;
     StatusBar: TStatusBar;
-    ImgUpdate: TImage;
     TrayIcon: TCoolTrayIcon;
     PopupMenuTray: TPopupMenu;
     MenuClose: TMenuItem;
@@ -78,8 +75,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure BtCharacterClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure ImgUpdateClick(Sender: TObject);
-    procedure TimerUpdateTimer(Sender: TObject);
     procedure BtAlertClick(Sender: TObject);
     procedure TrayIconDblClick(Sender: TObject);
     procedure MenuCloseClick(Sender: TObject);
@@ -94,17 +89,14 @@ type
     FPngOpen: TPNGObject;
     FPngRestricted: TPNGObject;
     FCurrentForm: TForm;
-    FFileUrl: String;
     {$IFNDEF __NOALERT}
     FAlert: TAlert;
     {$ENDIF}
     FVisible: Boolean;
-
     FPanelTime: TStatusPanel;
     FPanelCurrentSeason: TStatusPanel;
     FPanelNextSeason: TStatusPanel;
     FPanelVersion: TStatusPanel;
-
     procedure UpdateStatusAndTime;
     procedure GetSeasonInfo;
   public
@@ -116,9 +108,10 @@ var
 
 implementation
 
-uses UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
-  UnitFormCharacter, UnitFormInvent, UnitFormFilter, DateUtils,
-  UnitFormAlert, SyncObjs, Contnrs, UnitFormlog, UnitFormBackup;
+uses
+  UnitFormGuild, UnitFormOptions, UnitFormProgress, UnitFormRoom, UnitFormHome,
+  UnitFormCharacter, UnitFormInvent, UnitFormFilter, DateUtils, UnitFormAlert,
+  SyncObjs, Contnrs, UnitFormlog, UnitFormBackup;
 
 {$R *.dfm}
 
@@ -132,7 +125,7 @@ begin
   PnHeader.DoubleBuffered := True;
   PnContainer.DoubleBuffered := True;
   FVisible := False;
-  
+
   GConfig := TConfig.Create;
   GRyzomApi := TRyzom.Create;
   GGuild := TGuild.Create;
@@ -168,7 +161,8 @@ Displays the form
 *******************************************************************************}
 procedure TFormMain.FormShow(Sender: TObject);
 begin
-  if FVisible then Exit;
+  if FVisible then
+    Exit;
   
   // Load the settings
   FormOptions.ApplyConfig;
@@ -177,7 +171,7 @@ begin
   FormHome.BorderStyle := bsNone;
   FormHome.Parent := PnContainer;
   FormHome.Align := alClient;
-  
+
   FormGuild.BorderStyle := bsNone;
   FormGuild.Parent := PnContainer;
   FormGuild.Align := alClient;
@@ -223,13 +217,6 @@ begin
 
   // Check version
   FPanelVersion.Text := RS_VERSION + ' ' + GConfig.Version;
-  ImgUpdate.Hint := RS_NEW_VERSION;
-  {$IF not Defined(__NOUPDATE) and not Defined(__DEBUG)}
-  if GConfig.CheckVersion(FFileUrl) then begin
-    ImgUpdate.Visible := True;
-    TimerUpdate.Enabled := True;
-  end;
-  {$IFEND}
 
   FVisible := True;
 end;
@@ -253,7 +240,7 @@ begin
 
   GAlertCS.Free;
   GMsgList.Free;
-    
+
   GRyzomStringPack.Free;
   GGuild.Free;
   GCharacter.Free;
@@ -337,33 +324,12 @@ Displays a project form at the bottom
 *******************************************************************************}
 procedure TFormMain.ShowMenuForm(AForm: TForm);
 begin
-  if FCurrentForm = AForm then Exit;
-  if Assigned(FCurrentForm) then FCurrentForm.Close;
+  if FCurrentForm = AForm then
+    Exit;
+  if Assigned(FCurrentForm) then
+    FCurrentForm.Close;
   AForm.Show;
   FCurrentForm := AForm;
-end;
-
-{*******************************************************************************
-Link to the last version
-*******************************************************************************}
-procedure TFormMain.ImgUpdateClick(Sender: TObject);
-begin
-  ShellExecute(0, 'open', PChar(FFileUrl), nil, nil, SW_SHOW);
-end;
-
-{*******************************************************************************
-Hide and show image to update version
-*******************************************************************************}
-procedure TFormMain.TimerUpdateTimer(Sender: TObject);
-begin
-  if ImgUpdate.Visible then begin
-    ImgUpdate.Visible := False;
-    TimerUpdate.Interval := 200;
-  end else begin
-    ImgUpdate.Visible := True;
-    TimerUpdate.Interval := 1000;
-  end;
-  Application.ProcessMessages;
 end;
 
 {*******************************************************************************
@@ -388,10 +354,14 @@ begin
     wXmlDoc.LoadStream(wStream);
     wSeasonIndex := StrToIntDef(wXmlDoc.DocumentElement.SelectString('/shard_time/season'), -1);
     case wSeasonIndex of
-      0: wSeason := RS_SEASON_SPRING;
-      1: wSeason := RS_SEASON_SUMMER;
-      2: wSeason := RS_SEASON_AUTUMN;
-      3: wSeason := RS_SEASON_WINTER;
+      0:
+        wSeason := RS_SEASON_SPRING;
+      1:
+        wSeason := RS_SEASON_SUMMER;
+      2:
+        wSeason := RS_SEASON_AUTUMN;
+      3:
+        wSeason := RS_SEASON_WINTER;
     else
       wSeason := '-';
     end;
@@ -400,7 +370,7 @@ begin
     // Calculation of next season
     wDayOfSeason := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/day_of_season'));
     wTimeOfDay := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/time_of_day'));
-    wMinutes := ( (89-wDayOfSeason)*24 + (23-wTimeOfDay) )*3;
+    wMinutes := ((89 - wDayOfSeason) * 24 + (23 - wTimeOfDay)) * 3;
     wNextSeason := IncMinute(Now, wMinutes);
     FPanelNextSeason.Text := Format('%s %s %s %s', [
       RS_NEXT_SEASON, DateToStr(wNextSeason), RS_AT, FormatDateTime('hh:nn', wNextSeason)]);
@@ -501,3 +471,4 @@ begin
 end;
 
 end.
+
