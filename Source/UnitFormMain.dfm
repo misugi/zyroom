@@ -449,7 +449,7 @@ object FormMain: TFormMain
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
-    Font.Name = 'Calibri'
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Panels = <
       item

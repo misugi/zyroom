@@ -769,8 +769,8 @@ object FormLog: TFormLog
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
         Font.Style = []
         ParentCtl3D = False
         ParentFont = False
@@ -793,8 +793,8 @@ object FormLog: TFormLog
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
         Font.Style = []
         ParentCtl3D = False
         ParentFont = False

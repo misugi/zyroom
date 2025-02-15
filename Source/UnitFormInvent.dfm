@@ -95,14 +95,14 @@ object FormInvent: TFormInvent
         Left = 2
         Top = 0
         Width = 409
-        Height = 19
+        Height = 20
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
         Caption = '-'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Calibri'
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
       end
@@ -118,7 +118,7 @@ object FormInvent: TFormInvent
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
-        Font.Name = 'Calibri'
+        Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
@@ -213,7 +213,7 @@ object FormInvent: TFormInvent
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
-        Font.Name = 'Calibri'
+        Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
         ParentShowHint = False
