@@ -181,7 +181,7 @@ object FormOptions: TFormOptions
         Left = 5
         Top = 105
         Width = 526
-        Height = 41
+        Height = 40
         AutoSize = False
         Caption = 
           'Ce fichier doit '#234'tre valide pour afficher le nom des objets et a' +

@@ -980,7 +980,7 @@ begin
       ImgSab.Top := ImgHpb.Top;
       ImgStb.Top := ImgHpb.Top;
       ImgFob.Top := ImgHpb.Top;
-      LbValueHpb.Top := ImgHpb.Top + 6;
+      LbValueHpb.Top := ImgHpb.Top + 2;
       LbValueSab.Top := LbValueHpb.Top;
       LbValueStb.Top := LbValueHpb.Top;
       LbValueFob.Top := LbValueHpb.Top;

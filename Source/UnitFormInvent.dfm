@@ -20,7 +20,7 @@ object FormInvent: TFormInvent
   object PnFilter1: TPanel
     Left = 0
     Top = 0
-    Width = 285
+    Width = 365
     Height = 517
     Align = alLeft
     BevelOuter = bvNone
@@ -28,9 +28,9 @@ object FormInvent: TFormInvent
     TabOrder = 0
   end
   object PnInvent: TPanel
-    Left = 285
+    Left = 365
     Top = 0
-    Width = 623
+    Width = 543
     Height = 517
     Align = alClient
     BevelOuter = bvNone
@@ -39,7 +39,7 @@ object FormInvent: TFormInvent
     object TabInvent: TTabControl
       Left = 0
       Top = 25
-      Width = 623
+      Width = 543
       Height = 492
       Align = alClient
       TabOrder = 0
@@ -57,7 +57,7 @@ object FormInvent: TFormInvent
       object CharInvent: TScrollRoom
         Left = 4
         Top = 31
-        Width = 615
+        Width = 535
         Height = 457
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
@@ -82,19 +82,19 @@ object FormInvent: TFormInvent
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 623
+      Width = 543
       Height = 25
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
-        623
+        543
         25)
       object LbValueCharName: TLabel
         Left = 2
         Top = 0
-        Width = 409
+        Width = 329
         Height = 20
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -107,10 +107,10 @@ object FormInvent: TFormInvent
         ParentFont = False
       end
       object LbValueVolume: TLabel
-        Left = 524
+        Left = 444
         Top = 5
         Width = 80
-        Height = 16
+        Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
@@ -119,13 +119,13 @@ object FormInvent: TFormInvent
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
       object ImgVolume: TImage
-        Left = 607
+        Left = 527
         Top = 5
         Width = 16
         Height = 16
@@ -158,7 +158,7 @@ object FormInvent: TFormInvent
         ShowHint = True
       end
       object ImgDappers: TImage
-        Left = 502
+        Left = 422
         Top = 5
         Width = 16
         Height = 16
@@ -202,10 +202,10 @@ object FormInvent: TFormInvent
         ShowHint = True
       end
       object LbValueDappers: TLabel
-        Left = 429
+        Left = 349
         Top = 5
         Width = 70
-        Height = 16
+        Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
@@ -214,7 +214,7 @@ object FormInvent: TFormInvent
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
         ParentShowHint = False
         ShowHint = False

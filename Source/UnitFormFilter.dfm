@@ -1,8 +1,9 @@
 object FormFilter: TFormFilter
   Left = 521
   Top = 36
-  Width = 323
+  Width = 508
   Height = 788
+  ActiveControl = PnTitle
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +21,7 @@ object FormFilter: TFormFilter
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 280
+    Width = 360
     Height = 749
     ActivePage = TabInfo
     Align = alLeft
@@ -31,31 +32,45 @@ object FormFilter: TFormFilter
     object TabInfo: TTabSheet
       Caption = 'Informations'
       ImageIndex = 1
+      DesignSize = (
+        352
+        714)
       object PnTitle: TPanel
         Left = 0
         Top = 1
-        Width = 270
+        Width = 350
         Height = 26
         Alignment = taLeftJustify
+        Anchors = [akLeft, akTop, akRight]
         BevelOuter = bvNone
         BorderWidth = 5
         BorderStyle = bsSingle
         Caption = 'Fragment de Carapace Supr'#234'me/Kidinak des Primes Racines'
         Ctl3D = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
         ParentColor = True
         ParentCtl3D = False
+        ParentFont = False
         TabOrder = 0
       end
       object PnInfo: TPanel
         Left = 0
         Top = 29
-        Width = 270
+        Width = 350
         Height = 209
+        Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
         BevelOuter = bvLowered
         Constraints.MinHeight = 53
         ParentColor = True
         TabOrder = 1
+        DesignSize = (
+          350
+          209)
         object LbQuality: TLabel
           Left = 5
           Top = 25
@@ -78,7 +93,7 @@ object FormFilter: TFormFilter
           Caption = 'Artisanat :'
         end
         object ImgItem: TItemImage
-          Left = 223
+          Left = 303
           Top = 7
           Width = 40
           Height = 40
@@ -87,7 +102,7 @@ object FormFilter: TFormFilter
           StickerPosY = 0
         end
         object LbValueQuality: TLabel
-          Left = 126
+          Left = 101
           Top = 25
           Width = 27
           Height = 20
@@ -100,7 +115,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueVolume: TLabel
-          Left = 126
+          Left = 101
           Top = 85
           Width = 31
           Height = 20
@@ -113,7 +128,7 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueCraft: TLabel
-          Left = 126
+          Left = 101
           Top = 125
           Width = 91
           Height = 20
@@ -133,7 +148,7 @@ object FormFilter: TFormFilter
           Caption = 'Classe :'
         end
         object LbValueClass: TLabel
-          Left = 126
+          Left = 101
           Top = 45
           Width = 62
           Height = 20
@@ -153,7 +168,7 @@ object FormFilter: TFormFilter
           Caption = 'Durabilit'#233' :'
         end
         object LbValueDura: TLabel
-          Left = 126
+          Left = 101
           Top = 105
           Width = 61
           Height = 20
@@ -166,10 +181,11 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object ImgSkin1: TImage
-          Left = 226
+          Left = 306
           Top = 50
           Width = 10
           Height = 10
+          Anchors = [akTop, akRight]
           ParentShowHint = False
           Picture.Data = {
             0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000000A00
@@ -191,10 +207,11 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSkin2: TImage
-          Left = 238
+          Left = 318
           Top = 50
           Width = 10
           Height = 10
+          Anchors = [akTop, akRight]
           ParentShowHint = False
           Picture.Data = {
             0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000000A00
@@ -216,10 +233,11 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSkin3: TImage
-          Left = 250
+          Left = 330
           Top = 50
           Width = 10
           Height = 10
+          Anchors = [akTop, akRight]
           ParentShowHint = False
           Picture.Data = {
             0A54504E474F626A65637489504E470D0A1A0A0000000D494844520000000A00
@@ -248,7 +266,7 @@ object FormFilter: TFormFilter
           Caption = 'Couleur :'
         end
         object LbValueColor: TLabel
-          Left = 126
+          Left = 101
           Top = 165
           Width = 45
           Height = 20
@@ -268,7 +286,7 @@ object FormFilter: TFormFilter
           Caption = 'Race :'
         end
         object LbValueRace: TLabel
-          Left = 126
+          Left = 101
           Top = 145
           Width = 110
           Height = 20
@@ -288,7 +306,7 @@ object FormFilter: TFormFilter
           Caption = 'Poids :'
         end
         object LbValueWeight: TLabel
-          Left = 126
+          Left = 101
           Top = 65
           Width = 54
           Height = 20
@@ -308,7 +326,7 @@ object FormFilter: TFormFilter
           Caption = 'Ecosyst'#232'me :'
         end
         object LbValueEcosys: TLabel
-          Left = 126
+          Left = 101
           Top = 5
           Width = 64
           Height = 20
@@ -328,7 +346,7 @@ object FormFilter: TFormFilter
           Caption = 'Surveillance :'
         end
         object LbValueGuard: TLabel
-          Left = 126
+          Left = 101
           Top = 185
           Width = 27
           Height = 20
@@ -344,12 +362,16 @@ object FormFilter: TFormFilter
       object PnInfo2: TPanel
         Left = 0
         Top = 244
-        Width = 270
+        Width = 350
         Height = 462
+        Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
         TabOrder = 2
+        DesignSize = (
+          350
+          462)
         object LbAutoSpeed: TLabel
           Left = 5
           Top = 18
@@ -358,11 +380,12 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse :'
         end
         object LbValueSpeed: TLabel
-          Left = 212
+          Left = 292
           Top = 18
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
@@ -373,11 +396,12 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueDodge: TLabel
-          Left = 212
+          Left = 292
           Top = 48
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -395,11 +419,12 @@ object FormFilter: TFormFilter
           Caption = 'Port'#233'e :'
         end
         object LbValueRange: TLabel
-          Left = 212
+          Left = 292
           Top = 33
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -410,11 +435,12 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueParry: TLabel
-          Left = 212
+          Left = 292
           Top = 64
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -425,11 +451,12 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueAdvDodge: TLabel
-          Left = 212
+          Left = 292
           Top = 80
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -440,11 +467,12 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueAdvParry: TLabel
-          Left = 212
+          Left = 292
           Top = 96
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -462,11 +490,12 @@ object FormFilter: TFormFilter
           Caption = 'Protect. max/cp tranchant :'
         end
         object LbValueSlashingProt: TLabel
-          Left = 212
+          Left = 292
           Top = 128
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -484,11 +513,12 @@ object FormFilter: TFormFilter
           Caption = 'Protect. max/cp contondant :'
         end
         object LbValueSmashingProt: TLabel
-          Left = 212
+          Left = 292
           Top = 144
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -506,11 +536,12 @@ object FormFilter: TFormFilter
           Caption = 'Protect. max/cp perforant :'
         end
         object LbValuePiercingProt: TLabel
-          Left = 212
+          Left = 292
           Top = 160
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -565,7 +596,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgFob: TImage
-          Left = 212
+          Left = 267
           Top = 431
           Width = 24
           Height = 24
@@ -609,7 +640,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgStb: TImage
-          Left = 144
+          Left = 179
           Top = 431
           Width = 24
           Height = 24
@@ -654,7 +685,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSab: TImage
-          Left = 76
+          Left = 96
           Top = 431
           Width = 24
           Height = 24
@@ -699,62 +730,82 @@ object FormFilter: TFormFilter
         end
         object LbValueHpb: TLabel
           Left = 36
-          Top = 434
-          Width = 24
+          Top = 433
+          Width = 27
           Height = 20
           Caption = '125'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object LbValueSab: TLabel
-          Left = 104
-          Top = 434
-          Width = 24
+          Left = 124
+          Top = 433
+          Width = 27
           Height = 20
           Caption = '125'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object LbValueStb: TLabel
-          Left = 172
-          Top = 434
-          Width = 24
+          Left = 207
+          Top = 433
+          Width = 27
           Height = 20
           Caption = '125'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object LbValueFob: TLabel
-          Left = 240
-          Top = 434
-          Width = 24
+          Left = 295
+          Top = 433
+          Width = 27
           Height = 20
           Caption = '125'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object LbAutoDodge: TLabel
           Left = 5
           Top = 49
-          Width = 176
+          Width = 115
           Height = 20
-          AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
         end
         object LbAutoParry: TLabel
           Left = 5
           Top = 64
-          Width = 176
+          Width = 119
           Height = 20
-          AutoSize = False
           Caption = 'Modif. de Parades'
         end
         object LbAutoAdvDodge: TLabel
           Left = 5
           Top = 79
-          Width = 176
+          Width = 177
           Height = 20
-          AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
         end
         object LbAutoAdvParry: TLabel
           Left = 5
           Top = 94
-          Width = 176
+          Width = 172
           Height = 20
-          AutoSize = False
           Caption = 'Modif. Parades Adversaire'
         end
         object LbAutoFactorProt: TLabel
@@ -765,11 +816,12 @@ object FormFilter: TFormFilter
           Caption = 'Facteur de protection :'
         end
         object LbValueFactorProt: TLabel
-          Left = 212
+          Left = 292
           Top = 112
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -787,11 +839,12 @@ object FormFilter: TFormFilter
           Caption = 'D'#233'g'#226'ts :'
         end
         object LbValueDmg: TLabel
-          Left = 212
+          Left = 292
           Top = 3
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '250'
           Font.Charset = DEFAULT_CHARSET
@@ -802,11 +855,12 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueProtect1: TLabel
-          Left = 212
+          Left = 292
           Top = 231
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -824,11 +878,12 @@ object FormFilter: TFormFilter
           Caption = 'Ondes de choc :'
         end
         object LbValueProtect3: TLabel
-          Left = 212
+          Left = 292
           Top = 263
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -854,11 +909,12 @@ object FormFilter: TFormFilter
           Caption = 'Poison :'
         end
         object LbValueProtect2: TLabel
-          Left = 212
+          Left = 292
           Top = 247
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -876,11 +932,12 @@ object FormFilter: TFormFilter
           Caption = 'D'#233'sert :'
         end
         object LbValueResist1: TLabel
-          Left = 212
+          Left = 292
           Top = 179
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -898,11 +955,12 @@ object FormFilter: TFormFilter
           Caption = 'For'#234't :'
         end
         object LbValueResist2: TLabel
-          Left = 212
+          Left = 292
           Top = 195
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -920,11 +978,12 @@ object FormFilter: TFormFilter
           Caption = 'Lacs :'
         end
         object LbValueResist3: TLabel
-          Left = 212
+          Left = 292
           Top = 210
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -942,11 +1001,12 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie destructrice :'
         end
         object LbValueElementalSpeed: TLabel
-          Left = 212
+          Left = 292
           Top = 284
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -964,11 +1024,12 @@ object FormFilter: TFormFilter
           Caption = 'Puissance magie destructrice :'
         end
         object LbValueElementalPower: TLabel
-          Left = 212
+          Left = 292
           Top = 300
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -979,11 +1040,12 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbValueHealPower: TLabel
-          Left = 212
+          Left = 292
           Top = 371
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -1001,11 +1063,12 @@ object FormFilter: TFormFilter
           Caption = 'Puissance magie neutralisante :'
         end
         object LbValueDefensivePower: TLabel
-          Left = 212
+          Left = 292
           Top = 403
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -1018,9 +1081,8 @@ object FormFilter: TFormFilter
         object LbAutoHealPower: TLabel
           Left = 5
           Top = 369
-          Width = 176
+          Width = 172
           Height = 20
-          AutoSize = False
           Caption = 'Puissance magie curative :'
         end
         object LbAutoDefensiveSpeed: TLabel
@@ -1031,11 +1093,12 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie neutralisante :'
         end
         object LbValueDefensiveSpeed: TLabel
-          Left = 212
+          Left = 292
           Top = 387
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -1053,11 +1116,12 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie d'#233'bilitante :'
         end
         object LbValueOffensiveSpeed: TLabel
-          Left = 212
+          Left = 292
           Top = 319
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -1075,11 +1139,12 @@ object FormFilter: TFormFilter
           Caption = 'Puissance magie d'#233'bilitante :'
         end
         object LbValueOffensivePower: TLabel
-          Left = 212
+          Left = 292
           Top = 335
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -1097,11 +1162,12 @@ object FormFilter: TFormFilter
           Caption = 'Vitesse magie curative :'
         end
         object LbValueHealSpeed: TLabel
-          Left = 212
+          Left = 292
           Top = 350
           Width = 50
           Height = 20
           Alignment = taRightJustify
+          Anchors = [akTop, akRight]
           AutoSize = False
           Caption = '0'
           Font.Charset = DEFAULT_CHARSET
@@ -1118,20 +1184,20 @@ object FormFilter: TFormFilter
       object GbSorting: TGroupBox
         Left = 0
         Top = 0
-        Width = 271
+        Width = 350
         Height = 53
         Caption = 'Tri'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
         Font.Name = 'Segoe UI'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 7
         object EdSorting: TComboBox
           Left = 5
           Top = 20
-          Width = 260
+          Width = 338
           Height = 28
           Style = csDropDownList
           Font.Charset = DEFAULT_CHARSET
@@ -1158,9 +1224,15 @@ object FormFilter: TFormFilter
       object GbType: TGroupBox
         Left = 0
         Top = 54
-        Width = 132
+        Width = 172
         Height = 134
         Caption = 'Type'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 0
         object CbTypeMat: TCheckBox
           Left = 5
@@ -1168,6 +1240,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'Mati'#232'res'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
           OnClick = CbTypeMatClick
         end
@@ -1177,6 +1255,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'Cristaux'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 1
         end
         object CbTypeOthers: TCheckBox
@@ -1185,6 +1269,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'Autres'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 2
         end
         object CbTypeEquipment: TCheckBox
@@ -1193,6 +1283,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'Equipement'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 3
           OnClick = CbTypeMatClick
         end
@@ -1202,15 +1298,27 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'T'#233'l'#233'porteurs'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 4
         end
       end
       object GbEcosys: TGroupBox
-        Left = 138
+        Left = 178
         Top = 54
-        Width = 132
+        Width = 172
         Height = 134
         Caption = 'Ecosyst'#232'me'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 3
         object CbEcoPrime: TCheckBox
           Left = 5
@@ -1218,6 +1326,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'Primes racines'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
         end
         object CbEcoCommon: TCheckBox
@@ -1226,6 +1340,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'Commun'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 1
         end
         object CbEcoDesert: TCheckBox
@@ -1235,7 +1355,13 @@ object FormFilter: TFormFilter
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'D'#233'sert'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ParentBiDiMode = False
+          ParentFont = False
           TabOrder = 2
         end
         object CbEcoForest: TCheckBox
@@ -1244,6 +1370,12 @@ object FormFilter: TFormFilter
           Width = 125
           Height = 17
           Caption = 'For'#234't'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 3
         end
         object CbEcoLakes: TCheckBox
@@ -1253,7 +1385,13 @@ object FormFilter: TFormFilter
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Lacs'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ParentBiDiMode = False
+          ParentFont = False
           TabOrder = 4
         end
         object CbEcoJungle: TCheckBox
@@ -1263,13 +1401,19 @@ object FormFilter: TFormFilter
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Jungle'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ParentBiDiMode = False
+          ParentFont = False
           TabOrder = 5
         end
       end
       object BtDefault: TSevenButton
-        Left = 95
-        Top = 639
+        Left = 89
+        Top = 643
         Width = 85
         Height = 23
         Caption = 'D'#233'faut'
@@ -1319,8 +1463,8 @@ object FormFilter: TFormFilter
         Marging = 5
       end
       object BtOK: TSevenButton
-        Left = 185
-        Top = 639
+        Left = 182
+        Top = 643
         Width = 85
         Height = 23
         Caption = 'Appliquer'
@@ -1371,11 +1515,17 @@ object FormFilter: TFormFilter
         Marging = 5
       end
       object GbQuantity: TGroupBox
-        Left = 138
+        Left = 178
         Top = 243
-        Width = 132
+        Width = 172
         Height = 89
         Caption = 'Quantit'#233
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 12
         object LbQuantityMin: TLabel
           Left = 5
@@ -1383,6 +1533,12 @@ object FormFilter: TFormFilter
           Width = 32
           Height = 20
           Caption = 'Min :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
         end
         object LbQuantityMax: TLabel
           Left = 5
@@ -1390,24 +1546,42 @@ object FormFilter: TFormFilter
           Width = 35
           Height = 20
           Caption = 'Max :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
         end
         object EdQuantityMin: TSpinEdit
-          Left = 47
+          Left = 45
           Top = 22
-          Width = 80
+          Width = 120
           Height = 30
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           MaxValue = 999
           MinValue = 0
+          ParentFont = False
           TabOrder = 0
           Value = 250
         end
         object EdQuantityMax: TSpinEdit
-          Left = 47
+          Left = 45
           Top = 54
-          Width = 80
+          Width = 120
           Height = 30
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           MaxValue = 999
           MinValue = 0
+          ParentFont = False
           TabOrder = 1
           Value = 250
         end
@@ -1415,9 +1589,15 @@ object FormFilter: TFormFilter
       object GbClass: TGroupBox
         Left = 0
         Top = 189
-        Width = 270
+        Width = 350
         Height = 53
         Caption = 'Classe'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 2
         object LbClassMin: TLabel
           Left = 5
@@ -1425,22 +1605,40 @@ object FormFilter: TFormFilter
           Width = 32
           Height = 20
           Caption = 'Min :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
         end
         object LbClassMax: TLabel
-          Left = 138
+          Left = 183
           Top = 24
           Width = 35
           Height = 20
           Caption = 'Max :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
         end
         object EdClassMin: TComboBox
           Left = 45
           Top = 20
-          Width = 85
+          Width = 120
           Height = 28
           Style = csDropDownList
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ItemHeight = 20
           ItemIndex = 0
+          ParentFont = False
           TabOrder = 0
           Text = 'Base'
           Items.Strings = (
@@ -1451,13 +1649,19 @@ object FormFilter: TFormFilter
             'Supr'#234'me')
         end
         object EdClassMax: TComboBox
-          Left = 180
+          Left = 223
           Top = 20
-          Width = 85
+          Width = 120
           Height = 28
           Style = csDropDownList
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ItemHeight = 20
           ItemIndex = 4
+          ParentFont = False
           TabOrder = 1
           Text = 'Supr'#234'me'
           Items.Strings = (
@@ -1471,9 +1675,15 @@ object FormFilter: TFormFilter
       object GbQuality: TGroupBox
         Left = 0
         Top = 243
-        Width = 132
+        Width = 172
         Height = 89
         Caption = 'Qualit'#233
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 1
         object LbQualityMin: TLabel
           Left = 5
@@ -1481,6 +1691,12 @@ object FormFilter: TFormFilter
           Width = 32
           Height = 20
           Caption = 'Min :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
         end
         object LbQualityMax: TLabel
           Left = 5
@@ -1488,24 +1704,42 @@ object FormFilter: TFormFilter
           Width = 35
           Height = 20
           Caption = 'Max :'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
         end
         object EdQualityMin: TSpinEdit
           Left = 45
           Top = 20
-          Width = 80
+          Width = 120
           Height = 30
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           MaxValue = 270
           MinValue = 0
+          ParentFont = False
           TabOrder = 0
           Value = 250
         end
         object EdQualityMax: TSpinEdit
           Left = 45
           Top = 54
-          Width = 80
+          Width = 120
           Height = 30
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           MaxValue = 300
           MinValue = 0
+          ParentFont = False
           TabOrder = 1
           Value = 250
         end
@@ -1513,18 +1747,30 @@ object FormFilter: TFormFilter
       object GbEquipment: TGroupBox
         Left = 0
         Top = 333
-        Width = 270
+        Width = 350
         Height = 53
         Caption = 'Equipement'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 5
         object EdEquipment: TComboBox
           Left = 5
           Top = 20
-          Width = 260
+          Width = 338
           Height = 28
           Style = csDropDownList
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ItemHeight = 20
           ItemIndex = 0
+          ParentFont = False
           TabOrder = 0
           Text = 'Tout '#233'quipement'
           Items.Strings = (
@@ -1544,18 +1790,30 @@ object FormFilter: TFormFilter
       object GbCategory: TGroupBox
         Left = 0
         Top = 387
-        Width = 270
+        Width = 350
         Height = 53
         Caption = 'Cat'#233'gorie'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 6
         object EdCategory: TComboBox
           Left = 5
           Top = 20
-          Width = 260
+          Width = 338
           Height = 28
           Style = csDropDownList
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ItemHeight = 20
           ItemIndex = 0
+          ParentFont = False
           TabOrder = 0
           Text = 'Toute cat'#233'gorie'
           Items.Strings = (
@@ -1585,15 +1843,21 @@ object FormFilter: TFormFilter
       object GbSales: TGroupBox
         Left = 0
         Top = 441
-        Width = 270
-        Height = 62
+        Width = 350
+        Height = 66
         Caption = 'Ventes'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 8
         object LbPriceMin: TLabel
-          Left = 116
-          Top = 11
+          Left = 195
+          Top = 13
           Width = 71
-          Height = 14
+          Height = 17
           Alignment = taCenter
           AutoSize = False
           Caption = 'Prix min'
@@ -1605,10 +1869,10 @@ object FormFilter: TFormFilter
           ParentFont = False
         end
         object LbPriceMax: TLabel
-          Left = 193
-          Top = 11
+          Left = 272
+          Top = 13
           Width = 71
-          Height = 14
+          Height = 17
           Alignment = taCenter
           AutoSize = False
           Caption = 'Prix max'
@@ -1621,12 +1885,18 @@ object FormFilter: TFormFilter
         end
         object EdContinent: TComboBox
           Left = 5
-          Top = 28
-          Width = 105
+          Top = 33
+          Width = 181
           Height = 28
           Style = csDropDownList
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ItemHeight = 20
           ItemIndex = 0
+          ParentFont = False
           TabOrder = 0
           Text = 'Atys'
           Items.Strings = (
@@ -1637,35 +1907,53 @@ object FormFilter: TFormFilter
             'Matis')
         end
         object EdPriceMin: TSpinEdit
-          Left = 116
-          Top = 27
+          Left = 195
+          Top = 32
           Width = 71
           Height = 30
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           MaxValue = 0
           MinValue = 0
+          ParentFont = False
           TabOrder = 1
           Value = 0
         end
         object EdPriceMax: TSpinEdit
-          Left = 193
-          Top = 27
+          Left = 272
+          Top = 32
           Width = 71
           Height = 30
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           MaxValue = 0
           MinValue = 0
+          ParentFont = False
           TabOrder = 2
           Value = 0
         end
       end
       object GbBonus: TGroupBox
         Left = 0
-        Top = 504
-        Width = 270
+        Top = 508
+        Width = 350
         Height = 52
         Caption = 'Bonus'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 9
         object ImgHpbF: TImage
-          Left = 8
+          Left = 10
           Top = 22
           Width = 24
           Height = 24
@@ -1709,7 +1997,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgSabF: TImage
-          Left = 76
+          Left = 100
           Top = 22
           Width = 24
           Height = 24
@@ -1753,7 +2041,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgStbF: TImage
-          Left = 144
+          Left = 190
           Top = 22
           Width = 24
           Height = 24
@@ -1798,7 +2086,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object ImgFobF: TImage
-          Left = 212
+          Left = 280
           Top = 22
           Width = 24
           Height = 24
@@ -1842,7 +2130,7 @@ object FormFilter: TFormFilter
           ShowHint = True
         end
         object CbHpb: TCheckBox
-          Left = 36
+          Left = 40
           Top = 26
           Width = 13
           Height = 17
@@ -1856,7 +2144,7 @@ object FormFilter: TFormFilter
           OnClick = CbTypeMatClick
         end
         object CbSab: TCheckBox
-          Left = 104
+          Left = 130
           Top = 26
           Width = 13
           Height = 17
@@ -1870,7 +2158,7 @@ object FormFilter: TFormFilter
           OnClick = CbTypeMatClick
         end
         object CbStb: TCheckBox
-          Left = 172
+          Left = 220
           Top = 26
           Width = 13
           Height = 17
@@ -1884,7 +2172,7 @@ object FormFilter: TFormFilter
           OnClick = CbTypeMatClick
         end
         object CbFob: TCheckBox
-          Left = 240
+          Left = 310
           Top = 26
           Width = 13
           Height = 17
@@ -1900,40 +2188,64 @@ object FormFilter: TFormFilter
       end
       object GbName: TGroupBox
         Left = 0
-        Top = 557
-        Width = 270
+        Top = 561
+        Width = 350
         Height = 74
         Caption = 'Nom'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 4
         DesignSize = (
-          270
+          350
           74)
         object EdName: TEdit
           Left = 5
           Top = 20
-          Width = 260
+          Width = 338
           Height = 28
           Anchors = [akLeft, akTop, akRight]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
         end
         object RbAllWords: TRadioButton
           Left = 5
           Top = 50
-          Width = 125
+          Width = 165
           Height = 17
           Caption = 'Tous les mots'
           Checked = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
         object RbOneWord: TRadioButton
-          Left = 136
+          Left = 176
           Top = 50
-          Width = 125
+          Width = 165
           Height = 17
           BiDiMode = bdLeftToRight
           Caption = 'Un des mots'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
           ParentBiDiMode = False
+          ParentFont = False
           TabOrder = 2
         end
       end
@@ -1941,19 +2253,26 @@ object FormFilter: TFormFilter
     object TabMaterial: TTabSheet
       Caption = 'Mati'#232're'
       ImageIndex = 2
+      DesignSize = (
+        352
+        714)
       object PnCat1: TPanel
         Left = 0
         Top = 3
-        Width = 270
+        Width = 350
         Height = 258
+        Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
         TabOrder = 0
+        DesignSize = (
+          350
+          258)
         object LbCat1Spec1: TLabel
           Left = 5
           Top = 31
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Durabilit'#233
@@ -1961,7 +2280,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec2: TLabel
           Left = 5
           Top = 51
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'L'#233'geret'#233
@@ -1969,7 +2288,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec3: TLabel
           Left = 5
           Top = 71
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Charge en s'#232've'
@@ -1977,7 +2296,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec4: TLabel
           Left = 5
           Top = 91
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'DMG'
@@ -1985,7 +2304,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec5: TLabel
           Left = 5
           Top = 111
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Vitesse'
@@ -1993,7 +2312,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec6: TLabel
           Left = 5
           Top = 131
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
@@ -2001,7 +2320,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec7: TLabel
           Left = 5
           Top = 151
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. de Parades'
@@ -2009,7 +2328,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec8: TLabel
           Left = 5
           Top = 171
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
@@ -2017,7 +2336,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec9: TLabel
           Left = 5
           Top = 191
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. Parades Adversaire'
@@ -2025,7 +2344,7 @@ object FormFilter: TFormFilter
         object LbCat1Spec10: TLabel
           Left = 5
           Top = 211
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Temps restant'
@@ -2033,16 +2352,17 @@ object FormFilter: TFormFilter
         object LbCat1Spec11: TLabel
           Left = 5
           Top = 231
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Temps restant'
         end
         object GaugeCat1Spec1: TGauge
-          Left = 183
-          Top = 36
-          Width = 80
+          Left = 229
+          Top = 37
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2050,10 +2370,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec2: TGauge
-          Left = 183
-          Top = 56
-          Width = 80
+          Left = 229
+          Top = 57
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2061,10 +2382,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec3: TGauge
-          Left = 183
-          Top = 76
-          Width = 80
+          Left = 229
+          Top = 77
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2072,10 +2394,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec4: TGauge
-          Left = 183
-          Top = 96
-          Width = 80
+          Left = 229
+          Top = 97
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2083,10 +2406,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec5: TGauge
-          Left = 183
-          Top = 116
-          Width = 80
+          Left = 229
+          Top = 117
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2094,10 +2418,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec7: TGauge
-          Left = 183
-          Top = 156
-          Width = 80
+          Left = 229
+          Top = 157
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2105,10 +2430,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec6: TGauge
-          Left = 183
-          Top = 136
-          Width = 80
+          Left = 229
+          Top = 137
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2116,10 +2442,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec8: TGauge
-          Left = 183
-          Top = 176
-          Width = 80
+          Left = 229
+          Top = 177
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2127,10 +2454,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec10: TGauge
-          Left = 183
-          Top = 216
-          Width = 80
+          Left = 229
+          Top = 217
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2138,10 +2466,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec11: TGauge
-          Left = 183
-          Top = 236
-          Width = 80
+          Left = 229
+          Top = 237
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2149,10 +2478,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat1Spec9: TGauge
-          Left = 183
-          Top = 196
-          Width = 80
+          Left = 229
+          Top = 197
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           ForeColor = clWhite
           MaxValue = 60
@@ -2216,25 +2546,35 @@ object FormFilter: TFormFilter
         end
         object LbCat1: TLabel
           Left = 32
-          Top = 8
-          Width = 55
+          Top = 7
+          Width = 59
           Height = 20
           Caption = 'Marteau'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
       end
       object PnCat2: TPanel
         Left = 0
         Top = 268
-        Width = 270
+        Width = 350
         Height = 253
+        Anchors = [akLeft, akTop, akRight]
         BevelInner = bvRaised
         BevelOuter = bvLowered
         ParentColor = True
         TabOrder = 1
+        DesignSize = (
+          350
+          253)
         object LbCat2Spec1: TLabel
           Left = 5
           Top = 31
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Durabilit'#233
@@ -2242,7 +2582,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec2: TLabel
           Left = 5
           Top = 51
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'L'#233'geret'#233
@@ -2250,7 +2590,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec3: TLabel
           Left = 5
           Top = 71
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Charge en s'#232've'
@@ -2258,7 +2598,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec4: TLabel
           Left = 5
           Top = 91
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'DMG'
@@ -2266,7 +2606,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec5: TLabel
           Left = 5
           Top = 111
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Vitesse'
@@ -2274,7 +2614,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec6: TLabel
           Left = 5
           Top = 131
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. d'#39'Esquives'
@@ -2282,7 +2622,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec7: TLabel
           Left = 5
           Top = 151
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. de Parades'
@@ -2290,7 +2630,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec8: TLabel
           Left = 5
           Top = 171
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. Esquives Adversaire'
@@ -2298,7 +2638,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec9: TLabel
           Left = 5
           Top = 191
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Modif. Parades Adversaire'
@@ -2306,7 +2646,7 @@ object FormFilter: TFormFilter
         object LbCat2Spec10: TLabel
           Left = 5
           Top = 211
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Temps restant'
@@ -2314,16 +2654,17 @@ object FormFilter: TFormFilter
         object LbCat2Spec11: TLabel
           Left = 5
           Top = 231
-          Width = 176
+          Width = 200
           Height = 19
           AutoSize = False
           Caption = 'Temps restant'
         end
         object GaugeCat2Spec1: TGauge
-          Left = 183
-          Top = 36
-          Width = 80
+          Left = 229
+          Top = 37
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2333,10 +2674,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec2: TGauge
-          Left = 183
-          Top = 56
-          Width = 80
+          Left = 229
+          Top = 57
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2346,10 +2688,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec3: TGauge
-          Left = 183
-          Top = 76
-          Width = 80
+          Left = 229
+          Top = 77
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2359,10 +2702,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec4: TGauge
-          Left = 183
-          Top = 96
-          Width = 80
+          Left = 229
+          Top = 97
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2372,10 +2716,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec5: TGauge
-          Left = 183
-          Top = 116
-          Width = 80
+          Left = 229
+          Top = 117
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2385,10 +2730,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec7: TGauge
-          Left = 183
-          Top = 156
-          Width = 80
+          Left = 229
+          Top = 157
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2398,10 +2744,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec6: TGauge
-          Left = 183
-          Top = 136
-          Width = 80
+          Left = 229
+          Top = 137
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2411,10 +2758,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec8: TGauge
-          Left = 183
-          Top = 176
-          Width = 80
+          Left = 229
+          Top = 177
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2424,10 +2772,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec10: TGauge
-          Left = 183
-          Top = 216
-          Width = 80
+          Left = 229
+          Top = 217
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2437,10 +2786,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec11: TGauge
-          Left = 183
-          Top = 236
-          Width = 80
+          Left = 229
+          Top = 237
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2450,10 +2800,11 @@ object FormFilter: TFormFilter
           ShowText = False
         end
         object GaugeCat2Spec9: TGauge
-          Left = 183
-          Top = 196
-          Width = 80
+          Left = 229
+          Top = 197
+          Width = 114
           Height = 9
+          Anchors = [akTop, akRight]
           BackColor = 3158064
           Color = clBlack
           ForeColor = clWhite
@@ -2512,16 +2863,22 @@ object FormFilter: TFormFilter
         end
         object LbCat2: TLabel
           Left = 32
-          Top = 8
-          Width = 81
+          Top = 7
+          Width = 85
           Height = 20
           Caption = 'Contrepoids'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
       end
       object PnSales: TPanel
         Left = 0
-        Top = 534
-        Width = 270
+        Top = 528
+        Width = 350
         Height = 97
         BevelInner = bvRaised
         BevelOuter = bvLowered
@@ -2616,10 +2973,16 @@ object FormFilter: TFormFilter
         end
         object LbSale: TLabel
           Left = 32
-          Top = 8
-          Width = 37
+          Top = 7
+          Width = 40
           Height = 20
           Caption = 'Vente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
       end
     end
