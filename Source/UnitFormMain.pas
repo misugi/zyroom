@@ -229,7 +229,7 @@ begin
   FormBackup.StartAutoBackup;
 
   // Check version
-  FPanelVersion.Text := RS_VERSION + ' ' + GConfig.Version;
+  FPanelVersion.Text := RS_VERSION + ' ' + GConfig.Version + StringOfChar(' ', 2);
 
   FVisible := True;
 end;
