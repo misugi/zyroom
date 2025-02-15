@@ -13126,7 +13126,7 @@ object FormHome: TFormHome
   end
   object LbCreatedFor: TLabel
     Left = 243
-    Top = 148
+    Top = 146
     Width = 250
     Height = 19
     Alignment = taCenter
@@ -13158,11 +13158,10 @@ object FormHome: TFormHome
     ParentShowHint = False
     ShowHint = True
     Transparent = True
-    OnClick = LbContestClick
   end
   object LbCreatedBy: TLabel
     Left = 243
-    Top = 190
+    Top = 198
     Width = 250
     Height = 19
     Alignment = taCenter
@@ -13178,7 +13177,7 @@ object FormHome: TFormHome
   end
   object LbAuthor: TLabel
     Left = 243
-    Top = 205
+    Top = 215
     Width = 250
     Height = 19
     Alignment = taCenter
@@ -13194,7 +13193,7 @@ object FormHome: TFormHome
   end
   object LbWebsite: TLabel
     Left = 243
-    Top = 232
+    Top = 250
     Width = 250
     Height = 19
     Alignment = taCenter
@@ -13209,14 +13208,14 @@ object FormHome: TFormHome
     Transparent = True
   end
   object LbProjectWebsite: TLabel
-    Left = 243
-    Top = 247
-    Width = 250
+    Left = 238
+    Top = 267
+    Width = 260
     Height = 19
     Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
-    Caption = 'http://zyroom.misulud.fr'
+    Caption = 'https://github.com/misugi/zyroom'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -15
@@ -13494,40 +13493,6 @@ object FormHome: TFormHome
       44AE426082}
     ShowHint = True
     OnClick = ImgRyzomClick
-  end
-  object LbVersion: TLabel
-    Left = 243
-    Top = 274
-    Width = 250
-    Height = 19
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Version :'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    Transparent = True
-  end
-  object LbValueVersion: TLabel
-    Left = 243
-    Top = 289
-    Width = 250
-    Height = 19
-    Alignment = taCenter
-    AutoSize = False
-    Caption = '-'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWhite
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-    Transparent = True
   end
   object ImgAgpl: TImage
     Left = 537
