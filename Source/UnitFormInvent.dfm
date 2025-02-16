@@ -94,10 +94,9 @@ object FormInvent: TFormInvent
       object LbValueCharName: TLabel
         Left = 2
         Top = 0
-        Width = 329
+        Width = 6
         Height = 20
         Anchors = [akLeft, akTop, akRight]
-        AutoSize = False
         Caption = '-'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -107,9 +106,9 @@ object FormInvent: TFormInvent
         ParentFont = False
       end
       object LbValueVolume: TLabel
-        Left = 444
+        Left = 424
         Top = 5
-        Width = 80
+        Width = 100
         Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
@@ -119,7 +118,7 @@ object FormInvent: TFormInvent
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = False
@@ -158,7 +157,7 @@ object FormInvent: TFormInvent
         ShowHint = True
       end
       object ImgDappers: TImage
-        Left = 422
+        Left = 392
         Top = 5
         Width = 16
         Height = 16
@@ -202,9 +201,9 @@ object FormInvent: TFormInvent
         ShowHint = True
       end
       object LbValueDappers: TLabel
-        Left = 349
+        Left = 299
         Top = 5
-        Width = 70
+        Width = 90
         Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
@@ -214,7 +213,7 @@ object FormInvent: TFormInvent
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
         ParentShowHint = False
         ShowHint = False

@@ -3,7 +3,7 @@ object FormFilter: TFormFilter
   Top = 112
   Width = 508
   Height = 775
-  ActiveControl = CbTypeMat
+  ActiveControl = PnCat1
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -23,7 +23,7 @@ object FormFilter: TFormFilter
     Top = 0
     Width = 360
     Height = 736
-    ActivePage = TabFilter
+    ActivePage = TabMaterial
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -2920,16 +2920,28 @@ object FormFilter: TFormFilter
         object LbValuePrice: TLabel
           Left = 86
           Top = 31
-          Width = 24
+          Width = 27
           Height = 20
           Caption = '250'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object LbValueContinent: TLabel
           Left = 86
           Top = 71
-          Width = 60
+          Width = 64
           Height = 20
           Caption = 'Commun'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object LbTime: TLabel
           Left = 5
@@ -2941,9 +2953,15 @@ object FormFilter: TFormFilter
         object LbValueTime: TLabel
           Left = 86
           Top = 51
-          Width = 231
+          Width = 250
           Height = 20
           Caption = '3 Tage, 22 Stunden und 45 Minuten'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
         end
         object Image1: TImage
           Left = 4

@@ -671,7 +671,7 @@ Returns the head of the character
 *******************************************************************************}
 procedure TFormCharacter.GetHead(AIcon: TPNGObject; ACanvas: TCanvas; ARect: TRect; AColor: TColor);
 const
-  _HEAD_WIDTH = 48;
+  _HEAD_WIDTH = 60;
   _HEAD_HEIGHT = 48;
 var
   wRectSrc: TRect;

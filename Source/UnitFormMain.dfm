@@ -189,7 +189,7 @@ object FormMain: TFormMain
     object BtGuild: TSevenButton
       Left = 33
       Top = 3
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Guildes'
       TabOrder = 1
@@ -239,9 +239,9 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtCharacter: TSevenButton
-      Left = 123
+      Left = 143
       Top = 3
-      Width = 103
+      Width = 105
       Height = 23
       Caption = 'Personnages'
       TabOrder = 2
@@ -291,9 +291,9 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtAlert: TSevenButton
-      Left = 231
+      Left = 253
       Top = 3
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Alertes'
       TabOrder = 3
@@ -343,9 +343,9 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtLog: TSevenButton
-      Left = 321
+      Left = 363
       Top = 3
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Log'
       TabOrder = 4
@@ -395,9 +395,9 @@ object FormMain: TFormMain
       Marging = 5
     end
     object BtBackup: TSevenButton
-      Left = 411
+      Left = 473
       Top = 3
-      Width = 103
+      Width = 105
       Height = 23
       Caption = 'Sauvegarde'
       TabOrder = 5

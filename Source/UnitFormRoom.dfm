@@ -77,9 +77,9 @@ object FormRoom: TFormRoom
         ParentFont = False
       end
       object LbValueVolume: TLabel
-        Left = 245
+        Left = 225
         Top = 4
-        Width = 80
+        Width = 100
         Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
@@ -128,7 +128,7 @@ object FormRoom: TFormRoom
         ShowHint = True
       end
       object ImgDappers: TImage
-        Left = 213
+        Left = 193
         Top = 4
         Width = 16
         Height = 16
@@ -172,9 +172,9 @@ object FormRoom: TFormRoom
         ShowHint = True
       end
       object LbValueDappers: TLabel
-        Left = 140
+        Left = 100
         Top = 4
-        Width = 70
+        Width = 90
         Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
