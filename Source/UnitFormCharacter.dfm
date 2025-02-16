@@ -53,7 +53,7 @@ object FormCharacter: TFormCharacter
     object BtNew: TSevenButton
       Left = 0
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Ajouter'
       TabOrder = 0
@@ -102,9 +102,9 @@ object FormCharacter: TFormCharacter
       Marging = 5
     end
     object BtUpdate: TSevenButton
-      Left = 90
+      Left = 110
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Modifier'
       TabOrder = 1
@@ -153,9 +153,9 @@ object FormCharacter: TFormCharacter
       Marging = 5
     end
     object BtDelete: TSevenButton
-      Left = 270
+      Left = 330
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Supprimer'
       TabOrder = 2
@@ -204,9 +204,9 @@ object FormCharacter: TFormCharacter
       Marging = 5
     end
     object BtRoom: TSevenButton
-      Left = 360
+      Left = 440
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Inventaire'
       TabOrder = 3
@@ -255,7 +255,7 @@ object FormCharacter: TFormCharacter
       Marging = 5
     end
     object BtDown: TSevenButton
-      Left = 450
+      Left = 550
       Top = 0
       Width = 19
       Height = 23
@@ -315,7 +315,7 @@ object FormCharacter: TFormCharacter
       Marging = 5
     end
     object BtUp: TSevenButton
-      Left = 474
+      Left = 574
       Top = 0
       Width = 19
       Height = 23
@@ -375,9 +375,9 @@ object FormCharacter: TFormCharacter
       Marging = 5
     end
     object BtReset: TSevenButton
-      Left = 180
+      Left = 220
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'R'#233'initialiser'
       TabOrder = 6

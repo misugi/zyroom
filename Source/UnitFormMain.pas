@@ -94,6 +94,7 @@ type
     FPanelCurrentSeason: TStatusPanel;
     FPanelNextSeason: TStatusPanel;
     FPanelVersion: TStatusPanel;
+    FAdjustedSize: Boolean;
     procedure UpdateStatusAndTime;
     procedure GetSeasonInfo;
   public
@@ -139,6 +140,7 @@ begin
   PnHeader.DoubleBuffered := True;
   PnContainer.DoubleBuffered := True;
   FVisible := False;
+  FAdjustedSize := False;
 
   GConfig := TConfig.Create;
   GRyzomApi := TRyzom.Create;
@@ -334,11 +336,12 @@ Displays a project form at the bottom
 procedure TFormMain.ShowMenuForm(AForm: TForm; AdjustSize: Boolean);
 begin
   // ajuster la taille de la fenêtre ?
-  if AdjustSize and (Constraints.MinHeight < _WIN_HEIGHT) then begin
+  if AdjustSize and (not FAdjustedSize) then begin
     Self.Top := (Screen.Height - _WIN_HEIGHT) div 2;
     Self.Left := (Screen.Width - _WIN_WIDTH) div 2;
     Constraints.MinHeight := _WIN_HEIGHT;
     Constraints.MinWidth := _WIN_WIDTH;
+    FAdjustedSize := True;
   end;
 
   if FCurrentForm = AForm then

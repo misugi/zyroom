@@ -1421,7 +1421,7 @@ object FormFilter: TFormFilter
       end
       object BtDefault: TSevenButton
         Left = 89
-        Top = 646
+        Top = 643
         Width = 85
         Height = 23
         Caption = 'D'#233'faut'
@@ -1472,7 +1472,7 @@ object FormFilter: TFormFilter
       end
       object BtOK: TSevenButton
         Left = 182
-        Top = 646
+        Top = 643
         Width = 85
         Height = 23
         Caption = 'Appliquer'
@@ -1526,7 +1526,7 @@ object FormFilter: TFormFilter
         Left = 0
         Top = 183
         Width = 352
-        Height = 53
+        Height = 52
         Caption = 'Classe'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1610,9 +1610,9 @@ object FormFilter: TFormFilter
       end
       object GbQuality: TGroupBox
         Left = 0
-        Top = 236
+        Top = 235
         Width = 352
-        Height = 53
+        Height = 52
         Caption = 'Qualit'#233
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1682,9 +1682,9 @@ object FormFilter: TFormFilter
       end
       object GbQuantity: TGroupBox
         Left = -1
-        Top = 289
+        Top = 287
         Width = 352
-        Height = 53
+        Height = 52
         Caption = 'Quantit'#233
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1754,7 +1754,7 @@ object FormFilter: TFormFilter
       end
       object GbEquipment: TGroupBox
         Left = 0
-        Top = 342
+        Top = 339
         Width = 352
         Height = 53
         Anchors = [akLeft, akTop, akRight]
@@ -1802,7 +1802,7 @@ object FormFilter: TFormFilter
       end
       object GbCategory: TGroupBox
         Left = 0
-        Top = 395
+        Top = 392
         Width = 352
         Height = 53
         Anchors = [akLeft, akTop, akRight]
@@ -1860,7 +1860,7 @@ object FormFilter: TFormFilter
       end
       object GbSales: TGroupBox
         Left = 0
-        Top = 448
+        Top = 445
         Width = 352
         Height = 66
         Caption = 'Ventes'
@@ -1959,7 +1959,7 @@ object FormFilter: TFormFilter
       end
       object GbBonus: TGroupBox
         Left = 0
-        Top = 514
+        Top = 511
         Width = 352
         Height = 52
         Caption = 'Bonus'
@@ -2206,9 +2206,9 @@ object FormFilter: TFormFilter
       end
       object GbName: TGroupBox
         Left = 0
-        Top = 566
+        Top = 563
         Width = 352
-        Height = 74
+        Height = 72
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Nom'
         Font.Charset = DEFAULT_CHARSET
@@ -2220,7 +2220,7 @@ object FormFilter: TFormFilter
         TabOrder = 4
         DesignSize = (
           352
-          74)
+          72)
         object EdName: TEdit
           Left = 5
           Top = 20

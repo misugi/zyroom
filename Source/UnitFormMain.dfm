@@ -471,6 +471,9 @@ object FormMain: TFormMain
       item
         Alignment = taCenter
         Text = 'Version 2.7.0'
+        Width = 126
+      end
+      item
         Width = 0
       end>
     ParentColor = True

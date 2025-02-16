@@ -3,7 +3,7 @@ object FormEdit: TFormEdit
   Top = 395
   BorderStyle = bsDialog
   ClientHeight = 151
-  ClientWidth = 514
+  ClientWidth = 674
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FormEdit: TFormEdit
   Position = poMainFormCenter
   OnShow = FormShow
   DesignSize = (
-    514
+    674
     151)
   PixelsPerInch = 96
   TextHeight = 20
@@ -26,7 +26,7 @@ object FormEdit: TFormEdit
     Caption = 'Cl'#233' API de personnage :'
   end
   object ImgProfilePage: TImage
-    Left = 486
+    Left = 646
     Top = 9
     Width = 24
     Height = 24
@@ -86,7 +86,7 @@ object FormEdit: TFormEdit
   object EdKey: TEdit
     Left = 195
     Top = 8
-    Width = 287
+    Width = 447
     Height = 28
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
@@ -94,7 +94,7 @@ object FormEdit: TFormEdit
   object EdComment: TEdit
     Left = 195
     Top = 39
-    Width = 287
+    Width = 447
     Height = 28
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 1
@@ -102,7 +102,7 @@ object FormEdit: TFormEdit
   object CbCheckVolume: TCheckBox
     Left = 195
     Top = 72
-    Width = 287
+    Width = 447
     Height = 17
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Surveiller le volume'
@@ -111,14 +111,14 @@ object FormEdit: TFormEdit
   object CbCheckChange: TCheckBox
     Left = 195
     Top = 94
-    Width = 287
+    Width = 447
     Height = 17
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Surveiller tout changement'
     TabOrder = 3
   end
   object BtOK: TSevenButton
-    Left = 354
+    Left = 514
     Top = 123
     Width = 75
     Height = 23
@@ -171,7 +171,7 @@ object FormEdit: TFormEdit
     Marging = 5
   end
   object BtCancel: TSevenButton
-    Left = 434
+    Left = 594
     Top = 123
     Width = 75
     Height = 23

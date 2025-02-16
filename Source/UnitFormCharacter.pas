@@ -246,7 +246,7 @@ begin
     GridItem.Row := 0;
     GridItem.ColCount := 4;
     GridItem.RowHeights[0] := 20;
-    GridItem.ColWidths[0] := 48;
+    GridItem.ColWidths[0] := 60;
     GridItem.ColWidths[1] := 250;
     GridItem.ColWidths[3] := 90;
 

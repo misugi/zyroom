@@ -18,9 +18,9 @@ object FormRoom: TFormRoom
   PixelsPerInch = 96
   TextHeight = 20
   object PnRoom: TPanel
-    Left = 285
+    Left = 365
     Top = 0
-    Width = 424
+    Width = 344
     Height = 386
     Align = alClient
     BevelOuter = bvNone
@@ -29,7 +29,7 @@ object FormRoom: TFormRoom
     object GuildRoom: TScrollRoom
       Left = 0
       Top = 25
-      Width = 424
+      Width = 344
       Height = 361
       HorzScrollBar.Tracking = True
       VertScrollBar.Increment = 44
@@ -53,38 +53,49 @@ object FormRoom: TFormRoom
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 424
+      Width = 344
       Height = 25
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 1
       DesignSize = (
-        424
+        344
         25)
       object LbValueGuildName: TLabel
         Left = 2
         Top = 0
-        Width = 235
-        Height = 19
+        Width = 6
+        Height = 20
         Anchors = [akLeft, akTop, akRight]
-        AutoSize = False
         Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object LbValueVolume: TLabel
-        Left = 325
-        Top = 5
+        Left = 245
+        Top = 4
         Width = 80
-        Height = 16
+        Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
       object ImgVolume: TImage
-        Left = 408
+        Left = 328
         Top = 4
         Width = 16
         Height = 16
@@ -117,7 +128,7 @@ object FormRoom: TFormRoom
         ShowHint = True
       end
       object ImgDappers: TImage
-        Left = 303
+        Left = 213
         Top = 4
         Width = 16
         Height = 16
@@ -161,14 +172,20 @@ object FormRoom: TFormRoom
         ShowHint = True
       end
       object LbValueDappers: TLabel
-        Left = 230
-        Top = 5
+        Left = 140
+        Top = 4
         Width = 70
-        Height = 16
+        Height = 17
         Alignment = taRightJustify
         Anchors = [akTop, akRight]
         AutoSize = False
         Caption = '-'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = False
       end
@@ -177,7 +194,7 @@ object FormRoom: TFormRoom
   object PnFilter: TPanel
     Left = 0
     Top = 0
-    Width = 285
+    Width = 365
     Height = 386
     Align = alLeft
     BevelOuter = bvNone
