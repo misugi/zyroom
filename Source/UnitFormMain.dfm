@@ -466,10 +466,10 @@ object FormMain: TFormMain
       item
         Alignment = taCenter
         Text = 'Prochain changement de saison le 24/05/2010 '#224' 12:56'
-        Width = 400
+        Width = 500
       end
       item
-        Alignment = taRightJustify
+        Alignment = taCenter
         Text = 'Version 2.7.0'
         Width = 0
       end>
