@@ -1,7 +1,7 @@
 object FormOptions: TFormOptions
   Left = 438
   Top = 206
-  ActiveControl = CmbLanguage
+  ActiveControl = EdVolumeRoom
   BorderStyle = bsDialog
   Caption = 'Options'
   ClientHeight = 427
@@ -23,8 +23,14 @@ object FormOptions: TFormOptions
     Top = 0
     Width = 543
     Height = 393
-    ActivePage = TabGeneral
+    ActivePage = TabAlertes
     Align = alClient
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
     object TabGeneral: TTabSheet
       Caption = 'G'#233'n'#233'ral'
@@ -190,7 +196,7 @@ object FormOptions: TFormOptions
         Font.Color = clMaroon
         Font.Height = -13
         Font.Name = 'Segoe UI'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 6
       end
@@ -305,14 +311,14 @@ object FormOptions: TFormOptions
         358)
       object LbVolumeMax: TLabel
         Left = 5
-        Top = 33
+        Top = 24
         Width = 197
         Height = 20
         Caption = 'Seuil d'#39'alerte pour le volume :'
       end
       object LbVolumeGuild: TLabel
         Left = 471
-        Top = 9
+        Top = 0
         Width = 61
         Height = 19
         Alignment = taCenter
@@ -328,7 +334,7 @@ object FormOptions: TFormOptions
       end
       object LbVolumeRoom: TLabel
         Left = 403
-        Top = 9
+        Top = 0
         Width = 61
         Height = 19
         Alignment = taCenter
@@ -344,21 +350,21 @@ object FormOptions: TFormOptions
       end
       object LbSalesCount: TLabel
         Left = 5
-        Top = 66
+        Top = 57
         Width = 315
         Height = 20
         Caption = 'Nombre d'#39'alertes pour l'#39'expiration d'#39'une vente :'
       end
       object LbSeasonCount: TLabel
         Left = 5
-        Top = 99
+        Top = 90
         Width = 387
         Height = 20
         Caption = 'Nombre d'#39'alertes pour le prochain changement de saison :'
       end
       object EdVolumeRoom: TSpinEdit
         Left = 403
-        Top = 28
+        Top = 19
         Width = 61
         Height = 30
         Anchors = [akTop, akRight]
@@ -370,7 +376,7 @@ object FormOptions: TFormOptions
       end
       object EdVolumeGuild: TSpinEdit
         Left = 471
-        Top = 28
+        Top = 19
         Width = 61
         Height = 30
         Anchors = [akTop, akRight]
@@ -382,7 +388,7 @@ object FormOptions: TFormOptions
       end
       object CbSaveAlertFile: TCheckBox
         Left = 5
-        Top = 177
+        Top = 168
         Width = 461
         Height = 17
         Caption = 'Sauvegarder automatiquement les alertes dans un fichier'
@@ -391,7 +397,7 @@ object FormOptions: TFormOptions
       end
       object EdSalesCount: TSpinEdit
         Left = 471
-        Top = 61
+        Top = 52
         Width = 61
         Height = 30
         Anchors = [akTop, akRight]
@@ -403,7 +409,7 @@ object FormOptions: TFormOptions
       end
       object EdSeasonCount: TSpinEdit
         Left = 471
-        Top = 94
+        Top = 85
         Width = 61
         Height = 30
         Anchors = [akTop, akRight]
@@ -415,7 +421,7 @@ object FormOptions: TFormOptions
       end
       object CbShowHint: TCheckBox
         Left = 5
-        Top = 152
+        Top = 143
         Width = 461
         Height = 17
         Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
@@ -424,7 +430,7 @@ object FormOptions: TFormOptions
       end
       object CbIgnoreCata: TCheckBox
         Left = 5
-        Top = 127
+        Top = 118
         Width = 461
         Height = 17
         Caption = 'Ignorer les alertes sur les cristaux'
