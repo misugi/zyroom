@@ -385,7 +385,7 @@ Returns the language code
 *******************************************************************************}
 function TConfig.GetLanguage: Integer;
 begin
-  Result := FIniFile.ReadInteger(_SECTION_GENERAL, _KEY_LANGUAGE, 2057);
+  Result := FIniFile.ReadInteger(_SECTION_GENERAL, _KEY_LANGUAGE, _LANGUAGE_FRENCH_ID);
 end;
 
 {*******************************************************************************

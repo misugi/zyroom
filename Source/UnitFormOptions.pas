@@ -93,11 +93,11 @@ var
 
 implementation
 
-uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
-  UnitFormGuild, UnitFormEdit, UnitFormMain, UnitFormProgress,
-  UnitFormHome, UnitFormRoom, UnitFormCharacter, UnitFormFilter,
-  UnitFormInvent, UnitFormAlert, UnitFormWatch, UnitFormLog,
-  UnitFormBackup, UnitFormName;
+uses
+  UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation, UnitFormGuild,
+  UnitFormEdit, UnitFormMain, UnitFormProgress, UnitFormHome, UnitFormRoom,
+  UnitFormCharacter, UnitFormFilter, UnitFormInvent, UnitFormAlert,
+  UnitFormWatch, UnitFormLog, UnitFormBackup, UnitFormName;
 
 {$R *.dfm}
 
@@ -105,6 +105,7 @@ uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation,
 Available languages
 *******************************************************************************}
 function LocalesCallback(Name: PChar): Integer; stdcall;
+
   function GetLocaleData(ID: LCID; Flag: DWORD): string;
   var
     BufSize: Integer;
@@ -114,8 +115,9 @@ function LocalesCallback(Name: PChar): Integer; stdcall;
     GetLocaleinfo(ID, Flag, PChar(Result), BufSize);
     SetLength(Result, BufSize - 1);
   end;
+
 const
-  _SUPPORTED_LANGUAGES: array[0..2] of Integer = (1031, 1036, 2057);
+  _SUPPORTED_LANGUAGES: array[0..2] of Integer = (_LANGUAGE_GERMAN_ID, _LANGUAGE_FRENCH_ID, _LANGUAGE_ENGLISH_ID);
 var
   i: Integer;
   LCID: Integer;
@@ -162,7 +164,7 @@ var
   i: Integer;
 begin
   for i := 0 to PnProxy.ControlCount - 1 do begin
-     PnProxy.Controls[i].Enabled := AEnabled;
+    PnProxy.Controls[i].Enabled := AEnabled;
   end;
   BtApply.Enabled := True;
 end;
@@ -309,7 +311,7 @@ begin
   TranslateComponent(FormBackup);
   TranslateComponent(FormName);
   {$ENDIF}
-  
+
   FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;
   FormGuild.UpdateLanguage;
@@ -345,7 +347,8 @@ begin
       EdProxyPort.Value,
       EdProxyUsername.Text,
       EdProxyPassword.Text);
-  end else begin
+  end
+  else begin
     GRyzomApi.SetProxyParameters('', 0, '', '');
   end;
 
@@ -372,3 +375,4 @@ begin
 end;
 
 end.
+
