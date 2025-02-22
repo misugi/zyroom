@@ -66,8 +66,8 @@ type
     procedure EnableButtons;
     procedure BackupFiles(ABackupType: Char; AName: String);
     procedure RestoreBackup;
-    function  GetBackupDir: String;
-    function  GetBackupName: String;
+    function GetBackupDir: String;
+    function GetBackupName: String;
     procedure LoadCharacters;
   public
     procedure Init;
@@ -79,8 +79,9 @@ var
 
 implementation
 
-uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress,
-  Math, DateUtils, UnitFormName, StrUtils, UnitFormConfirmation;
+uses
+  UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress, Math,
+  DateUtils, UnitFormName, StrUtils, UnitFormConfirmation;
 
 {$R *.dfm}
 
@@ -176,7 +177,8 @@ begin
   BtRestore.Enabled := (ListBackup.ItemIndex >= 0) and (BtSave.Enabled) and (ListCharacters.SelCount > 0);
   BtDelete.Enabled := ListBackup.ItemIndex >= 0;
   BtRename.Enabled := ListBackup.ItemIndex >= 0;
-  if ListBackup.ItemIndex < 0 then ListCharacters.Clear;
+  if ListBackup.ItemIndex < 0 then
+    ListCharacters.Clear;
 end;
 
 {*******************************************************************************
@@ -190,6 +192,7 @@ var
   wFileName: String;
 
   // Copy files
+
   procedure CopyFiles;
   var
     i: integer;
@@ -199,12 +202,13 @@ var
       CopyFile(PChar(wList.Strings[i]), PChar(wBackupFile), False);
     end;
   end;
+
 begin
   if FileExists(GConfig.PackFile) then begin
     // Create the backup directory
     wBackupDir := GConfig.CurrentPath + _BACKUP_DIR + '\' + FormatDateTime('yyyy-mm-dd hhnnss', Now) + ABackupType;
     MkDir(wBackupDir);
-    
+
     wList := TStringList.Create;
     try
       // Keys
@@ -247,7 +251,8 @@ var
   wBackupDir: String;
   wIndex: Integer;
 begin
-  if FormConfirm.ShowConfirmation(RS_DELETE_CONFIRMATION) <> mrYes then Exit;
+  if FormConfirm.ShowConfirmation(RS_DELETE_CONFIRMATION) <> mrYes then
+    Exit;
 
   wIndex := ListBackup.ItemIndex;
   wBackupDir := GConfig.CurrentPath + _BACKUP_DIR + '\' + GetBackupDir;
@@ -280,12 +285,13 @@ begin
       wList.Sort;
       if wList.Count = 0 then begin
         BackupFiles('A', RS_DEFAULT_AUTO_NAME);
-      end else begin
+      end
+      else begin
         // Deletes the oldest backup if the limit is reached
         if wList.Count = _MAX_BACKUP then
           MdkRemoveDir(wList.Strings[0]);
 
-        wLastBackupDir := ExtractFileName(wList.Strings[wList.Count-1]);
+        wLastBackupDir := ExtractFileName(wList.Strings[wList.Count - 1]);
         wLastBackupDate := Copy(wLastBackupDir, 1, 10);
         wNowBackupDate := FormatDateTime('yyyy-mm-dd', Now);
         if CompareText(wLastBackupDate, wNowBackupDate) <> 0 then
@@ -336,7 +342,7 @@ var
   wValue: String;
 begin
   wValue := ListBackup.Items[ListBackup.ItemIndex];
-  Result := RightStr(wValue, Length(wValue)-19);
+  Result := RightStr(wValue, Length(wValue) - 19);
 end;
 
 {*******************************************************************************
@@ -344,7 +350,8 @@ Restore backup
 *******************************************************************************}
 procedure TFormBackup.BtRestoreClick(Sender: TObject);
 begin
-  if FormConfirm.ShowConfirmation(RS_DESTORE_CONFIRMATION) <> mrYes then Exit;
+  if FormConfirm.ShowConfirmation(RS_DESTORE_CONFIRMATION) <> mrYes then
+    Exit;
   RestoreBackup;
 end;
 
@@ -369,11 +376,10 @@ begin
     for i := 0 to wList.Count - 1 do begin
       wReg.Exec(wList.Strings[i]);
       wCharName := wReg.Match[1];
-      wCharName := UpperCase(wCharName[1]) + RightStr(wCharName, Length(wCharName)-1);
+      wCharName := UpperCase(wCharName[1]) + RightStr(wCharName, Length(wCharName) - 1);
       ListCharacters.Items.Append(wCharName);
     end;
     ListCharacters.SelectAll;
-    
   finally
     wReg.Free;
     wList.Free;
@@ -418,6 +424,7 @@ var
       CopyFile(PChar(wList.Strings[i]), PChar(wGameFile), False);
     end;
   end;
+
 begin
   wBackupDir := GConfig.CurrentPath + _BACKUP_DIR + '\' + GetBackupDir;
 
@@ -446,3 +453,4 @@ begin
 end;
 
 end.
+
