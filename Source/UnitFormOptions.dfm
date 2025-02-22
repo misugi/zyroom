@@ -75,7 +75,7 @@ object FormOptions: TFormOptions
         Height = 28
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 20
+        ItemHeight = 0
         Sorted = True
         TabOrder = 0
         OnChange = CmbLanguageChange

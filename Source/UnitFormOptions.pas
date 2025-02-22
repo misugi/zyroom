@@ -151,6 +151,7 @@ begin
   LoadConfig;
   BtOK.SetFocus;
   BtApply.Enabled := False;
+  PageControl.ActivePage := TabGeneral;
 end;
 
 {*******************************************************************************
