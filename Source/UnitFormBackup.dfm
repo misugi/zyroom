@@ -50,7 +50,7 @@ object FormBackup: TFormBackup
     object BtSave: TSevenButton
       Left = 0
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Ajouter'
       ParentShowHint = False
@@ -102,9 +102,9 @@ object FormBackup: TFormBackup
       Marging = 5
     end
     object BtRestore: TSevenButton
-      Left = 90
+      Left = 110
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Restaurer'
       Enabled = False
@@ -157,9 +157,9 @@ object FormBackup: TFormBackup
       Marging = 5
     end
     object BtDelete: TSevenButton
-      Left = 180
+      Left = 220
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Supprimer'
       Enabled = False
@@ -221,9 +221,9 @@ object FormBackup: TFormBackup
       OnClick = CbAutoBackupClick
     end
     object BtRename: TSevenButton
-      Left = 270
+      Left = 330
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Renommer'
       Enabled = False

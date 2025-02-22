@@ -87,7 +87,7 @@ object FormAlert: TFormAlert
     object BtClear: TSevenButton
       Left = 0
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Vider'
       TabOrder = 0
@@ -136,9 +136,9 @@ object FormAlert: TFormAlert
       Marging = 5
     end
     object BtSave: TSevenButton
-      Left = 90
+      Left = 110
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Enregistrer'
       TabOrder = 1

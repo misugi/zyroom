@@ -84,9 +84,9 @@ object FormMain: TFormMain
       ShowHint = True
     end
     object LbAutoStatus: TLabel
-      Left = 692
+      Left = 695
       Top = 7
-      Width = 27
+      Width = 24
       Height = 17
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
@@ -95,7 +95,7 @@ object FormMain: TFormMain
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
+      Font.Style = []
       ParentFont = False
     end
     object BtOptions: TSevenButton
