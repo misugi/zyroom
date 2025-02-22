@@ -37,7 +37,7 @@ object FormLog: TFormLog
     object BtLoad: TSevenButton
       Left = 0
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Charger'
       TabOrder = 0
@@ -157,9 +157,9 @@ object FormLog: TFormLog
       TabOrder = 4
     end
     object BtCode: TSevenButton
-      Left = 90
+      Left = 110
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Code'
       TabOrder = 5
@@ -209,9 +209,9 @@ object FormLog: TFormLog
       Marging = 5
     end
     object BtSave: TSevenButton
-      Left = 180
+      Left = 220
       Top = 0
-      Width = 106
+      Width = 105
       Height = 23
       Caption = 'Sauvegarder'
       TabOrder = 6
@@ -261,9 +261,9 @@ object FormLog: TFormLog
       Marging = 5
     end
     object BtClean: TSevenButton
-      Left = 291
+      Left = 330
       Top = 0
-      Width = 85
+      Width = 105
       Height = 23
       Caption = 'Nettoyer'
       TabOrder = 7
@@ -358,16 +358,22 @@ object FormLog: TFormLog
           Height = 335
           TabStop = False
           Anchors = [akLeft, akTop, akRight, akBottom]
-          ItemHeight = 14
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Consolas'
+          Font.Style = []
+          ItemHeight = 16
+          ParentFont = False
           Style = lbOwnerDrawFixed
           TabOrder = 0
           OnDblClick = CheckListBoxDblClick
           OnDrawItem = ListChannelsDrawItem
         end
         object BtCheckChannels: TSevenButton
-          Left = 33
+          Left = 6
           Top = 342
-          Width = 70
+          Width = 100
           Height = 23
           Anchors = [akLeft, akBottom]
           Caption = 'Tous'
@@ -418,9 +424,9 @@ object FormLog: TFormLog
           Marging = 5
         end
         object BtUncheckChannels: TSevenButton
-          Left = 108
+          Left = 111
           Top = 342
-          Width = 70
+          Width = 100
           Height = 23
           Anchors = [akLeft, akBottom]
           Caption = 'Aucun'
@@ -471,16 +477,16 @@ object FormLog: TFormLog
           Marging = 5
         end
       end
-      object TabSheet2: TTabSheet
+      object TabSystem: TTabSheet
         Caption = 'Syst'#232'me'
         ImageIndex = 1
         DesignSize = (
           214
           367)
         object BtAddFilter: TSevenButton
-          Left = 33
+          Left = 6
           Top = 342
-          Width = 70
+          Width = 100
           Height = 23
           Anchors = [akLeft, akBottom]
           Caption = 'Ajouter'
@@ -531,9 +537,9 @@ object FormLog: TFormLog
           Marging = 5
         end
         object BtDelFilter: TSevenButton
-          Left = 108
+          Left = 111
           Top = 342
-          Width = 87
+          Width = 100
           Height = 23
           Anchors = [akLeft, akBottom]
           Caption = 'Supprimer'
@@ -625,9 +631,9 @@ object FormLog: TFormLog
           OnDblClick = CheckListBoxDblClick
         end
         object BtCheckCharacters: TSevenButton
-          Left = 33
+          Left = 6
           Top = 342
-          Width = 70
+          Width = 100
           Height = 23
           Anchors = [akLeft, akBottom]
           Caption = 'Tous'
@@ -678,9 +684,9 @@ object FormLog: TFormLog
           Marging = 5
         end
         object BtUncheckCharacters: TSevenButton
-          Left = 108
+          Left = 111
           Top = 342
-          Width = 70
+          Width = 100
           Height = 23
           Anchors = [akLeft, akBottom]
           Caption = 'Aucun'
@@ -837,9 +843,9 @@ object FormLog: TFormLog
         222
         35)
       object BtDefault: TSevenButton
-        Left = 22
+        Left = 10
         Top = 7
-        Width = 85
+        Width = 100
         Height = 23
         Anchors = [akLeft, akBottom]
         Caption = 'D'#233'faut'
@@ -890,9 +896,9 @@ object FormLog: TFormLog
         Marging = 5
       end
       object BtOK: TSevenButton
-        Left = 112
+        Left = 115
         Top = 7
-        Width = 85
+        Width = 100
         Height = 23
         Anchors = [akLeft, akBottom]
         Caption = 'Appliquer'

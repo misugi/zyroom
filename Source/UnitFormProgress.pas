@@ -996,7 +996,7 @@ begin
             if wColorPos2 > 0 then begin
               wChannel := wColorText2;
               if Length(wReg.Match[8]) > 0 then
-                wChannel := wReg.Match[8] + wColorText2;
+                wChannel := Format('%s %s', [wColorText2, wReg.Match[8]]); // <couleur du canal> <nom du canal>
               if (wListChannels.IndexOf(wChannel) < 0) then
                 wListChannels.Append(wChannel);
 

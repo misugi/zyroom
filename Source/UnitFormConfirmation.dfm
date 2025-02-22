@@ -3,7 +3,7 @@ object FormConfirm: TFormConfirm
   Top = 347
   BorderStyle = bsDialog
   Caption = 'Information'
-  ClientHeight = 84
+  ClientHeight = 106
   ClientWidth = 350
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -16,24 +16,24 @@ object FormConfirm: TFormConfirm
   OnShow = FormShow
   DesignSize = (
     350
-    84)
+    106)
   PixelsPerInch = 96
   TextHeight = 20
   object LbMessage: TLabel
     Left = 5
     Top = 7
     Width = 340
-    Height = 39
+    Height = 64
     Alignment = taCenter
     AutoSize = False
     Caption = 
       'Etes-vous s'#251'r de vouloir restaurer les personnages s'#233'lectionn'#233's ' +
-      '?'
+      '? Et si le message fait trois lignes '#231'a donne quoi ?'
     WordWrap = True
   end
   object BtYes: TSevenButton
     Left = 97
-    Top = 56
+    Top = 78
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -86,7 +86,7 @@ object FormConfirm: TFormConfirm
   end
   object BtNo: TSevenButton
     Left = 178
-    Top = 56
+    Top = 78
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]
@@ -139,7 +139,7 @@ object FormConfirm: TFormConfirm
   end
   object BtOK: TSevenButton
     Left = 137
-    Top = 56
+    Top = 78
     Width = 75
     Height = 23
     Anchors = [akLeft, akBottom]

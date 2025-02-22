@@ -3,7 +3,7 @@ object FormFilter: TFormFilter
   Top = 112
   Width = 508
   Height = 775
-  ActiveControl = PnCat1
+  ActiveControl = PnTitle
   Caption = 'Filtre'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
@@ -23,7 +23,7 @@ object FormFilter: TFormFilter
     Top = 0
     Width = 360
     Height = 736
-    ActivePage = TabMaterial
+    ActivePage = TabInfo
     Align = alLeft
     MultiLine = True
     TabOrder = 0
@@ -1420,9 +1420,9 @@ object FormFilter: TFormFilter
         end
       end
       object BtDefault: TSevenButton
-        Left = 89
+        Left = 134
         Top = 643
-        Width = 85
+        Width = 105
         Height = 23
         Caption = 'D'#233'faut'
         TabOrder = 10
@@ -1471,9 +1471,9 @@ object FormFilter: TFormFilter
         Marging = 5
       end
       object BtOK: TSevenButton
-        Left = 182
+        Left = 244
         Top = 643
-        Width = 85
+        Width = 105
         Height = 23
         Caption = 'Appliquer'
         TabOrder = 11

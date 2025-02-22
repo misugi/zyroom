@@ -59,7 +59,7 @@ type
     BtClean: TSevenButton;
     PageControl: TPageControl;
     TabChannels: TTabSheet;
-    TabSheet2: TTabSheet;
+    TabSystem: TTabSheet;
     TabCharacters: TTabSheet;
     ListChannels: TCheckListBox;
     BtCheckChannels: TSevenButton;
@@ -190,6 +190,7 @@ begin
   ListChannels.Clear;
   ListCharacters.Clear;
   EdFilter.Text := '';
+  PageControl.ActivePage := TabChannels;
 end;
 
 {*******************************************************************************
