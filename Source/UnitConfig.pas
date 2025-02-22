@@ -46,7 +46,7 @@ const
   _BACKUP_DIR = 'backup';
   _BACKUP_NAME_FILE = 'name.txt';
   _CHARACTER_DIR = 'character';
-  _PACK_FILEPATH = '\save\string_client.pack';
+  _PACK_FILEPATH = 'save\string_client.pack';
   _WIN_HEIGHT = 820;
   _WIN_WIDTH = 1024;
   _LANGUAGE_FILENAME = 'languages.lcf';
@@ -394,12 +394,26 @@ Returns the resource file
 function TConfig.GetPackFile: String;
 var
   wRyzomDir: String;
+  wIniFile: TIniFile;
+  wAtysFolder: String;
+  wPackFile: String;
 begin
   Result := FIniFile.ReadString(_SECTION_GENERAL, _KEY_PACKFILE, '');
-  if Result = '' then begin
+  if not FileExists(Result) then begin
     wRyzomDir := GetRyzomInstallDir;
-    if DirectoryExists(wRyzomDir) then
-      Result := wRyzomDir + _PACK_FILEPATH;
+    if DirectoryExists(wRyzomDir) then begin
+      wIniFile := TIniFile.Create(IncludeTrailingPathDelimiter(wRyzomDir) + 'ryzom.ini');
+      try
+        wAtysFolder := wIniFile.ReadString('atys', 'folder', '0'); // profile 0 par défaut
+        wPackfile := Format('%s\%s\%s', [wRyzomDir, wAtysFolder, _PACK_FILEPATH]);
+        if FileExists(wPackFile) then begin
+          SetPackFile(wPackFile);
+          Result := wPackFile;
+        end;
+      finally
+        wIniFile.Free;
+      end;
+    end;
   end;
 end;
 

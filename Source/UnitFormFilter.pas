@@ -256,6 +256,7 @@ type
     FPngObject: TPNGObject;
     FLbList: TObjectList;
     FLbList2: TObjectList;
+    FPackFileExists: Boolean;
 
     FComboIndexSorting: Integer;
     FComboIndexClassMin: Integer;
@@ -609,7 +610,7 @@ begin
 
     with AItemImage.Data as TItemInfo do begin
       // Name
-      if FileExists(GConfig.PackFile) then begin
+      if FPackFileExists then begin
         PnTitle.OnClick := nil;
         PnTitle.Cursor := crDefault;
         PnTitle.Caption := ItemDesc
@@ -1070,6 +1071,7 @@ begin
   PnSales.Visible := False;
   PnCat1.Visible := False;
   PnCat2.Visible := False;
+  FPackFileExists := FileExists(GConfig.PackFile);
 end;
 
 {*******************************************************************************

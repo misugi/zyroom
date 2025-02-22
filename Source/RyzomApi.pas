@@ -116,14 +116,15 @@ end;
 {*******************************************************************************
 Returns the installation directory of Ryzom
 *******************************************************************************}
-function GetRyzomInstallDir: String;
+function GetRyzomInstallDir(): String;
 var
   SpecialPath: Array[0..MAX_PATH] Of Char;
+  wRoamingDir: String;
 begin
   Result := '';
   if SHGetSpecialFolderPath(0, @SpecialPath[0], CSIDL_APPDATA, False) then begin
-    Result := String(PAnsiChar(@SpecialPath[0]));
-    Result := Result + '\Ryzom\0';
+    wRoamingDir := String(PAnsiChar(@SpecialPath[0]));
+    Result := IncludeTrailingPathDelimiter(wRoamingDir) + 'Ryzom';
   end;
 end;
 
