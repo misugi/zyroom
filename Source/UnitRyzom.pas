@@ -1379,6 +1379,7 @@ var
   wFound: Boolean;
   wCatIndex1: Integer;
   wCatIndex2: Integer;
+  wItemDesc: String;
   i: Integer;
 begin
   Result := False;
@@ -1405,14 +1406,14 @@ begin
     wList := TStringList.Create;
     try
       wList.CommaText := MdkRemoveAccents(AFilter.ItemName);
-      AItemInfo.ItemDesc := MdkRemoveAccents(AItemInfo.ItemDesc);
+      wItemDesc := MdkRemoveAccents(AItemInfo.ItemDesc);
       wFound := AFilter.AllWords;
       i := 0;
       while (i < wList.Count) do begin
         if AFilter.AllWords then
-          wFound := wFound and (Pos(UpperCase(wList[i]), UpperCase(AItemInfo.ItemDesc)) > 0)
+          wFound := wFound and (Pos(UpperCase(wList[i]), UpperCase(wItemDesc)) > 0)
         else
-          wFound := wFound or (Pos(UpperCase(wList[i]), UpperCase(AItemInfo.ItemDesc)) > 0);
+          wFound := wFound or (Pos(UpperCase(wList[i]), UpperCase(wItemDesc)) > 0);
         Inc(i);
       end;
       if not wFound then
