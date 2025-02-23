@@ -290,6 +290,7 @@ type
     procedure GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
     function CheckItem(AItemInfo: TItemInfo; AFilter: TItemFilter): Boolean;
     procedure GetItemInfoFromName(AItemInfo: TItemInfo);
+    function GetSystemMatColor(AItemInfo: TItemInfo): Integer;
     procedure SetDefaultFilter(var AFilter: TItemFilter);
     function GetSheetName(ASheetId: String): String;
     property ServerStatus: Integer read FServerStatus;
@@ -957,6 +958,27 @@ begin
   AFilter.QuantityMax := _MAX_QUANTITY;
 end;
 
+{*==============================================================================
+Couleur pour une mp générique
+===============================================================================}
+function TRyzom.GetSystemMatColor(AItemInfo: TItemInfo): Integer;
+var
+  i: Integer;
+  wColor: String;
+begin
+  // on cherche une couleur dans le nom de l'objet (ex: system_mp_choice_purple.sitem ou system_mp_extra_green.sitem)
+  for i := 1 to High(_MAT_COLOR) do begin
+    wColor := _MAT_COLOR[i];
+    if Pos(wColor, AItemInfo.ItemName) > 0 then begin
+      Result := i;
+      Exit;
+    end;
+  end;
+
+  // beige par défaut
+  Result := 1;
+end;
+
 {*******************************************************************************
 Returns information about an item from the item name
 *******************************************************************************}
@@ -1192,6 +1214,7 @@ begin
       wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
       if wIndex >= 0 then begin
         AItemInfo.ItemCategory1 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex], 1, 2));
+        // autre que larve de Kitin ?
         if Pos('m0312', AItemInfo.ItemName) = 0 then
           AItemInfo.ItemCategory2 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex + 1], 1, 2));
         AItemInfo.MatColor1 := StrToInt(FCatStrings.ValueFromIndex[wIndex][3]);
@@ -1339,9 +1362,15 @@ begin
         AItemInfo.ItemCategory1 := 0;
         SetLength(AItemInfo.MatSpec1, 1);
         AItemInfo.MatSpec1[0][0] := 0;
-        AItemInfo.MatColor1 := 1;
-        if Pos('system_mp', wRegExpr.Match[1]) = 0 then
-          AItemInfo.MatColor1 := 8;
+        
+        // mp générique ?
+        if Pos('system_mp', wRegExpr.Match[1]) > 0 then begin
+          AItemInfo.MatColor1 := GetSystemMatColor(AItemInfo);
+        end
+        else begin
+          AItemInfo.MatColor1 := 8; // blanc
+        end;
+        AItemInfo.MatColor2 := AItemInfo.MatColor1;
 
         AItemInfo.ItemClass := icBasic;
         if wRegExpr.Match[2] <> '' then begin
