@@ -3,8 +3,8 @@ unit UnitThreadAlert;
 interface
 
 uses
-  Classes, SyncObjs, Contnrs, XpDOM, UnitRyzom, RyzomApi, SysUtils,
-  MisuDevKit, IniFiles, RegExpr;
+  Classes, SyncObjs, Contnrs, XpDOM, UnitRyzom, RyzomApi, SysUtils, MisuDevKit,
+  IniFiles, RegExpr;
 
 type
   TAlert = class(TThread)
@@ -13,28 +13,28 @@ type
     FPause: TEvent;
     FTimeout: Integer;
     FApi: TRyzomApi;
-
     procedure SynchroChars;
     procedure SynchroGuilds;
     procedure CheckInvent(ACharID: String);
     procedure CheckRoom(AGuildID: String);
     procedure CheckObjects(AGuildID: String);
-    procedure CheckItems(AGuardFile: String; AObjectName: String; ASection: String; ANodeList: TXpNodeList; var AVolume: Double);
+    procedure CheckItems(AGuardFile: String; AObjectName: String; ASection:
+      String; ANodeList: TXpNodeList; var AVolume: Double);
     procedure CheckSales(ACharID: String);
     procedure CheckSeason;
   protected
     procedure Execute; override;
   public
     constructor Create;
-    destructor  Destroy; override;
-
+    destructor Destroy; override;
     property Timeout: Integer read FTimeout write FTimeout;
     procedure Terminate; overload;
   end;
 
 implementation
 
-uses UnitConfig, UnitFormProgress, UnitFormAlert, DateUtils, UnitFormMain;
+uses
+  UnitConfig, UnitFormProgress, UnitFormAlert, DateUtils, UnitFormMain;
 
 { Alert }
 
@@ -118,14 +118,16 @@ begin
     GCharacter.CharList(wList);
     for i := 0 to wList.Count - 1 do begin
       try
-        if Terminated then Exit;
+        if Terminated then
+          Exit;
         wCharID := wList[i];
         wCharKey := GCharacter.GetCharKey(wCharID);
         wXmlFile.Clear;
         FApi.ApiCharacter(wCharKey, wXmlFile);
         wXmlFile.SaveToFile(GConfig.GetCharPath(wCharID) + _INFO_FILENAME);
         CheckInvent(wCharID);
-        if GConfig.SalesCount > 0 then CheckSales(wCharID);
+        if GConfig.SalesCount > 0 then
+          CheckSales(wCharID);
       except
       end;
     end;
@@ -152,7 +154,8 @@ begin
     GGuild.GuildList(wList);
     for i := 0 to wList.Count - 1 do begin
       try
-        if Terminated then Exit;
+        if Terminated then
+          Exit;
         wGuildID := wList[i];
         wGuildKey := GGuild.GetGuildKey(wGuildID);
         wXmlFile.Clear;
@@ -172,7 +175,8 @@ end;
 {*******************************************************************************
 Show items
 *******************************************************************************}
-procedure TAlert.CheckItems(AGuardFile: String; AObjectName: String; ASection: String; ANodeList: TXpNodeList; var AVolume: Double);
+procedure TAlert.CheckItems(AGuardFile: String; AObjectName: String; ASection:
+  String; ANodeList: TXpNodeList; var AVolume: Double);
 var
   i: Integer;
   wItemInfo: TItemInfo;
@@ -195,7 +199,8 @@ begin
     AVolume := 0;
     // Loop to get items
     for i := 0 to ANodeList.Length - 1 do begin
-      if Terminated then Exit;
+      if Terminated then
+        Exit;
       wItemInfo := TItemInfo.Create;
 
       // Get direct information from XML file
@@ -216,7 +221,8 @@ begin
     try
       wGuard.ReadSection(ASection, wKeys);
       for i := 0 to wKeys.Count - 1 do begin
-        if Terminated then Exit;
+        if Terminated then
+          Exit;
 
         wRegExpr.Exec(wKeys[i]);
         wItemSlot := StrToInt(wRegExpr.Match[1]);
@@ -224,7 +230,7 @@ begin
         wItemName := wRegExpr.Match[3];
         wItemIndex := wItemList.IndexOf(wItemSlot, wItemQuality, wItemName);
         if wItemIndex > 0 then begin
-          wItemFound := wItemList.GetItem(wItemIndex); 
+          wItemFound := wItemList.GetItem(wItemIndex);
           wValue := wGuard.ReadInteger(ASection, wKeys[i], -1);
           if wItemFound.ItemType = itEquipment then begin
             // Durability alert
@@ -241,7 +247,8 @@ begin
               wMsg.ItemName := wItemName;
               FormAlert.NewMessage(wMsg);
             end;
-          end else begin
+          end
+          else begin
             // Quantity alert
             if wItemFound.ItemSize < wValue then begin
               wMsg := TAlertMessage.Create;
@@ -257,7 +264,8 @@ begin
               FormAlert.NewMessage(wMsg);
             end;
           end;
-        end else begin
+        end
+        else begin
           // Unfound alert
           wGuard.DeleteKey(ASection, wKeys[i]);
           wMsg := TAlertMessage.Create;
@@ -295,7 +303,8 @@ var
   wMsg: TAlertMessage;
 begin
   wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
-  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
+    Exit;
 
   wGuardFile := GConfig.GetCharPath(ACharID) + _GUARD_FILENAME;
   wCharName := GCharacter.GetCharName(ACharID);
@@ -304,7 +313,8 @@ begin
   try
     wXmlDoc.LoadDataSource(wItemsFile);
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
     CheckItems(wGuardFile, wCharName, _SECTION_ROOM, wNodeList, wVolume);
     wNodeList.Free;
@@ -324,27 +334,32 @@ begin
       end;
     end;
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_BAG);
     CheckItems(wGuardFile, wCharName, _SECTION_BAG, wNodeList, wVolume);
     wNodeList.Free;
-    
-    if Terminated then Exit;
+
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);
     CheckItems(wGuardFile, wCharName, _SECTION_PET1, wNodeList, wVolume);
     wNodeList.Free;
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);
     CheckItems(wGuardFile, wCharName, _SECTION_PET2, wNodeList, wVolume);
     wNodeList.Free;
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);
     CheckItems(wGuardFile, wCharName, _SECTION_PET3, wNodeList, wVolume);
     wNodeList.Free;
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);
     CheckItems(wGuardFile, wCharName, _SECTION_PET4, wNodeList, wVolume);
     wNodeList.Free;
@@ -367,7 +382,8 @@ var
   wMsg: TAlertMessage;
 begin
   wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
-  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
+    Exit;
 
   wGuardFile := GConfig.GetGuildPath(AGuildID) + _GUARD_FILENAME;
   wGuildName := GGuild.GetGuildName(AGuildID);
@@ -376,7 +392,8 @@ begin
   try
     wXmlDoc.LoadDataSource(wItemsFile);
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
     CheckItems(wGuardFile, wGuildName, _SECTION_ROOM, wNodeList, wVolume);
     wNodeList.Free;
@@ -424,10 +441,12 @@ var
   wItemIndex: Integer;
   wItemFound: TItemInfo;
 begin
-  if not GGuild.GetCheckChange(AGuildID) then Exit;
-  
+  if not GGuild.GetCheckChange(AGuildID) then
+    Exit;
+
   wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
-  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
+    Exit;
 
   wWatchFile := GConfig.GetGuildPath(AGuildID) + _WATCH_FILENAME;
   wGuildName := GGuild.GetGuildName(AGuildID);
@@ -436,7 +455,8 @@ begin
   try
     wXmlDoc.LoadDataSource(wItemsFile);
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
     try
       wItemList := TItemList.Create(True);
@@ -453,10 +473,12 @@ begin
             wKeys.Append(wIdent + '=' + IntToStr(wItemInfo.ItemSize));
             wItemInfo.Free;
           end;
-        end else begin
+        end
+        else begin
           // Loop to get items
           for i := 0 to wNodeList.Length - 1 do begin
-            if Terminated then Exit;
+            if Terminated then
+              Exit;
             wItemInfo := TItemInfo.Create;
 
             // Get direct information from XML file
@@ -471,10 +493,12 @@ begin
 
           // Compare file
           wKeys.LoadFromFile(wWatchFile);
-          if (wKeys.Count > 0) and (wKeys[0] = '[room]') then wKeys.Delete(0); // Compatibility
+          if (wKeys.Count > 0) and (wKeys[0] = '[room]') then
+            wKeys.Delete(0); // Compatibility
           i := 0;
           while i < wKeys.Count - 1 do begin
-            if Terminated then Exit;
+            if Terminated then
+              Exit;
 
             wRegExpr.Expression := '(\d+)\.(\d+)\.(.*)';
             wRegExpr.Exec(wKeys.Names[i]);
@@ -503,7 +527,8 @@ begin
                 FormAlert.NewMessage(wMsg);
               end;
               Inc(i);
-            end else begin
+            end
+            else begin
               // Object removed
               wKeys.Delete(i);
 
@@ -522,11 +547,12 @@ begin
 
           // new objects
           for i := 0 to wItemList.Count - 1 do begin
-            wIdent := Format('%d.%d.%s', [wItemList.GetItem(i).ItemSlot, wItemList.GetItem(i).ItemQuality, wItemList.GetItem(i).ItemName]);
+            wIdent := Format('%d.%d.%s', [wItemList.GetItem(i).ItemSlot,
+              wItemList.GetItem(i).ItemQuality, wItemList.GetItem(i).ItemName]);
             if wKeys.IndexOfName(wIdent) < 0 then begin
               wValue := wItemList.GetItem(i).ItemSize;
               wKeys.Append(wIdent + '=' + IntToStr(wValue));
-              
+
               wMsg := TAlertMessage.Create;
               wMsg.MsgType := atAdded;
               wMsg.MsgDate := Now;
@@ -569,12 +595,14 @@ var
   wItemInfo: TItemInfo;
   wMsg: TAlertMessage;
   wNow: TDateTime;
-  {wDays, }wHours, wMinutes: Integer;
+  {wDays, }  wHours, wMinutes: Integer;
 begin
-  if not GCharacter.GetCheckSales(ACharID) then Exit;
+  if not GCharacter.GetCheckSales(ACharID) then
+    Exit;
 
   wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
-  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
+    Exit;
 
   wCharName := GCharacter.GetCharName(ACharID);
 
@@ -582,12 +610,14 @@ begin
   try
     wXmlDoc.LoadDataSource(wItemsFile);
 
-    if Terminated then Exit;
+    if Terminated then
+      Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);
 
     // Loop sales
     for i := 0 to wNodeList.Length - 1 do begin
-      if Terminated then Exit;
+      if Terminated then
+        Exit;
       wItemInfo := TItemInfo.Create;
       GRyzomApi.GetItemInfoFromXML(wNodeList.Item(i), wItemInfo);
 
@@ -616,7 +646,7 @@ begin
           FormAlert.NewMessage(wMsg);
         end;
       end;
-      
+
       wItemInfo.Free;
     end;
   finally
@@ -635,7 +665,7 @@ var
   wSeason: String;
   wDayOfSeason: Integer;
   wTimeOfDay: Integer;
-  {wDays, }wHours, wMinutes: Integer;
+  {wDays, }  wHours, wMinutes: Integer;
   wNextSeason: TDateTime;
   wMsg: TAlertMessage;
   wNow: TDateTime;
@@ -650,9 +680,9 @@ begin
     // Calculation of next season
     wDayOfSeason := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/day_of_season'));
     wTimeOfDay := StrToInt(wXmlDoc.DocumentElement.SelectString('/shard_time/time_of_day'));
-    wMinutes := ( (89-wDayOfSeason)*24 + (23-wTimeOfDay) )*3;
+    wMinutes := ((89 - wDayOfSeason) * 24 + (23 - wTimeOfDay)) * 3;
     wNextSeason := IncMinute(Now, wMinutes);
-    
+
     wNow := Now;
     if wNow < wNextSeason then begin
       wHours := HoursBetween(wNow, wNextSeason);
@@ -664,10 +694,14 @@ begin
         wMinutes := MinutesBetween(wNow, wNextSeason);
 
         case wSeasonIndex of
-          0: wSeason := RS_SEASON_SUMMER;
-          1: wSeason := RS_SEASON_AUTUMN;
-          2: wSeason := RS_SEASON_WINTER;
-          3: wSeason := RS_SEASON_SPRING;
+          0:
+            wSeason := RS_SEASON_SUMMER;
+          1:
+            wSeason := RS_SEASON_AUTUMN;
+          2:
+            wSeason := RS_SEASON_WINTER;
+          3:
+            wSeason := RS_SEASON_SPRING;
         else
           wSeason := '-';
         end;
@@ -689,3 +723,4 @@ begin
 end;
 
 end.
+

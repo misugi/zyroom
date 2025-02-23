@@ -92,8 +92,7 @@ type
     procedure BtDefaultClick(Sender: TObject);
     procedure BtOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure ListChannelsDrawItem(Control: TWinControl; Index: Integer;
-      Rect: TRect; State: TOwnerDrawState);
+    procedure ListChannelsDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
     procedure BtHtmlClick(Sender: TObject);
     procedure BtBbcodeClick(Sender: TObject);
     procedure BtTextClick(Sender: TObject);
@@ -112,16 +111,13 @@ type
     FLogFileBbode: String;
     FLogFileText: String;
     FFilterFile: String;
-    
     FDateStart: TDateTime;
     FDateEnd: TDateTime;
-
     FColorReg: TRegExpr;
-    
     procedure LoadLogFile(AFirstLoading: Boolean = False);
     procedure SetDefault(ASetDates: Boolean = True);
     procedure ReloadSourceFile;
-    function  GetConfirmation: Boolean;
+    function GetConfirmation: Boolean;
     procedure SetBackgroundColor(AFomeFile: TFileName);
   public
     procedure ChangeChecked(AList: TCheckListBox; AChecked: Boolean);
@@ -136,8 +132,9 @@ var
 
 implementation
 
-uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress,
-  Math, DateUtils, UnitFormConfirmation;
+uses
+  UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress, Math,
+  DateUtils, UnitFormConfirmation;
 
 {$R *.dfm}
 
@@ -182,7 +179,8 @@ begin
   if FileExists(wHomeFile) then begin
     SetBackgroundColor(wHomeFile);
     WebLog.Navigate(wHomeFile);
-  end else
+  end
+  else
     WebLog.Navigate('about:blank');
 
   // Init
@@ -348,19 +346,19 @@ end;
 {*******************************************************************************
 Color of channels in the list
 *******************************************************************************}
-procedure TFormLog.ListChannelsDrawItem(Control: TWinControl;
-  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+procedure TFormLog.ListChannelsDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
 var
   wColor: String;
 begin
-  with Control as TCheckListBox do with Canvas do begin
-    FColorReg.Exec(Items[Index]);
-    wColor := FColorReg.Match[0];
-    Brush.Color := PnColorBackground.Color;
-    Font.Color := FormProgress.LogToDelphiColor(wColor);
-    FillRect(Rect);
-    DrawText(Handle, PChar(Items[Index]), -1, Rect , DT_LEFT or DT_NOPREFIX);
-  end;
+  with Control as TCheckListBox do
+    with Canvas do begin
+      FColorReg.Exec(Items[Index]);
+      wColor := FColorReg.Match[0];
+      Brush.Color := PnColorBackground.Color;
+      Font.Color := FormProgress.LogToDelphiColor(wColor);
+      FillRect(Rect);
+      DrawText(Handle, PChar(Items[Index]), -1, Rect, DT_LEFT or DT_NOPREFIX);
+    end;
 end;
 
 {*******************************************************************************
@@ -369,7 +367,7 @@ Copy HTML
 procedure TFormLog.BtHtmlClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileHtml);
-  ShellExecute(0, 'open', PChar(FLogFileHtml), nil, nil , SW_SHOW);
+  ShellExecute(0, 'open', PChar(FLogFileHtml), nil, nil, SW_SHOW);
 end;
 
 {*******************************************************************************
@@ -378,7 +376,7 @@ Copy BBCode
 procedure TFormLog.BtBbcodeClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileBbode);
-  ShellExecute(0, 'open', PChar(FLogFileBbode), nil, nil , SW_SHOW);
+  ShellExecute(0, 'open', PChar(FLogFileBbode), nil, nil, SW_SHOW);
 end;
 
 {*******************************************************************************
@@ -387,7 +385,7 @@ Copy Text
 procedure TFormLog.BtTextClick(Sender: TObject);
 begin
   Clipboard.AsText := MdkGetFileContent(FLogFileText);
-  ShellExecute(0, 'open', PChar(FLogFileText), nil, nil , SW_SHOW);
+  ShellExecute(0, 'open', PChar(FLogFileText), nil, nil, SW_SHOW);
 end;
 
 {*******************************************************************************
@@ -400,11 +398,12 @@ begin
   wIndex := ListFilter.ItemIndex;
   if wIndex >= 0 then begin
     ListFilter.DeleteSelected;
-    wIndex := Min(wIndex, ListFilter.Count-1);
+    wIndex := Min(wIndex, ListFilter.Count - 1);
     if wIndex >= 0 then begin
       ListFilter.Selected[wIndex] := True;
       EdFilter.Text := ListFilter.Items[wIndex];
-    end else begin
+    end
+    else begin
       EdFilter.Text := '';
     end;
   end;
@@ -451,7 +450,8 @@ Supprime tous les messages
 *******************************************************************************}
 procedure TFormLog.MenuDeleteAllClick(Sender: TObject);
 begin
-  if not GetConfirmation then Exit;
+  if not GetConfirmation then
+    Exit;
   MdkWriteFile(OdBrowseLogFile.FileName, '', False, True);
   ReloadSourceFile;
 end;
@@ -461,7 +461,8 @@ Supprime les messages système
 *******************************************************************************}
 procedure TFormLog.MenuDeleteSystemClick(Sender: TObject);
 begin
-  if not GetConfirmation then Exit;
+  if not GetConfirmation then
+    Exit;
   FormProgress.ShowCleanLog(OdBrowseLogFile.FileName, 0);
   ReloadSourceFile;
 end;
@@ -471,7 +472,8 @@ Supprime les vieux messages
 *******************************************************************************}
 procedure TFormLog.MenuAutoDeleteOldClick(Sender: TObject);
 begin
-  if not GetConfirmation then Exit;
+  if not GetConfirmation then
+    Exit;
   FormProgress.ShowCleanLog(OdBrowseLogFile.FileName, DateOf(DatePickerStart.DateTime));
   ReloadSourceFile;
 end;
@@ -489,7 +491,8 @@ Sauvegarde du fichier de log en cours et suppression de tous les messages
 *******************************************************************************}
 procedure TFormLog.BtSaveClick(Sender: TObject);
 begin
-  OdSaveFile.FileName := ChangeFileExt(OdBrowseLogFile.FileName, FormatDateTime(' (yyyy-mm-dd hhnnss)', Now) + ExtractFileExt(OdBrowseLogFile.FileName));
+  OdSaveFile.FileName := ChangeFileExt(OdBrowseLogFile.FileName, FormatDateTime(' (yyyy-mm-dd hhnnss)',
+    Now) + ExtractFileExt(OdBrowseLogFile.FileName));
   if OdSaveFile.Execute then
     Windows.CopyFile(PChar(OdBrowseLogFile.FileName), PChar(OdSaveFile.FileName), False);
 end;
@@ -532,3 +535,4 @@ finalization
   OleUninitialize;
 
 end.
+

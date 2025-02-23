@@ -25,8 +25,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, Buttons, SevenButton, UnitConfig;
+  Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi, LcUnit,
+  StrUtils, Buttons, SevenButton, UnitConfig;
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
@@ -47,7 +47,7 @@ const
   _EXPR_MOUNT = '^chidb2\.creature$';
 
 type
-  TPublicStringGrid = class(TCustomGrid); 
+  TPublicStringGrid = class(TCustomGrid);
 
   TFormCharacter = class(TForm)
     GridItem: TStringGrid;
@@ -60,17 +60,13 @@ type
     BtUp: TSevenButton;
     BtReset: TSevenButton;
     procedure FormCreate(Sender: TObject);
-    procedure GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
-      Rect: TRect; State: TGridDrawState);
+    procedure GridItemDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
     procedure BtNewClick(Sender: TObject);
     procedure BtUpdateClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure GridItemMouseWheelDown(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
-    procedure GridItemMouseWheelUp(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
-    procedure GridItemSelectCell(Sender: TObject; ACol, ARow: Integer;
-      var CanSelect: Boolean);
+    procedure GridItemMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure GridItemMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure GridItemSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
     procedure BtDeleteClick(Sender: TObject);
     procedure BtRoomClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -81,7 +77,6 @@ type
   private
     FIconList: TObjectList;
     FDappers: String;
-    
     procedure LoadGrid;
     procedure Synchronize;
     procedure ShowRoom;
@@ -100,9 +95,9 @@ var
 
 implementation
 
-uses UnitFormEdit, UnitRyzom, MisuDevKit,
-  UnitFormConfirmation, UnitFormProgress, UnitFormMain,
-  UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr;
+uses
+  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormConfirmation, UnitFormProgress,
+  UnitFormMain, UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr;
 
 {$R *.dfm}
 
@@ -127,80 +122,87 @@ end;
 {*******************************************************************************
 Displays the grid
 *******************************************************************************}
-procedure TFormCharacter.GridItemDrawCell(Sender: TObject; ACol, ARow: Integer;
-  Rect: TRect; State: TGridDrawState);
+procedure TFormCharacter.GridItemDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
 var
   wGuild: String;
 begin
-  with Sender as TStringGrid do with Canvas do begin
-    if ARow = 0 then begin
-      Brush.Color := clBtnFace;
-      FillRect(Rect);
-      Font.Size := _FONT_SIZE;
-      Font.Color := clBlack;
-      Font.Style := [];
-      Font.Name := _FONT_NAME;
-      Rect.Left := Rect.Left + 2;
-      DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-              DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
-    end else begin
+  with Sender as TStringGrid do
+    with Canvas do begin
+      if ARow = 0 then begin
+        Brush.Color := clBtnFace;
+        FillRect(Rect);
+        Font.Size := _FONT_SIZE;
+        Font.Color := clBlack;
+        Font.Style := [];
+        Font.Name := _FONT_NAME;
+        Rect.Left := Rect.Left + 2;
+        DrawText(Handle, PChar(Cells[ACol, ARow]), -1, Rect,
+          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
+      end
+      else begin
       // Background color
-      If gdFixed in State
-        then Brush.Color := clBtnFace
+        If gdFixed in State
+          then
+          Brush.Color := clBtnFace
         else If gdSelected In State
-          Then Brush.Color := clHighlight
-          Else If Odd(ARow)
-            Then Brush.Color := $FFFFFF
-            Else Brush.Color := $BBF2F7;
+          Then
+          Brush.Color := clHighlight
+        Else If Odd(ARow)
+          Then
+          Brush.Color := $FFFFFF
+        Else
+          Brush.Color := $BBF2F7;
 
       // Drawing background
-      FillRect(Rect);
+        FillRect(Rect);
 
       // Font color
-      If gdSelected In State
-        Then Font.Color:=clHighlightText
-        Else Font.Color:=clBlack;
+        If gdSelected In State
+          Then
+          Font.Color := clHighlightText
+        Else
+          Font.Color := clBlack;
 
       // Name
-      if (ACol = 1) then begin
-        Font.Size := _FONT_SIZE + 2;
-        Font.Style := [fsBold];
-        Rect.Top := Rect.Top - 25;
-        Rect.Left := Rect.Left + 5;
-        DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
+        if (ACol = 1) then begin
+          Font.Size := _FONT_SIZE + 2;
+          Font.Style := [fsBold];
+          Rect.Top := Rect.Top - 25;
+          Rect.Left := Rect.Left + 5;
+          DrawText(Handle, PChar(Cells[ACol, ARow]), -1, Rect,
+            DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
 
         // Guild
-        Font.Size := _FONT_SIZE;
-        Font.Style := [];
-        Rect.Top := Rect.Top + 45;
-        wGuild := GCharacter.GetGuildName(Cells[3,ARow]);
-        DrawText(Handle, PChar(wGuild), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
-      end;
+          Font.Size := _FONT_SIZE;
+          Font.Style := [];
+          Rect.Top := Rect.Top + 45;
+          wGuild := GCharacter.GetGuildName(Cells[3, ARow]);
+          DrawText(Handle, PChar(wGuild), -1, Rect,
+            DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
+        end;
 
       // Comment
-      if (ACol = 2) then begin
-        Font.Size := _FONT_SIZE;
-        Font.Style := [];
-        Rect.Left := Rect.Left + 5;
-        DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
-      end;
+        if (ACol = 2) then begin
+          Font.Size := _FONT_SIZE;
+          Font.Style := [];
+          Rect.Left := Rect.Left + 5;
+          DrawText(Handle, PChar(Cells[ACol, ARow]), -1, Rect,
+            DT_LEFT or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
+        end;
 
       // Number
-      if (ACol = 3) then begin
-        Font.Size := _FONT_SIZE;
-        Font.Style := [];
-        DrawText(Handle, PChar(Cells[ACol,ARow]), -1, Rect ,
-          DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
-      end;
+        if (ACol = 3) then begin
+          Font.Size := _FONT_SIZE;
+          Font.Style := [];
+          DrawText(Handle, PChar(Cells[ACol, ARow]), -1, Rect,
+            DT_CENTER or DT_NOPREFIX or DT_VCENTER or DT_SINGLELINE);
+        end;
 
       // Drawing image (head)
-      if (ACol = 0) then
-        GetHead(TPNGObject(FIconList.Items[ARow-1]), TStringGrid(Sender).Canvas, Rect, Brush.Color);
+        if (ACol = 0) then
+          GetHead(TPNGObject(FIconList.Items[ARow - 1]), TStringGrid(Sender).Canvas, Rect, Brush.Color);
+      end;
     end;
-  end;
 end;
 
 {*******************************************************************************
@@ -265,9 +267,9 @@ begin
         end;
         FIconList.Add(wPng);
         GridItem.RowCount := GridItem.RowCount + 1;
-        GridItem.Cells[1, GridItem.RowCount-1] := GCharacter.GetCharName(wItemList[i]);
-        GridItem.Cells[2, GridItem.RowCount-1] := GCharacter.GetComment(wItemList[i]);
-        GridItem.Cells[3, GridItem.RowCount-1] := wItemList[i];
+        GridItem.Cells[1, GridItem.RowCount - 1] := GCharacter.GetCharName(wItemList[i]);
+        GridItem.Cells[2, GridItem.RowCount - 1] := GCharacter.GetComment(wItemList[i]);
+        GridItem.Cells[3, GridItem.RowCount - 1] := wItemList[i];
       end;
 
       EnableButtons(False);
@@ -287,30 +289,30 @@ end;
 {*******************************************************************************
 Scroll down
 *******************************************************************************}
-procedure TFormCharacter.GridItemMouseWheelDown(Sender: TObject;
-  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+procedure TFormCharacter.GridItemMouseWheelDown(Sender: TObject; Shift:
+  TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
+  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEDOWN, 0);
 end;
 
 {*******************************************************************************
 Scroll up
 *******************************************************************************}
-procedure TFormCharacter.GridItemMouseWheelUp(Sender: TObject;
-  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+procedure TFormCharacter.GridItemMouseWheelUp(Sender: TObject; Shift:
+  TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEUP, 0) ;
+  SendMessage(GridItem.Handle, WM_VSCROLL, SB_LINEUP, 0);
 end;
 
 {*******************************************************************************
 Selects a guild in the grid
 *******************************************************************************}
-procedure TFormCharacter.GridItemSelectCell(Sender: TObject; ACol,
-  ARow: Integer; var CanSelect: Boolean);
+procedure TFormCharacter.GridItemSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: Boolean);
 begin
-  if ARow = 0 then CanSelect := False;
+  if ARow = 0 then
+    CanSelect := False;
   BtUp.Enabled := ARow > 1;
   BtDown.Enabled := ARow < GridItem.RowCount - 1;
 end;
@@ -327,14 +329,16 @@ begin
   wRow := GridItem.Row;
   if wRow > 0 then begin
     wItemID := GridItem.Cells[3, wRow];
-    if FormConfirm.ShowConfirmation(RS_CHAR_DELETE_CONFIRMATION) <> mrYes then Exit;
-    
+    if FormConfirm.ShowConfirmation(RS_CHAR_DELETE_CONFIRMATION) <> mrYes then
+      Exit;
+
     SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
     try
       wTopRow := GridItem.TopRow;
       TPublicStringGrid(GridItem).DeleteRow(wRow);
       GridItem.TopRow := wTopRow;
-      if wRow < GridItem.RowCount then GridItem.Row := wRow;
+      if wRow < GridItem.RowCount then
+        GridItem.Row := wRow;
 
       if GridItem.RowCount = 1 then
         EnableButtons(False);
@@ -345,7 +349,7 @@ begin
     GCharacter.DeleteChar(wItemID);
     MdkRemoveDir(GConfig.GetCharPath(wItemID));
     MdkRemoveDir(GConfig.GetCharPath(wItemID));
-    FIconList.Delete(wRow-1);
+    FIconList.Delete(wRow - 1);
     GridItem.Refresh;
   end;
 end;
@@ -360,7 +364,8 @@ begin
     Synchronize;
     ShowRoom;
   except
-    on E: Exception do MessageDlg(E.Message, mtError, [mbOK], 0);
+    on E: Exception do
+      MessageDlg(E.Message, mtError, [mbOK], 0);
   end;
 end;
 
@@ -377,7 +382,8 @@ Double clic on the grid
 *******************************************************************************}
 procedure TFormCharacter.GridItemDblClick(Sender: TObject);
 begin
-  if GridItem.Row > 0 then BtRoomClick(BtRoom);
+  if GridItem.Row > 0 then
+    BtRoomClick(BtRoom);
 end;
 
 {*******************************************************************************
@@ -385,7 +391,8 @@ Display items
 *******************************************************************************}
 procedure TFormCharacter.ShowRoom;
 begin
-  if not GConfig.SaveFilter then GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  if not GConfig.SaveFilter then
+    GRyzomApi.SetDefaultFilter(GCurrentFilter);
   FormInvent.TabInvent.TabIndex := _INVENT_ROOM;
   FormMain.ShowMenuForm(FormInvent);
   FormInvent.Dappers := FDappers;
@@ -501,7 +508,6 @@ Set info
 procedure TFormCharacter.SetItemInfo(AAction: TActionType);
 var
   i: Integer;
-  
   wItemKey: String;
   wComment: String;
   wCheckVolume: Boolean;
@@ -512,13 +518,11 @@ var
   wItemGuild: String;
   wGabarit: String;
   wMorph: String;
-
   wXmlDoc: TXpObjModel;
   wStream: TMemoryStream;
   wRegExpr: TRegExpr;
   wNodeList: TXpNodeList;
   wList: TStringList;
-  
   wInfoFile: String;
   wIconFile: String;
   wPetSheet: String;
@@ -542,34 +546,35 @@ begin
     if AAction = atAdd then begin
       GRyzomApi.ApiCharacter(wItemKey, wStream);
       wXmlDoc.LoadStream(wStream);
-    end else begin
+    end
+    else begin
       wItemID := GridItem.Cells[3, GridItem.Row];
       wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
       wXmlDoc.LoadDataSource(wInfoFile);
     end;
     {$ENDIF}
-
     // check modules
-    if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/@modules'), _REQUIRED_MODULES_CHAR) then
+    if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/@modules'),
+      _REQUIRED_MODULES_CHAR) then
       MessageDlg(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_CHAR, ',')]), mtWarning, [mbOK], 0);
 
     // read info in the XML
     wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/id');
     wItemName := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/name');
     wItemServer := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/shard');
-    wItemServer := UpperCase(LeftStr(wItemServer, 1)) + LowerCase(RightStr(wItemServer, Length(wItemServer)-1));
+    wItemServer := UpperCase(LeftStr(wItemServer, 1)) + LowerCase(RightStr(wItemServer, Length(wItemServer) - 1));
     wItemGuild := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/guild/name');
     FDappers := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/money');
 
     // update INI
-    GCharacter.SetChar(AAction, wItemID, wItemKey, wItemName, wItemServer, wComment, wItemGuild, wCheckVolume, wCheckSales);
+    GCharacter.SetChar(AAction, wItemID, wItemKey, wItemName, wItemServer,
+      wComment, wItemGuild, wCheckVolume, wCheckSales);
 
     // save to info.xml
     {$IFNDEF __LOCALINFO}
     wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
     wStream.SaveToFile(wInfoFile);
     {$ENDIF}
-
     // search the mount from the pet list
     wNodeList := wXmlDoc.DocumentElement.SelectNodes('/ryzomapi/character/pets/animal');
     try
@@ -619,15 +624,15 @@ begin
     wIconFile := GConfig.GetCharPath(wItemID) + _ICON_FILENAME;
     wStream.SaveToFile(wIconFile);
     if AAction = atUpdate then
-      TPNGObject(FIconList.Items[GridItem.Row-1]).LoadFromFile(wIconFile);
+      TPNGObject(FIconList.Items[GridItem.Row - 1]).LoadFromFile(wIconFile);
     {$ENDIF}
-
     // refresh grid info
     if AAction = atAdd then begin
       GCharacter.SetIndex(wItemID, GridItem.RowCount - 1);
       LoadGrid;
       SelectItem(wItemID);
-    end else begin
+    end
+    else begin
       GridItem.Cells[1, GridItem.Row] := wItemName;
       GridItem.Cells[2, GridItem.Row] := wComment;
       GridItem.Refresh;
@@ -683,6 +688,7 @@ var
   wRight: Integer;
 
   // Search the center of the head
+
   function HeadCenter(): Boolean;
   var
     x, y: Integer;
@@ -695,7 +701,8 @@ var
     while (AIcon.Pixels[x, y] = clBlack) and (y < AIcon.Height) do begin
       if x < AIcon.Width then begin
         Inc(x);
-      end else begin
+      end
+      else begin
         x := 0;
         Inc(y);
       end;
@@ -704,15 +711,16 @@ var
     if y < AIcon.Height then begin
       wTop := y;
       Inc(y, 20); // jump 20 lines
-
       // get left and right of the head
       if y < AIcon.Height then begin
         x := 0;
-        while (AIcon.Pixels[x, y] = clBlack) and (x < AIcon.Width) do Inc(x);
+        while (AIcon.Pixels[x, y] = clBlack) and (x < AIcon.Width) do
+          Inc(x);
         wLeft := x;
-        
-        x := AIcon.Width-1;
-        while (AIcon.Pixels[x, y] = clBlack) and (x >= 0) do Dec(x);
+
+        x := AIcon.Width - 1;
+        while (AIcon.Pixels[x, y] = clBlack) and (x >= 0) do
+          Dec(x);
         wRight := x;
 
         if (wRight - wLeft) < _HEAD_WIDTH then
@@ -720,14 +728,17 @@ var
       end;
     end;
   end;
+
 begin
-  if AIcon.Width = 0 then Exit;
-  if not HeadCenter then Exit;
+  if AIcon.Width = 0 then
+    Exit;
+  if not HeadCenter then
+    Exit;
 
   // Defines rectangle
-  wRectSrc.Left := wLeft + ((wRight-wLeft) div 2) - (_HEAD_WIDTH div 2);
+  wRectSrc.Left := wLeft + ((wRight - wLeft) div 2) - (_HEAD_WIDTH div 2);
   wRectSrc.Right := wRectSrc.Left + _HEAD_WIDTH;
-  wRectSrc.Top := wTop-2;
+  wRectSrc.Top := wTop - 2;
   wRectSrc.Bottom := wRectSrc.Top + _HEAD_HEIGHT;
 
   // Copy bitmap
@@ -752,8 +763,9 @@ begin
   wHead.Canvas.CopyRect(wRect, wBmp.Canvas, wRectSrc);
 
   ACanvas.Draw(ARect.Left, ARect.Top, wHead);
-  
+
   wBmp.Free;
 end;
 
 end.
+

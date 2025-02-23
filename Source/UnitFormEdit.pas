@@ -29,7 +29,7 @@ uses
 
 const
   _URL_PROFILE_PAGE = 'http://app.ryzom.com/app_ryzomapi';
-  
+
 type
   TFormEdit = class(TForm)
     LbAutoKey: TLabel;
@@ -71,3 +71,4 @@ begin
 end;
 
 end.
+

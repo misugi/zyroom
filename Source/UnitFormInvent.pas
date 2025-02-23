@@ -44,20 +44,16 @@ type
     ImgDappers: TImage;
     LbValueDappers: TLabel;
     MenuCopy: TMenuItem;
-    procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
-    procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
+    procedure CharInventMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
-    procedure CharInventMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
+    procedure CharInventMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure CharInventClick(Sender: TObject);
     procedure TabInventChange(Sender: TObject);
     procedure CharInventResize(Sender: TObject);
-    procedure CharInventContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
+    procedure CharInventContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure MenuGuardClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MenuCopyClick(Sender: TObject);
@@ -67,7 +63,6 @@ type
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
     FDappers: String;
-    
     procedure SetFMountID(const Value: Integer);
   public
     procedure UpdateRoom;
@@ -81,7 +76,8 @@ var
 
 implementation
 
-uses UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
+uses
+  UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
   UnitFormFilter, UnitFormCharacter, UnitFormWatch, Spin;
 
 {$R *.dfm}
@@ -121,28 +117,27 @@ end;
 {*******************************************************************************
 Scroll down
 *******************************************************************************}
-procedure TFormInvent.CharInventMouseWheelDown(Sender: TObject;
-  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+procedure TFormInvent.CharInventMouseWheelDown(Sender: TObject; Shift:
+  TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEDOWN, 0);
 end;
 
 {*******************************************************************************
 Scroll up
 *******************************************************************************}
-procedure TFormInvent.CharInventMouseWheelUp(Sender: TObject;
-  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+procedure TFormInvent.CharInventMouseWheelUp(Sender: TObject; Shift: TShiftState;
+  MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEUP, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEUP, 0);
 end;
 
 {*******************************************************************************
 Displays the names of items
 *******************************************************************************}
-procedure TFormInvent.CharInventMouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: Integer);
+procedure TFormInvent.CharInventMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
   if Sender is TItemImage then begin
     FormFilter.UpdateInfo(TItemImage(Sender));
@@ -152,8 +147,7 @@ end;
 {*******************************************************************************
 Closes the form
 *******************************************************************************}
-procedure TFormInvent.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TFormInvent.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FormFilter.Close;
 end;
@@ -202,23 +196,19 @@ begin
 
   if TabInvent.TabIndex = 0 then
     wMaxVolume := '/2000' // room
+  else if TabInvent.TabIndex = 1 then
+    wMaxVolume := '/300' // bag
+  else if TabInvent.TabIndex = 6 then
+    wMaxVolume := '' // sales
+  else if FMountID < 2 then
+    wMaxVolume := '' // mount unfound
+  else if TabInvent.TabIndex = FMountID then
+    wMaxVolume := '/300' // mount
   else
-    if TabInvent.TabIndex = 1 then
-      wMaxVolume := '/300' // bag
-    else
-      if TabInvent.TabIndex = 6 then
-        wMaxVolume := '' // sales
-      else
-        if FMountID < 2 then
-          wMaxVolume := '' // mount unfound
-        else
-          if TabInvent.TabIndex = FMountID then
-            wMaxVolume := '/300' // mount
-          else
-            wMaxVolume := '/500'; // pack
+    wMaxVolume := '/500'; // pack
 
   LbValueCharName.Caption := FormCharacter.GridItem.Cells[1, FormCharacter.GridItem.Row];
-  LbValueVolume.Caption := FormatFloat2('####0.##',FormProgress.TotalVolume) + wMaxVolume;
+  LbValueVolume.Caption := FormatFloat2('####0.##', FormProgress.TotalVolume) + wMaxVolume;
   LbValueDappers.Caption := FDappers;
 end;
 
@@ -231,12 +221,13 @@ var
 begin
   ImgVolume.Hint := RS_VOLUME;
   ImgDappers.Hint := RS_DAPPERS;
-  
+
   for i := 2 to 5 do begin // animals
     if i = FMountID then begin
-      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_MOUNT, i-1]);
-    end else begin
-      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_PET, i-1]);
+      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_MOUNT, i - 1]);
+    end
+    else begin
+      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_PET, i - 1]);
     end;
   end;
 end;
@@ -244,20 +235,21 @@ end;
 {*******************************************************************************
 Popup menu Watch/Unwatch
 *******************************************************************************}
-procedure TFormInvent.CharInventContextPopup(Sender: TObject;
-  MousePos: TPoint; var Handled: Boolean);
+procedure TFormInvent.CharInventContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
 
   if Sender is TItemImage then begin
     with TItemImage(Sender).Data as TItemInfo do begin
-      if TabInvent.TabIndex > 5 then Exit;
+      if TabInvent.TabIndex > 5 then
+        Exit;
 //      if not(ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then Exit;
-      
+
       if ItemGuarded then begin
         MenuEdit.Visible := True;
         MenuGuard.Caption := RS_MENU_UNWATCH;
-      end else begin
+      end
+      else begin
         MenuEdit.Visible := False;
         MenuGuard.Caption := RS_MENU_WATCH;
       end;
@@ -283,12 +275,18 @@ begin
     FreeAndNil(FGuardFile);
     FGuardFile := TIniFile.Create(wGuardFile);
     case TabInvent.TabIndex of
-      0: wSection := _SECTION_ROOM;
-      1: wSection := _SECTION_BAG;
-      2: wSection := _SECTION_PET1;
-      3: wSection := _SECTION_PET2;
-      4: wSection := _SECTION_PET3;
-      5: wSection := _SECTION_PET4;
+      0:
+        wSection := _SECTION_ROOM;
+      1:
+        wSection := _SECTION_BAG;
+      2:
+        wSection := _SECTION_PET1;
+      3:
+        wSection := _SECTION_PET2;
+      4:
+        wSection := _SECTION_PET3;
+      5:
+        wSection := _SECTION_PET4;
     end;
     wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
     if ItemType = itEquipment then
@@ -300,22 +298,26 @@ begin
       FormWatch.EdValue.Text := '999';
       if FormWatch.ShowModal = mrOk then begin
         wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
-        if wValue <= 1 then wValue := 999;
+        if wValue <= 1 then
+          wValue := 999;
         FGuardFile.WriteInteger(wSection, wIdent, wValue);
         FItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
         ItemGuarded := True;
         ItemGuardValue := wValue;
       end;
-    end else begin
+    end
+    else begin
       if Sender = MenuEdit then begin
         FormWatch.EdValue.Text := IntToStr(ItemGuardValue);
         if FormWatch.ShowModal = mrOk then begin
           wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
-          if wValue <= 1 then wValue := 999;
+          if wValue <= 1 then
+            wValue := 999;
           FGuardFile.WriteInteger(wSection, wIdent, wValue);
           ItemGuardValue := wValue;
         end;
-      end else begin
+      end
+      else begin
         FGuardFile.DeleteKey(wSection, wIdent);
         FItemImage.RemoveSticker;
         ItemGuarded := False;
@@ -335,3 +337,4 @@ begin
 end;
 
 end.
+

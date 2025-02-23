@@ -405,7 +405,7 @@ begin
       wIniFile := TIniFile.Create(IncludeTrailingPathDelimiter(wRyzomDir) + 'ryzom.ini');
       try
         wAtysFolder := wIniFile.ReadString('atys', 'folder', '0'); // profile 0 par défaut
-        wPackfile := Format('%s\%s\%s', [wRyzomDir, wAtysFolder, _PACK_FILEPATH]);
+        wPackFile := Format('%s\%s\%s', [wRyzomDir, wAtysFolder, _PACK_FILEPATH]);
         if FileExists(wPackFile) then begin
           SetPackFile(wPackFile);
           Result := wPackFile;

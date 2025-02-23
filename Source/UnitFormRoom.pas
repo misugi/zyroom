@@ -43,19 +43,15 @@ type
     ImgDappers: TImage;
     LbValueDappers: TLabel;
     MenuCopy: TMenuItem;
-    procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
-    procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState;
-      MousePos: TPoint; var Handled: Boolean);
+    procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
-    procedure GuildRoomMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
+    procedure GuildRoomMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GuildRoomClick(Sender: TObject);
     procedure GuildRoomResize(Sender: TObject);
-    procedure GuildRoomContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
+    procedure GuildRoomContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure MenuGuardClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MenuCopyClick(Sender: TObject);
@@ -75,7 +71,8 @@ var
 
 implementation
 
-uses UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
+uses
+  UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
   UnitFormFilter, UnitFormWatch;
 
 {$R *.dfm}
@@ -114,28 +111,26 @@ end;
 {*******************************************************************************
 Scroll down
 *******************************************************************************}
-procedure TFormRoom.GuildRoomMouseWheelDown(Sender: TObject;
-  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+procedure TFormRoom.GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState;
+  MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEDOWN, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEDOWN, 0);
 end;
 
 {*******************************************************************************
 Scroll up
 *******************************************************************************}
-procedure TFormRoom.GuildRoomMouseWheelUp(Sender: TObject;
-  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+procedure TFormRoom.GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
-  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEUP, 0) ;
+  SendMessage(TScrollBox(Sender).Handle, WM_VSCROLL, SB_LINEUP, 0);
 end;
 
 {*******************************************************************************
 Displays the names of items
 *******************************************************************************}
-procedure TFormRoom.GuildRoomMouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: Integer);
+procedure TFormRoom.GuildRoomMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
   if Sender is TItemImage then begin
     FormFilter.UpdateInfo(TItemImage(Sender));
@@ -145,8 +140,7 @@ end;
 {*******************************************************************************
 Closes the form
 *******************************************************************************}
-procedure TFormRoom.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TFormRoom.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FormFilter.Close;
 end;
@@ -175,23 +169,23 @@ begin
   FGuildID := FormGuild.GridItem.Cells[3, FormGuild.GridItem.Row];
   FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
   LbValueGuildName.Caption := FormGuild.GridItem.Cells[1, FormGuild.GridItem.Row];
-  LbValueVolume.Caption := FormatFloat2('####0.##',FormProgress.TotalVolume) + '/10000';
+  LbValueVolume.Caption := FormatFloat2('####0.##', FormProgress.TotalVolume) + '/10000';
   LbValueDappers.Caption := FDappers;
 end;
 
-procedure TFormRoom.GuildRoomContextPopup(Sender: TObject;
-  MousePos: TPoint; var Handled: Boolean);
+procedure TFormRoom.GuildRoomContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
 begin
   Handled := True;
 
   if Sender is TItemImage then begin
     with TItemImage(Sender).Data as TItemInfo do begin
 //      if not(ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then Exit;
-      
+
       if ItemGuarded then begin
         MenuEdit.Visible := True;
         MenuGuard.Caption := RS_MENU_UNWATCH;
-      end else begin
+      end
+      else begin
         MenuEdit.Visible := False;
         MenuGuard.Caption := RS_MENU_WATCH;
       end;
@@ -224,22 +218,26 @@ begin
       FormWatch.EdValue.Text := '999';
       if FormWatch.ShowModal = mrOk then begin
         wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
-        if wValue <= 1 then wValue := 999;
+        if wValue <= 1 then
+          wValue := 999;
         FGuardFile.WriteInteger(wSection, wIdent, wValue);
         FItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
         ItemGuarded := True;
         ItemGuardValue := wValue;
       end;
-    end else begin
+    end
+    else begin
       if Sender = MenuEdit then begin
         FormWatch.EdValue.Text := IntToStr(ItemGuardValue);
         if FormWatch.ShowModal = mrOk then begin
           wValue := StrToIntDef(FormWatch.EdValue.Text, 999);
-          if wValue <= 1 then wValue := 999;
+          if wValue <= 1 then
+            wValue := 999;
           FGuardFile.WriteInteger(wSection, wIdent, wValue);
           ItemGuardValue := wValue;
         end;
-      end else begin
+      end
+      else begin
         FGuardFile.DeleteKey(wSection, wIdent);
         FItemImage.RemoveSticker;
         ItemGuarded := False;
@@ -268,3 +266,4 @@ begin
 end;
 
 end.
+

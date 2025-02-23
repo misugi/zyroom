@@ -25,9 +25,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom,
-  ItemImage, StrUtils, ComCtrls, DateUtils, Gauges, Contnrs, RyzomApi,
-  SevenButton, IniFiles;
+  Dialogs, StdCtrls, ExtCtrls, pngimage, ShellAPI, Spin, UnitRyzom, ItemImage,
+  StrUtils, ComCtrls, DateUtils, Gauges, Contnrs, RyzomApi, SevenButton,
+  IniFiles;
 
 resourcestring
   RS_SKIN = 'Skin';
@@ -257,14 +257,12 @@ type
     FLbList: TObjectList;
     FLbList2: TObjectList;
     FPackFileExists: Boolean;
-
     FComboIndexSorting: Integer;
     FComboIndexClassMin: Integer;
     FComboIndexClassMax: Integer;
     FComboIndexEquipment: Integer;
     FComboIndexCategory: Integer;
     FComboIndexContinent: Integer;
-   
     procedure EnabledGroup(AGroup: TGroupBox; AEnabled: Boolean);
     procedure LoadCurrentFilter;
     procedure SaveCurrentFilter;
@@ -282,7 +280,8 @@ var
 
 implementation
 
-uses UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
+uses
+  UnitFormProgress, UnitFormGuild, UnitFormRoom, UnitFormInvent,
   UnitFormCharacter, UnitConfig, UnitFormOptions;
 
 //DONE: I see, a filter on the amount of items and a new entry in the top list to sort items on the amount, I added this in my todo list
@@ -354,8 +353,7 @@ end;
 {*******************************************************************************
 Closes the form
 *******************************************************************************}
-procedure TFormFilter.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TFormFilter.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 end;
 
@@ -411,8 +409,8 @@ begin
   
   // Type
   CbTypeMat.Checked := (itNaturalMat in GCurrentFilter.Type_) or
-                       (itAnimalMat in GCurrentFilter.Type_) or
-                       (itSystemMat in GCurrentFilter.Type_);
+    (itAnimalMat in GCurrentFilter.Type_) or
+    (itSystemMat in GCurrentFilter.Type_);
   CbTypeEquipment.Checked := (itEquipment in GCurrentFilter.Type_);
   CbTypeCata.Checked := (itCata in GCurrentFilter.Type_);
   CbTypeTeleporter.Checked := (itTeleporter in GCurrentFilter.Type_);
@@ -440,18 +438,28 @@ begin
 
   // Item equipment
   EdEquipment.ItemIndex := 0;
-  if iqLightArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 1;
-  if iqMediumArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 2;
-  if iqHeavyArmor in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 3;
-  if iqWeaponMelee in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 4;
-  if iqWeaponRange in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 5;
-  if iqAmplifier in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 6;
-  if iqJewel in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 7;
+  if iqLightArmor in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 1;
+  if iqMediumArmor in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 2;
+  if iqHeavyArmor in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 3;
+  if iqWeaponMelee in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 4;
+  if iqWeaponRange in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 5;
+  if iqAmplifier in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 6;
+  if iqJewel in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 7;
   if (iqBuckler in GCurrentFilter.Equipment) or
-     (iqShield in GCurrentFilter.Equipment) then EdEquipment.ItemIndex := 8;
-  if iqTool in GCurrentFilter.Equipment then EdEquipment.ItemIndex := 9;
+    (iqShield in GCurrentFilter.Equipment) then
+    EdEquipment.ItemIndex := 8;
+  if iqTool in GCurrentFilter.Equipment then
+    EdEquipment.ItemIndex := 9;
   if (iqAmmo in GCurrentFilter.Equipment) or
-     (iqOther in GCurrentFilter.Equipment) then EdEquipment.ItemIndex := 10;
+    (iqOther in GCurrentFilter.Equipment) then
+    EdEquipment.ItemIndex := 10;
 
   // Item category
   EdCategory.ItemIndex := GCurrentFilter.CategoryIndex;
@@ -487,61 +495,93 @@ procedure TFormFilter.SaveCurrentFilter;
 begin
   // Sorting
   case EdSorting.ItemIndex of
-    0: GCurrentFilter.Sorting := ioType;
-    1: GCurrentFilter.Sorting := ioEcosys;
-    2: GCurrentFilter.Sorting := ioClass;
-    3: GCurrentFilter.Sorting := ioQuality;
-    4: GCurrentFilter.Sorting := ioVolume;
-    5: GCurrentFilter.Sorting := ioQuantity;
-    6: GCurrentFilter.Sorting := ioPrice;
-    7: GCurrentFilter.Sorting := ioTime;
+    0:
+      GCurrentFilter.Sorting := ioType;
+    1:
+      GCurrentFilter.Sorting := ioEcosys;
+    2:
+      GCurrentFilter.Sorting := ioClass;
+    3:
+      GCurrentFilter.Sorting := ioQuality;
+    4:
+      GCurrentFilter.Sorting := ioVolume;
+    5:
+      GCurrentFilter.Sorting := ioQuantity;
+    6:
+      GCurrentFilter.Sorting := ioPrice;
+    7:
+      GCurrentFilter.Sorting := ioTime;
   end;
   
   // Item type
   GCurrentFilter.Type_ := [];
-  if CbTypeMat.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itAnimalMat,itNaturalMat,itSystemMat];
-  if CbTypeEquipment.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itEquipment];
-  if CbTypeCata.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itCata];
-  if CbTypeTeleporter.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itTeleporter];
-  if CbTypeOthers.Checked then GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itOther];
+  if CbTypeMat.Checked then
+    GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itAnimalMat, itNaturalMat, itSystemMat];
+  if CbTypeEquipment.Checked then
+    GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itEquipment];
+  if CbTypeCata.Checked then
+    GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itCata];
+  if CbTypeTeleporter.Checked then
+    GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itTeleporter];
+  if CbTypeOthers.Checked then
+    GCurrentFilter.Type_ := GCurrentFilter.Type_ + [itOther];
 
   // Item ecosystem
   GCurrentFilter.Ecosystem := [];
-  if CbEcoPrime.Checked then GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [iePrime];
-  if CbEcoCommon.Checked then GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieCommon];
-  if CbEcoDesert.Checked then GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieDesert];
-  if CbEcoForest.Checked then GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieForest];
-  if CbEcoLakes.Checked then GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieLakes];
-  if CbEcoJungle.Checked then GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieJungle];
+  if CbEcoPrime.Checked then
+    GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [iePrime];
+  if CbEcoCommon.Checked then
+    GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieCommon];
+  if CbEcoDesert.Checked then
+    GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieDesert];
+  if CbEcoForest.Checked then
+    GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieForest];
+  if CbEcoLakes.Checked then
+    GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieLakes];
+  if CbEcoJungle.Checked then
+    GCurrentFilter.Ecosystem := GCurrentFilter.Ecosystem + [ieJungle];
 
   // Item class
-  if EdClassMax.ItemIndex < EdClassMin.ItemIndex then EdClassMax.ItemIndex := EdClassMin.ItemIndex;
+  if EdClassMax.ItemIndex < EdClassMin.ItemIndex then
+    EdClassMax.ItemIndex := EdClassMin.ItemIndex;
   GCurrentFilter.ClassMin := TItemClass(EdClassMin.ItemIndex);
   GCurrentFilter.ClassMax := TItemClass(EdClassMax.ItemIndex);
 
   // Item quality
-  if EdQualityMax.Value < EdQualityMin.Value then EdQualityMax.Value := EdQualityMin.Value;
+  if EdQualityMax.Value < EdQualityMin.Value then
+    EdQualityMax.Value := EdQualityMin.Value;
   GCurrentFilter.QualityMin := EdQualityMin.Value;
   GCurrentFilter.QualityMax := EdQualityMax.Value;
 
   // Item quantity
-  if EdQuantityMax.Value < EdQuantityMin.Value then EdQuantityMax.Value := EdQuantityMin.Value;
+  if EdQuantityMax.Value < EdQuantityMin.Value then
+    EdQuantityMax.Value := EdQuantityMin.Value;
   GCurrentFilter.QuantityMin := EdQuantityMin.Value;
   GCurrentFilter.QuantityMax := EdQuantityMax.Value;
 
   // Item equipment
   GCurrentFilter.Equipment := [];
   case EdEquipment.ItemIndex of
-    1: GCurrentFilter.Equipment := [iqLightArmor];
-    2: GCurrentFilter.Equipment := [iqMediumArmor];
-    3: GCurrentFilter.Equipment := [iqHeavyArmor];
-    4: GCurrentFilter.Equipment := [iqWeaponMelee];
-    5: GCurrentFilter.Equipment := [iqWeaponRange];
-    6: GCurrentFilter.Equipment := [iqAmplifier];
-    7: GCurrentFilter.Equipment := [iqJewel];
-    8: GCurrentFilter.Equipment := [iqBuckler, iqShield];
-    9: GCurrentFilter.Equipment := [iqTool];
-    10: GCurrentFilter.Equipment := [iqAmmo, iqOther];
+    1:
+      GCurrentFilter.Equipment := [iqLightArmor];
+    2:
+      GCurrentFilter.Equipment := [iqMediumArmor];
+    3:
+      GCurrentFilter.Equipment := [iqHeavyArmor];
+    4:
+      GCurrentFilter.Equipment := [iqWeaponMelee];
+    5:
+      GCurrentFilter.Equipment := [iqWeaponRange];
+    6:
+      GCurrentFilter.Equipment := [iqAmplifier];
+    7:
+      GCurrentFilter.Equipment := [iqJewel];
+    8:
+      GCurrentFilter.Equipment := [iqBuckler, iqShield];
+    9:
+      GCurrentFilter.Equipment := [iqTool];
+    10:
+      GCurrentFilter.Equipment := [iqAmmo, iqOther];
   end;
 
   // Item Category
@@ -556,10 +596,14 @@ begin
 
   // Bonus
   GCurrentFilter.Bonus := [];
-  if CbHpb.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibHp];
-  if CbSab.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibSab];
-  if CbStb.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibStamina];
-  if CbFob.Checked then GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibFocus];
+  if CbHpb.Checked then
+    GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibHp];
+  if CbSab.Checked then
+    GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibSab];
+  if CbStb.Checked then
+    GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibStamina];
+  if CbFob.Checked then
+    GCurrentFilter.Bonus := GCurrentFilter.Bonus + [ibFocus];
 
   // Item name
   GCurrentFilter.ItemName := Trim(EdName.Text);
@@ -584,7 +628,8 @@ begin
   SaveCurrentFilter;
   if FormRoom.Visible then begin
     FormRoom.UpdateRoom;
-  end else begin
+  end
+  else begin
     FormInvent.UpdateRoom;
   end;
 end;
@@ -604,8 +649,10 @@ var
   i: Integer;
 begin
   try
-    if FCurrentItem = AItemImage then Exit;
-    if PageControl.TabIndex <> 0 then Exit;
+    if FCurrentItem = AItemImage then
+      Exit;
+    if PageControl.TabIndex <> 0 then
+      Exit;
     FCurrentItem := AItemImage;
 
     with AItemImage.Data as TItemInfo do begin
@@ -614,7 +661,8 @@ begin
         PnTitle.OnClick := nil;
         PnTitle.Cursor := crDefault;
         PnTitle.Caption := ItemDesc
-      end else begin
+      end
+      else begin
         PnTitle.OnClick := PnTitleClick;
         PnTitle.Cursor := crHandPoint;
         PnTitle.Caption := RS_NEEDED_FILE;
@@ -622,11 +670,16 @@ begin
 
       // Background color
       case ItemEcosys of
-        ieCommon, iePrime, ieUnknown: PnTitle.Color := $434B4F;
-        ieDesert: PnTitle.Color := $18436F;
-        ieJungle: PnTitle.Color := $824B7F;
-        ieForest: PnTitle.Color := $2D6053;
-        ieLakes: PnTitle.Color := $706237;
+        ieCommon, iePrime, ieUnknown:
+          PnTitle.Color := $434B4F;
+        ieDesert:
+          PnTitle.Color := $18436F;
+        ieJungle:
+          PnTitle.Color := $824B7F;
+        ieForest:
+          PnTitle.Color := $2D6053;
+        ieLakes:
+          PnTitle.Color := $706237;
       end;
 
       // Image
@@ -637,16 +690,19 @@ begin
       ImgSkin2.Visible := False;
       ImgSkin3.Visible := False;
       case ItemSkin of
-        isSkin1: ImgSkin1.Visible := True;
-        isSkin2: begin
+        isSkin1:
           ImgSkin1.Visible := True;
-          ImgSkin2.Visible := True;
-        end;
-        isSkin3: begin
-          ImgSkin1.Visible := True;
-          ImgSkin2.Visible := True;
-          ImgSkin3.Visible := True;
-        end;
+        isSkin2:
+          begin
+            ImgSkin1.Visible := True;
+            ImgSkin2.Visible := True;
+          end;
+        isSkin3:
+          begin
+            ImgSkin1.Visible := True;
+            ImgSkin2.Visible := True;
+            ImgSkin3.Visible := True;
+          end;
       end;
 
       // Ecosystem
@@ -704,7 +760,7 @@ begin
           LbValueDmg.Caption := IntToStr(CDmg);
           FLbList2.Add(LbAutoDmg);
           FLbList2.Add(LbValueDmg);
-          
+
           LbValueSpeed.Caption := IntToStr(CSpeed);
           FLbList2.Add(LbAutoSpeed);
           FLbList2.Add(LbValueSpeed);
@@ -713,8 +769,9 @@ begin
           FLbList2.Add(LbAutoRange);
           FLbList2.Add(LbValueRange);
         end;
-        
-        if (ItemEquip in [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqShield, iqBuckler, iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
+
+        if (ItemEquip in [iqLightArmor, iqMediumArmor, iqHeavyArmor, iqShield,
+          iqBuckler, iqWeaponMelee, iqWeaponRange, iqAmplifier]) then begin
           LbValueDodge.Caption := IntToStr(CDodgeModifier);
           FLbList2.Add(LbAutoDodge);
           FLbList2.Add(LbValueDodge);
@@ -834,9 +891,10 @@ begin
           LbValueCraft.Caption := RS_CAT_ALL;
           FLbList.Add(LbCraft);
           FLbList.Add(LbValueCraft);
-        end else begin
+        end
+        else begin
           if (ItemCategory1 > 0) and (ItemCategory2 > 0) then begin
-            LbValueCraft.Caption :=  GetCatName(ItemCategory1) + ', ' + GetCatName(ItemCategory2);
+            LbValueCraft.Caption := GetCatName(ItemCategory1) + ', ' + GetCatName(ItemCategory2);
             FLbList.Add(LbCraft);
             FLbList.Add(LbValueCraft);
           end;
@@ -846,13 +904,16 @@ begin
         wMatColor := 0;
         if (ItemEcosys = iePrime) then begin
           wMatColor := MatColor3;
-        end else begin
+        end
+        else begin
           case ItemClass of
-            icBasic, icFine: wMatColor := MatColor1;
-            icChoice, icExcellent, icSupreme: wMatColor := MatColor2;
+            icBasic, icFine:
+              wMatColor := MatColor1;
+            icChoice, icExcellent, icSupreme:
+              wMatColor := MatColor2;
           end;
         end;
-      
+
         if wMatColor > 0 then begin
           LbValueColor.Caption := GetColorName(wMatColor);
           FLbList.Add(LbColor);
@@ -877,23 +938,25 @@ begin
             TGauge(FindComponent(Format('GaugeCat1Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat1.Height := 35 + Length(MatSpec1)*_LABEL_HEIGHT;
+          PnCat1.Height := 35 + Length(MatSpec1) * _LABEL_HEIGHT;
           for i := 0 to High(MatSpec1) do begin
-            with FindComponent(Format('LbCat1Spec%d', [i+1])) as TLabel do begin
+            with FindComponent(Format('LbCat1Spec%d', [i + 1])) as TLabel do begin
               Visible := True;
               Caption := GetSpecName(MatSpec1[i][0]);
             end;
-            with FindComponent(Format('GaugeCat1Spec%d', [i+1])) as TGauge do begin
+            with FindComponent(Format('GaugeCat1Spec%d', [i + 1])) as TGauge do begin
               Visible := True;
               case MatSpec1[i][1] of
-                1: Progress := 0 + Ord(ItemClass)*9;
-                2: Progress := 12 + Ord(ItemClass)*9;
-                3: Progress := 36 + Ord(ItemClass)*9;
+                1:
+                  Progress := 0 + Ord(ItemClass) * 9;
+                2:
+                  Progress := 12 + Ord(ItemClass) * 9;
+                3:
+                  Progress := 36 + Ord(ItemClass) * 9;
               end;
             end;
           end;
         end; // Cat1
-
         // Category 2
         if ItemCategory2 >= 0 then begin
           wResName := Format('cat_%s', [LowerCase(_MAT_CATEGORY[ItemCategory2])]);
@@ -905,18 +968,21 @@ begin
             TGauge(FindComponent(Format('GaugeCat2Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat2.Height := 35 + Length(MatSpec2)*_LABEL_HEIGHT;
+          PnCat2.Height := 35 + Length(MatSpec2) * _LABEL_HEIGHT;
           for i := 0 to High(MatSpec2) do begin
-            with FindComponent(Format('LbCat2Spec%d', [i+1])) as TLabel do begin
+            with FindComponent(Format('LbCat2Spec%d', [i + 1])) as TLabel do begin
               Visible := True;
               Caption := GetSpecName(MatSpec2[i][0]);
             end;
-            with FindComponent(Format('GaugeCat2Spec%d', [i+1])) as TGauge do begin
+            with FindComponent(Format('GaugeCat2Spec%d', [i + 1])) as TGauge do begin
               Visible := True;
               case MatSpec2[i][1] of
-                1: Progress := 0 + Ord(ItemClass)*9;
-                2: Progress := 12 + Ord(ItemClass)*9;
-                3: Progress := 36 + Ord(ItemClass)*9;
+                1:
+                  Progress := 0 + Ord(ItemClass) * 9;
+                2:
+                  Progress := 12 + Ord(ItemClass) * 9;
+                3:
+                  Progress := 36 + Ord(ItemClass) * 9;
               end;
             end;
           end;
@@ -931,40 +997,47 @@ begin
       end;
 
       // Bonus
-      if ItemHpb <> 0 then LbValueHpb.Caption := IntToStr(ItemHpb);
-      if ItemSab <> 0 then LbValueSab.Caption := IntToStr(ItemSab);
-      if ItemStb <> 0 then LbValueStb.Caption := IntToStr(ItemStb);
-      if ItemFob <> 0 then LbValueFob.Caption := IntToStr(ItemFob);
+      if ItemHpb <> 0 then
+        LbValueHpb.Caption := IntToStr(ItemHpb);
+      if ItemSab <> 0 then
+        LbValueSab.Caption := IntToStr(ItemSab);
+      if ItemStb <> 0 then
+        LbValueStb.Caption := IntToStr(ItemStb);
+      if ItemFob <> 0 then
+        LbValueFob.Caption := IntToStr(ItemFob);
 
       // Sales
       if ItemPrice > 0 then begin
         LbValueContinent.Caption := ItemContinent;
         LbValuePrice.Caption := Format('%s (%s)', [
           FormatFloat2('###,###,###,##0', ItemPrice),
-          FormatFloat2('###,###,###,##0', ItemPrice*ItemQuantity)]);
+          FormatFloat2('###,###,###,##0', ItemPrice * ItemQuantity)]);
         wNow := Now;
         wDays := DaysBetween(wNow, ItemTime);
         wNow := IncDay(wNow, wDays);
         wHours := HoursBetween(wNow, ItemTime);
         wNow := IncHour(wNow, wHours);
         wMinutes := MinutesBetween(wNow, ItemTime);
-        LbValueTime.Caption := Format('%d %s, %d %s %s %d %s', [wDays, RS_DAYS, wHours, RS_HOURS, RS_AND, wMinutes, RS_MINUTES]);
+        LbValueTime.Caption := Format('%d %s, %d %s %s %d %s', [wDays, RS_DAYS,
+          wHours, RS_HOURS, RS_AND, wMinutes, RS_MINUTES]);
       end;
 
       //-----------------------------------------------
-
       // Hide all labels
       for i := 0 to PnInfo.ControlCount - 1 do begin
-        if PnInfo.Controls[i] is TLabel then TLabel(PnInfo.Controls[i]).Visible := False;
+        if PnInfo.Controls[i] is TLabel then
+          TLabel(PnInfo.Controls[i]).Visible := False;
       end;
       for i := 0 to PnInfo2.ControlCount - 1 do begin
-        if PnInfo2.Controls[i] is TLabel then TLabel(PnInfo2.Controls[i]).Visible := False;
+        if PnInfo2.Controls[i] is TLabel then
+          TLabel(PnInfo2.Controls[i]).Visible := False;
       end;
 
       // Height of info panels
-      PnInfo.Height := 8 + ((FLbList.Count div 2)*_LABEL_HEIGHT);
-      PnInfo2.Height := 8 + ((FLbList2.Count div 2)*_LABEL_HEIGHT);
-      if ItemBonus then PnInfo2.Height := PnInfo2.Height + 24;
+      PnInfo.Height := 8 + ((FLbList.Count div 2) * _LABEL_HEIGHT);
+      PnInfo2.Height := 8 + ((FLbList2.Count div 2) * _LABEL_HEIGHT);
+      if ItemBonus then
+        PnInfo2.Height := PnInfo2.Height + 24;
 
       // Bonus
       ImgHpb.Visible := ItemHpb <> 0;
@@ -1009,9 +1082,9 @@ begin
       wTop := 5;
       while i < FLbList.Count - 1 do begin
         TLabel(FLbList.Items[i]).Visible := True;
-        TLabel(FLbList.Items[i+1]).Visible := True;
+        TLabel(FLbList.Items[i + 1]).Visible := True;
         TLabel(FLbList.Items[i]).Top := wTop;
-        TLabel(FLbList.Items[i+1]).Top := wTop;
+        TLabel(FLbList.Items[i + 1]).Top := wTop;
         Inc(wTop, _LABEL_HEIGHT);
         Inc(i, 2);
       end;
@@ -1021,9 +1094,9 @@ begin
       wTop := 5;
       while i < FLbList2.Count - 1 do begin
         TLabel(FLbList2.Items[i]).Visible := True;
-        TLabel(FLbList2.Items[i+1]).Visible := True;
+        TLabel(FLbList2.Items[i + 1]).Visible := True;
         TLabel(FLbList2.Items[i]).Top := wTop;
-        TLabel(FLbList2.Items[i+1]).Top := wTop;
+        TLabel(FLbList2.Items[i + 1]).Top := wTop;
         Inc(wTop, _LABEL_HEIGHT);
         Inc(i, 2);
       end;
@@ -1044,7 +1117,7 @@ begin
         PnInfo2.Top := wTop;
         wTop := wTop + PnInfo2.Height + 2;
       end;
-      
+
       if PnSales.Visible then begin
         PnSales.Top := wTop;
         wTop := wTop + PnSales.Height + 2;
@@ -1090,11 +1163,16 @@ begin
   TabInfo.DoubleBuffered := True;
 
   for i := 0 to ComponentCount - 1 do begin
-    if Components[i] is TPanel then TPanel(Components[i]).DoubleBuffered := True;
-    if Components[i] is TGroupBox then TGroupBox(Components[i]).DoubleBuffered := True;
-    if Components[i] is TCheckBox then TCheckBox(Components[i]).DoubleBuffered := True;
-    if Components[i] is TSpinEdit then TSpinEdit(Components[i]).DoubleBuffered := True;
-    if Components[i] is TRadioButton then TRadioButton(Components[i]).DoubleBuffered := True;
+    if Components[i] is TPanel then
+      TPanel(Components[i]).DoubleBuffered := True;
+    if Components[i] is TGroupBox then
+      TGroupBox(Components[i]).DoubleBuffered := True;
+    if Components[i] is TCheckBox then
+      TCheckBox(Components[i]).DoubleBuffered := True;
+    if Components[i] is TSpinEdit then
+      TSpinEdit(Components[i]).DoubleBuffered := True;
+    if Components[i] is TRadioButton then
+      TRadioButton(Components[i]).DoubleBuffered := True;
   end;
 
   PnCat1.Parent := TabInfo;
@@ -1159,3 +1237,4 @@ begin
 end;
 
 end.
+

@@ -30,7 +30,7 @@ const
   _URL_PROJECT_SITE = 'https://github.com/misugi/zyroom';
   _URL_RYZOM_SITE = 'http://www.ryzom.com';
   _URL_AGPL = 'http://www.gnu.org/licenses/agpl-3.0.html';
-  
+
 type
   TFormHome = class(TForm)
     ImgRoom: TImage;
@@ -55,7 +55,8 @@ var
 
 implementation
 
-uses ConvUtils, UnitConfig;
+uses
+  ConvUtils, UnitConfig;
 
 {$R *.dfm}
 
@@ -94,3 +95,4 @@ begin
 end;
 
 end.
+

@@ -25,9 +25,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, XpDOM, ExtCtrls, ScrollRoom, ItemImage,
-  pngimage, UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils, IniFiles,
-  SevenButton;
+  Dialogs, ComCtrls, StdCtrls, XpDOM, ExtCtrls, ScrollRoom, ItemImage, pngimage,
+  UnitRyzom, regexpr, SyncObjs, Contnrs, StrUtils, IniFiles, SevenButton;
 
 resourcestring
   RS_PROGRESS_SYNCHRONIZE = 'Synchronisation en cours, veuillez patienter...';
@@ -43,14 +42,13 @@ const
   _TASK_INVENT = 3;
   _TASK_PARSE_LOG = 4;
   _TASK_CLEAN_LOG = 5;
-
   _INVENT_ROOM = 0;
   _INVENT_BAG = 1;
   _INVENT_PET1 = 2;
   _INVENT_PET2 = 3;
   _INVENT_PET3 = 4;
   _INVENT_PET4 = 5;
-  
+
 type
   TGetItemThread = class(TThread)
   private
@@ -60,7 +58,7 @@ type
     constructor Create(ANode: TXpNode; AStoragePath: String);
     procedure Execute; override;
   end;
-  
+
   TFormProgress = class(TForm)
     ProgressBar: TProgressBar;
     LbProgress: TLabel;
@@ -86,21 +84,19 @@ type
     FFirstLoading: Boolean;
     FCleanDate: TDateTime;
     FDappers: String;
-
     procedure FillRoom(AGuildID: String);
     procedure FillInvent(ACharID: String);
     procedure GetItem(ANodeList: TXpNodeList; AStoragePath: String);
     procedure ShowItem(ANodeList: TXpNodeList; ASection: String; AStoragePath: String);
-    function  GetSortPrefix(AItemInfo: TItemInfo): String;
+    function GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
-
     procedure ParseLogFile(AFirstLoading: Boolean);
     procedure CleanLogFile(ADate: TDateTime = 0);
-    function  ColorTextHtml(AHtmlColor: String; AText: String): String;
-    function  ColorTextBbcode(AHtmlColor: String; AText: String): String;
-    function  CheckSystemFilter(AMessage: String): Boolean;
-    function  IsSystemLine(ALine: String): Boolean;
-    function  ReplaceHtmlSpecialChars(ALine: String): String;
+    function ColorTextHtml(AHtmlColor: String; AText: String): String;
+    function ColorTextBbcode(AHtmlColor: String; AText: String): String;
+    function CheckSystemFilter(AMessage: String): Boolean;
+    function IsSystemLine(ALine: String): Boolean;
+    function ReplaceHtmlSpecialChars(ALine: String): String;
   public
     procedure SynchronizeGuild(AGuildID: String);
     procedure SynchronizeChar(ACharID: String);
@@ -110,13 +106,11 @@ type
     procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
     procedure ShowParseLog(ALogFile: String; AFirstLoading: Boolean);
     procedure ShowCleanLog(ALogFile: String; ADate: TDateTime = 0);
-
-    function  LogToHtmlColor(ALogColor: String): String;
-    function  LogToDelphiColor(ALogColor: String): TColor;
-    function  DelphiToHtmlColor(ADelphiColor: TColor): String;
-
-    property  TotalVolume: Double read FTotalVolume write FTotalVolume;
-    property  Dappers: String read FDappers write FDappers;
+    function LogToHtmlColor(ALogColor: String): String;
+    function LogToDelphiColor(ALogColor: String): TColor;
+    function DelphiToHtmlColor(ADelphiColor: TColor): String;
+    property TotalVolume: Double read FTotalVolume write FTotalVolume;
+    property Dappers: String read FDappers write FDappers;
   end;
 
 var
@@ -129,7 +123,8 @@ var
 
 implementation
 
-uses UnitConfig, RyzomApi, MisuDevKit, Math, UnitFormLog, DateUtils;
+uses
+  UnitConfig, RyzomApi, MisuDevKit, Math, UnitFormLog, DateUtils;
 
 {$R *.dfm}
 
@@ -184,8 +179,7 @@ end;
 {*******************************************************************************
 Authorization to close the form
 *******************************************************************************}
-procedure TFormProgress.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TFormProgress.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   CanClose := FEnabled;
 end;
@@ -193,8 +187,7 @@ end;
 {*******************************************************************************
 Get items and save image files
 *******************************************************************************}
-procedure TFormProgress.GetItem(ANodeList: TXpNodeList;
-  AStoragePath: String);
+procedure TFormProgress.GetItem(ANodeList: TXpNodeList; AStoragePath: String);
 var
   i: Integer;
   wThread: TGetItemThread;
@@ -204,7 +197,8 @@ begin
   GThreadCount := 0;
   i := 0;
   while i < ANodeList.Length do begin
-    if ModalResult = mrCancel then Break;
+    if ModalResult = mrCancel then
+      Break;
 
     wItemName := ANodeList.Item(i).SelectString('.//sheet');
     if Pos('#', wItemName) = 1 then
@@ -225,12 +219,13 @@ begin
         GSection.Leave;
       end;
       Inc(i);
-    end else begin
+    end
+    else begin
       GEvent.ResetEvent;
       GEvent.WaitFor(100);
     end;
 
-    ProgressBar.Position := Trunc( ((i+1) / ANodeList.Length) * 100);
+    ProgressBar.Position := Trunc(((i + 1) / ANodeList.Length) * 100);
     Application.ProcessMessages;
   end;
 
@@ -260,9 +255,11 @@ begin
     wIndexFile := GConfig.GetGuildPath(AGuildID) + _INDEX_FILENAME;
     if FileExists(wIndexFile) then begin
       GStrings.LoadFromFile(wIndexFile);
-      if (GStrings.Count > 0) and (GStrings.ValueFromIndex[0] = '') then GStrings.Clear; // Compatibility code (version 3.1.6)
+      if (GStrings.Count > 0) and (GStrings.ValueFromIndex[0] = '') then
+        GStrings.Clear; // Compatibility code (version 3.1.6)
       GStrings.Sort;
-    end else begin
+    end
+    else begin
       GStrings.Clear;
     end;
 
@@ -306,9 +303,11 @@ begin
     wIndexFile := GConfig.GetCharPath(ACharID) + _INDEX_FILENAME;
     if FileExists(wIndexFile) then begin
       GStrings.LoadFromFile(wIndexFile);
-      if (GStrings.Count > 0) and (GStrings.ValueFromIndex[0] = '') then GStrings.Clear; // Compatibility code (version 3.1.6)
+      if (GStrings.Count > 0) and (GStrings.ValueFromIndex[0] = '') then
+        GStrings.Clear; // Compatibility code (version 3.1.6)
       GStrings.Sort;
-    end else begin
+    end
+    else begin
       GStrings.Clear;
     end;
 
@@ -392,12 +391,18 @@ begin
   TimerStart.Enabled := False;
   try
     case FProcessingType of
-      _TASK_SYNCHRONIZE: SynchronizeGuild(FGuildID);
-      _TASK_ROOM: FillRoom(FGuildID);
-      _TASK_SYNCHRONIZE_CHAR: SynchronizeChar(FCharID);
-      _TASK_INVENT: FillInvent(FCharID);
-      _TASK_PARSE_LOG: ParseLogFile(FFirstLoading);
-      _TASK_CLEAN_LOG: CleanLogFile(FCleanDate);
+      _TASK_SYNCHRONIZE:
+        SynchronizeGuild(FGuildID);
+      _TASK_ROOM:
+        FillRoom(FGuildID);
+      _TASK_SYNCHRONIZE_CHAR:
+        SynchronizeChar(FCharID);
+      _TASK_INVENT:
+        FillInvent(FCharID);
+      _TASK_PARSE_LOG:
+        ParseLogFile(FFirstLoading);
+      _TASK_CLEAN_LOG:
+        CleanLogFile(FCleanDate);
     end;
   finally
     CloseForm;
@@ -501,7 +506,8 @@ begin
     try
       // Loop to filter and sort items
       for i := 0 to ANodeList.Length - 1 do begin
-        if ModalResult = mrCancel then Exit;
+        if ModalResult = mrCancel then
+          Exit;
 
         wItemInfo := TItemInfo.Create;
 
@@ -526,8 +532,10 @@ begin
         if (not FFilter.Enabled) or GRyzomApi.CheckItem(wItemInfo, FFilter) then begin
           wItemList.Add(wItemInfo);
           wSortPrefix := GetSortPrefix(wItemInfo);
-          wItemSort.Append(Format('%s%3.3d%d%s=%d', [wSortPrefix, wItemInfo.ItemQuality, Ord(wItemInfo.ItemClass), wItemInfo.ItemName, wItemList.Count-1]));
-        end else begin
+          wItemSort.Append(Format('%s%3.3d%d%s=%d', [wSortPrefix, wItemInfo.ItemQuality,
+            Ord(wItemInfo.ItemClass), wItemInfo.ItemName, wItemList.Count - 1]));
+        end
+        else begin
           wItemInfo.Free;
         end;
       end;
@@ -538,7 +546,8 @@ begin
       // Loop to display items
       FTotalVolume := 0.0;
       for i := 0 to wItemSort.Count - 1 do begin
-        if ModalResult = mrCancel then Exit;
+        if ModalResult = mrCancel then
+          Exit;
 
         wItemInfo := TItemInfo(wItemList.Items[StrToInt(wItemSort.ValueFromIndex[i])]);
         FTotalVolume := FTotalVolume + wItemInfo.ItemVolume;
@@ -554,7 +563,8 @@ begin
           except
             wItemImage.LoadFromResourceName(_RES_NOICON);
           end;
-        end else begin
+        end
+        else begin
           wItemImage.LoadFromResourceName(_RES_NOICON);
         end;
 
@@ -562,7 +572,7 @@ begin
           wItemImage.PngSticker.LoadFromResourceName(HInstance, _RES_EYES);
 
         FRoom.AddControl(wItemImage);
-        ProgressBar.Position := Trunc( ((i+1) / ANodeList.Length) * 100);
+        ProgressBar.Position := Trunc(((i + 1) / ANodeList.Length) * 100);
         Application.ProcessMessages;
       end;
     finally
@@ -582,48 +592,78 @@ function TFormProgress.GetSortPrefix(AItemInfo: TItemInfo): String;
 begin
   Result := '';
   case GCurrentFilter.Sorting of
-    ioEcosys: Result := IntToStr(Ord(AItemInfo.ItemEcosys));
-    ioClass: Result := IntToStr(Ord(AItemInfo.ItemClass));
-    ioQuality: Result := Format('%.3d', [AItemInfo.ItemQuality]);
-    ioVolume: Result := FormatFloat2('0000.00', AItemInfo.ItemVolume);
-    ioQuantity: Result := Format('%.3d', [AItemInfo.ItemSize]);
-    ioPrice: if AItemInfo.ItemPrice > 0 then Result := FormatFloat2('00000000', AItemInfo.ItemPrice);
-    ioTime: if AItemInfo.ItemPrice > 0 then Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
+    ioEcosys:
+      Result := IntToStr(Ord(AItemInfo.ItemEcosys));
+    ioClass:
+      Result := IntToStr(Ord(AItemInfo.ItemClass));
+    ioQuality:
+      Result := Format('%.3d', [AItemInfo.ItemQuality]);
+    ioVolume:
+      Result := FormatFloat2('0000.00', AItemInfo.ItemVolume);
+    ioQuantity:
+      Result := Format('%.3d', [AItemInfo.ItemSize]);
+    ioPrice:
+      if AItemInfo.ItemPrice > 0 then
+        Result := FormatFloat2('00000000', AItemInfo.ItemPrice);
+    ioTime:
+      if AItemInfo.ItemPrice > 0 then
+        Result := FormatDateTime('yyyymmddhhnnss', AItemInfo.ItemTime);
   end;
-    
+
   case AItemInfo.ItemType of
-    itEquipment: begin
-      case AItemInfo.ItemEquip of
-        iqLightArmor: Result := Result + '01';
-        iqMediumArmor: Result := Result + '02';
-        iqHeavyArmor: Result := Result + '03';
-        iqWeaponMelee: begin
-          case AItemInfo.ItemWeapon of
-            iwOneHand: Result := Result + '041';
-            iwTwoHands: Result := Result + '042';
-          end;
+    itEquipment:
+      begin
+        case AItemInfo.ItemEquip of
+          iqLightArmor:
+            Result := Result + '01';
+          iqMediumArmor:
+            Result := Result + '02';
+          iqHeavyArmor:
+            Result := Result + '03';
+          iqWeaponMelee:
+            begin
+              case AItemInfo.ItemWeapon of
+                iwOneHand:
+                  Result := Result + '041';
+                iwTwoHands:
+                  Result := Result + '042';
+              end;
+            end;
+          iqAmplifier:
+            Result := Result + '05';
+          iqWeaponRange:
+            begin
+              case AItemInfo.ItemWeapon of
+                iwOneHand:
+                  Result := Result + '061';
+                iwTwoHands:
+                  Result := Result + '062';
+              end;
+            end;
+          iqShield:
+            Result := Result + '070';
+          iqBuckler:
+            Result := Result + '071';
+          iqAmmo:
+            Result := Result + '072';
+          iqTool:
+            Result := Result + '073';
+          iqOther:
+            Result := Result + '08';
+          iqJewel:
+            Result := Result + '09';
         end;
-        iqAmplifier: Result := Result + '05';
-        iqWeaponRange: begin
-          case AItemInfo.ItemWeapon of
-            iwOneHand: Result := Result + '061';
-            iwTwoHands: Result := Result + '062';
-          end;
-        end;
-        iqShield: Result := Result + '070';
-        iqBuckler: Result := Result + '071';
-        iqAmmo: Result := Result + '072';
-        iqTool: Result := Result + '073';
-        iqOther: Result := Result + '08';
-        iqJewel: Result := Result + '09';
       end;
-    end;
-    itNaturalMat, itAnimalMat, itSystemMat: begin
-      Result := Result + '10' + Format('%.2d', [AItemInfo.ItemCategory1]);
-    end;
-    itTeleporter: Result := Result + '14';
-    itOther: Result := Result + '15';
-    itCata: Result := Result + '16';
+    itNaturalMat, itAnimalMat, itSystemMat:
+      begin
+        Result := Result + '10' + Format('%.2d', [AItemInfo.ItemCategory1]);
+      end;
+    itTeleporter:
+      Result := Result + '14';
+    itOther:
+      Result := Result + '15';
+    itCata:
+      Result := Result + '16';
   end;
 end;
 
@@ -638,7 +678,8 @@ var
 begin
   FRoom.Clear;
   wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
-  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
+    Exit;
   wXmlDoc := TXpObjModel.Create(nil);
   try
     wXmlDoc.LoadDataSource(wItemsFile);
@@ -670,20 +711,49 @@ var
 begin
   FRoom.Clear;
   wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
-  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then Exit;
+  if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
+    Exit;
   wXmlDoc := TXpObjModel.Create(nil);
   try
     wXmlDoc.LoadDataSource(wItemsFile);
     wSection := '';
     wNodeList := nil;
     case FInventPart of
-      0: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR); wSection := _SECTION_ROOM; end;
-      1: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_BAG);  wSection := _SECTION_BAG; end;
-      2: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);  wSection := _SECTION_PET1; end;
-      3: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);  wSection := _SECTION_PET2; end;
-      4: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);  wSection := _SECTION_PET3; end;
-      5: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);  wSection := _SECTION_PET4; end;
-      6: begin wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);  wSection := _SECTION_STORE; end;
+      0:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
+          wSection := _SECTION_ROOM;
+        end;
+      1:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_BAG);
+          wSection := _SECTION_BAG;
+        end;
+      2:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);
+          wSection := _SECTION_PET1;
+        end;
+      3:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);
+          wSection := _SECTION_PET2;
+        end;
+      4:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);
+          wSection := _SECTION_PET3;
+        end;
+      5:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);
+          wSection := _SECTION_PET4;
+        end;
+      6:
+        begin
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);
+          wSection := _SECTION_STORE;
+        end;
     end;
 
     GGuarded.Clear;
@@ -743,12 +813,15 @@ begin
           try
             // Set proxy parameters
             if GConfig.ProxyEnabled then
-              wApi.SetProxyParameters(GConfig.ProxyAddress, GConfig.ProxyPort, GConfig.ProxyUsername, GConfig.ProxyPassword)
+              wApi.SetProxyParameters(GConfig.ProxyAddress, GConfig.ProxyPort,
+                GConfig.ProxyUsername, GConfig.ProxyPassword)
             else
               wApi.SetProxyParameters('', 0, '', '');
 
             // Get item icon
-            wApi.ApiItemIcon(wItemInfo.ItemName, wIconFile, wItemInfo.ItemColor, wItemInfo.ItemQuality, wItemInfo.ItemSize, IfThen(wItemInfo.ItemSap, 0, -1), wItemInfo.ItemDestroyed, wItemInfo.ItemLocked);
+            wApi.ApiItemIcon(wItemInfo.ItemName, wIconFile, wItemInfo.ItemColor,
+              wItemInfo.ItemQuality, wItemInfo.ItemSize, IfThen(wItemInfo.ItemSap,
+              0, -1), wItemInfo.ItemDestroyed, wItemInfo.ItemLocked);
             try
               wPng.LoadFromStream(wIconFile);
               wPng.SaveToFile(FStoragePath + wItemInfo.ItemFileName);
@@ -791,11 +864,11 @@ var
   wBlue: Integer;
 begin
   if Length(ALogColor) <> 7 then
-    raise Exception.Create('Invalid color: '+ALogColor);
+    raise Exception.Create('Invalid color: ' + ALogColor);
 
-  wRed := (StrToInt('$'+ALogColor[3]) shl 4);
-  wGreen := (StrToInt('$'+ALogColor[4]) shl 4);
-  wBlue := (StrToInt('$'+ALogColor[5]) shl 4);
+  wRed := (StrToInt('$' + ALogColor[3]) shl 4);
+  wGreen := (StrToInt('$' + ALogColor[4]) shl 4);
+  wBlue := (StrToInt('$' + ALogColor[5]) shl 4);
 
   Result := '#' + IntToHex(wRed, 2) + IntToHex(wGreen, 2) + IntToHex(wBlue, 2);
 end;
@@ -855,22 +928,18 @@ var
   wChatSize: Cardinal;
   wTotalBytes: Integer;
   wFirstLine: Boolean;
-  
   wDate: String;
   wText: String;
   wTextHtml, wTextBbcode, wTextBrut: String;
   wLine, wLine2: String;
   wCharacter: String;
   wUtf8File: Boolean;
-
   wSysColor, wBackColor: String;
   wColorText1, wColorText2: String;
   wColorPos1, wColorPos2: Integer;
   wChannel: String;
-
   wDateStart, wDateEnd, wDateLine: TDateTime;
   wListChannels, wListCharacters: TStringList;
-
   wSystemMessage: Boolean;
   wWriteEnabled: Boolean;
 begin
@@ -889,13 +958,13 @@ begin
     // Open files
     AssignFile(wChatLog, FLogFile);
     Reset(wChatLog);
-    
+
     AssignFile(wHtmlFile, LogFileHtml);
     Rewrite(wHtmlFile);
-    
+
     AssignFile(wBbcodeFile, LogFileBbode);
     Rewrite(wBbcodeFile);
-    
+
     AssignFile(wTextFile, LogFileText);
     Rewrite(wTextFile);
     try
@@ -904,7 +973,8 @@ begin
       wReg2.ModifierG := False;
 
       // Header
-      WriteLn(wHtmlFile, Format('<html><head><title></title></head><body bgcolor="%s"><font face="%s" size=2 color="%s">', [wBackColor, _FONT_NAME, wSysColor]));
+      WriteLn(wHtmlFile, Format('<html><head><title></title></head><body bgcolor="%s"><font face="%s" size=2 color="%s">',
+        [wBackColor, _FONT_NAME, wSysColor]));
       WriteLn(wBbcodeFile, '[quote]');
 
       // All lines
@@ -918,12 +988,14 @@ begin
       wTotalBytes := 0;
       wChatSize := MdkFileSize(FLogFile);
       while not Eof(wChatLog) do begin
-        if Self.ModalResult = mrCancel then Exit;
+        if Self.ModalResult = mrCancel then
+          Exit;
         ReadLn(wChatLog, wLine);
 
         // Empty line ?
         wLine := Trim(wLine);
-        if Length(wLine) = 0 then Continue;
+        if Length(wLine) = 0 then
+          Continue;
 
         // Decode the line (UTF-8)
         if wUtf8File then begin
@@ -943,7 +1015,7 @@ begin
         if wReg.Exec(wLine) then begin
           // Date at the beginning of the line
           wDateLine := EncodeDateTime(StrToInt(wReg.Match[1]), StrToInt(wReg.Match[2]), StrToInt(wReg.Match[3]),
-                                      StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
+            StrToInt(wReg.Match[4]), StrToInt(wReg.Match[5]), StrToInt(wReg.Match[6]), 0);
           if wDateStart = 0 then
             wDateStart := wDateLine;
 
@@ -957,7 +1029,8 @@ begin
             wTextHtml := wLine;
             wTextBbcode := wLine;
             wTextBrut := wLine;
-          end else begin
+          end
+          else begin
             // Initialization
             wTextHtml := '';
             wTextBbcode := '';
@@ -968,7 +1041,7 @@ begin
             wReg2.Expression := '@\{\w{4}\}.*(\w+)\s';
             if wReg2.Exec(wLine) then begin
               wCharacter := wReg2.Match[1];
-              wCharacter := UpperCase(wCharacter[1]) + RightStr(wCharacter, Length(wCharacter)-1);
+              wCharacter := UpperCase(wCharacter[1]) + RightStr(wCharacter, Length(wCharacter) - 1);
               if wListCharacters.IndexOf(wCharacter) < 0 then
                 wListCharacters.Append(wCharacter);
             end;
@@ -986,7 +1059,7 @@ begin
 
             // First color
             if wColorPos1 > 0 then begin
-              wText := Copy(wLine, wColorPos1 + 7, wColorPos2-8);
+              wText := Copy(wLine, wColorPos1 + 7, wColorPos2 - 8);
               wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText1), wText);
               wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText1), wText);
               wTextBrut := wText;
@@ -1000,13 +1073,14 @@ begin
               if (wListChannels.IndexOf(wChannel) < 0) then
                 wListChannels.Append(wChannel);
 
-              wText := Copy(wLine, wColorPos2 + 7, Length(wLine)-wColorPos2-6);
+              wText := Copy(wLine, wColorPos2 + 7, Length(wLine) - wColorPos2 - 6);
               wTextHtml := wTextHtml + ColorTextHtml(LogToHtmlColor(wColorText2), wText);
               wTextBbcode := wTextBbcode + ColorTextBbcode(LogToHtmlColor(wColorText2), wText);
               wTextBrut := wTextBrut + wText;
             end;
           end;
-        end else begin
+        end
+        else begin
           // No date at the beginning of the line
           wDate := '';
           wTextHtml := ColorTextHtml(LogToHtmlColor(wColorText2), wLine);
@@ -1022,15 +1096,16 @@ begin
         end;
 
         // Write HTML code
-        wWriteEnabled := ((not wSystemMessage) or (wSystemMessage and CbSystemMessage.Checked and CheckSystemFilter(wTextBrut)));
+        wWriteEnabled := ((not wSystemMessage) or (wSystemMessage and
+          CbSystemMessage.Checked and CheckSystemFilter(wTextBrut)));
         if not AFirstLoading then
           // Check options
           wWriteEnabled :=
-           (wWriteEnabled) and 
-           (wDateLine >= (DateOf(DatePickerStart.Date) + TimeOf(TimePickerStart.Time))) and
-           (wDateLine <= (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) and
-           ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wChannel)])) and
-           ((wSystemMessage) or ((ListCharacters.Count > 0) and ListCharacters.Checked[ListCharacters.Items.IndexOf(wCharacter)]));
+            (wWriteEnabled) and
+            (wDateLine >= (DateOf(DatePickerStart.Date) + TimeOf(TimePickerStart.Time))) and
+            (wDateLine <= (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) and
+            ((wSystemMessage) or ((ListChannels.Count > 0) and ListChannels.Checked[ListChannels.Items.IndexOf(wChannel)])) and
+            ((wSystemMessage) or ((ListCharacters.Count > 0) and ListCharacters.Checked[ListCharacters.Items.IndexOf(wCharacter)]));
 
         // Writing OK
         if wWriteEnabled then begin
@@ -1040,14 +1115,14 @@ begin
         end;
 
         // Stop if the end date has passed
-        if (not AFirstLoading) and (wDateLine > (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) then Break;
+        if (not AFirstLoading) and (wDateLine > (DateOf(DatePickerEnd.Date) + TimeOf(TimePickerEnd.Time))) then
+          Break;
 
         // Progression
-        wTotalBytes := wTotalBytes + Length(wLine)+2;
-        ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
+        wTotalBytes := wTotalBytes + Length(wLine) + 2;
+        ProgressBar.Position := Trunc((wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
       end; // end while
-
       // Date end
       if (wDateStart > 0) then
         wDateEnd := wDateLine;
@@ -1080,8 +1155,7 @@ begin
       // Footer
       WriteLn(wHtmlFile, '</font></body></html>');
       WriteLn(wBbcodeFile, '[/quote]');
-    finally
-      // Free objects
+    finally      // Free objects
       wListCharacters.Free;
       wListChannels.Free;
       wReg2.Free;
@@ -1144,22 +1218,25 @@ begin
     if ADate = 0 then begin
       // suppression des messages système
       while not Eof(wChatLog) do begin
-        if ModalResult = mrCancel then Exit;
+        if ModalResult = mrCancel then
+          Exit;
 
         if not IsSystemLine(wLine) then
           WriteLn(wNewFile, wLine);
 
         // Progression
-        wTotalBytes := wTotalBytes + Length(wLine)+2;
-        ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
+        wTotalBytes := wTotalBytes + Length(wLine) + 2;
+        ProgressBar.Position := Trunc((wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
 
         ReadLn(wChatLog, wLine);
       end;
-    end else begin
+    end
+    else begin
       // suppression des vieux messages
       while not Eof(wChatLog) do begin
-        if ModalResult = mrCancel then Exit;
+        if ModalResult = mrCancel then
+          Exit;
 
         wDateLine := 0;
         wYear := StrToIntDef(Copy(wLine, 1, 4), -1);
@@ -1173,8 +1250,8 @@ begin
           WriteLn(wNewFile, wLine);
 
         // Progression
-        wTotalBytes := wTotalBytes + Length(wLine)+2;
-        ProgressBar.Position := Trunc( (wTotalBytes / wChatSize) * 100);
+        wTotalBytes := wTotalBytes + Length(wLine) + 2;
+        ProgressBar.Position := Trunc((wTotalBytes / wChatSize) * 100);
         Application.ProcessMessages;
 
         ReadLn(wChatLog, wLine);
@@ -1210,3 +1287,4 @@ begin
 end;
 
 end.
+

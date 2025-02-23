@@ -25,8 +25,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi,
-  LcUnit, StrUtils, ComCtrls, Buttons, SyncObjs, CoolTrayIcon, SevenButton;
+  Dialogs, StdCtrls, Grids, XpDOM, Contnrs, pngimage, ExtCtrls, RyzomApi, LcUnit,
+  StrUtils, ComCtrls, Buttons, SyncObjs, CoolTrayIcon, SevenButton;
 
 resourcestring
   RS_ALERT_DURABILITY = 'la durabilité de l''objet %s Q%d est en dessous du seuil de surveillance (%d/%d)';
@@ -42,7 +42,8 @@ resourcestring
   RS_ALERT_HINT = 'Nouvelles alertes !';
 
 type
-  TAlertType = (atDurability, atQuantity, atUnfound, atAdded, atRemoved, atModified, atSales, atVolumeRoom, atVolumeGuild, atSeason);
+  TAlertType = (atDurability, atQuantity, atUnfound, atAdded, atRemoved,
+    atModified, atSales, atVolumeRoom, atVolumeGuild, atSeason);
 
   TAlertMessage = class(TObject)
   public
@@ -59,7 +60,6 @@ type
     ItemName: String;
   end;
 
-  
   TFormAlert = class(TForm)
     RichEditAlert: TRichEdit;
     Panel1: TPanel;
@@ -87,7 +87,8 @@ var
 
 implementation
 
-uses UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain;
+uses
+  UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain;
 
 {$R *.dfm}
 
@@ -132,64 +133,78 @@ begin
 
           wStart := Length(RichEditAlert.Text);
           case MsgType of
-            atDurability: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_DURABILITY,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1, MsgValue2]));
-            end;
-            atQuantity: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_QUANTITY,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1, MsgValue2]));
-            end;
-            atUnfound: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_UNFOUND,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality]));
-            end;
-            atAdded: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_ADDED,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1]));
-            end;
-            atRemoved: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_REMOVED,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1]));
-            end;
-            atModified: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_MODIFIED,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1, MsgValue2]));
-            end;
-            atSales: begin
-              wExpiration := Format('%d %s %s %d %s', [{MsgValue1, RS_DAYS, }MsgValue2, RS_HOURS, RS_AND, MsgValue3, RS_MINUTES]);
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_SALES,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgObject, MsgQuality, wExpiration, MsgInfo]));
-            end;
-            atVolumeRoom: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_VOLUME_ROOM,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgValue1, MsgValue2]));
-            end;
-            atVolumeGuild: begin
-              RichEditAlert.Lines.Append(Format('%s | %s (%s): '+RS_ALERT_VOLUME_GUILD,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                MsgName, MsgLocation, MsgValue1, MsgValue2]));
-            end;
-            atSeason: begin
-              wExpiration := Format('%d %s %s %d %s', [{MsgValue1, RS_DAYS, }MsgValue2, RS_HOURS, RS_AND, MsgValue3, RS_MINUTES]);
-              RichEditAlert.Lines.Append(Format('%s | '+RS_ALERT_SEASON,
-                [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
-                wExpiration, MsgInfo]));
-            end;
+            atDurability:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_DURABILITY,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1, MsgValue2]));
+              end;
+            atQuantity:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_QUANTITY,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1, MsgValue2]));
+              end;
+            atUnfound:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_UNFOUND,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality]));
+              end;
+            atAdded:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_ADDED,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1]));
+              end;
+            atRemoved:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_REMOVED,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1]));
+              end;
+            atModified:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_MODIFIED,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality, MsgValue1, MsgValue2]));
+              end;
+            atSales:
+              begin
+                wExpiration := Format('%d %s %s %d %s', [
+                  {MsgValue1, RS_DAYS, }
+                  MsgValue2, RS_HOURS, RS_AND, MsgValue3, RS_MINUTES]);
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_SALES,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgObject, MsgQuality, wExpiration, MsgInfo]));
+              end;
+            atVolumeRoom:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_VOLUME_ROOM,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgValue1, MsgValue2]));
+              end;
+            atVolumeGuild:
+              begin
+                RichEditAlert.Lines.Append(Format('%s | %s (%s): ' + RS_ALERT_VOLUME_GUILD,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  MsgName, MsgLocation, MsgValue1, MsgValue2]));
+              end;
+            atSeason:
+              begin
+                wExpiration := Format('%d %s %s %d %s', [
+                  {MsgValue1, RS_DAYS, }
+                  MsgValue2, RS_HOURS, RS_AND, MsgValue3, RS_MINUTES]);
+                RichEditAlert.Lines.Append(Format('%s | ' + RS_ALERT_SEASON,
+                  [FormatDateTime('yyyy-mm-dd hh:nn:ss', MsgDate),
+                  wExpiration, MsgInfo]));
+              end;
           end;
 
           // Change styles
           if MsgName <> '' then begin
             wPos := PosEx(MsgName, RichEditAlert.Text, wStart);
-            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelStart := wPos - 1;
             RichEditAlert.SelLength := Length(MsgName);
             RichEditAlert.SelAttributes.Style := [fsBold];
             RichEditAlert.SelAttributes.Color := clBlack;
@@ -197,23 +212,23 @@ begin
 
           if MsgObject <> '' then begin
             wPos := PosEx(MsgObject, RichEditAlert.Text, wStart);
-            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelStart := wPos - 1;
             RichEditAlert.SelLength := Length(MsgObject);
             RichEditAlert.SelAttributes.Style := [fsBold];
             RichEditAlert.SelAttributes.Color := $007D491F;
           end;
 
           if MsgQuality > 0 then begin
-            wPos := PosEx('Q'+IntToStr(MsgQuality), RichEditAlert.Text, wStart);
-            RichEditAlert.SelStart := wPos-1;
-            RichEditAlert.SelLength := Length('Q'+IntToStr(MsgQuality));
+            wPos := PosEx('Q' + IntToStr(MsgQuality), RichEditAlert.Text, wStart);
+            RichEditAlert.SelStart := wPos - 1;
+            RichEditAlert.SelLength := Length('Q' + IntToStr(MsgQuality));
             RichEditAlert.SelAttributes.Style := [fsBold];
             RichEditAlert.SelAttributes.Color := $000000CC;
           end;
 
           if MsgLocation <> '' then begin
             wPos := PosEx(MsgLocation, RichEditAlert.Text, wStart);
-            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelStart := wPos - 1;
             RichEditAlert.SelLength := Length(MsgLocation);
             RichEditAlert.SelAttributes.Style := [];
             RichEditAlert.SelAttributes.Color := $00008000;
@@ -221,14 +236,14 @@ begin
 
           if MsgInfo <> '' then begin
             wPos := PosEx(MsgInfo, RichEditAlert.Text, wStart);
-            RichEditAlert.SelStart := wPos-1;
+            RichEditAlert.SelStart := wPos - 1;
             RichEditAlert.SelLength := Length(MsgInfo);
             RichEditAlert.SelAttributes.Style := [];
             RichEditAlert.SelAttributes.Color := $00008000;
           end;
 
           RichEditAlert.SelLength := 0;
-          RichEditAlert.Perform(EM_SCROLLCARET, 0 ,0);
+          RichEditAlert.Perform(EM_SCROLLCARET, 0, 0);
           RichEditAlert.Refresh;
         end;
       finally
@@ -301,7 +316,7 @@ var
   wAlertDir: String;
   wAlertFile: String;
 begin
-  if (GConfig.SaveAlert) and (RichEditAlert.Lines.Count > 0 ) then begin
+  if (GConfig.SaveAlert) and (RichEditAlert.Lines.Count > 0) then begin
     wAlertDir := Format('%s\%s\%s', [GConfig.CurrentDir, _ALERT_DIR, FormatDateTime('yyyymm', Now)]);
     ForceDirectories(wAlertDir);
     wAlertFile := Format('%s\alert-%s.rtf', [wAlertDir, FormatDateTime('yyyymmdd-hhnnss', Now)]);
@@ -318,3 +333,4 @@ begin
 end;
 
 end.
+

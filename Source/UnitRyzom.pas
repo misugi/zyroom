@@ -1308,9 +1308,12 @@ begin
         wCoef := 9.0; // food small
       if CompareText(AItemInfo.ItemName, 'winch.sitem') = 0 then
         wCoef := 5.0; // canne à pêche
-      // Special weapons
-      if (CompareText(AItemInfo.ItemName, 'icbm1sa_2.sitem') = 0) {Hache Cleven des Renégats}        or
-        (CompareText(AItemInfo.ItemName, 'icbm1bs.sitem') = 0) {Bâton Shopan de l'Arbre éternel} then begin
+      { Special weapons
+      icbm1sa_2.sitem => Hache Cleven des Renégats
+      icbm1bs.sitem => Bâton Shopan de l'Arbre éternel
+      }
+      if (CompareText(AItemInfo.ItemName, 'icbm1sa_2.sitem') = 0) or
+        (CompareText(AItemInfo.ItemName, 'icbm1bs.sitem') = 0) then begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqWeaponMelee;
         AItemInfo.ItemEcosys := ieCommon;
