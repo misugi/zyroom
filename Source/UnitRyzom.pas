@@ -1374,6 +1374,7 @@ begin
 
         AItemInfo.ItemClass := icBasic;
         if wRegExpr.Match[2] <> '' then begin
+          AItemInfo.MatSpec1[0][1] := 2;
           if Pos('fine', wRegExpr.Match[2]) = 1 then
             AItemInfo.ItemClass := icFine;
           if Pos('choice', wRegExpr.Match[2]) = 1 then
@@ -1384,7 +1385,10 @@ begin
             AItemInfo.ItemClass := icExcellent;
           if Pos('supreme', wRegExpr.Match[2]) = 1 then
             AItemInfo.ItemClass := icSupreme;
-          AItemInfo.MatSpec1[0][1] := 2;
+          if Pos('extra', wRegExpr.Match[2]) = 1 then begin
+            AItemInfo.ItemClass := icSupreme;
+            AItemInfo.MatSpec1[0][1] := 3;
+          end;
         end
         else begin
           AItemInfo.MatSpec1[0][1] := 1;
