@@ -886,7 +886,7 @@ begin
 
       // Materials
       if (ItemType = itAnimalMat) or (ItemType = itNaturalMat) or (ItemType = itSystemMat) then begin
-        // Craft
+        // larve de Kitin ou mp générique ?
         if (Pos('m0312', ItemName) = 1) or (ItemType = itSystemMat) then begin
           LbValueCraft.Caption := RS_CAT_ALL;
           FLbList.Add(LbCraft);
@@ -938,7 +938,7 @@ begin
             TGauge(FindComponent(Format('GaugeCat1Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat1.Height := 35 + Length(MatSpec1) * _LABEL_HEIGHT;
+          PnCat1.Height := 36 + Length(MatSpec1) * _LABEL_HEIGHT;
           for i := 0 to High(MatSpec1) do begin
             with FindComponent(Format('LbCat1Spec%d', [i + 1])) as TLabel do begin
               Visible := True;
@@ -968,7 +968,7 @@ begin
             TGauge(FindComponent(Format('GaugeCat2Spec%d', [i]))).Visible := False;
           end;
 
-          PnCat2.Height := 35 + Length(MatSpec2) * _LABEL_HEIGHT;
+          PnCat2.Height := 36 + Length(MatSpec2) * _LABEL_HEIGHT;
           for i := 0 to High(MatSpec2) do begin
             with FindComponent(Format('LbCat2Spec%d', [i + 1])) as TLabel do begin
               Visible := True;
@@ -1034,8 +1034,8 @@ begin
       end;
 
       // Height of info panels
-      PnInfo.Height := 8 + ((FLbList.Count div 2) * _LABEL_HEIGHT);
-      PnInfo2.Height := 8 + ((FLbList2.Count div 2) * _LABEL_HEIGHT);
+      PnInfo.Height := 10 + ((FLbList.Count div 2) * _LABEL_HEIGHT);
+      PnInfo2.Height := 10 + ((FLbList2.Count div 2) * _LABEL_HEIGHT);
       if ItemBonus then
         PnInfo2.Height := PnInfo2.Height + 24;
 
