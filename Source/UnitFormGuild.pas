@@ -524,7 +524,7 @@ begin
     end
     else begin
       wItemID := GridItem.Cells[3, GridItem.Row];
-      wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
+      wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
       wXmlDoc.LoadDataSource(wInfoFile);
     end;
     {$ENDIF}
