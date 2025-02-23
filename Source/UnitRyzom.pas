@@ -1005,7 +1005,6 @@ begin
     // Teleporters
     if Pos('tp_ka', AItemInfo.ItemName) = 1 then begin
       AItemInfo.ItemType := itTeleporter;
-      wCoef := 0.2;
     end;
 
     // Tool
