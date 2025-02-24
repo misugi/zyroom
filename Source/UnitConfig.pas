@@ -395,8 +395,30 @@ function TConfig.GetPackFile: String;
 var
   wRyzomDir: String;
   wIniFile: TIniFile;
+  wAtysSection: String;
   wAtysFolder: String;
   wPackFile: String;
+
+  function GetAtysSection(): String;
+  var
+    wSections: TStringList;
+    i: Integer;
+  begin
+    wSections := TStringList.Create;
+    try
+      wIniFile.ReadSections(wSections);
+      Result := '';
+      for i := 0 to wSections.Count - 1 do begin
+        if Pos('profile_Atys', wSections[i]) = 1 then begin
+          Result := wSections[i];
+          Exit;
+        end;
+      end;
+    finally
+      wSections.Free;
+    end;
+  end;
+
 begin
   Result := FIniFile.ReadString(_SECTION_GENERAL, _KEY_PACKFILE, '');
   if not FileExists(Result) then begin
@@ -404,11 +426,14 @@ begin
     if DirectoryExists(wRyzomDir) then begin
       wIniFile := TIniFile.Create(IncludeTrailingPathDelimiter(wRyzomDir) + 'ryzom.ini');
       try
-        wAtysFolder := wIniFile.ReadString('atys', 'folder', '0'); // profile 0 par défaut
-        wPackFile := Format('%s\%s\%s', [wRyzomDir, wAtysFolder, _PACK_FILEPATH]);
-        if FileExists(wPackFile) then begin
-          SetPackFile(wPackFile);
-          Result := wPackFile;
+        wAtysSection := GetAtysSection();
+        if Length(wAtysSection) > 0 then begin
+          wAtysFolder := wIniFile.ReadString(wAtysSection, 'folder', '0'); // profile 0 par défaut
+          wPackFile := Format('%s\%s\%s', [wRyzomDir, wAtysFolder, _PACK_FILEPATH]);
+          if FileExists(wPackFile) then begin
+            SetPackFile(wPackFile);
+            Result := wPackFile;
+          end;
         end;
       finally
         wIniFile.Free;
