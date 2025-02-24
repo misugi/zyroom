@@ -145,7 +145,7 @@ const
   _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_|mp_karavan_ep2_)(\w*)\.sitem';
   _EXPR_TOOL = '^(icoka[rm]t|sfxitforage|it).*\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
-  _EXPR_EQUIPMENT_ARMOR = '^ic.a([lmhc]).*';
+  _EXPR_EQUIPMENT_ARMOR = '^ic.a([lmhcbgpsv]).*';
   _EXPR_EQUIPMENT_SHIELD = '^ic(.|ka[rm])s([bs]).*';
   _EXPR_EQUIPMENT_AMPLIFIER = '^ic.+m2ms.*';
   _EXPR_EQUIPMENT_WEAPON = '^ic.+([rm])([12])(.{2}).*';
@@ -749,6 +749,31 @@ begin
     if Length(wNodeValue) > 0 then
       AItemInfo.ItemColor := ToItemColor(wNodeValue);
 
+    // pas de couleur dans le XML ?
+    if AItemInfo.ItemColor = icNone then begin
+      // cas particulier avec l'armure de réfugié => couleur selon la 6ème lettre
+      if Pos('icra', AItemInfo.ItemName) = 1 then begin
+        case Ord(AItemInfo.ItemName[6]) of
+          97:
+            AItemInfo.ItemColor := icBlack; // a
+            101:
+            AItemInfo.ItemColor := icBeige; // e
+            103:
+            AItemInfo.ItemColor := icGreen; // g
+            114:
+            AItemInfo.ItemColor := icRed; // r
+            116:
+            AItemInfo.ItemColor := icTurquoise; // t
+            117:
+            AItemInfo.ItemColor := icBlue; // u
+            118:
+            AItemInfo.ItemColor := icPurple; // v
+            119:
+            AItemInfo.ItemColor := icWhite; // w
+        end;
+      end;
+    end;
+
     // Quality
     wNodeValue := ANode.SelectString('.//quality');
     if Length(wNodeValue) > 0 then
@@ -1071,10 +1096,10 @@ begin
           wRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
           if wRegExpr.Exec(AItemInfo.ItemName) then begin
             case Ord(wRegExpr.Match[1][1]) of
-              108:
-                AItemInfo.ItemEquip := iqLightArmor; // l = light
-                99:
-                AItemInfo.ItemEquip := iqLightArmor; // c = light
+              108, 99:
+                AItemInfo.ItemEquip := iqLightArmor; // l,c = light
+                98, 103, 112, 115, 118:
+                AItemInfo.ItemEquip := iqLightArmor; // b,g,p,s,v = light (armure de réfugié)
                 109:
                 AItemInfo.ItemEquip := iqMediumArmor; // m = medium
                 104:
