@@ -318,7 +318,7 @@ object FormOptions: TFormOptions
       end
       object LbVolumeGuild: TLabel
         Left = 471
-        Top = 0
+        Top = 1
         Width = 61
         Height = 19
         Alignment = taCenter
@@ -334,7 +334,7 @@ object FormOptions: TFormOptions
       end
       object LbVolumeRoom: TLabel
         Left = 403
-        Top = 0
+        Top = 1
         Width = 61
         Height = 19
         Alignment = taCenter
@@ -364,31 +364,43 @@ object FormOptions: TFormOptions
       end
       object EdVolumeRoom: TSpinEdit
         Left = 403
-        Top = 19
+        Top = 21
         Width = 61
-        Height = 30
+        Height = 27
         Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         MaxValue = 2000
         MinValue = 0
+        ParentFont = False
         TabOrder = 0
         Value = 1900
         OnChange = CmbLanguageChange
       end
       object EdVolumeGuild: TSpinEdit
         Left = 471
-        Top = 19
+        Top = 21
         Width = 61
-        Height = 30
+        Height = 27
         Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         MaxValue = 10000
         MinValue = 0
+        ParentFont = False
         TabOrder = 1
         Value = 9800
         OnChange = CmbLanguageChange
       end
       object CbSaveAlertFile: TCheckBox
         Left = 5
-        Top = 168
+        Top = 178
         Width = 461
         Height = 17
         Caption = 'Sauvegarder automatiquement les alertes dans un fichier'
@@ -397,31 +409,43 @@ object FormOptions: TFormOptions
       end
       object EdSalesCount: TSpinEdit
         Left = 471
-        Top = 52
+        Top = 54
         Width = 61
-        Height = 30
+        Height = 27
         Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         MaxValue = 24
         MinValue = 0
+        ParentFont = False
         TabOrder = 3
         Value = 1
         OnChange = CmbLanguageChange
       end
       object EdSeasonCount: TSpinEdit
         Left = 471
-        Top = 85
+        Top = 87
         Width = 61
-        Height = 30
+        Height = 27
         Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Segoe UI'
+        Font.Style = []
         MaxValue = 24
         MinValue = 0
+        ParentFont = False
         TabOrder = 4
         Value = 1
         OnChange = CmbLanguageChange
       end
       object CbShowHint: TCheckBox
         Left = 5
-        Top = 143
+        Top = 153
         Width = 461
         Height = 17
         Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
@@ -430,7 +454,7 @@ object FormOptions: TFormOptions
       end
       object CbIgnoreCata: TCheckBox
         Left = 5
-        Top = 118
+        Top = 128
         Width = 461
         Height = 17
         Caption = 'Ignorer les alertes sur les cristaux'
