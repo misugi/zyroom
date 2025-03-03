@@ -11624,7 +11624,7 @@ object FormMain: TFormMain
       Caption = 'Garder le filtre actif'
       OnClick = ChangeOptions
     end
-    object N2: TMenuItem
+    object MenuSep2: TMenuItem
       Caption = '-'
     end
     object MenuSaveAlert: TMenuItem
@@ -11637,7 +11637,7 @@ object FormMain: TFormMain
       Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
       OnClick = ChangeOptions
     end
-    object N1: TMenuItem
+    object MenuSep1: TMenuItem
       Caption = '-'
     end
     object MenuOpen: TMenuItem

@@ -39,10 +39,10 @@ type
     LbCreatedBy: TLabel;
     LbAuthor: TLabel;
     LbWebsite: TLabel;
-    LbProjectWebsite: TLabel;
+    LbValueWebsite: TLabel;
     ImgRyzom: TImage;
     ImgAgpl: TImage;
-    procedure LbProjectWebsiteClick(Sender: TObject);
+    procedure LbValueWebsiteClick(Sender: TObject);
     procedure ImgRyzomClick(Sender: TObject);
     procedure ImgAgplClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -67,13 +67,13 @@ procedure TFormHome.FormShow(Sender: TObject);
 begin
   ImgRyzom.Hint := _URL_RYZOM_SITE;
   ImgAgpl.Hint := _URL_AGPL;
-  LbProjectWebsite.Hint := _URL_PROJECT_SITE;
+  LbValueWebsite.Hint := _URL_PROJECT_SITE;
 end;
 
 {*******************************************************************************
 Link to the project site
 *******************************************************************************}
-procedure TFormHome.LbProjectWebsiteClick(Sender: TObject);
+procedure TFormHome.LbValueWebsiteClick(Sender: TObject);
 begin
   ShellExecute(0, 'open', _URL_PROJECT_SITE, nil, nil, SW_SHOW);
 end;

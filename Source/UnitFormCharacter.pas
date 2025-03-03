@@ -30,7 +30,7 @@ uses
 
 resourcestring
   RS_CHAR_NEW_CHARACTER = 'Nouveau personnage';
-  RS_CHAR_CHANGE_KEY = 'Changement de clé';
+  RS_CHAR_EDIT_CHARACTER = 'Modification personnage';
   RS_CHAR_COL_CHAR_HEAD = 'Tête';
   RS_CHAR_COL_CHAR_NAME = 'Personnage';
   RS_CHAR_COL_CHAR_NUMBER = 'Numéro';
@@ -96,8 +96,9 @@ var
 implementation
 
 uses
-  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormConfirmation, UnitFormProgress,
-  UnitFormMain, UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr;
+  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormProgress,
+  UnitFormMain, UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr,
+  UnitFormDialog;
 
 {$R *.dfm}
 
@@ -329,7 +330,7 @@ begin
   wRow := GridItem.Row;
   if wRow > 0 then begin
     wItemID := GridItem.Cells[3, wRow];
-    if FormConfirm.ShowConfirmation(RS_CHAR_DELETE_CONFIRMATION) <> mrYes then
+    if FormDialog.Show(RS_CHAR_DELETE_CONFIRMATION, mtConfirmation) <> mrYes then
       Exit;
 
     SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
@@ -365,7 +366,7 @@ begin
     ShowRoom;
   except
     on E: Exception do
-      MessageDlg(E.Message, mtError, [mbOK], 0);
+      FormDialog.Show(E.Message, mtError);
   end;
 end;
 
@@ -437,7 +438,7 @@ begin
   wItemID := GridItem.Cells[3, GridItem.Row];
 
   // prepare the edit window
-  FormEdit.Caption := RS_CHAR_CHANGE_KEY;
+  FormEdit.Caption := RS_CHAR_EDIT_CHARACTER;
   FormEdit.LbAutoKey.Caption := RS_CHAR_KEY;
   FormEdit.EdKey.Text := GCharacter.GetCharKey(wItemID);
   FormEdit.EdComment.Text := GCharacter.GetComment(wItemID);
@@ -498,7 +499,7 @@ begin
     wItemID := GridItem.Cells[3, wRow];
     MdkRemoveDir(GConfig.GetCharRoomPath(wItemID));
     DeleteFile(GConfig.GetCharPath(wItemID) + _INDEX_FILENAME);
-    ShowMessage(RS_RESET_OK);
+    FormDialog.Show(RS_RESET_OK);
   end;
 end;
 
@@ -556,7 +557,7 @@ begin
     // check modules
     if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/@modules'),
       _REQUIRED_MODULES_CHAR) then
-      MessageDlg(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_CHAR, ',')]), mtWarning, [mbOK], 0);
+      FormDialog.Show(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_CHAR, ',')]), mtWarning);
 
     // read info in the XML
     wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/id');

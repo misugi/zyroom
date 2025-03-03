@@ -29,7 +29,6 @@ uses
   UnitFormProgress in 'UnitFormProgress.pas' {FormProgress},
   UnitConfig in 'UnitConfig.pas',
   UnitRyzom in 'UnitRyzom.pas',
-  UnitFormConfirmation in 'UnitFormConfirmation.pas' {FormConfirm},
   UnitFormHome in 'UnitFormHome.pas' {FormHome},
   RyzomApi in 'RyzomApi.pas',
   UnitFormBackup in 'UnitFormBackup.pas' {FormBackup},
@@ -42,7 +41,8 @@ uses
   UnitThreadAlert in 'UnitThreadAlert.pas',
   UnitFormAlert in 'UnitFormAlert.pas' {FormAlert},
   UnitFormLog in 'UnitFormLog.pas' {FormLog},
-  UnitFormWatch in 'UnitFormWatch.pas' {FormWatch};
+  UnitFormWatch in 'UnitFormWatch.pas' {FormWatch},
+  UnitFormDialog in 'UnitFormDialog.pas' {FormDialog};
 
 {$R *.res}
 {$R cat.res}
@@ -54,7 +54,6 @@ begin
   Application.CreateForm(TFormMain, FormMain);
   Application.CreateForm(TFormOptions, FormOptions);
   Application.CreateForm(TFormProgress, FormProgress);
-  Application.CreateForm(TFormConfirm, FormConfirm);
   Application.CreateForm(TFormInvent, FormInvent);
   Application.CreateForm(TFormHome, FormHome);
   Application.CreateForm(TFormBackup, FormBackup);
@@ -67,5 +66,6 @@ begin
   Application.CreateForm(TFormAlert, FormAlert);
   Application.CreateForm(TFormLog, FormLog);
   Application.CreateForm(TFormWatch, FormWatch);
+  Application.CreateForm(TFormDialog, FormDialog);
   Application.Run;
 end.

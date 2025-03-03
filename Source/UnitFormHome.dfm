@@ -13204,7 +13204,7 @@ object FormHome: TFormHome
     ParentFont = False
     Transparent = True
   end
-  object LbProjectWebsite: TLabel
+  object LbValueWebsite: TLabel
     Left = 238
     Top = 267
     Width = 260
@@ -13222,7 +13222,7 @@ object FormHome: TFormHome
     ParentShowHint = False
     ShowHint = True
     Transparent = True
-    OnClick = LbProjectWebsiteClick
+    OnClick = LbValueWebsiteClick
   end
   object ImgRyzom: TImage
     Left = 318

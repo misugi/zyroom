@@ -30,7 +30,7 @@ uses
 
 resourcestring
   RS_NEW_GUILD = 'Nouvelle guilde';
-  RS_CHANGE_KEY = 'Changement de clé';
+  RS_EDIT_GUILD = 'Modification guilde';
   RS_COL_GUILD_LOGO = 'Blason';
   RS_COL_GUILD_NAME = 'Guilde';
   RS_COL_GUILD_NUMBER = 'Numéro';
@@ -91,8 +91,8 @@ var
 implementation
 
 uses
-  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormConfirmation, UnitFormProgress,
-  UnitFormMain, UnitFormFilter, UnitFormRoom;
+  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormProgress,
+  UnitFormMain, UnitFormFilter, UnitFormRoom, UnitFormDialog;
 
 {$R *.dfm}
 
@@ -313,7 +313,7 @@ begin
   wRow := GridItem.Row;
   if wRow > 0 then begin
     wItemID := GridItem.Cells[3, wRow];
-    if FormConfirm.ShowConfirmation(RS_DELETE_CONFIRMATION) <> mrYes then
+    if FormDialog.Show(RS_DELETE_CONFIRMATION, mtConfirmation) <> mrYes then
       Exit;
 
     SendMessage(GridItem.Handle, WM_SETREDRAW, 0, 0);
@@ -349,7 +349,7 @@ begin
     ShowRoom;
   except
     on E: Exception do
-      MessageDlg(E.Message, mtError, [mbOK], 0);
+      FormDialog.Show(E.Message, mtError);
   end;
 end;
 
@@ -420,7 +420,7 @@ begin
   wItemID := GridItem.Cells[3, GridItem.Row];
 
   // prepare the edit window
-  FormEdit.Caption := RS_CHANGE_KEY;
+  FormEdit.Caption := RS_EDIT_GUILD;
   FormEdit.LbAutoKey.Caption := RS_GUILD_KEY;
   FormEdit.EdKey.Text := GGuild.GetGuildKey(wItemID);
   FormEdit.EdComment.Text := GGuild.GetComment(wItemID);
@@ -481,7 +481,7 @@ begin
     wItemID := GridItem.Cells[3, wRow];
     MdkRemoveDir(GConfig.GetGuildRoomPath(wItemID));
     DeleteFile(GConfig.GetGuildPath(wItemID) + _INDEX_FILENAME);
-    ShowMessage(RS_RESET_OK);
+    FormDialog.Show(RS_RESET_OK);
   end;
 end;
 
@@ -530,7 +530,7 @@ begin
     {$ENDIF}
     // check modules
     if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/@modules'), _REQUIRED_MODULES_GUILD) then
-      MessageDlg(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_GUILD, ',')]), mtWarning, [mbOK], 0);
+      FormDialog.Show(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_GUILD, ',')]), mtWarning);
 
     // read info in the XML
     wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/gid');

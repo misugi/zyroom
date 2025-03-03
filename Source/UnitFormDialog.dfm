@@ -1,44 +1,48 @@
-object FormConfirm: TFormConfirm
+object FormDialog: TFormDialog
   Left = 425
   Top = 347
   BorderStyle = bsDialog
-  Caption = 'Information'
-  ClientHeight = 106
-  ClientWidth = 350
-  Color = 12631988
+  ClientHeight = 172
+  ClientWidth = 400
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -15
   Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
-  Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
-  DesignSize = (
-    350
-    106)
   PixelsPerInch = 96
   TextHeight = 20
-  object LbMessage: TLabel
-    Left = 5
-    Top = 7
-    Width = 340
-    Height = 64
+  object ImageSystem: TImage
+    Left = 10
+    Top = 10
+    Width = 48
+    Height = 48
+  end
+  object LbAutoMessage: TLabel
+    Left = 68
+    Top = 10
+    Width = 322
+    Height = 100
     Alignment = taCenter
-    AutoSize = False
     Caption = 
-      'Etes-vous s'#251'r de vouloir restaurer les personnages s'#233'lectionn'#233's ' +
-      '? Et si le message fait trois lignes '#231'a donne quoi ?'
+      'On sait depuis longtemps que travailler avec du texte lisible et' +
+      ' contenant du sens est source de distractions, et emp'#234'che de se ' +
+      'concentrer sur la mise en page elle-m'#234'me. L'#39'avantage du Lorem Ip' +
+      'sum sur un texte g'
     WordWrap = True
   end
   object BtYes: TSevenButton
-    Left = 97
-    Top = 78
-    Width = 75
+    Left = 7
+    Top = 138
+    Width = 74
     Height = 23
-    Anchors = [akLeft, akBottom]
     Caption = 'Oui'
     TabOrder = 0
+    Visible = False
     Border.ColorNormal = 7368816
     Border.ColorHot = 11632444
     Border.ColorDown = 9134636
@@ -80,18 +84,17 @@ object FormConfirm: TFormConfirm
     Fonts.FontFocused.Name = 'Segoe UI'
     Fonts.FontFocused.Style = []
     ModalResult = 6
-    Default = True
     Spacing = 5
     Marging = 5
   end
   object BtNo: TSevenButton
-    Left = 178
-    Top = 78
-    Width = 75
+    Left = 90
+    Top = 138
+    Width = 72
     Height = 23
-    Anchors = [akLeft, akBottom]
     Caption = 'Non'
     TabOrder = 1
+    Visible = False
     Border.ColorNormal = 7368816
     Border.ColorHot = 11632444
     Border.ColorDown = 9134636
@@ -133,18 +136,17 @@ object FormConfirm: TFormConfirm
     Fonts.FontFocused.Name = 'Segoe UI'
     Fonts.FontFocused.Style = []
     ModalResult = 7
-    Cancel = True
     Spacing = 5
     Marging = 5
   end
-  object BtOK: TSevenButton
-    Left = 137
-    Top = 78
-    Width = 75
+  object BtOk: TSevenButton
+    Left = 47
+    Top = 138
+    Width = 74
     Height = 23
-    Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 2
+    Visible = False
     Border.ColorNormal = 7368816
     Border.ColorHot = 11632444
     Border.ColorDown = 9134636
@@ -185,9 +187,13 @@ object FormConfirm: TFormConfirm
     Fonts.FontFocused.Height = -15
     Fonts.FontFocused.Name = 'Segoe UI'
     Fonts.FontFocused.Style = []
-    ModalResult = 2
-    Default = True
+    ModalResult = 1
     Spacing = 5
     Marging = 5
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnMessage = ApplicationEvents1Message
+    Left = 305
+    Top = 20
   end
 end

@@ -81,7 +81,7 @@ implementation
 
 uses
   UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress, Math,
-  DateUtils, UnitFormName, StrUtils, UnitFormConfirmation;
+  DateUtils, UnitFormName, StrUtils, UnitFormDialog;
 
 {$R *.dfm}
 
@@ -251,7 +251,7 @@ var
   wBackupDir: String;
   wIndex: Integer;
 begin
-  if FormConfirm.ShowConfirmation(RS_DELETE_CONFIRMATION) <> mrYes then
+  if FormDialog.Show(RS_DELETE_CONFIRMATION, mtConfirmation) <> mrYes then
     Exit;
 
   wIndex := ListBackup.ItemIndex;
@@ -350,7 +350,7 @@ Restore backup
 *******************************************************************************}
 procedure TFormBackup.BtRestoreClick(Sender: TObject);
 begin
-  if FormConfirm.ShowConfirmation(RS_DESTORE_CONFIRMATION) <> mrYes then
+  if FormDialog.Show(RS_DESTORE_CONFIRMATION, mtConfirmation) <> mrYes then
     Exit;
   RestoreBackup;
 end;

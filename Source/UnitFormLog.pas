@@ -134,7 +134,7 @@ implementation
 
 uses
   UnitConfig, UnitRyzom, MisuDevKit, UnitFormMain, UnitFormProgress, Math,
-  DateUtils, UnitFormConfirmation;
+  DateUtils, UnitFormDialog;
 
 {$R *.dfm}
 
@@ -483,7 +483,7 @@ Demande de confirmation
 *******************************************************************************}
 function TFormLog.GetConfirmation: Boolean;
 begin
-  Result := FormConfirm.ShowConfirmation(RS_DELETECONFIRMATION1 + #13#10 + RS_DELETECONFIRMATION2) = mrYes;
+  Result := FormDialog.Show(RS_DELETECONFIRMATION1 + #13#10 + RS_DELETECONFIRMATION2, mtConfirmation) = mrYes;
 end;
 
 {*******************************************************************************

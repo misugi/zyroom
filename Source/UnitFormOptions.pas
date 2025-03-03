@@ -94,10 +94,10 @@ var
 implementation
 
 uses
-  UnitConfig, UnitRyzom, MisuDevKit, UnitFormConfirmation, UnitFormGuild,
+  UnitConfig, UnitRyzom, MisuDevKit, UnitFormGuild,
   UnitFormEdit, UnitFormMain, UnitFormProgress, UnitFormHome, UnitFormRoom,
   UnitFormCharacter, UnitFormFilter, UnitFormInvent, UnitFormAlert,
-  UnitFormWatch, UnitFormLog, UnitFormBackup, UnitFormName;
+  UnitFormWatch, UnitFormLog, UnitFormBackup, UnitFormName, UnitFormDialog;
 
 {$R *.dfm}
 
@@ -323,7 +323,6 @@ begin
   FormMain.Color := GConfig.InterfaceColor;
   FormEdit.Color := GConfig.InterfaceColor;
   FormProgress.Color := GConfig.InterfaceColor;
-  FormConfirm.Color := GConfig.InterfaceColor;
   FormHome.Color := GConfig.InterfaceColor;
   FormRoom.Color := GConfig.InterfaceColor;
   FormGuild.Color := GConfig.InterfaceColor;
@@ -335,6 +334,7 @@ begin
   FormWatch.Color := GConfig.InterfaceColor;
   FormBackup.Color := GConfig.InterfaceColor;
   FormName.Color := GConfig.InterfaceColor;
+  FormDialog.Color := GConfig.InterfaceColor;
 
   // String resource file
   if FileExists(GConfig.PackFile) then

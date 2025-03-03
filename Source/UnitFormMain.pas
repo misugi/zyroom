@@ -53,9 +53,9 @@ type
     PopupMenuTray: TPopupMenu;
     MenuClose: TMenuItem;
     MenuOpen: TMenuItem;
-    N1: TMenuItem;
+    MenuSep1: TMenuItem;
     MenuShowHint: TMenuItem;
-    N2: TMenuItem;
+    MenuSep2: TMenuItem;
     MenuKeepFilter: TMenuItem;
     MenuSaveAlert: TMenuItem;
     BtOptions: TSevenButton;
