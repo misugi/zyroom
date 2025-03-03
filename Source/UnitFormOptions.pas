@@ -296,7 +296,6 @@ begin
   TranslateComponent(FormMain);
   TranslateComponent(FormEdit);
   TranslateComponent(FormProgress);
-  TranslateComponent(FormConfirm);
   TranslateComponent(FormHome);
   TranslateComponent(FormRoom);
   TranslateComponent(FormGuild);
