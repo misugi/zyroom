@@ -671,6 +671,7 @@ var
   procedure SetProtection;
   var
     wValue: Integer;
+    wRealValue: Double;
     wIndex: Integer;
     wProtect: String;
     i: Integer;
@@ -681,11 +682,25 @@ var
       if wIndex < 0 then
         Continue;
 
+      // ATTENTION la valeur peut être stockée de 2 manières différentes
+      // <protection2factor value="6">0.815375</protection2factor> // avec la propriété value => valeur entière
       wNodeValue := ANode.SelectString(Format('.//craftparameters/protection%dfactor/@value', [i]));
       if Length(wNodeValue) > 0 then begin
         wValue := StrToInt(wNodeValue);
         AItemInfo.BProtect[i] := TItemProtection(wIndex);
         AItemInfo.BProtectValue[i] := wValue;
+        Continue;
+      end;
+
+      // <protection2factor>0.933091</protection2factor> // sans la propriété value => calcul requis
+      wNodeValue := ANode.SelectString(Format('.//craftparameters/protection%dfactor', [i]));
+      if Length(wNodeValue) > 0 then begin
+        wRealValue := StrToFloat2(wNodeValue);
+        SetRoundMode(rmDown);
+        wValue := Round(wRealValue * 8);
+        AItemInfo.BProtect[i] := TItemProtection(wIndex);
+        AItemInfo.BProtectValue[i] := wValue;
+        Continue;
       end;
     end;
   end;
