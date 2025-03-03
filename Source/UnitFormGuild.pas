@@ -91,8 +91,8 @@ var
 implementation
 
 uses
-  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormProgress,
-  UnitFormMain, UnitFormFilter, UnitFormRoom, UnitFormDialog;
+  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormProgress, UnitFormMain,
+  UnitFormFilter, UnitFormRoom, UnitFormDialog;
 
 {$R *.dfm}
 
@@ -490,7 +490,7 @@ Set info
 *******************************************************************************}
 procedure TFormGuild.SetItemInfo(AAction: TActionType);
 var
-  wItemKey: String;
+  wApiKey: String;
   wComment: String;
   wCheckVolume: Boolean;
   wCheckChange: Boolean;
@@ -508,26 +508,34 @@ begin
   wXmlDoc := TXpObjModel.Create(nil);
   try
     // read info on the edit window
-    wItemKey := FormEdit.EdKey.Text;
+    wApiKey := FormEdit.EdKey.Text;
     wComment := FormEdit.EdComment.Text;
     wCheckVolume := FormEdit.CbCheckVolume.Checked;
     wCheckChange := FormEdit.CbCheckChange.Checked;
 
     // call API
+    try
     {$IFNDEF __LOCALINFO}
-    GRyzomApi.ApiGuild(wItemKey, wStream);
-    wXmlDoc.LoadStream(wStream);
-    {$ELSE}
-    if AAction = atAdd then begin
-      GRyzomApi.ApiGuild(wItemKey, wStream);
+      GRyzomApi.ApiGuild(wApiKey, wStream);
       wXmlDoc.LoadStream(wStream);
-    end
-    else begin
-      wItemID := GridItem.Cells[3, GridItem.Row];
-      wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
-      wXmlDoc.LoadDataSource(wInfoFile);
-    end;
+    {$ELSE}
+      if AAction = atAdd then begin
+        GRyzomApi.ApiGuild(wApiKey, wStream);
+        wXmlDoc.LoadStream(wStream);
+      end
+      else begin
+        wItemID := GridItem.Cells[3, GridItem.Row];
+        wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
+        wXmlDoc.LoadDataSource(wInfoFile);
+      end;
     {$ENDIF}
+    except
+      on E: Exception do begin
+        FormDialog.Show(Format(RS_INVALID_APIKEY, [E.Message]), mtError);
+        Exit;
+      end;
+    end;
+    
     // check modules
     if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/@modules'), _REQUIRED_MODULES_GUILD) then
       FormDialog.Show(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_GUILD, ',')]), mtWarning);
@@ -541,7 +549,7 @@ begin
     FDappers := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/money');
 
     // update INI
-    GGuild.SetGuild(AAction, wItemID, wItemKey, wItemName, wComment, wItemServer, wCheckVolume, wCheckChange);
+    GGuild.SetGuild(AAction, wItemID, wApiKey, wItemName, wComment, wItemServer, wCheckVolume, wCheckChange);
 
     // save to info.xml
     {$IFNDEF __LOCALINFO}

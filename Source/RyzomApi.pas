@@ -30,6 +30,7 @@ uses
 resourcestring
   RS_ERROR_LOADING_XML = 'Erreur de chargement du flux XML';
   RS_REQUIRED_MODULES = 'Veuillez activer tous les modules requis sur votre clé API : %s';
+  RS_INVALID_APIKEY = 'La clé API est probablement invalide : %s';
 
 const
   _API_BASE_URL = 'https://api.ryzom.com';

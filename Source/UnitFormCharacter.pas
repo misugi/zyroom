@@ -96,9 +96,8 @@ var
 implementation
 
 uses
-  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormProgress,
-  UnitFormMain, UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr,
-  UnitFormDialog;
+  UnitFormEdit, UnitRyzom, MisuDevKit, UnitFormProgress, UnitFormMain,
+  UnitFormFilter, UnitFormInvent, ComCtrls, RegExpr, UnitFormDialog;
 
 {$R *.dfm}
 
@@ -509,7 +508,7 @@ Set info
 procedure TFormCharacter.SetItemInfo(AAction: TActionType);
 var
   i: Integer;
-  wItemKey: String;
+  wApiKey: String;
   wComment: String;
   wCheckVolume: Boolean;
   wCheckSales: Boolean;
@@ -534,26 +533,34 @@ begin
   wList := TStringList.Create;
   try
     // read info on the edit window
-    wItemKey := FormEdit.EdKey.Text;
+    wApiKey := FormEdit.EdKey.Text;
     wComment := FormEdit.EdComment.Text;
     wCheckVolume := FormEdit.CbCheckVolume.Checked;
     wCheckSales := FormEdit.CbCheckChange.Checked;
 
     // call API
+    try
     {$IFNDEF __LOCALINFO}
-    GRyzomApi.ApiCharacter(wItemKey, wStream);
-    wXmlDoc.LoadStream(wStream);
-    {$ELSE}
-    if AAction = atAdd then begin
-      GRyzomApi.ApiCharacter(wItemKey, wStream);
+      GRyzomApi.ApiCharacter(wApiKey, wStream);
       wXmlDoc.LoadStream(wStream);
-    end
-    else begin
-      wItemID := GridItem.Cells[3, GridItem.Row];
-      wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
-      wXmlDoc.LoadDataSource(wInfoFile);
-    end;
+    {$ELSE}
+      if AAction = atAdd then begin
+        GRyzomApi.ApiCharacter(wApiKey, wStream);
+        wXmlDoc.LoadStream(wStream);
+      end
+      else begin
+        wItemID := GridItem.Cells[3, GridItem.Row];
+        wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
+        wXmlDoc.LoadDataSource(wInfoFile);
+      end;
     {$ENDIF}
+    except
+      on E: Exception do begin
+        FormDialog.Show(Format(RS_INVALID_APIKEY, [E.Message]), mtError);
+        Exit;
+      end;
+    end;
+  
     // check modules
     if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/@modules'),
       _REQUIRED_MODULES_CHAR) then
@@ -568,7 +575,7 @@ begin
     FDappers := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/money');
 
     // update INI
-    GCharacter.SetChar(AAction, wItemID, wItemKey, wItemName, wItemServer,
+    GCharacter.SetChar(AAction, wItemID, wApiKey, wItemName, wItemServer,
       wComment, wItemGuild, wCheckVolume, wCheckSales);
 
     // save to info.xml
