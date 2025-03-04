@@ -747,10 +747,14 @@ function TGuild.GetGuildKey(AGuildID: String): String;
 var
   wKey: String;
 begin
+  Result := '';
   wKey := FIniFile.ReadString(AGuildID, _KEY_KEY, '');
   if wKey = '' then
     raise Exception.Create(RS_ERROR_KEY_NOTFOUND);
-  Result := DESEncryptStringEx(wKey, _ENCRYPTION_KEY, False);
+  try
+    Result := DESEncryptStringEx(wKey, _ENCRYPTION_KEY, False);
+  except
+  end;
 end;
 
 {*******************************************************************************
@@ -948,10 +952,14 @@ function TCharacter.GetCharKey(ACharID: String): String;
 var
   wKey: String;
 begin
+  Result := '';
   wKey := FIniFile.ReadString(ACharID, _KEY_KEY, '');
   if wKey = '' then
     raise Exception.Create(RS_ERROR_KEY_NOTFOUND);
-  Result := DESEncryptStringEx(wKey, _ENCRYPTION_KEY, False);
+  try
+    Result := DESEncryptStringEx(wKey, _ENCRYPTION_KEY, False);
+  except
+  end;
 end;
 
 {*******************************************************************************
