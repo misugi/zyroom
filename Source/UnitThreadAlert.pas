@@ -48,11 +48,11 @@ begin
 
   FPause := TEvent.Create(nil, True, False, IntToStr(Self.ThreadID));
   FPause.ResetEvent;
-  {$IFNDEF __DEBUG}
+{$IFNDEF __DEBUG}
   FTimeout := 3600000; // 1h
-  {$ELSE}
+{$ELSE}
   FTimeout := 10000;
-  {$ENDIF}
+{$ENDIF}
 
   FApi := TRyzomApi.Create;
   // Set proxy parameters

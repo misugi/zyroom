@@ -268,7 +268,7 @@ begin
     FreeAndNil(FGuardFile);
     FGuardFile := TIniFile.Create(wGuardFile);
 
-    {$IFNDEF  __NOSYNCH}
+{$IFNDEF  __NOSYNCH}
     wXmlDoc.LoadDataSource(GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME);
     try
       wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
@@ -280,7 +280,7 @@ begin
     finally
       GStrings.SaveToFile(wIndexFile);
     end;
-    {$ENDIF}
+{$ENDIF}
   finally
     wXmlDoc.Free;
     wXmlFile.Free;
@@ -316,7 +316,7 @@ begin
     FreeAndNil(FGuardFile);
     FGuardFile := TIniFile.Create(wGuardFile);
 
-    {$IFNDEF __NOSYNCH}
+{$IFNDEF __NOSYNCH}
     wXmlDoc.LoadDataSource(GConfig.GetCharPath(ACharID) + _INFO_FILENAME);
     try
       // Room
@@ -377,7 +377,7 @@ begin
     finally
       GStrings.SaveToFile(wIndexFile);
     end;
-    {$ENDIF}
+{$ENDIF}
   finally
     wXmlDoc.Free;
   end;

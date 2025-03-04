@@ -135,14 +135,14 @@ Creates the form
 *******************************************************************************}
 procedure TFormOptions.FormCreate(Sender: TObject);
 begin
-  {$IFNDEF __DEBUG}
+{$IFNDEF __DEBUG}
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
   EnumSystemLocales(@LocalesCallback, LCID_SUPPORTED);
-  {$ELSE}
+{$ELSE}
   // no limit
   EdSalesCount.MaxValue := 0;
   EdSeasonCount.MaxValue := 0;
-  {$ENDIF}
+{$ENDIF}
 end;
 
 {*******************************************************************************
@@ -290,7 +290,7 @@ Applies settings of the application
 procedure TFormOptions.ApplyConfig;
 begin
   // Language of the interface
-  {$IFNDEF __DEBUG}
+{$IFNDEF __DEBUG}
   LoadLcf(GConfig.LanguageFileName, GConfig.Language, nil, nil);
   TranslateComponent(FormOptions);
   TranslateComponent(FormMain);
@@ -309,7 +309,7 @@ begin
   TranslateComponent(FormLog);
   TranslateComponent(FormBackup);
   TranslateComponent(FormName);
-  {$ENDIF}
+{$ENDIF}
 
   FormInvent.UpdateLanguage;
   FormCharacter.UpdateLanguage;

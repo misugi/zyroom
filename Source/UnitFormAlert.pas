@@ -278,9 +278,9 @@ Load alert file
 procedure TFormAlert.FormCreate(Sender: TObject);
 begin
   RichEditAlert.Clear;
-  {$IFDEF __DEBUG}
+{$IFDEF __DEBUG}
   TimerUpdate.Interval := 5000;
-  {$ENDIF}
+{$ENDIF}
 end;
 
 {*******************************************************************************

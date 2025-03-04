@@ -87,9 +87,9 @@ type
     FPngOpen: TPNGObject;
     FPngRestricted: TPNGObject;
     FCurrentForm: TForm;
-    {$IFNDEF __NOALERT}
+{$IFNDEF __NOALERT}
     FAlert: TAlert;
-    {$ENDIF}
+{$ENDIF}
     FVisible: Boolean;
     FPanelCurrentSeason: TStatusPanel;
     FPanelNextSeason: TStatusPanel;
@@ -165,10 +165,10 @@ begin
   FPanelNextSeason := StatusBar.Panels.Items[1];
   FPanelVersion := StatusBar.Panels.Items[2];
 
-  {$IFNDEF __NOALERT}
+{$IFNDEF __NOALERT}
   // Start thread for alerts
   FAlert := TAlert.Create;
-  {$ENDIF}
+{$ENDIF}
 end;
 
 {*******************************************************************************
@@ -248,10 +248,10 @@ Destroys the form
 *******************************************************************************}
 procedure TFormMain.FormDestroy(Sender: TObject);
 begin
-  {$IFNDEF __NOALERT}
+{$IFNDEF __NOALERT}
   FAlert.Terminate;
   WaitForSingleObject(FAlert.Handle, 10000);
-  {$ENDIF}
+{$ENDIF}
 
   GAlertCS.Free;
   GMsgList.Free;
@@ -295,7 +295,7 @@ var
 begin
   ImgStatus.Hint := RS_STATUS_OPEN;
   ImgStatus.Picture.Assign(FPngOpen);
-  {$IFNDEF __NOSTATUS}
+{$IFNDEF __NOSTATUS}
   try
     // Time
     wStream := TStringStream.Create('');
@@ -311,7 +311,7 @@ begin
     ImgStatus.Hint := RS_STATUS_CLOSED;
     ImgStatus.Picture.Assign(FPngClosed);
   end;
-  {$ENDIF}
+{$ENDIF}
 end;
 
 {*******************************************************************************

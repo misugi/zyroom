@@ -515,10 +515,10 @@ begin
 
     // call API
     try
-    {$IFNDEF __LOCALINFO}
+{$IFNDEF __LOCALINFO}
       GRyzomApi.ApiGuild(wApiKey, wStream);
       wXmlDoc.LoadStream(wStream);
-    {$ELSE}
+{$ELSE}
       if AAction = atAdd then begin
         GRyzomApi.ApiGuild(wApiKey, wStream);
         wXmlDoc.LoadStream(wStream);
@@ -528,7 +528,7 @@ begin
         wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
         wXmlDoc.LoadDataSource(wInfoFile);
       end;
-    {$ENDIF}
+{$ENDIF}
     except
       on E: Exception do begin
         FormDialog.Show(Format(RS_INVALID_APIKEY, [E.Message]), mtError);
@@ -552,19 +552,19 @@ begin
     GGuild.SetGuild(AAction, wItemID, wApiKey, wItemName, wComment, wItemServer, wCheckVolume, wCheckChange);
 
     // save to info.xml
-    {$IFNDEF __LOCALINFO}
+{$IFNDEF __LOCALINFO}
     wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
     wStream.SaveToFile(wInfoFile);
-    {$ENDIF}
+{$ENDIF}
     // Get image
-    {$IFNDEF __LOCALINFO}
+{$IFNDEF __LOCALINFO}
     wStream.Clear;
     GRyzomApi.ApiGuildIcon(wItemIcon, _ICON_SMALL, wStream);
     wIconFile := GConfig.GetGuildPath(wItemID) + _ICON_FILENAME;
     wStream.SaveToFile(wIconFile);
     if AAction = atUpdate then
       TPNGObject(FIconList.Items[GridItem.Row - 1]).LoadFromFile(wIconFile);
-    {$ENDIF}
+{$ENDIF}
     // delete watch file if necessary
     wWatchFile := GConfig.GetGuildPath(wItemID) + _WATCH_FILENAME;
     if ((AAction = atAdd) or (not wCheckChange)) and FileExists(wWatchFile) then

@@ -540,10 +540,10 @@ begin
 
     // call API
     try
-    {$IFNDEF __LOCALINFO}
+{$IFNDEF __LOCALINFO}
       GRyzomApi.ApiCharacter(wApiKey, wStream);
       wXmlDoc.LoadStream(wStream);
-    {$ELSE}
+{$ELSE}
       if AAction = atAdd then begin
         GRyzomApi.ApiCharacter(wApiKey, wStream);
         wXmlDoc.LoadStream(wStream);
@@ -553,7 +553,7 @@ begin
         wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
         wXmlDoc.LoadDataSource(wInfoFile);
       end;
-    {$ENDIF}
+{$ENDIF}
     except
       on E: Exception do begin
         FormDialog.Show(Format(RS_INVALID_APIKEY, [E.Message]), mtError);
@@ -579,10 +579,10 @@ begin
       wComment, wItemGuild, wCheckVolume, wCheckSales);
 
     // save to info.xml
-    {$IFNDEF __LOCALINFO}
+{$IFNDEF __LOCALINFO}
     wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
     wStream.SaveToFile(wInfoFile);
-    {$ENDIF}
+{$ENDIF}
     // search the mount from the pet list
     wNodeList := wXmlDoc.DocumentElement.SelectNodes('/ryzomapi/character/pets/animal');
     try
@@ -598,8 +598,7 @@ begin
     finally
       wNodeList.Free;
     end;
-
-    {$IFNDEF __LOCALINFO}
+{$IFNDEF __LOCALINFO}
     // Gabarit
     wList.Clear;
     wList.Append(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/body/gabarit/@height'));
