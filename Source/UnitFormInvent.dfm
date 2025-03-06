@@ -233,7 +233,6 @@ object FormInvent: TFormInvent
     end
     object MenuCopy: TMenuItem
       Caption = 'Copier'
-      Visible = False
       OnClick = MenuCopyClick
     end
   end

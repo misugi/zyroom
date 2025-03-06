@@ -91,9 +91,6 @@ begin
   TabInvent.DoubleBuffered := True;
   DoubleBuffered := True;
   FGuardFile := nil;
-{$IFDEF __DEBUG}
-  MenuCopy.Visible := True;
-{$ENDIF}
 end;
 
 {*******************************************************************************
