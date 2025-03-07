@@ -663,7 +663,6 @@ Returns information of an item
 procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
   wNodeValue: String;
-  wLocked: String;
   wEnergy: Double;
 
   // lecture des 3 protections sur les bijoux
@@ -805,13 +804,9 @@ begin
       AItemInfo.ItemSize := StrToInt(wNodeValue);
 
     // Locked
-    wLocked := '';
     wNodeValue := ANode.SelectString('.//locked');
-    if Length(wNodeValue) > 0 then begin
+    if Length(wNodeValue) > 0 then
       AItemInfo.ItemLocked := StrToInt(wNodeValue) > 0;
-      if AItemInfo.ItemLocked then
-        wLocked := 'l'; // lettre "l" pour "locked" utilisé dans le nom du fichier image (compatibilité: valeur vide par défaut)
-    end;
 
     // Sap load
     // Attention, 2 noeuds sapload:
@@ -820,8 +815,10 @@ begin
     // => mais ça nous indique toujours pas combien de sorts on peut lancer ! (pour récupérer l'icone correspondante)
     // DONC utilisation d'un booléen juste pour mettre (ou pas) l'icone de charge sans nombre !
     wNodeValue := ANode.SelectString('sapload');
-    if Length(wNodeValue) > 0 then
-      AItemInfo.ItemSap := True;
+    if (Length(wNodeValue) > 0) then
+      // sauf pour les sorts cristallisés
+      if (CompareText(AItemInfo.ItemName, 'crystalized_spell.sitem') <> 0) then
+        AItemInfo.ItemSap := True;
 
     // Destroyed / HP
     wNodeValue := ANode.SelectString('.//hp');
@@ -964,9 +961,10 @@ begin
       AItemInfo.ADefensivePower := StrToIntDef(wNodeValue, 0);
 
     // Image filename
-    AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%d%s%s',
+    AItemInfo.ItemFileName := Format('%s.c%dq%ds%dd%dl%ds%d%s',
       [AItemInfo.ItemName, Ord(AItemInfo.ItemColor), AItemInfo.ItemQuality, AItemInfo.ItemSize,
-      MdkBoolToInteger(AItemInfo.ItemDestroyed), wLocked, _ICON_FORMAT]);
+      MdkBoolToInteger(AItemInfo.ItemDestroyed), MdkBoolToInteger(AItemInfo.ItemLocked),
+      MdkBoolToInteger(AItemInfo.ItemSap), _ICON_FORMAT]);
   except
     on E: Exception do
       Exception.CreateFmt('[GetItemInfoFromXML] %s', [E.Message]);
