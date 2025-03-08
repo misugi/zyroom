@@ -114,10 +114,10 @@ resourcestring
   RS_MENU_UNWATCH = 'Ne plus surveiller';
   RS_TAB_ROOM = 'Pièce';
   RS_TAB_BAG = 'Sac';
-  RS_TAB_PET = 'Mektoub';
+  RS_TAB_MEKTOUB = 'Mektoub';
   RS_TAB_MOUNT = 'Monture';
-  RS_TAB_ANIMAL = 'Animal';
-  RS_TAB_SALES = 'Ventes';
+  RS_TAB_ZIG = 'Zig';
+  RS_TAB_SHOP = 'Ventes';
   RS_DAYS = 'jours';
   RS_HOURS = 'heures';
   RS_MINUTES = 'minutes';
@@ -181,6 +181,8 @@ type
   TItemProtection = (ipAcid, ipCold, ipFire, ipRot, ipShockwave, ipPoison, ipElectricity, ipNone);
 
   TItemResistance = (irDesert, irForest, irLakes, irJungle, irPrime, irNone);
+
+  TCharInvent = (ciBag, ciRoom, ciShop, ciMektoub, ciMount, ciZig, ciPet1, ciPet2, ciPet3, ciPet4, ciPet5, ciPet6, ciPet7);
 
   TItemFilter = record
     Enabled: Boolean;

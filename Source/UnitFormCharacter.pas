@@ -43,9 +43,6 @@ resourcestring
   RS_DOWN = 'Descendre';
   RS_RESET_OK = 'Réinitialisation terminée';
 
-const
-  _EXPR_MOUNT = '^chidb2\.creature$';
-
 type
   TPublicStringGrid = class(TCustomGrid);
 
@@ -82,6 +79,7 @@ type
     procedure ShowRoom;
     procedure UpdateItem(AAuto: Boolean);
     procedure SetItemInfo(AAction: TActionType);
+    procedure SetInventTabs(AXmlData: TXpObjModel);
     procedure MoveRow(AIndex: Integer);
     procedure SelectItem(AItemID: String);
     procedure EnableButtons(AEnabled: Boolean);
@@ -210,18 +208,23 @@ Adds a new guild
 *******************************************************************************}
 procedure TFormCharacter.BtNewClick(Sender: TObject);
 begin
+  try
   // Prepare edit window
-  FormEdit.Caption := RS_CHAR_NEW_CHARACTER;
-  FormEdit.LbAutoKey.Caption := RS_CHAR_KEY;
-  FormEdit.EdKey.Text := '';
-  FormEdit.EdComment.Text := '';
-  FormEdit.CbCheckChange.Caption := RS_CHECK_SALES;
-  FormEdit.CbCheckVolume.Checked := False;
-  FormEdit.CbCheckChange.Checked := False;
+    FormEdit.Caption := RS_CHAR_NEW_CHARACTER;
+    FormEdit.LbAutoKey.Caption := RS_CHAR_KEY;
+    FormEdit.EdKey.Text := '';
+    FormEdit.EdComment.Text := '';
+    FormEdit.CbCheckChange.Caption := RS_CHECK_SALES;
+    FormEdit.CbCheckVolume.Checked := False;
+    FormEdit.CbCheckChange.Checked := False;
 
   // display window
-  if FormEdit.ShowModal = mrOk then
-    SetItemInfo(atAdd);
+    if FormEdit.ShowModal = mrOk then
+      SetItemInfo(atAdd);
+  except
+    on E: Exception do
+      FormDialog.Show(E.Message, mtError);
+  end;
 end;
 
 {*******************************************************************************
@@ -229,7 +232,12 @@ Changes the key of a guild
 *******************************************************************************}
 procedure TFormCharacter.BtUpdateClick(Sender: TObject);
 begin
-  UpdateItem(False);
+  try
+    UpdateItem(False);
+  except
+    on E: Exception do
+      FormDialog.Show(E.Message, mtError);
+  end;
 end;
 
 {*******************************************************************************
@@ -393,7 +401,7 @@ procedure TFormCharacter.ShowRoom;
 begin
   if not GConfig.SaveFilter then
     GRyzomApi.SetDefaultFilter(GCurrentFilter);
-  FormInvent.TabInvent.TabIndex := _INVENT_ROOM;
+  FormInvent.TabInvent.TabIndex := 0; // 1er onglet = sac
   FormMain.ShowMenuForm(FormInvent);
   FormInvent.Dappers := FDappers;
   FormInvent.UpdateRoom;
@@ -507,7 +515,6 @@ Set info
 *******************************************************************************}
 procedure TFormCharacter.SetItemInfo(AAction: TActionType);
 var
-  i: Integer;
   wApiKey: String;
   wComment: String;
   wCheckVolume: Boolean;
@@ -516,20 +523,19 @@ var
   wItemName: String;
   wItemServer: String;
   wItemGuild: String;
-  wGabarit: String;
-  wMorph: String;
   wXmlDoc: TXpObjModel;
   wStream: TMemoryStream;
-  wRegExpr: TRegExpr;
-  wNodeList: TXpNodeList;
   wList: TStringList;
   wInfoFile: String;
+{$IFNDEF __LOCALINFO}
+  i: Integer;
+  wGabarit: String;
+  wMorph: String;
   wIconFile: String;
-  wPetSheet: String;
+{$ENDIF}
 begin
   wStream := TMemoryStream.Create;
   wXmlDoc := TXpObjModel.Create(nil);
-  wRegExpr := TRegExpr.Create;
   wList := TStringList.Create;
   try
     // read info on the edit window
@@ -555,16 +561,14 @@ begin
       end;
 {$ENDIF}
     except
-      on E: Exception do begin
-        FormDialog.Show(Format(RS_INVALID_APIKEY, [E.Message]), mtError);
-        Exit;
-      end;
+      on E: Exception do
+        raise Exception.CreateFmt(RS_INVALID_APIKEY, [E.Message]);
     end;
   
     // check modules
     if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/@modules'),
       _REQUIRED_MODULES_CHAR) then
-      FormDialog.Show(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_CHAR, ',')]), mtWarning);
+      raise Exception.CreateFmt(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_CHAR, ',')]);
 
     // read info in the XML
     wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/character/id');
@@ -583,21 +587,8 @@ begin
     wInfoFile := GConfig.GetCharPath(wItemID) + _INFO_FILENAME;
     wStream.SaveToFile(wInfoFile);
 {$ENDIF}
-    // search the mount from the pet list
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes('/ryzomapi/character/pets/animal');
-    try
-      FormInvent.MountID := -1;
-      for i := 0 to wNodeList.Length - 1 do begin
-        wPetSheet := wNodeList.Item(i).SelectString('sheet');
-        wRegExpr.Expression := _EXPR_MOUNT;
-        if wRegExpr.Exec(wPetSheet) then begin
-          FormInvent.MountID := i;
-          Break;
-        end;
-      end;
-    finally
-      wNodeList.Free;
-    end;
+    // onglets de l'inventaire
+    SetInventTabs(wXmlDoc);
 {$IFNDEF __LOCALINFO}
     // Gabarit
     wList.Clear;
@@ -632,7 +623,7 @@ begin
     wStream.SaveToFile(wIconFile);
     if AAction = atUpdate then
       TPNGObject(FIconList.Items[GridItem.Row - 1]).LoadFromFile(wIconFile);
-    {$ENDIF}
+{$ENDIF}
     // refresh grid info
     if AAction = atAdd then begin
       GCharacter.SetIndex(wItemID, GridItem.RowCount - 1);
@@ -646,9 +637,34 @@ begin
     end;
   finally
     wList.Free;
-    wRegExpr.Free;
     wXmlDoc.Free;
     wStream.Free;
+  end;
+end;
+
+{*==============================================================================
+Onglets de l'inventaire selon les animaux trouvés
+===============================================================================}
+procedure TFormCharacter.SetInventTabs(AXmlData: TXpObjModel);
+var
+  wNodeList: TXpNodeList;
+  wSheetList: TStringList;
+  wSheet: String;
+  i: Integer;
+begin
+  // boucle sur les animaux
+  wSheetList := TStringList.Create;
+  wNodeList := AXmlData.DocumentElement.SelectNodes('/ryzomapi/character/pets/animal');
+  try
+    // boucle sur les animaux
+    for i := 0 to wNodeList.Length - 1 do begin
+      wSheet := wNodeList.Item(i).SelectString('sheet');
+      wSheetList.Append(wSheet);
+    end;
+    FormInvent.SetTabs(wSheetList);
+  finally
+    wNodeList.Free;
+    wSheetList.Free;
   end;
 end;
 

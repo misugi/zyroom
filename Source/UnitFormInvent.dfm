@@ -43,22 +43,13 @@ object FormInvent: TFormInvent
       Height = 492
       Align = alClient
       TabOrder = 0
-      Tabs.Strings = (
-        'Pi'#232'ce'
-        'Sac'
-        'Animal 1'
-        'Animal 2'
-        'Animal 3'
-        'Animal 4'
-        'Ventes')
-      TabIndex = 0
       TabStop = False
       OnChange = TabInventChange
       object CharInvent: TScrollRoom
         Left = 4
-        Top = 31
+        Top = 6
         Width = 535
-        Height = 457
+        Height = 482
         HorzScrollBar.Tracking = True
         VertScrollBar.Increment = 42
         VertScrollBar.Tracking = True

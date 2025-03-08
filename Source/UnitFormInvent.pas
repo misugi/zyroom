@@ -26,7 +26,7 @@ interface
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
   Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles,
-  pngimage, Clipbrd;
+  pngimage, Clipbrd, UnitRyzom;
 
 type
   TFormInvent = class(TForm)
@@ -58,16 +58,17 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure MenuCopyClick(Sender: TObject);
   private
-    FMountID: Integer;
     FCharID: String;
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
     FDappers: String;
-    procedure SetFMountID(const Value: Integer);
+    FInventTabs: array of TCharInvent; // pour la gestion des onglets
+    FInventPos: array of TCharInvent; // pour le chargement des inventaires (position dans le XML)
+    procedure AddTab(ATab: TCharInvent; AType: TCharInvent);
   public
     procedure UpdateRoom;
     procedure UpdateLanguage;
-    property MountID: Integer read FMountID write SetFMountID;
+    procedure SetTabs(ASheetList: TStringList);
     property Dappers: String read FDappers write FDappers;
   end;
 
@@ -77,8 +78,8 @@ var
 implementation
 
 uses
-  UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
-  UnitFormFilter, UnitFormCharacter, UnitFormWatch, Spin;
+  UnitConfig, UnitFormProgress, SysUtils, UnitFormGuild, UnitFormFilter,
+  UnitFormCharacter, UnitFormWatch, Spin;
 
 {$R *.dfm}
 
@@ -166,14 +167,6 @@ begin
 end;
 
 {*******************************************************************************
-Mount ID
-*******************************************************************************}
-procedure TFormInvent.SetFMountID(const Value: Integer);
-begin
-  FMountID := Value + 2;
-end;
-
-{*******************************************************************************
 Adjust items in the scroll box
 *******************************************************************************}
 procedure TFormInvent.CharInventResize(Sender: TObject);
@@ -182,27 +175,36 @@ begin
 end;
 
 {*******************************************************************************
-room/bag/pet1/pet2/pet3/pet4
+Mise à jour des infos selon l'inventaire sélectionné
 *******************************************************************************}
 procedure TFormInvent.UpdateRoom;
 var
+  wTabIndex: Integer;
   wMaxVolume: String;
+  wInventPos: TCharInvent;
+  wInventTab: TCharInvent;
 begin
+  wTabIndex := TabInvent.TabIndex;
+  wInventPos := FInventPos[wTabIndex];
   FCharID := FormCharacter.GridItem.Cells[3, FormCharacter.GridItem.Row];
-  FormProgress.ShowFormInvent(FCharID, CharInvent, TabInvent.TabIndex, GCurrentFilter);
+  FormProgress.ShowFormInvent(FCharID, CharInvent, wInventPos, GCurrentFilter);
 
-  if TabInvent.TabIndex = 0 then
-    wMaxVolume := '/2000' // room
-  else if TabInvent.TabIndex = 1 then
-    wMaxVolume := '/300' // bag
-  else if TabInvent.TabIndex = 6 then
-    wMaxVolume := '' // sales
-  else if FMountID < 2 then
-    wMaxVolume := '' // mount unfound
-  else if TabInvent.TabIndex = FMountID then
-    wMaxVolume := '/300' // mount
-  else
-    wMaxVolume := '/500'; // pack
+  // volume max selon l'inventaire
+  wInventTab := FInventTabs[wTabIndex];
+  case wInventTab of
+    ciBag:
+      wMaxVolume := '/300';
+    ciRoom:
+      wMaxVolume := '/2000';
+    ciShop:
+      wMaxVolume := '';
+    ciMektoub:
+      wMaxVolume := '/500';
+    ciMount:
+      wMaxVolume := '/300';
+    ciZig:
+      wMaxVolume := '/150';
+  end;
 
   LbValueCharName.Caption := FormCharacter.GridItem.Cells[1, FormCharacter.GridItem.Row];
   LbValueVolume.Caption := FormatFloat2('####0.##', FormProgress.TotalVolume) + wMaxVolume;
@@ -215,17 +217,41 @@ Updates names of tab
 procedure TFormInvent.UpdateLanguage;
 var
   i: Integer;
+  wName: String;
+  wType: TCharInvent;
+  wNum: Integer;
 begin
   ImgVolume.Hint := RS_VOLUME;
   ImgDappers.Hint := RS_DAPPERS;
 
-  for i := 2 to 5 do begin // animals
-    if i = FMountID then begin
-      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_MOUNT, i - 1]);
-    end
-    else begin
-      TabInvent.Tabs.Strings[i] := Format('%s %d', [RS_TAB_PET, i - 1]);
+  TabInvent.Tabs.Clear;
+  for i := 0 to High(FInventTabs) do begin
+    wType := FInventPos[i];
+    case FInventTabs[i] of
+      ciBag:
+        wName := RS_TAB_BAG;
+      ciRoom:
+        wName := RS_TAB_ROOM;
+      ciShop:
+        wName := RS_TAB_SHOP;
+      ciMektoub:
+        begin
+          wNum := Ord(wType) - Ord(ciPet1) + 1; // mektoub => ciPet1..ciPet4
+          wName := Format('%s %d', [RS_TAB_MEKTOUB, wNum]);
+        end;
+      ciMount:
+        begin
+          wNum := Ord(wType) - Ord(ciPet1) + 1; // monture => ciPet1..ciPet4
+          wName := Format('%s %d', [RS_TAB_MOUNT, wNum]);
+        end;
+      ciZig:
+        begin
+          wNum := Ord(wType) - Ord(ciPet5) + 1; // zig => ciPet5..ciPet7
+          wName := Format('%s %d', [RS_TAB_ZIG, wNum]);
+        end;
     end;
+
+    TabInvent.Tabs.Append(wName);
   end;
 end;
 
@@ -238,9 +264,9 @@ begin
 
   if Sender is TItemImage then begin
     with TItemImage(Sender).Data as TItemInfo do begin
-      if TabInvent.TabIndex > 5 then
+      // onglet des ventes ?
+      if FInventTabs[TabInvent.TabIndex] = ciShop then
         Exit;
-//      if not(ItemType in [itAnimalMat, itNaturalMat, itSystemMat, itEquipment]) then Exit;
 
       if ItemGuarded then begin
         MenuEdit.Visible := True;
@@ -266,24 +292,24 @@ var
   wSection: String;
   wIdent: String;
   wValue: Integer;
+  wInventPos: TCharInvent;
+  wIdx: Integer;
 begin
   with FItemImage.Data as TItemInfo do begin
     wGuardFile := GConfig.GetCharPath(FCharID) + 'guard.dat';
     FreeAndNil(FGuardFile);
     FGuardFile := TIniFile.Create(wGuardFile);
-    case TabInvent.TabIndex of
-      0:
+    wInventPos := FInventPos[TabInvent.TabIndex];
+    case wInventPos of
+      ciRoom:
         wSection := _SECTION_ROOM;
-      1:
+      ciBag:
         wSection := _SECTION_BAG;
-      2:
-        wSection := _SECTION_PET1;
-      3:
-        wSection := _SECTION_PET2;
-      4:
-        wSection := _SECTION_PET3;
-      5:
-        wSection := _SECTION_PET4;
+      ciPet1..ciPet7:
+        begin
+          wIdx := Ord(wInventPos) - Ord(ciPet1);
+          wSection := Format(_SECTION_PET, [wIdx + 1]);
+        end;
     end;
     wIdent := Format('%d.%d.%s', [ItemSlot, ItemQuality, ItemName]);
     if ItemType = itEquipment then
@@ -331,6 +357,63 @@ Copy the item name
 procedure TFormInvent.MenuCopyClick(Sender: TObject);
 begin
   Clipboard.SetTextBuf(PChar(TItemInfo(FItemImage.Data).ItemName));
+end;
+
+{*==============================================================================
+Définit les onglets
+@param ASheetList liste des sheets pour les animaux (7 items au 07/03/2025)
+===============================================================================}
+procedure TFormInvent.SetTabs(ASheetList: TStringList);
+var
+  i: Integer;
+  wSheet: String;
+  wPet: TCharInvent;
+begin
+  SetLength(FInventTabs, 0);
+  SetLength(FInventPos, 0);
+
+  // sac en premier
+  AddTab(ciBag, ciBag);
+
+  // boucle sur les animaux
+  wPet := ciPet1;
+  for i := 0 to ASheetList.Count - 1 do begin
+    wSheet := ASheetList[i];
+
+    // animal existant ?
+    if Length(wSheet) > 0 then begin
+      // mektoub ?
+      if Pos('chj', wSheet) = 1 then begin
+        AddTab(ciMektoub, wPet)
+      end
+      else begin
+        // zig ?
+        // les zigs sont toujours retournés aux index 4 à 6
+        // ce qui peut servir à mettre une autre condition sur l'index i
+        if Pos('zig', wSheet) > 0 then
+          AddTab(ciZig, wPet)
+        else
+          AddTab(ciMount, wPet);
+      end;
+    end;
+
+    Inc(wPet);
+  end;
+
+  AddTab(ciRoom, ciRoom); // pièce d'appartement
+  AddTab(ciShop, ciShop); // ventes
+end;
+
+{*==============================================================================
+Ajoute un onglet
+===============================================================================}
+procedure TFormInvent.AddTab(ATab: TCharInvent; AType: TCharInvent);
+begin
+  SetLength(FInventTabs, Length(FInventTabs) + 1);
+  FInventTabs[High(FInventTabs)] := ATab;
+
+  SetLength(FInventPos, Length(FInventPos) + 1);
+  FInventPos[High(FInventPos)] := AType;
 end;
 
 end.

@@ -63,11 +63,8 @@ const
   _SECTION_BACKUP = 'BACKUP';
   _SECTION_ROOM = 'room';
   _SECTION_BAG = 'bag';
-  _SECTION_PET1 = 'pet_animal1';
-  _SECTION_PET2 = 'pet_animal2';
-  _SECTION_PET3 = 'pet_animal3';
-  _SECTION_PET4 = 'pet_animal4';
-  _SECTION_STORE = 'store';
+  _SECTION_PET = 'pet_animal%d';
+  _SECTION_SHOP = 'shop';
   _KEY_LANGUAGE = 'Language';
   _KEY_PACKFILE = 'PackFile';
   _KEY_PROXY_ENABLED = 'Enabled';

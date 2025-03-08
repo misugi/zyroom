@@ -301,6 +301,8 @@ var
   wCharName: String;
   wVolume: Double;
   wMsg: TAlertMessage;
+  i: Integer;
+  wXpath, wSection: String;
 begin
   wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
   if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
@@ -313,6 +315,7 @@ begin
   try
     wXmlDoc.LoadDataSource(wItemsFile);
 
+    // pièce
     if Terminated then
       Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
@@ -334,35 +337,23 @@ begin
       end;
     end;
 
+    // sac
     if Terminated then
       Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_BAG);
     CheckItems(wGuardFile, wCharName, _SECTION_BAG, wNodeList, wVolume);
     wNodeList.Free;
 
-    if Terminated then
-      Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);
-    CheckItems(wGuardFile, wCharName, _SECTION_PET1, wNodeList, wVolume);
-    wNodeList.Free;
-
-    if Terminated then
-      Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);
-    CheckItems(wGuardFile, wCharName, _SECTION_PET2, wNodeList, wVolume);
-    wNodeList.Free;
-
-    if Terminated then
-      Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);
-    CheckItems(wGuardFile, wCharName, _SECTION_PET3, wNodeList, wVolume);
-    wNodeList.Free;
-
-    if Terminated then
-      Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);
-    CheckItems(wGuardFile, wCharName, _SECTION_PET4, wNodeList, wVolume);
-    wNodeList.Free;
+    // animaux (7)
+    for i := 0 to 6 do begin
+      if Terminated then
+        Exit;
+      wXpath := Format(_XPATH_PET, [i]);
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes(wXpath);
+      wSection := Format(_SECTION_PET, [i + 1]);
+      CheckItems(wGuardFile, wCharName, wSection, wNodeList, wVolume);
+      wNodeList.Free;
+    end;
   finally
     wXmlDoc.Free;
   end;
@@ -595,7 +586,7 @@ var
   wItemInfo: TItemInfo;
   wMsg: TAlertMessage;
   wNow: TDateTime;
-  {wDays, }  wHours, wMinutes: Integer;
+  {wDays, }    wHours, wMinutes: Integer;
 begin
   if not GCharacter.GetCheckSales(ACharID) then
     Exit;
@@ -612,7 +603,7 @@ begin
 
     if Terminated then
       Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_SHOP);
 
     // Loop sales
     for i := 0 to wNodeList.Length - 1 do begin
@@ -635,7 +626,7 @@ begin
           wMsg.MsgType := atSales;
           wMsg.MsgDate := Now;
           wMsg.MsgName := wCharName;
-          wMsg.MsgLocation := _SECTION_STORE;
+          wMsg.MsgLocation := _SECTION_SHOP;
           wMsg.MsgObject := GRyzomStringPack.GetString(wItemInfo.ItemName);
           wMsg.MsgQuality := wItemInfo.ItemQuality;
           wMsg.MsgValue1 := 0;
@@ -665,7 +656,7 @@ var
   wSeason: String;
   wDayOfSeason: Integer;
   wTimeOfDay: Integer;
-  {wDays, }  wHours, wMinutes: Integer;
+  {wDays, }    wHours, wMinutes: Integer;
   wNextSeason: TDateTime;
   wMsg: TAlertMessage;
   wNow: TDateTime;

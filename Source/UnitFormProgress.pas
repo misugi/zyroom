@@ -42,12 +42,6 @@ const
   _TASK_INVENT = 3;
   _TASK_PARSE_LOG = 4;
   _TASK_CLEAN_LOG = 5;
-  _INVENT_ROOM = 0;
-  _INVENT_BAG = 1;
-  _INVENT_PET1 = 2;
-  _INVENT_PET2 = 3;
-  _INVENT_PET3 = 4;
-  _INVENT_PET4 = 5;
 
 type
   TGetItemThread = class(TThread)
@@ -72,7 +66,7 @@ type
   private
     FEnabled: Boolean;
     FProcessingType: Integer;
-    FInventPart: Integer;
+    FInventPart: TCharInvent;
     FGuildID: String;
     FCharID: String;
     FRoom: TScrollRoom;
@@ -103,7 +97,7 @@ type
     procedure ShowFormSyncGuild(AGuildID: String);
     procedure ShowFormSyncChar(ACharID: String);
     procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
-    procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
+    procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: TCharInvent; AFilter: TItemFilter);
     procedure ShowParseLog(ALogFile: String; AFirstLoading: Boolean);
     procedure ShowCleanLog(ALogFile: String; ADate: TDateTime = 0);
     function LogToHtmlColor(ALogColor: String): String;
@@ -296,6 +290,8 @@ var
   wNodeList: TXpNodeList;
   wIndexFile: String;
   wGuardFile: String;
+  i: Integer;
+  wXpath: String;
 begin
   wXmlDoc := TXpObjModel.Create(nil);
   try
@@ -335,40 +331,19 @@ begin
         wNodeList.Free;
       end;
 
-      // Pet1
-      wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);
-      try
-        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-      finally
-        wNodeList.Free;
-      end;
-
-      // Pet2
-      wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);
-      try
-        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-      finally
-        wNodeList.Free;
-      end;
-
-      // Pet3
-      wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);
-      try
-        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-      finally
-        wNodeList.Free;
-      end;
-
-      // Pet4
-      wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);
-      try
-        GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
-      finally
-        wNodeList.Free;
+      // animaux (7)
+      for i := 0 to 6 do begin
+        wXpath := Format(_XPATH_PET, [i]);
+        wNodeList := wXmlDoc.DocumentElement.SelectNodes(wXpath);
+        try
+          GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
+        finally
+          wNodeList.Free;
+        end;
       end;
 
       // Sales
-      wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);
+      wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_SHOP);
       try
         GetItem(wNodeList, GConfig.GetCharRoomPath(ACharID));
       finally
@@ -447,7 +422,8 @@ end;
 {*******************************************************************************
 Starts a character 
 *******************************************************************************}
-procedure TFormProgress.ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: Integer; AFilter: TItemFilter);
+procedure TFormProgress.ShowFormInvent(ACharID: String; ARoom: TScrollRoom;
+  AInventPart: TCharInvent; AFilter: TItemFilter);
 begin
   FCharID := ACharID;
   FRoom := ARoom;
@@ -708,6 +684,8 @@ var
   wNodeList: TXpNodeList;
   wItemsFile: String;
   wSection: String;
+  wXpath: String;
+  wIdx: Integer;
 begin
   FRoom.Clear;
   wItemsFile := GConfig.GetCharPath(ACharID) + _INFO_FILENAME;
@@ -719,40 +697,27 @@ begin
     wSection := '';
     wNodeList := nil;
     case FInventPart of
-      0:
+      ciRoom:
         begin
           wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
           wSection := _SECTION_ROOM;
         end;
-      1:
+      ciBag:
         begin
           wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_BAG);
           wSection := _SECTION_BAG;
         end;
-      2:
+      ciPet1..ciPet7:
         begin
-          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET1);
-          wSection := _SECTION_PET1;
+          wIdx := Ord(FInventPart) - Ord(ciPet1);
+          wXpath := Format(_XPATH_PET, [wIdx]);
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(wXpath);
+          wSection := Format(_SECTION_PET, [wIdx + 1]);
         end;
-      3:
+      ciShop:
         begin
-          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET2);
-          wSection := _SECTION_PET2;
-        end;
-      4:
-        begin
-          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET3);
-          wSection := _SECTION_PET3;
-        end;
-      5:
-        begin
-          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_PET4);
-          wSection := _SECTION_PET4;
-        end;
-      6:
-        begin
-          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_STORE);
-          wSection := _SECTION_STORE;
+          wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_SHOP);
+          wSection := _SECTION_SHOP;
         end;
     end;
 

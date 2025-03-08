@@ -195,18 +195,23 @@ Adds a new guild
 *******************************************************************************}
 procedure TFormGuild.BtNewClick(Sender: TObject);
 begin
+  try
   // Prepare edit window
-  FormEdit.Caption := RS_NEW_GUILD;
-  FormEdit.LbAutoKey.Caption := RS_GUILD_KEY;
-  FormEdit.EdKey.Text := '';
-  FormEdit.EdComment.Text := '';
-  FormEdit.CbCheckVolume.Checked := False;
-  FormEdit.CbCheckChange.Checked := False;
-  FormEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
+    FormEdit.Caption := RS_NEW_GUILD;
+    FormEdit.LbAutoKey.Caption := RS_GUILD_KEY;
+    FormEdit.EdKey.Text := '';
+    FormEdit.EdComment.Text := '';
+    FormEdit.CbCheckVolume.Checked := False;
+    FormEdit.CbCheckChange.Checked := False;
+    FormEdit.CbCheckChange.Caption := RS_CHECK_CHANGE;
 
   // display window
-  if FormEdit.ShowModal = mrOk then
-    SetItemInfo(atAdd);
+    if FormEdit.ShowModal = mrOk then
+      SetItemInfo(atAdd);
+  except
+    on E: Exception do
+      FormDialog.Show(E.Message, mtError);
+  end;
 end;
 
 {*******************************************************************************
@@ -214,7 +219,12 @@ Changes the key of a guild
 *******************************************************************************}
 procedure TFormGuild.BtUpdateClick(Sender: TObject);
 begin
-  UpdateItem(False);
+  try
+    UpdateItem(False);
+  except
+    on E: Exception do
+      FormDialog.Show(E.Message, mtError);
+  end;
 end;
 
 {*******************************************************************************
@@ -501,8 +511,10 @@ var
   wXmlDoc: TXpObjModel;
   wStream: TMemoryStream;
   wInfoFile: String;
-  wIconFile: String;
   wWatchFile: String;
+{$IFNDEF __LOCALINFO}
+  wIconFile: String;
+{$ENDIF}
 begin
   wStream := TMemoryStream.Create;
   wXmlDoc := TXpObjModel.Create(nil);
@@ -530,15 +542,13 @@ begin
       end;
 {$ENDIF}
     except
-      on E: Exception do begin
-        FormDialog.Show(Format(RS_INVALID_APIKEY, [E.Message]), mtError);
-        Exit;
-      end;
+      on E: Exception do
+        raise Exception.CreateFmt(RS_INVALID_APIKEY, [E.Message]);
     end;
     
     // check modules
     if not CheckModules(wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/@modules'), _REQUIRED_MODULES_GUILD) then
-      FormDialog.Show(Format(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_GUILD, ',')]), mtWarning);
+      raise Exception.CreateFmt(RS_REQUIRED_MODULES, [MdkArrayToString(_REQUIRED_MODULES_GUILD, ',')]);
 
     // read info in the XML
     wItemID := wXmlDoc.DocumentElement.SelectString('/ryzomapi/guild/gid');

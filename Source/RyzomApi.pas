@@ -34,7 +34,7 @@ resourcestring
 
 const
   _API_BASE_URL = 'https://api.ryzom.com';
-  _REQUIRED_MODULES_CHAR: array[0..4] of String = ('C01', 'C04', 'C05', 'C06', 'A03');
+  _REQUIRED_MODULES_CHAR: array[0..5] of String = ('C01', 'C04', 'C05', 'C06', 'A01', 'A03');
   _REQUIRED_MODULES_GUILD: array[0..2] of String = ('G01', 'G02', 'G03');
   _FORMAT_XML = 'xml';
   _FORMAT_RAW = 'raw';
@@ -45,11 +45,8 @@ const
   _XPATH_ROOM_CHAR = '/ryzomapi/character/room/item';
   _XPATH_ROOM_GUILD = '/ryzomapi/guild/room/item';
   _XPATH_BAG = '/ryzomapi/character/bag/item';
-  _XPATH_PET1 = '/ryzomapi/character/pets/animal[@index=''0'']/inventory/item';
-  _XPATH_PET2 = '/ryzomapi/character/pets/animal[@index=''1'']/inventory/item';
-  _XPATH_PET3 = '/ryzomapi/character/pets/animal[@index=''2'']/inventory/item';
-  _XPATH_PET4 = '/ryzomapi/character/pets/animal[@index=''3'']/inventory/item';
-  _XPATH_STORE = '/ryzomapi/character/shop/shopitem';
+  _XPATH_PET = '/ryzomapi/character/pets/animal[@index=''%d'']/inventory/item';
+  _XPATH_SHOP = '/ryzomapi/character/shop/shopitem';
   _XPATH_ERROR_MESSAGE = '/ryzomapi/*/error';
   _XPATH_ERROR_CODE = '/ryzomapi/*/error/@code';
 
