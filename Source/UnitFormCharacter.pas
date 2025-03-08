@@ -652,7 +652,6 @@ var
   wSheet: String;
   i: Integer;
 begin
-  // boucle sur les animaux
   wSheetList := TStringList.Create;
   wNodeList := AXmlData.DocumentElement.SelectNodes('/ryzomapi/character/pets/animal');
   try

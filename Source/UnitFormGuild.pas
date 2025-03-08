@@ -81,6 +81,7 @@ type
     procedure MoveRow(AIndex: Integer);
     procedure SelectItem(AItemID: String);
     procedure EnableButtons(AEnabled: Boolean);
+    procedure SetInventTabs(AXmlData: TXpObjModel);
   public
     procedure UpdateLanguage;
   end;
@@ -387,6 +388,7 @@ procedure TFormGuild.ShowRoom;
 begin
   if not GConfig.SaveFilter then
     GRyzomApi.SetDefaultFilter(GCurrentFilter);
+  FormRoom.TabChest.TabIndex := 0; // 1er onglet
   FormMain.ShowMenuForm(FormRoom);
   FormRoom.Dappers := FDappers;
   FormRoom.UpdateRoom;
@@ -566,8 +568,10 @@ begin
     wInfoFile := GConfig.GetGuildPath(wItemID) + _INFO_FILENAME;
     wStream.SaveToFile(wInfoFile);
 {$ENDIF}
-    // Get image
+    // onglets de l'inventaire
+    SetInventTabs(wXmlDoc);
 {$IFNDEF __LOCALINFO}
+    // Get image
     wStream.Clear;
     GRyzomApi.ApiGuildIcon(wItemIcon, _ICON_SMALL, wStream);
     wIconFile := GConfig.GetGuildPath(wItemID) + _ICON_FILENAME;
@@ -594,6 +598,33 @@ begin
   finally
     wXmlDoc.Free;
     wStream.Free;
+  end;
+end;
+
+{*==============================================================================
+Onglets de l'inventaire selon les coffres trouvés
+===============================================================================}
+procedure TFormGuild.SetInventTabs(AXmlData: TXpObjModel);
+var
+  wNodeList: TXpNodeList;
+  wChestList: TStringList;
+  wBulkmax: Integer;
+  wName: String;
+  i: Integer;
+begin
+  wChestList := TStringList.Create;
+  wNodeList := AXmlData.DocumentElement.SelectNodes('/ryzomapi/guild/chests/chest');
+  try
+    // boucle sur les coffres
+    for i := 0 to wNodeList.Length - 1 do begin
+      wBulkmax := wNodeList.Item(i).SelectInteger('bulkmax');
+      wName := wNodeList.Item(i).SelectString('name');
+      wChestList.Append(Format('%d=%s', [wBulkmax, wName]));
+    end;
+    FormRoom.SetTabs(wChestList);
+  finally
+    wNodeList.Free;
+    wChestList.Free;
   end;
 end;
 

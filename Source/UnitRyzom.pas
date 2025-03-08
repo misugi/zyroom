@@ -182,7 +182,12 @@ type
 
   TItemResistance = (irDesert, irForest, irLakes, irJungle, irPrime, irNone);
 
-  TCharInvent = (ciBag, ciRoom, ciShop, ciMektoub, ciMount, ciZig, ciPet1, ciPet2, ciPet3, ciPet4, ciPet5, ciPet6, ciPet7);
+  TCharInvent = (ciBag, ciRoom, ciShop, ciMektoub, ciMount, ciZig, ciPet1,
+    ciPet2, ciPet3, ciPet4, ciPet5, ciPet6, ciPet7);
+
+  TGuildChest = (gcChest1, gcChest2, gcChest3, gcChest4, gcChest5, gcChest6,
+    gcChest7, gcChest8, gcChest9, gcChest10, gcChest11, gcChest12, gcChest13,
+    gcChest14, gcChest15, gcChest16, gcChest17, gcChest18, gcChest19, gcChest20);
 
   TItemFilter = record
     Enabled: Boolean;

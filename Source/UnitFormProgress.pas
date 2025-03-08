@@ -67,6 +67,7 @@ type
     FEnabled: Boolean;
     FProcessingType: Integer;
     FInventPart: TCharInvent;
+    FGuildChest: TGuildChest;
     FGuildID: String;
     FCharID: String;
     FRoom: TScrollRoom;
@@ -81,7 +82,8 @@ type
     procedure FillRoom(AGuildID: String);
     procedure FillInvent(ACharID: String);
     procedure GetItem(ANodeList: TXpNodeList; AStoragePath: String);
-    procedure ShowItem(ANodeList: TXpNodeList; ASection: String; AStoragePath: String);
+    procedure ShowItem(ANodeList: TXpNodeList; ASection: String; AStoragePath:
+      String; ASlotMin: Integer = 0; ASlotMax: Integer = MaxInt);
     function GetSortPrefix(AItemInfo: TItemInfo): String;
     procedure CloseForm;
     procedure ParseLogFile(AFirstLoading: Boolean);
@@ -96,7 +98,7 @@ type
     procedure SynchronizeChar(ACharID: String);
     procedure ShowFormSyncGuild(AGuildID: String);
     procedure ShowFormSyncChar(ACharID: String);
-    procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
+    procedure ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AChest: TGuildChest; AFilter: TItemFilter);
     procedure ShowFormInvent(ACharID: String; ARoom: TScrollRoom; AInventPart: TCharInvent; AFilter: TItemFilter);
     procedure ShowParseLog(ALogFile: String; AFirstLoading: Boolean);
     procedure ShowCleanLog(ALogFile: String; ADate: TDateTime = 0);
@@ -409,12 +411,13 @@ end;
 {*******************************************************************************
 Starts a guild room
 *******************************************************************************}
-procedure TFormProgress.ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AFilter: TItemFilter);
+procedure TFormProgress.ShowFormRoom(AGuildID: String; ARoom: TScrollRoom; AChest: TGuildChest; AFilter: TItemFilter);
 begin
   FGuildID := AGuildID;
   FRoom := ARoom;
   FFilter := AFilter;
   FProcessingType := _TASK_ROOM;
+  FGuildChest := AChest;
   LbProgress.Caption := RS_PROGRESS_ROOM;
   Self.ShowModal;
 end;
@@ -461,13 +464,15 @@ end;
 {*******************************************************************************
 Show items
 *******************************************************************************}
-procedure TFormProgress.ShowItem(ANodeList: TXpNodeList; ASection: String; AStoragePath: String);
+procedure TFormProgress.ShowItem(ANodeList: TXpNodeList; ASection: String;
+  AStoragePath: String; ASlotMin: Integer; ASlotMax: Integer);
 var
   i: Integer;
   wItemImage: TItemImage;
   wItemInfo: TItemInfo;
   wItemList: TObjectList;
   wItemSort: TStringList;
+  wItemSlot: Integer;
   wSortPrefix: String;
   wIndex: Integer;
   wIdent: String;
@@ -484,6 +489,12 @@ begin
       for i := 0 to ANodeList.Length - 1 do begin
         if ModalResult = mrCancel then
           Exit;
+
+        wItemSlot := ANodeList.Item(i).SelectInteger('@slot');
+        
+        // filtrage selon le slot (pour les coffres de guilde)
+        if (wItemSlot < ASlotMin) or (wItemSlot > ASlotMax) then
+          Continue;
 
         wItemInfo := TItemInfo.Create;
 
@@ -647,10 +658,13 @@ end;
 Show the room of a guild
 *******************************************************************************}
 procedure TFormProgress.FillRoom(AGuildID: String);
+const
+  _CHEST_SEGMENT_SIZE = 500;
 var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;
   wItemsFile: String;
+  wSlotMin, wSlotMax: Integer;
 begin
   FRoom.Clear;
   wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
@@ -666,7 +680,11 @@ begin
       FGuardFile.ReadSection(_SECTION_ROOM, GGuarded);
 
     try
-      ShowItem(wNodeList, _SECTION_ROOM, GConfig.GetGuildRoomPath(AGuildID));
+      // https://fr.wiki.ryzom.com/wiki/Guilde/Coffres_de_Guilde
+      // https://app.ryzom.com/app_forum/index.php?page=post/view/210135
+      wSlotMin := Ord(FGuildChest) * _CHEST_SEGMENT_SIZE;
+      wSlotMax := wSlotMin + _CHEST_SEGMENT_SIZE - 1;
+      ShowItem(wNodeList, _SECTION_ROOM, GConfig.GetGuildRoomPath(AGuildID), wSlotMin, wSlotMax);
     finally
       wNodeList.Free;
     end;

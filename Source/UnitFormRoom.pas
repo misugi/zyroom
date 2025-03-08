@@ -26,13 +26,12 @@ interface
 uses
   Classes, Controls, StdCtrls, Forms, Graphics, Types, ScrollRoom, XpDOM,
   Windows, Messages, ItemImage, ComCtrls, Buttons, ExtCtrls, Menus, IniFiles,
-  pngimage, Clipbrd;
+  pngimage, Clipbrd, UnitRyzom;
 
 type
   TFormRoom = class(TForm)
     PnRoom: TPanel;
     PnFilter: TPanel;
-    GuildRoom: TScrollRoom;
     Panel1: TPanel;
     LbValueGuildName: TLabel;
     PopupWatch: TPopupMenu;
@@ -43,6 +42,8 @@ type
     ImgDappers: TImage;
     LbValueDappers: TLabel;
     MenuCopy: TMenuItem;
+    TabChest: TTabControl;
+    GuildRoom: TScrollRoom;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -55,14 +56,19 @@ type
     procedure MenuGuardClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MenuCopyClick(Sender: TObject);
+    procedure TabChestChange(Sender: TObject);
   private
     FItemImage: TItemImage;
     FGuardFile: TIniFile;
     FGuildID: String;
     FDappers: String;
+    FInventTabs: array of TGuildChest; // pour la gestion des onglets
+    FInventVolumes: array of Integer; // pour la gestion du volume max
+    procedure AddTab(ATab: TGuildChest; AName: String; ABulkmax: Integer);
   public
     procedure UpdateRoom;
     procedure UpdateLanguage;
+    procedure SetTabs(AChestList: TStringList);
     property Dappers: String read FDappers write FDappers;
   end;
 
@@ -72,8 +78,8 @@ var
 implementation
 
 uses
-  UnitConfig, UnitFormProgress, SysUtils, UnitRyzom, UnitFormGuild,
-  UnitFormFilter, UnitFormWatch;
+  UnitConfig, UnitFormProgress, SysUtils, UnitFormGuild, UnitFormFilter,
+  UnitFormWatch;
 
 {$R *.dfm}
 
@@ -162,11 +168,20 @@ end;
 Hall
 *******************************************************************************}
 procedure TFormRoom.UpdateRoom;
+var
+  wTabIndex: Integer;
+  wMaxVolume: String;
+  wChest: TGuildChest;
 begin
+  wTabIndex := TabChest.TabIndex;
+  wChest := FInventTabs[wTabIndex];
+
   FGuildID := FormGuild.GridItem.Cells[3, FormGuild.GridItem.Row];
-  FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, GCurrentFilter);
+  FormProgress.ShowFormRoom(FGuildID, FormRoom.GuildRoom, wChest, GCurrentFilter);
+
+  wMaxVolume := '/' + IntToStr(FInventVolumes[wTabIndex]);
   LbValueGuildName.Caption := FormGuild.GridItem.Cells[1, FormGuild.GridItem.Row];
-  LbValueVolume.Caption := FormatFloat2('####0.##', FormProgress.TotalVolume) + '/10000';
+  LbValueVolume.Caption := FormatFloat2('####0.##', FormProgress.TotalVolume) + wMaxVolume;
   LbValueDappers.Caption := FDappers;
 end;
 
@@ -260,6 +275,58 @@ Copy the item name
 procedure TFormRoom.MenuCopyClick(Sender: TObject);
 begin
   Clipboard.SetTextBuf(PChar(TItemInfo(FItemImage.Data).ItemName));
+end;
+
+{*==============================================================================
+Définit les onglets
+@param AChestList liste des coffres avec volume max et nom (20 items au 07/03/2025)
+===============================================================================}
+procedure TFormRoom.SetTabs(AChestList: TStringList);
+var
+  i: Integer;
+  wChest: TGuildChest;
+  wName: String;
+  wBulkmax: Integer;
+begin
+  SetLength(FInventTabs, 0);
+  SetLength(FInventVolumes, 0);
+  TabChest.Tabs.Clear;
+
+  // boucle sur les coffres
+  wChest := gcChest1;
+  for i := 0 to AChestList.Count - 1 do begin
+    wBulkmax := StrToIntDef(AChestList.Names[i], 0);
+
+    // coffre existant ?
+    if wBulkmax > 0 then begin
+      wName := AChestList.ValueFromIndex[i];
+      AddTab(wChest, wName, wBulkmax);
+    end;
+
+    Inc(wChest);
+  end;
+end;
+
+{*==============================================================================
+Ajoute un onglet
+===============================================================================}
+procedure TFormRoom.AddTab(ATab: TGuildChest; AName: String; ABulkmax: Integer);
+begin
+  SetLength(FInventTabs, Length(FInventTabs) + 1);
+  FInventTabs[High(FInventTabs)] := ATab;
+
+  SetLength(FInventVolumes, Length(FInventVolumes) + 1);
+  FInventVolumes[High(FInventVolumes)] := ABulkmax;
+
+  TabChest.Tabs.Append(AName);
+end;
+
+{*==============================================================================
+Tab change
+===============================================================================}
+procedure TFormRoom.TabChestChange(Sender: TObject);
+begin
+  UpdateRoom();
 end;
 
 end.

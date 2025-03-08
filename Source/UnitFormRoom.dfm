@@ -26,30 +26,6 @@ object FormRoom: TFormRoom
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
-    object GuildRoom: TScrollRoom
-      Left = 0
-      Top = 25
-      Width = 344
-      Height = 361
-      HorzScrollBar.Tracking = True
-      VertScrollBar.Increment = 44
-      VertScrollBar.Tracking = True
-      Align = alClient
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 0
-      TabStop = True
-      OnClick = GuildRoomClick
-      OnContextPopup = GuildRoomContextPopup
-      OnMouseMove = GuildRoomMouseMove
-      OnMouseWheelDown = GuildRoomMouseWheelDown
-      OnMouseWheelUp = GuildRoomMouseWheelUp
-      OnResize = GuildRoomResize
-      Spacing = 2
-      ColCount = 16
-      ControlWidth = 40
-      ControlHeight = 40
-    end
     object Panel1: TPanel
       Left = 0
       Top = 0
@@ -58,7 +34,7 @@ object FormRoom: TFormRoom
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
-      TabOrder = 1
+      TabOrder = 0
       DesignSize = (
         344
         25)
@@ -188,6 +164,40 @@ object FormRoom: TFormRoom
         ParentFont = False
         ParentShowHint = False
         ShowHint = False
+      end
+    end
+    object TabChest: TTabControl
+      Left = 0
+      Top = 25
+      Width = 344
+      Height = 361
+      Align = alClient
+      TabOrder = 1
+      TabStop = False
+      OnChange = TabChestChange
+      object GuildRoom: TScrollRoom
+        Left = 4
+        Top = 6
+        Width = 336
+        Height = 351
+        HorzScrollBar.Tracking = True
+        VertScrollBar.Increment = 44
+        VertScrollBar.Tracking = True
+        Align = alClient
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 0
+        TabStop = True
+        OnClick = GuildRoomClick
+        OnContextPopup = GuildRoomContextPopup
+        OnMouseMove = GuildRoomMouseMove
+        OnMouseWheelDown = GuildRoomMouseWheelDown
+        OnMouseWheelUp = GuildRoomMouseWheelUp
+        OnResize = GuildRoomResize
+        Spacing = 2
+        ColCount = 16
+        ControlWidth = 40
+        ControlHeight = 40
       end
     end
   end
