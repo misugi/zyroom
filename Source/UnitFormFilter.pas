@@ -647,6 +647,24 @@ var
   wResName: String;
   wTop, wLeft: Integer;
   i: Integer;
+
+  function GetGaugeProgress(AClass: TItemClass; AValue: Integer): Integer;
+  begin
+    Result := 0;
+    case AValue of
+      1:
+        Result := -18 + Ord(AClass) * 9;
+      2:
+        Result := 0 + Ord(AClass) * 9;
+      3:
+        Result := 12 + Ord(AClass) * 9;
+      4:
+        Result := 18 + Ord(AClass) * 9;
+      5:
+        Result := 36 + Ord(AClass) * 9;
+    end;
+  end;
+
 begin
   try
     if FCurrentItem = AItemImage then
@@ -946,14 +964,7 @@ begin
             end;
             with FindComponent(Format('GaugeCat1Spec%d', [i + 1])) as TGauge do begin
               Visible := True;
-              case MatSpec1[i][1] of
-                1:
-                  Progress := 0 + Ord(ItemClass) * 9;
-                2:
-                  Progress := 12 + Ord(ItemClass) * 9;
-                3:
-                  Progress := 36 + Ord(ItemClass) * 9;
-              end;
+              Progress := GetGaugeProgress(ItemClass, MatSpec1[i][1]);
             end;
           end;
         end; // Cat1
@@ -976,14 +987,7 @@ begin
             end;
             with FindComponent(Format('GaugeCat2Spec%d', [i + 1])) as TGauge do begin
               Visible := True;
-              case MatSpec2[i][1] of
-                1:
-                  Progress := 0 + Ord(ItemClass) * 9;
-                2:
-                  Progress := 12 + Ord(ItemClass) * 9;
-                3:
-                  Progress := 36 + Ord(ItemClass) * 9;
-              end;
+              Progress := GetGaugeProgress(ItemClass, MatSpec2[i][1]);
             end;
           end;
         end; // Cat2

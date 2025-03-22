@@ -140,8 +140,8 @@ const
   _ITEM_CLASS: array[0..4] of String = ('base', 'fine', 'choice', 'excellent', 'supreme');
   _ITEM_PROTECTIONS: array[0..6] of String = ('acid', 'cold', 'fire', 'rot', 'shockwave', 'poison', 'electricity');
   _ITEM_RESISTANCES: array[0..4] of String = ('desert', 'forest', 'lacustre', 'jungle', 'primaryroot');
-  _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdflj])([a-f])01\.sitem';
-  _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdflj])([a-f])01\.sitem';
+  _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdfljg])([a-f])01\.sitem';
+  _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdfljg])([a-f])01\.sitem';
   _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_|mp_karavan_ep2_)(\w*)\.sitem';
   _EXPR_TOOL = '^(icoka[rm]t|sfxitforage|it).*\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
@@ -1254,7 +1254,12 @@ begin
 
     // Natural and Animal
     if (AItemInfo.ItemType = itNaturalMat) or (AItemInfo.ItemType = itAnimalMat) then begin
-      // Categories
+      // Categories - Composition d'une ligne
+      // 08432013022072082111121132142 => 08 432 013 022 072 082 111 121 132 142
+      // 08 = index de la catégorie => _MAT_CATEGORY
+      // 432 = index des couleurs : basique/fin (4), choix/xl/sup (3) et primes (2) => _MAT_COLOR
+      // 013 etc. = index de la caractéristique (01) suivi de la valeur de 1 à 5 (3) => _MAT_SPEC
+
       wIndex := FCatStrings.IndexOfName(Copy(AItemInfo.ItemName, 1, 5));
       if wIndex >= 0 then begin
         AItemInfo.ItemCategory1 := StrToInt(Copy(FCatStrings.ValueFromIndex[wIndex], 1, 2));
@@ -1296,8 +1301,8 @@ begin
 
       // Ecosystem
       case Ord(wRegExpr.Match[1][1]) of
-        99:
-          AItemInfo.ItemEcosys := ieCommon; // c
+        99, 103:
+          AItemInfo.ItemEcosys := ieCommon; // c,g
           112:
           AItemInfo.ItemEcosys := iePrime; // p
           100:
