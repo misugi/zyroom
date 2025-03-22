@@ -312,6 +312,8 @@ end;
 Ajoute un onglet
 ===============================================================================}
 procedure TFormRoom.AddTab(ATab: TGuildChest; AName: String; ABulkmax: Integer);
+var
+  wChestName: String;
 begin
   SetLength(FInventTabs, Length(FInventTabs) + 1);
   FInventTabs[High(FInventTabs)] := ATab;
@@ -319,7 +321,8 @@ begin
   SetLength(FInventVolumes, Length(FInventVolumes) + 1);
   FInventVolumes[High(FInventVolumes)] := ABulkmax;
 
-  CmbChest.Items.Append(AName);
+  wChestName := Format('#%d %s', [Length(FInventTabs), AName]);
+  CmbChest.Items.Append(wChestName);
 end;
 
 {*==============================================================================
