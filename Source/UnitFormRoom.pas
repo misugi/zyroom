@@ -32,7 +32,7 @@ type
   TFormRoom = class(TForm)
     PnRoom: TPanel;
     PnFilter: TPanel;
-    Panel1: TPanel;
+    PnTop: TPanel;
     LbValueGuildName: TLabel;
     PopupWatch: TPopupMenu;
     MenuGuard: TMenuItem;
@@ -42,8 +42,9 @@ type
     ImgDappers: TImage;
     LbValueDappers: TLabel;
     MenuCopy: TMenuItem;
-    TabChest: TTabControl;
+    PnInvent: TPanel;
     GuildRoom: TScrollRoom;
+    CmbChest: TComboBox;
     procedure GuildRoomMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure GuildRoomMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -173,7 +174,7 @@ var
   wMaxVolume: String;
   wChest: TGuildChest;
 begin
-  wTabIndex := TabChest.TabIndex;
+  wTabIndex := CmbChest.ItemIndex;
   wChest := FInventTabs[wTabIndex];
 
   FGuildID := FormGuild.GridItem.Cells[3, FormGuild.GridItem.Row];
@@ -290,7 +291,7 @@ var
 begin
   SetLength(FInventTabs, 0);
   SetLength(FInventVolumes, 0);
-  TabChest.Tabs.Clear;
+  CmbChest.Clear;
 
   // boucle sur les coffres
   wChest := gcChest1;
@@ -318,7 +319,7 @@ begin
   SetLength(FInventVolumes, Length(FInventVolumes) + 1);
   FInventVolumes[High(FInventVolumes)] := ABulkmax;
 
-  TabChest.Tabs.Append(AName);
+  CmbChest.Items.Append(AName);
 end;
 
 {*==============================================================================

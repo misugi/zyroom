@@ -26,18 +26,53 @@ object FormRoom: TFormRoom
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
-    object Panel1: TPanel
+    object PnInvent: TPanel
+      Left = 0
+      Top = 52
+      Width = 344
+      Height = 334
+      Align = alClient
+      BevelWidth = 2
+      BorderWidth = 2
+      ParentColor = True
+      TabOrder = 1
+      object GuildRoom: TScrollRoom
+        Left = 4
+        Top = 4
+        Width = 336
+        Height = 326
+        HorzScrollBar.Tracking = True
+        VertScrollBar.Increment = 44
+        VertScrollBar.Tracking = True
+        Align = alClient
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 0
+        TabStop = True
+        OnClick = GuildRoomClick
+        OnContextPopup = GuildRoomContextPopup
+        OnMouseMove = GuildRoomMouseMove
+        OnMouseWheelDown = GuildRoomMouseWheelDown
+        OnMouseWheelUp = GuildRoomMouseWheelUp
+        OnResize = GuildRoomResize
+        Spacing = 2
+        ColCount = 16
+        ControlWidth = 40
+        ControlHeight = 40
+      end
+    end
+    object PnTop: TPanel
       Left = 0
       Top = 0
       Width = 344
-      Height = 25
+      Height = 52
       Align = alTop
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 0
       DesignSize = (
         344
-        25)
+        52)
       object LbValueGuildName: TLabel
         Left = 2
         Top = 0
@@ -165,39 +200,33 @@ object FormRoom: TFormRoom
         ParentShowHint = False
         ShowHint = False
       end
-    end
-    object TabChest: TTabControl
-      Left = 0
-      Top = 25
-      Width = 344
-      Height = 361
-      Align = alClient
-      TabOrder = 1
-      TabStop = False
-      OnChange = TabChestChange
-      object GuildRoom: TScrollRoom
-        Left = 4
-        Top = 6
-        Width = 336
-        Height = 351
-        HorzScrollBar.Tracking = True
-        VertScrollBar.Increment = 44
-        VertScrollBar.Tracking = True
-        Align = alClient
-        ParentShowHint = False
-        ShowHint = False
+      object CmbChest: TComboBox
+        Left = 0
+        Top = 24
+        Width = 344
+        Height = 28
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ItemHeight = 20
+        ItemIndex = 0
+        ParentFont = False
         TabOrder = 0
-        TabStop = True
-        OnClick = GuildRoomClick
-        OnContextPopup = GuildRoomContextPopup
-        OnMouseMove = GuildRoomMouseMove
-        OnMouseWheelDown = GuildRoomMouseWheelDown
-        OnMouseWheelUp = GuildRoomMouseWheelUp
-        OnResize = GuildRoomResize
-        Spacing = 2
-        ColCount = 16
-        ControlWidth = 40
-        ControlHeight = 40
+        Text = 'Type'
+        OnChange = TabChestChange
+        Items.Strings = (
+          'Type'
+          'Ecosyst'#232'me'
+          'Classe'
+          'Qualit'#233
+          'Volume'
+          'Quantit'#233
+          'Prix'
+          'Temps')
       end
     end
   end

@@ -388,7 +388,7 @@ procedure TFormGuild.ShowRoom;
 begin
   if not GConfig.SaveFilter then
     GRyzomApi.SetDefaultFilter(GCurrentFilter);
-  FormRoom.TabChest.TabIndex := 0; // 1er onglet
+  FormRoom.CmbChest.ItemIndex := 0; // 1er coffre
   FormMain.ShowMenuForm(FormRoom);
   FormRoom.Dappers := FDappers;
   FormRoom.UpdateRoom;
