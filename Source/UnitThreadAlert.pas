@@ -315,7 +315,6 @@ begin
   try
     wXmlDoc.LoadDataSource(wItemsFile);
 
-    // pièce
     if Terminated then
       Exit;
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
@@ -431,6 +430,8 @@ var
   wItemName: String;
   wItemIndex: Integer;
   wItemFound: TItemInfo;
+  wChestNum: Integer;
+  wLocation: String;
 begin
   if not GGuild.GetCheckChange(AGuildID) then
     Exit;
@@ -500,7 +501,12 @@ begin
 
             wItemIndex := wItemList.IndexOf(wItemSlot, wItemQuality, wItemName);
             if wItemIndex >= 0 then begin
-              wItemFound := wItemList.GetItem(wItemIndex); 
+              wItemFound := wItemList.GetItem(wItemIndex);
+
+              // numéro de coffre
+              wChestNum := (wItemFound.ItemSlot div _CHEST_SEGMENT_SIZE) + 1;
+              wLocation := Format('%s #%d', [_SECTION_ROOM, wChestNum]);
+              
               // Object modified
               if wItemFound.ItemSize <> wValue then begin
                 wKeys.ValueFromIndex[i] := IntToStr(wItemFound.ItemSize);
@@ -509,7 +515,7 @@ begin
                 wMsg.MsgType := atModified;
                 wMsg.MsgDate := Now;
                 wMsg.MsgName := wGuildName;
-                wMsg.MsgLocation := _SECTION_ROOM;
+                wMsg.MsgLocation := wLocation;
                 wMsg.MsgObject := GRyzomStringPack.GetString(wItemName);
                 wMsg.MsgQuality := wItemFound.ItemQuality;
                 wMsg.MsgValue1 := wValue;
@@ -527,7 +533,7 @@ begin
               wMsg.MsgType := atRemoved;
               wMsg.MsgDate := Now;
               wMsg.MsgName := wGuildName;
-              wMsg.MsgLocation := _SECTION_ROOM;
+              wMsg.MsgLocation := wLocation;
               wMsg.MsgObject := GRyzomStringPack.GetString(wItemName);
               wMsg.MsgQuality := wItemQuality;
               wMsg.MsgValue1 := Abs(wValue);
@@ -548,7 +554,7 @@ begin
               wMsg.MsgType := atAdded;
               wMsg.MsgDate := Now;
               wMsg.MsgName := wGuildName;
-              wMsg.MsgLocation := _SECTION_ROOM;
+              wMsg.MsgLocation := wLocation;
               wMsg.MsgObject := GRyzomStringPack.GetString(wItemList.GetItem(i).ItemName);
               wMsg.MsgQuality := wItemList.GetItem(i).ItemQuality;
               wMsg.MsgValue1 := Abs(wItemList.GetItem(i).ItemSize);
@@ -586,7 +592,7 @@ var
   wItemInfo: TItemInfo;
   wMsg: TAlertMessage;
   wNow: TDateTime;
-  {wDays, }    wHours, wMinutes: Integer;
+  wHours, wMinutes: Integer;
 begin
   if not GCharacter.GetCheckSales(ACharID) then
     Exit;
@@ -656,7 +662,7 @@ var
   wSeason: String;
   wDayOfSeason: Integer;
   wTimeOfDay: Integer;
-  {wDays, }    wHours, wMinutes: Integer;
+  wHours, wMinutes: Integer;
   wNextSeason: TDateTime;
   wMsg: TAlertMessage;
   wNow: TDateTime;

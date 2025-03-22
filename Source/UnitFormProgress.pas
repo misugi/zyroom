@@ -658,8 +658,6 @@ end;
 Show the room of a guild
 *******************************************************************************}
 procedure TFormProgress.FillRoom(AGuildID: String);
-const
-  _CHEST_SEGMENT_SIZE = 500;
 var
   wXmlDoc: TXpObjModel;
   wNodeList: TXpNodeList;

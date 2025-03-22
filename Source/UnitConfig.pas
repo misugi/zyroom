@@ -120,6 +120,7 @@ const
   _LOG_BBCODE_FILENAME = 'log-bbcode.txt';
   _LOG_TEXT_FILENAME = 'log-plain.txt';
   _LOG_FILTER_FILENAME = 'sysfilter.dat';
+  _CHEST_SEGMENT_SIZE = 500;
 
 type
   TActionType = (atAdd, atUpdate);
