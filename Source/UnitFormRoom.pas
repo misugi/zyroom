@@ -330,6 +330,7 @@ Tab change
 ===============================================================================}
 procedure TFormRoom.TabChestChange(Sender: TObject);
 begin
+  FormFilter.InitInfo;
   UpdateRoom();
 end;
 

@@ -163,6 +163,7 @@ Tab change
 *******************************************************************************}
 procedure TFormInvent.TabInventChange(Sender: TObject);
 begin
+  FormFilter.InitInfo;
   UpdateRoom();
 end;
 
