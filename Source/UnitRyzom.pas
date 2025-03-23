@@ -140,10 +140,14 @@ const
   _ITEM_CLASS: array[0..4] of String = ('base', 'fine', 'choice', 'excellent', 'supreme');
   _ITEM_PROTECTIONS: array[0..6] of String = ('acid', 'cold', 'fire', 'rot', 'shockwave', 'poison', 'electricity');
   _ITEM_RESISTANCES: array[0..4] of String = ('desert', 'forest', 'lacustre', 'jungle', 'primaryroot');
+  _MAT_GUILD_CHEST: array[0..4] of String = ('mp_hard.sitem', 'mp_soft.sitem',
+    'mp_colonne.sitem', 'mp_ornement.sitem', 'mp_revetement.sitem');
+  _MAT_JOBS: array[0..3] of String = ('lucky_flower.sitem',
+    'protect_amber.sitem', 'water_barrel.sitem', 'tools_ticket.sitem');
   _EXPR_NATURAL_MAT = '^m\d{4}dxa([pcdfljg])([a-f])01\.sitem';
   _EXPR_ANIMAL_MAT = '^m\d{4}.{3}([pcdfljg])([a-f])01\.sitem';
   _EXPR_SYSTEM_MAT = '(system_mp_?|mp_kami_ep2_|mp_karavan_ep2_)(\w*)\.sitem';
-  _EXPR_TOOL = '^(icoka[rm]t|sfxitforage|it).*\.sitem';
+  _EXPR_TOOL = '^(ico(kar|kam|mar|gen)t|sfxitforage|it).*\.sitem';
   _EXPR_EQUIPMENT = '^ic(.).*(.{2})\.sitem';
   _EXPR_EQUIPMENT_ARMOR = '^ic.a([lmhcbgpsv]).*';
   _EXPR_EQUIPMENT_SHIELD = '^ic(.|ka[rm])s([bs]).*';
@@ -151,6 +155,7 @@ const
   _EXPR_EQUIPMENT_WEAPON = '^ic.+([rm])([12])(.{2}).*';
   _EXPR_EQUIPMENT_AMMO = '^ic.p([12][ablpr]).*\.sitem';
   _EXPR_EQUIPMENT_JEWEL = '^ic.j.*';
+  _EXPR_BANDIT_CHEST = 'compo_.*mark\d\.sitem';
 
 type
   TItemType = (itAnimalMat, itNaturalMat, itSystemMat, itCata, itEquipment, itTeleporter, itOther);
@@ -1042,7 +1047,7 @@ begin
     wCoef := 0.0;
 
     // Catalyzer
-    if Pos('ixpca01', AItemInfo.ItemName) = 1 then begin
+    if Pos('ixpca0', AItemInfo.ItemName) = 1 then begin
       AItemInfo.ItemType := itCata;
       wCoef := 0.01;
     end;
@@ -1105,7 +1110,10 @@ begin
               115:
                 begin // s = shield
                   AItemInfo.ItemEquip := iqShield;
-                  wCoef := 10.0;
+                  if CompareText(AItemInfo.ItemName, 'icbss_pvp.sitem') = 0 then
+                    wCoef := 20.0 // grand bouclier pvp
+                  else
+                    wCoef := 10.0;
                 end;
             end;
           end;
@@ -1148,16 +1156,15 @@ begin
               109:
                 begin // m = melee
                   AItemInfo.ItemEquip := iqWeaponMelee;
-                  case Ord(wRegExpr.Match[2][1]) of                  // 1 = 1 hand
-                    49:
+                  case Ord(wRegExpr.Match[2][1]) of
+                    49: // 1 = 1 hand
                       begin
                         AItemInfo.ItemWeapon := iwOneHand;
                         wCoef := 10.0;
                         if wRegExpr.Match[3] = 'pd' then
                           wCoef := 5.0; // dagger
                       end;
-                  // 2 = 2 hands
-                      50:
+                    50: // 2 = 2 hands
                       begin
                         AItemInfo.ItemWeapon := iwTwoHands;
                         wCoef := 15.0;
@@ -1167,14 +1174,13 @@ begin
               114:
                 begin // r = range
                   AItemInfo.ItemEquip := iqWeaponRange;
-                  case Ord(wRegExpr.Match[2][1]) of                  // 1 = 1 hand
-                    49:
+                  case Ord(wRegExpr.Match[2][1]) of
+                    49: // 1 = 1 hand
                       begin
                         AItemInfo.ItemWeapon := iwOneHand;
                         wCoef := 10.0;
                       end;
-                  // 2 = 2 hands
-                      50:
+                    50: // 2 = 2 hands
                       begin
                         AItemInfo.ItemWeapon := iwTwoHands;
                         case Ord(wRegExpr.Match[3][1]) of
@@ -1226,10 +1232,12 @@ begin
 
         // Others
         if AItemInfo.ItemEquip = iqOther then begin
-          if Pos('icra', AItemInfo.ItemName) = 1 then
-            wCoef := 7.0; // refugee
           if Pos('ic_candy_stick', AItemInfo.ItemName) = 1 then
             wCoef := 30.0;
+          if Pos('ic_halloween_stick', AItemInfo.ItemName) = 1 then
+            wCoef := 30.0;
+          if Pos('ic_anlor_helmet01', AItemInfo.ItemName) = 1 then
+            wCoef := 7.0;
         end;
       end;
     end;
@@ -1358,8 +1366,8 @@ begin
     // botte de fourrage basique : vol 15 / botte (vérifier les autres types de botte)
     // Others
     if AItemInfo.ItemType = itOther then begin
-      if CompareText(AItemInfo.ItemName, 'pre_order.sitem') = 0 then
-        wCoef := 5.0; // bouclier de pré-commande (pour la sortie du jeu en 2004)
+      if Pos('pre_order.sitem', AItemInfo.ItemName) > 0 then
+        wCoef := 5.0; // bouclier de pré-commande
       if CompareText(AItemInfo.ItemName, 'teddyubo.sitem') = 0 then
         wCoef := 5.0; // peluche de Yubo
       if CompareText(AItemInfo.ItemName, 'xmas_gingeryubo.sitem') = 0 then
@@ -1380,6 +1388,25 @@ begin
         wCoef := 9.0; // food small
       if CompareText(AItemInfo.ItemName, 'winch.sitem') = 0 then
         wCoef := 5.0; // canne à pêche
+      if CompareText(AItemInfo.ItemName, 's2e1_salins.sitem') = 0 then
+        wCoef := 0.5; // poignée de salins mûrs
+      if CompareText(AItemInfo.ItemName, 's2e1_seve_suc.sitem') = 0 then
+        wCoef := 0.5; // gouttelette de suc irisé de salina
+      if CompareText(AItemInfo.ItemName, 'ulo_4.sitem') = 0 then
+        wCoef := 1.0; // arkoleth
+      if CompareText(AItemInfo.ItemName, 'event_magnetized_amber.sitem') = 0 then
+        wCoef := 0.5; // ambre Ranger
+      if CompareText(AItemInfo.ItemName, 'rite_ranger_map_book.sitem') = 0 then
+        wCoef := 0.5; // carte Ranger
+      if CompareText(AItemInfo.ItemName, 'anniversary_dance_scroll.sitem') = 0 then
+        wCoef := 0.5; // danse classique
+      if AnsiIndexText(AItemInfo.ItemName, _MAT_JOBS) >= 0 then
+        wCoef := 1.0; // items de métier (fleur porte bonheur, ambre de protection, etc.)
+      wRegExpr.Expression := _EXPR_BANDIT_CHEST;
+      if wRegExpr.Exec(AItemInfo.ItemName) then
+        wCoef := 0.5; // loot coffre de bandits
+      if AnsiIndexText(AItemInfo.ItemName, _MAT_GUILD_CHEST) >= 0 then
+        wCoef := 0.1; // items pour les coffres de guilde (mp générique dure/molle/liquide, pièce de colonne, etc.)
       { Special weapons
       icbm1sa_2.sitem => Hache Cleven des Renégats
       icbm1bs.sitem => Bâton Shopan de l'Arbre éternel
@@ -1443,7 +1470,9 @@ begin
           AItemInfo.MatSpec1[0][1] := 1;
         end;
 
-        wCoef := 0;
+        // loot/allégorie
+        if CompareText(AItemInfo.ItemName, 'system_mp_loot.sitem') = 0 then
+          wCoef := 0.5;
       end;
     end;
 
