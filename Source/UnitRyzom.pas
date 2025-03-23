@@ -236,7 +236,6 @@ type
     ItemSkin: TItemSkin;
     ItemDesc: String;
     ItemHp: Integer;
-    ItemDur: Integer;
     ItemHpb: Integer;
     ItemSab: Integer;
     ItemStb: Integer;
@@ -845,11 +844,6 @@ begin
       AItemInfo.ItemDestroyed := AItemInfo.ItemHp = 1;
     end;
 
-    // Durability
-    wNodeValue := ANode.SelectString('.//craftparameters/durability/@value');
-    if Length(wNodeValue) > 0 then
-      AItemInfo.ItemDur := StrToIntDef(wNodeValue, 0);
-
     // HP Bonus
     wNodeValue := ANode.SelectString('.//craftparameters/hpbuff');
     if Length(wNodeValue) > 0 then
@@ -1069,10 +1063,6 @@ begin
       if wRegExpr.Exec(AItemInfo.ItemName) and (Pos('_sap_recharge', AItemInfo.ItemName) = 0) then begin
         AItemInfo.ItemType := itEquipment;
         AItemInfo.ItemEquip := iqTool;
-        //DONE: mettre 100 uniquement si l'objet n'a pas déjà une dura > 0 récupérée grace aux "craftparameters" dans la fonction GetItemInfoFromXML
-        // car un outil crafté a une durabilité de 120 (contre 100 pour un outil acheté)
-        if AItemInfo.ItemDur = 0 then
-          AItemInfo.ItemDur := 100;
         wCoef := 10.0;
       end;
     end;
@@ -1632,7 +1622,6 @@ begin
   ItemSkin := isUnknown;
   ItemDesc := '';
   ItemHp := 0;
-  ItemDur := 0;
   ItemHpb := 0;
   ItemSab := 0;
   ItemStb := 0;

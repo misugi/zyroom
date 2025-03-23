@@ -234,7 +234,7 @@ begin
           wValue := wGuard.ReadInteger(ASection, wKeys[i], -1);
           if wItemFound.ItemType = itEquipment then begin
             // Durability alert
-            if wItemFound.ItemDur < wValue then begin
+            if wItemFound.ItemHp < wValue then begin
               wMsg := TAlertMessage.Create;
               wMsg.MsgType := atDurability;
               wMsg.MsgDate := Now;
@@ -242,7 +242,7 @@ begin
               wMsg.MsgLocation := ASection;
               wMsg.MsgObject := GRyzomStringPack.GetString(wItemName);
               wMsg.MsgQuality := wItemFound.ItemQuality;
-              wMsg.MsgValue1 := wItemFound.ItemDur;
+              wMsg.MsgValue1 := wItemFound.ItemHp;
               wMsg.MsgValue2 := wValue;
               wMsg.ItemName := wItemName;
               FormAlert.NewMessage(wMsg);

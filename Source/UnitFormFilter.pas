@@ -759,8 +759,6 @@ begin
       // Durability
       if (ItemHp > 0) then begin
         LbValueDura.Caption := IntToStr(ItemHp);
-        if (ItemDur > 0) then
-          LbValueDura.Caption := LbValueDura.Caption + '/' + IntToStr(ItemDur);
         FLbList.Add(LbDura);
         FLbList.Add(LbValueDura);
       end;
