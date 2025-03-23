@@ -731,7 +731,7 @@ begin
       end;
 
       // Quality
-      if not (ItemQuality < 0) then begin
+      if ItemQuality > 0 then begin
         LbValueQuality.Caption := IntToStr(ItemQuality);
         FLbList.Add(LbQuality);
         FLbList.Add(LbValueQuality);

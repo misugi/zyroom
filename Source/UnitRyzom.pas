@@ -676,6 +676,7 @@ procedure TRyzom.GetItemInfoFromXML(ANode: TXpNode; AItemInfo: TItemInfo);
 var
   wNodeValue: String;
   wEnergy: Double;
+  wQuality: Integer;
 
   // lecture des 3 protections sur les bijoux
 
@@ -802,8 +803,13 @@ begin
 
     // Quality
     wNodeValue := ANode.SelectString('.//quality');
-    if Length(wNodeValue) > 0 then
-      AItemInfo.ItemQuality := StrToInt(wNodeValue);
+    if Length(wNodeValue) > 0 then begin
+      wQuality := StrToInt(wNodeValue);
+      // pour éviter d'avoir un "1" inutile sur l'icône de nombreux items (tp par ex.)
+      if wQuality = 1 then
+        wQuality := 0;
+      AItemInfo.ItemQuality := wQuality;
+    end;
 
     // Weight
     wNodeValue := ANode.SelectString('.//craftparameters/weight/@value');
