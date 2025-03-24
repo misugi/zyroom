@@ -1119,6 +1119,9 @@ begin
         if AItemInfo.ItemEquip = iqOther then begin
           wRegExpr.Expression := _EXPR_EQUIPMENT_ARMOR;
           if wRegExpr.Exec(AItemInfo.ItemName) then begin
+            if AItemInfo.ItemColor = icNone then
+              AItemInfo.ItemColor := icBeige;
+
             case Ord(wRegExpr.Match[1][1]) of
               108, 99:
                 AItemInfo.ItemEquip := iqLightArmor; // l,c = light
