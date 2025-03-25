@@ -128,7 +128,7 @@ begin
       try
         with GMsgList.Items[0] as TAlertMessage do begin
           // Ignore cata
-          if GConfig.IgnoreCata and (Pos('ixpca01', ItemName) = 1) then
+          if GConfig.IgnoreCata and (Pos('ixpca0', ItemName) = 1) then
             Continue;
 
           wStart := Length(RichEditAlert.Text);
