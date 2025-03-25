@@ -17,7 +17,7 @@ resourcestring
 
 type
   TDialogButtons = (vbAuto, vbOK, vbYesNo);
-  
+
   TFormDialog = class(TForm)
     BtYes: TSevenButton;
     BtNo: TSevenButton;
@@ -28,24 +28,23 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ApplicationEvents1Message(var Msg: tagMSG;
-      var Handled: Boolean);
+    procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
   private
     FImgInfo: TPNGObject;
     FImgAlert: TPNGObject;
     FImgError: TPNGObject;
     FImgQuestion: TPNGObject;
-
     procedure LoadImages;
     procedure FreeImages;
+    procedure SetCaption(AMessage: String);
     procedure AdjustDim;
     procedure AdjustPos;
     procedure PosButtons;
   public
     procedure SetFont(AFontName: String = 'Arial'; AFontSize: Integer = 10; AFontColor: TColor = clBlack);
     procedure SetBackground(ABackground: TColor);
-
-    function Show(AMessage: String; AType: TMsgDlgType = mtInformation; AButtons: TDialogButtons = vbAuto): TModalResult;
+    function Show(AMessage: String; AType: TMsgDlgType = mtInformation; AButtons:
+      TDialogButtons = vbAuto): TModalResult;
   end;
 
 var
@@ -65,35 +64,39 @@ Affiche la fenêtre
 function TFormDialog.Show(AMessage: String; AType: TMsgDlgType; AButtons: TDialogButtons): TModalResult;
 begin
   try
-    LbAutoMessage.Width := 322;
-    LbAutoMessage.Caption := AMessage;
+    SetCaption(AMessage);
     AdjustDim;
     AdjustPos;
 
     case AType of
-      mtInformation: begin
-        Caption := RS_DIALOG_TITLE_INFORMATION;
-        ImageSystem.Picture.Assign(FImgInfo);
-      end;
-      mtWarning: begin
-        Caption := RS_DIALOG_TITLE_WARNING;
-        ImageSystem.Picture.Assign(FImgAlert);
-      end;
-      mtError: begin
-        Caption := RS_DIALOG_TITLE_ERROR;
-        ImageSystem.Picture.Assign(FImgError);
-      end;
-      mtConfirmation: begin
-        Caption := RS_DIALOG_TITLE_CONFIRMATION;
-        ImageSystem.Picture.Assign(FImgQuestion);
-      end;
+      mtInformation:
+        begin
+          Caption := RS_DIALOG_TITLE_INFORMATION;
+          ImageSystem.Picture.Assign(FImgInfo);
+        end;
+      mtWarning:
+        begin
+          Caption := RS_DIALOG_TITLE_WARNING;
+          ImageSystem.Picture.Assign(FImgAlert);
+        end;
+      mtError:
+        begin
+          Caption := RS_DIALOG_TITLE_ERROR;
+          ImageSystem.Picture.Assign(FImgError);
+        end;
+      mtConfirmation:
+        begin
+          Caption := RS_DIALOG_TITLE_CONFIRMATION;
+          ImageSystem.Picture.Assign(FImgQuestion);
+        end;
     end;
 
     if AButtons = vbAuto then begin
       BtOk.Visible := (AType = mtInformation) or (AType = mtWarning) or (AType = mtError);
       BtYes.Visible := (AType = mtConfirmation);
       BtNo.Visible := (AType = mtConfirmation);
-    end else begin
+    end
+    else begin
       BtOk.Visible := (AButtons = vbOK);
       BtYes.Visible := (AButtons = vbYesNo);
       BtNo.Visible := (AButtons = vbYesNo);
@@ -103,11 +106,10 @@ begin
     BtYes.Enabled := BtYes.Visible;
     BtNo.Enabled := BtNo.Visible;
 
-    // le bouton Cancel reste toujours invisible mais est actif pour gérer le Echap => mrCancel
-  
     Result := ShowModal;
   except
-    on E: Exception do raise Exception.Create('[TFormDialog.Show] '+E.Message);
+    on E: Exception do
+      raise Exception.Create('[TFormDialog.Show] ' + E.Message);
   end;
 end;
 
@@ -159,7 +161,8 @@ begin
     FImgQuestion.LoadFromStream(wRes);
     wRes.Free;
   except
-    on E: Exception do raise Exception.Create('[TFormDialog.LoadImages] '+E.Message);
+    on E: Exception do
+      raise Exception.Create('[TFormDialog.LoadImages] ' + E.Message);
   end;
 end;
 
@@ -186,6 +189,7 @@ end;
 Change la police
 *******************************************************************************}
 procedure TFormDialog.SetFont(AFontName: String; AFontSize: Integer; AFontColor: TColor);
+
   procedure SetFont(AFont: TFont);
   begin
     AFont.Name := AFontName;
@@ -202,6 +206,7 @@ procedure TFormDialog.SetFont(AFontName: String; AFontSize: Integer; AFontColor:
     SetFont(AButton.Fonts.FontFocused);
     AButton.Fonts.FontDisabled.Color := clGrayText;
   end;
+
 begin
   try
     // form
@@ -212,7 +217,8 @@ begin
     SetFontButtons(BtYes);
     SetFontButtons(BtNo);
   except
-    on E: Exception do raise Exception.Create('[TFormDialog.SetFont] '+E.Message);
+    on E: Exception do
+      raise Exception.Create('[TFormDialog.SetFont] ' + E.Message);
   end;
 end;
 
@@ -232,7 +238,8 @@ begin
     BtYes.Left := ((ClientWidth - _MARGIN) div 2) - BtYes.Width;
     BtNo.Left := BtYes.Left + BtYes.Width + _MARGIN;
   except
-    on E: Exception do raise Exception.Create('[TFormDialog.PosButtons] '+E.Message);
+    on E: Exception do
+      raise Exception.Create('[TFormDialog.PosButtons] ' + E.Message);
   end;
 end;
 
@@ -246,7 +253,8 @@ begin
     PosButtons;
     ClientHeight := BtOk.Top + BtOk.Height + _MARGIN;
   except
-    on E: Exception do raise Exception.Create('[TFormDialog.AdjustDim] '+E.Message);
+    on E: Exception do
+      raise Exception.Create('[TFormDialog.AdjustDim] ' + E.Message);
   end;
 end;
 
@@ -259,11 +267,13 @@ begin
     if Assigned(Screen.ActiveForm) then begin
       Left := ((Screen.ActiveForm.Width - Self.Width) div 2) + Screen.ActiveForm.Left;
       Top := ((Screen.ActiveForm.Height - Self.Height) div 2) + Screen.ActiveForm.Top;
-    end else begin
+    end
+    else begin
       Self.Position := poScreenCenter;
     end;
   except
-    on E: Exception do raise Exception.Create('[TFormDialog.AdjustPos] '+E.Message);
+    on E: Exception do
+      raise Exception.Create('[TFormDialog.AdjustPos] ' + E.Message);
   end;
 end;
 
@@ -281,14 +291,26 @@ end;
 {*******************************************************************************
 Echap = Cancel
 *******************************************************************************}
-procedure TFormDialog.ApplicationEvents1Message(var Msg: tagMSG;
-  var Handled: Boolean);
+procedure TFormDialog.ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
 begin
   case Msg.message of
-    WM_KEYDOWN: begin
-      if (Msg.wParam = VK_ESCAPE) then ModalResult := mrCancel;
-    end;
+    WM_KEYDOWN:
+      begin
+        if (Msg.wParam = VK_ESCAPE) then
+          ModalResult := mrCancel;
+      end;
   end;
 end;
 
+{*==============================================================================
+Message à afficher
+===============================================================================}
+procedure TFormDialog.SetCaption(AMessage: String);
+begin
+  LbAutoMessage.Caption := '';
+  LbAutoMessage.Width := 322; // largeur initiale
+  LbAutoMessage.Caption := AMessage;
+end;
+
 end.
+

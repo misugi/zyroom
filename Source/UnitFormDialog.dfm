@@ -25,7 +25,7 @@ object FormDialog: TFormDialog
   object LbAutoMessage: TLabel
     Left = 68
     Top = 10
-    Width = 322
+    Width = 319
     Height = 100
     Alignment = taCenter
     Caption = 
