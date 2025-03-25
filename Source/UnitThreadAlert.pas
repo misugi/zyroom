@@ -499,14 +499,14 @@ begin
             wItemName := wRegExpr.Match[3];
             wValue := StrToIntDef(wKeys.ValueFromIndex[i], -1);
 
+            // numéro de coffre
+            wChestNum := (wItemSlot div _CHEST_SEGMENT_SIZE) + 1;
+            wLocation := Format('%s #%d', [_SECTION_ROOM, wChestNum]);
+
             wItemIndex := wItemList.IndexOf(wItemSlot, wItemQuality, wItemName);
             if wItemIndex >= 0 then begin
               wItemFound := wItemList.GetItem(wItemIndex);
 
-              // numéro de coffre
-              wChestNum := (wItemFound.ItemSlot div _CHEST_SEGMENT_SIZE) + 1;
-              wLocation := Format('%s #%d', [_SECTION_ROOM, wChestNum]);
-              
               // Object modified
               if wItemFound.ItemSize <> wValue then begin
                 wKeys.ValueFromIndex[i] := IntToStr(wItemFound.ItemSize);
@@ -544,9 +544,15 @@ begin
 
           // new objects
           for i := 0 to wItemList.Count - 1 do begin
-            wIdent := Format('%d.%d.%s', [wItemList.GetItem(i).ItemSlot,
-              wItemList.GetItem(i).ItemQuality, wItemList.GetItem(i).ItemName]);
+            wItemSlot := wItemList.GetItem(i).ItemSlot;
+            wItemQuality := wItemList.GetItem(i).ItemQuality;
+            wItemName := wItemList.GetItem(i).ItemName;
+            wIdent := Format('%d.%d.%s', [wItemSlot, wItemQuality, wItemName]);
             if wKeys.IndexOfName(wIdent) < 0 then begin
+              // numéro de coffre
+              wChestNum := (wItemSlot div _CHEST_SEGMENT_SIZE) + 1;
+              wLocation := Format('%s #%d', [_SECTION_ROOM, wChestNum]);
+
               wValue := wItemList.GetItem(i).ItemSize;
               wKeys.Append(wIdent + '=' + IntToStr(wValue));
 
