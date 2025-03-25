@@ -44,6 +44,7 @@ const
   _ICON_FORMAT = '.png';
   _XPATH_ROOM_CHAR = '/ryzomapi/character/room/item';
   _XPATH_ROOM_GUILD = '/ryzomapi/guild/room/item';
+  _XPATH_GUILD_CHEST = '/ryzomapi/guild/chests/chest';
   _XPATH_BAG = '/ryzomapi/character/bag/item';
   _XPATH_PET = '/ryzomapi/character/pets/animal[@index=''%d'']/inventory/item';
   _XPATH_SHOP = '/ryzomapi/character/shop/shopitem';

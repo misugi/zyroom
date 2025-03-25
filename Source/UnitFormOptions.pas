@@ -57,12 +57,9 @@ type
     EdProxyPort: TSpinEdit;
     CbProxyEnabled: TCheckBox;
     LbVolumeMax: TLabel;
-    LbVolumeGuild: TLabel;
-    LbVolumeRoom: TLabel;
     LbSalesCount: TLabel;
     LbSeasonCount: TLabel;
-    EdVolumeRoom: TSpinEdit;
-    EdVolumeGuild: TSpinEdit;
+    EdVolume: TSpinEdit;
     CbSaveAlertFile: TCheckBox;
     EdSalesCount: TSpinEdit;
     EdSeasonCount: TSpinEdit;
@@ -219,8 +216,7 @@ begin
   // Alert
   CbSaveAlertFile.Checked := GConfig.SaveAlert;
   CbShowHint.Checked := GConfig.ShowHint;
-  EdVolumeRoom.Value := GConfig.VolumeRoom;
-  EdVolumeGuild.Value := GConfig.VolumeGuild;
+  EdVolume.Value := GConfig.Volume;
   EdSalesCount.Value := GConfig.SalesCount;
   EdSeasonCount.Value := GConfig.SeasonCount;
   CbIgnoreCata.Checked := GConfig.IgnoreCata;
@@ -257,8 +253,7 @@ begin
   // Alert
   GConfig.SaveAlert := CbSaveAlertFile.Checked;
   GConfig.ShowHint := CbShowHint.Checked;
-  GConfig.VolumeRoom := EdVolumeRoom.Value;
-  GConfig.VolumeGuild := EdVolumeGuild.Value;
+  GConfig.Volume := EdVolume.Value;
   GConfig.SalesCount := EdSalesCount.Value;
   GConfig.SeasonCount := EdSeasonCount.Value;
   GConfig.IgnoreCata := CbIgnoreCata.Checked;

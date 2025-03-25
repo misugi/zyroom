@@ -613,7 +613,7 @@ var
   i: Integer;
 begin
   wChestList := TStringList.Create;
-  wNodeList := AXmlData.DocumentElement.SelectNodes('/ryzomapi/guild/chests/chest');
+  wNodeList := AXmlData.DocumentElement.SelectNodes(_XPATH_GUILD_CHEST);
   try
     // boucle sur les coffres
     for i := 0 to wNodeList.Length - 1 do begin

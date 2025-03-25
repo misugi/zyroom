@@ -181,6 +181,7 @@ Mise à jour des infos selon l'inventaire sélectionné
 procedure TFormInvent.UpdateRoom;
 var
   wTabIndex: Integer;
+  wMaxVolumeInt: Integer;
   wMaxVolume: String;
   wInventPos: TCharInvent;
   wInventTab: TCharInvent;
@@ -191,21 +192,24 @@ begin
   FormProgress.ShowFormInvent(FCharID, CharInvent, wInventPos, GCurrentFilter);
 
   // volume max selon l'inventaire
+  wMaxVolumeInt := 0;
   wInventTab := FInventTabs[wTabIndex];
   case wInventTab of
     ciBag:
-      wMaxVolume := '/300';
+      wMaxVolumeInt := _MAX_VOLUME_CHAR_BAG;
     ciRoom:
-      wMaxVolume := '/2000';
-    ciShop:
-      wMaxVolume := '';
+      wMaxVolumeInt := _MAX_VOLUME_CHAR_ROOM;
     ciMektoub:
-      wMaxVolume := '/500';
+      wMaxVolumeInt := _MAX_VOLUME_CHAR_MEKTOUB;
     ciMount:
-      wMaxVolume := '/300';
+      wMaxVolumeInt := _MAX_VOLUME_CHAR_MOUNT;
     ciZig:
-      wMaxVolume := '/150';
+      wMaxVolumeInt := _MAX_VOLUME_CHAR_ZIG;
   end;
+
+  // volume max ?
+  if wMaxVolumeInt > 0 then
+    wMaxVolume := '/' + IntToStr(wMaxVolumeInt);
 
   LbValueCharName.Caption := FormCharacter.GridItem.Cells[1, FormCharacter.GridItem.Row];
   LbValueVolume.Caption := FormatFloat2('####0.##', FormProgress.TotalVolume) + wMaxVolume;

@@ -82,8 +82,7 @@ const
   _KEY_THREAD_COUNT = 'ThreadCount';
   _KEY_SAVE_FILTER = 'SaveFilter';
   _KEY_ALERT_SAVEFILE = 'SaveFile';
-  _KEY_ALERT_VOLUME_ROOM = 'VolumeRoom';
-  _KEY_ALERT_VOLUME_GUILD = 'VolumeGuild';
+  _KEY_ALERT_VOLUME = 'Volume';
   _KEY_ALERT_SHOW_HINT = 'ShowHint';
   _KEY_ALERT_SALES_COUNT = 'SalesCount';
   _KEY_ALERT_SEASON_COUNT = 'SeasonCount';
@@ -121,6 +120,11 @@ const
   _LOG_TEXT_FILENAME = 'log-plain.txt';
   _LOG_FILTER_FILENAME = 'sysfilter.dat';
   _CHEST_SEGMENT_SIZE = 500;
+  _MAX_VOLUME_CHAR_ROOM = 2000;
+  _MAX_VOLUME_CHAR_BAG = 300;
+  _MAX_VOLUME_CHAR_MEKTOUB = 500;
+  _MAX_VOLUME_CHAR_MOUNT = 300;
+  _MAX_VOLUME_CHAR_ZIG = 150;
 
 type
   TActionType = (atAdd, atUpdate);
@@ -202,10 +206,8 @@ type
     procedure SetSaveFilter(const Value: Boolean);
     function GetSaveAlert: Boolean;
     procedure SetSaveAlert(const Value: Boolean);
-    function GetVolumeGuild: Integer;
-    function GetVolumeRoom: Integer;
-    procedure SetVolumeGuild(const Value: Integer);
-    procedure SetVolumeRoom(const Value: Integer);
+    function GetVolume: Integer;
+    procedure SetVolume(const Value: Integer);
     function GetSalesCount: Integer;
     function GetSeasonCount: Integer;
     function GetShowHint: Boolean;
@@ -237,8 +239,7 @@ type
     property ProxyUsername: String read GetProxyUsername write SetProxyUsername;
     property ProxyPassword: String read GetProxyPassword write SetProxyPassword;
     property SaveAlert: Boolean read GetSaveAlert write SetSaveAlert;
-    property VolumeRoom: Integer read GetVolumeRoom write SetVolumeRoom;
-    property VolumeGuild: Integer read GetVolumeGuild write SetVolumeGuild;
+    property Volume: Integer read GetVolume write SetVolume;
     property ShowHint: Boolean read GetShowHint write SetShowHint;
     property SalesCount: Integer read GetSalesCount write SetSalesCount;
     property SeasonCount: Integer read GetSeasonCount write SetSeasonCount;
@@ -606,29 +607,16 @@ begin
 end;
 
 {*******************************************************************************
-Alert for guild volume
+Alert for volume
 *******************************************************************************}
-function TConfig.GetVolumeGuild: Integer;
+function TConfig.GetVolume: Integer;
 begin
-  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_GUILD, 9900);
+  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME, 90);
 end;
 
-procedure TConfig.SetVolumeGuild(const Value: Integer);
+procedure TConfig.SetVolume(const Value: Integer);
 begin
-  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_GUILD, Value);
-end;
-
-{*******************************************************************************
-Alert for room volume
-*******************************************************************************}
-function TConfig.GetVolumeRoom: Integer;
-begin
-  Result := FIniFile.ReadInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_ROOM, 1900);
-end;
-
-procedure TConfig.SetVolumeRoom(const Value: Integer);
-begin
-  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME_ROOM, Value);
+  FIniFile.WriteInteger(_SECTION_ALERT, _KEY_ALERT_VOLUME, Value);
 end;
 
 {*******************************************************************************

@@ -36,8 +36,8 @@ resourcestring
   RS_ALERT_REMOVED = 'l''objet %s Q%d a été retiré (%d)';
   RS_ALERT_MODIFIED = 'la quantité de l''objet %s Q%d a changé (%d > %d)';
   RS_ALERT_SALES = 'l''objet %s Q%d sera automatiquement vendu au marchand dans %s (%s)';
-  RS_ALERT_VOLUME_ROOM = 'le volume de la pièce est au dessus du seuil limite (%d/%d)';
-  RS_ALERT_VOLUME_GUILD = 'le volume du coffre est au dessus du seuil limite (%d/%d)';
+  RS_ALERT_VOLUME_ROOM = 'le volume de la pièce est au dessus du seuil limite (%d%%)';
+  RS_ALERT_VOLUME_GUILD = 'le volume du coffre est au dessus du seuil limite (%d%%)';
   RS_ALERT_SEASON = 'Prochain changement de saison dans %s (%s)';
   RS_ALERT_HINT = 'Nouvelles alertes !';
 

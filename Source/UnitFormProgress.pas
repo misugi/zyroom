@@ -490,9 +490,8 @@ begin
         if ModalResult = mrCancel then
           Exit;
 
-        wItemSlot := ANodeList.Item(i).SelectInteger('@slot');
-        
         // filtrage selon le slot (pour les coffres de guilde)
+        wItemSlot := ANodeList.Item(i).SelectInteger('@slot');
         if (wItemSlot < ASlotMin) or (wItemSlot > ASlotMax) then
           Continue;
 

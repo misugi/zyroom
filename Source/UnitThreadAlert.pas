@@ -19,7 +19,7 @@ type
     procedure CheckRoom(AGuildID: String);
     procedure CheckObjects(AGuildID: String);
     procedure CheckItems(AGuardFile: String; AObjectName: String; ASection:
-      String; ANodeList: TXpNodeList; var AVolume: Double);
+      String; ANodeList: TXpNodeList; out AVolume: Double; ASlotMin: Integer = 0; ASlotMax: Integer = MaxInt);
     procedure CheckSales(ACharID: String);
     procedure CheckSeason;
   protected
@@ -176,7 +176,7 @@ end;
 Show items
 *******************************************************************************}
 procedure TAlert.CheckItems(AGuardFile: String; AObjectName: String; ASection:
-  String; ANodeList: TXpNodeList; var AVolume: Double);
+  String; ANodeList: TXpNodeList; out AVolume: Double; ASlotMin: Integer; ASlotMax: Integer);
 var
   i: Integer;
   wItemInfo: TItemInfo;
@@ -201,6 +201,12 @@ begin
     for i := 0 to ANodeList.Length - 1 do begin
       if Terminated then
         Exit;
+
+      // filtrage selon le slot (pour les coffres de guilde)
+      wItemSlot := ANodeList.Item(i).SelectInteger('@slot');
+      if (wItemSlot < ASlotMin) or (wItemSlot > ASlotMax) then
+        Continue;
+
       wItemInfo := TItemInfo.Create;
 
       // Get direct information from XML file
@@ -317,21 +323,21 @@ begin
 
     if Terminated then
       Exit;
+
     wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_CHAR);
     CheckItems(wGuardFile, wCharName, _SECTION_ROOM, wNodeList, wVolume);
     wNodeList.Free;
 
     // Check volume for room
     if GCharacter.GetCheckVolume(ACharID) then begin
-      if Trunc(wVolume) > GConfig.VolumeRoom then begin
+      if wVolume > (_MAX_VOLUME_CHAR_ROOM * (GConfig.Volume / 100)) then begin
         wMsg := TAlertMessage.Create;
         wMsg.MsgType := atVolumeRoom;
         wMsg.MsgDate := Now;
         wMsg.MsgName := wCharName;
         wMsg.MsgLocation := _SECTION_ROOM;
         wMsg.MsgObject := '';
-        wMsg.MsgValue1 := Trunc(wVolume);
-        wMsg.MsgValue2 := GConfig.VolumeRoom;
+        wMsg.MsgValue1 := Round(wVolume * 100 / _MAX_VOLUME_CHAR_ROOM);
         FormAlert.NewMessage(wMsg);
       end;
     end;
@@ -364,12 +370,17 @@ Check guild room
 procedure TAlert.CheckRoom(AGuildID: String);
 var
   wXmlDoc: TXpObjModel;
-  wNodeList: TXpNodeList;
+  wNodeList, wChestList: TXpNodeList;
   wItemsFile: String;
   wGuardFile: String;
   wGuildName: String;
   wVolume: Double;
   wMsg: TAlertMessage;
+  wSlotMin, wSlotMax: Integer;
+  wCheckVolume: Boolean;
+  wBulkmax, wChestNum: Integer;
+  wLocation: String;
+  i: Integer;
 begin
   wItemsFile := GConfig.GetGuildPath(AGuildID) + _INFO_FILENAME;
   if (not FileExists(wItemsFile)) or (MdkFileSize(wItemsFile) = 0) then
@@ -377,6 +388,7 @@ begin
 
   wGuardFile := GConfig.GetGuildPath(AGuildID) + _GUARD_FILENAME;
   wGuildName := GGuild.GetGuildName(AGuildID);
+  wCheckVolume := GGuild.GetCheckVolume(AGuildID);
 
   wXmlDoc := TXpObjModel.Create(nil);
   try
@@ -384,23 +396,37 @@ begin
 
     if Terminated then
       Exit;
-    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
-    CheckItems(wGuardFile, wGuildName, _SECTION_ROOM, wNodeList, wVolume);
-    wNodeList.Free;
 
-    // Check volume for guild
-    if GGuild.GetCheckVolume(AGuildID) then begin
-      if Trunc(wVolume) > GConfig.VolumeGuild then begin
-        wMsg := TAlertMessage.Create;
-        wMsg.MsgType := atVolumeGuild;
-        wMsg.MsgDate := Now;
-        wMsg.MsgName := wGuildName;
-        wMsg.MsgLocation := _SECTION_ROOM;
-        wMsg.MsgObject := '';
-        wMsg.MsgValue1 := Trunc(wVolume);
-        wMsg.MsgValue2 := GConfig.VolumeGuild;
-        FormAlert.NewMessage(wMsg);
+    wChestList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_GUILD_CHEST);
+    wNodeList := wXmlDoc.DocumentElement.SelectNodes(_XPATH_ROOM_GUILD);
+    try
+      // boucle sur les coffres
+      for i := 0 to wChestList.Length - 1 do begin
+        wBulkmax := wChestList.Item(i).SelectInteger('bulkmax');
+        wChestNum := i + 1;
+        wLocation := Format('%s #%d', [_SECTION_ROOM, wChestNum]);
+
+        wSlotMin := i * _CHEST_SEGMENT_SIZE;
+        wSlotMax := wSlotMin + _CHEST_SEGMENT_SIZE - 1;
+        CheckItems(wGuardFile, wGuildName, _SECTION_ROOM, wNodeList, wVolume, wSlotMin, wSlotMax);
+
+        // Check volume for guild
+        if wCheckVolume then begin
+          if wVolume > (wBulkmax * (GConfig.Volume / 100)) then begin // todo
+            wMsg := TAlertMessage.Create;
+            wMsg.MsgType := atVolumeGuild;
+            wMsg.MsgDate := Now;
+            wMsg.MsgName := wGuildName;
+            wMsg.MsgLocation := wLocation;
+            wMsg.MsgObject := '';
+            wMsg.MsgValue1 := Round(wVolume * 100 / wBulkmax);
+            FormAlert.NewMessage(wMsg);
+          end;
+        end;
       end;
+    finally
+      wNodeList.Free;
+      wChestList.Free;
     end;
   finally
     wXmlDoc.Free;

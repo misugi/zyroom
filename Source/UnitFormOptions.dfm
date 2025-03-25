@@ -1,7 +1,6 @@
 object FormOptions: TFormOptions
   Left = 438
   Top = 206
-  ActiveControl = EdVolumeRoom
   BorderStyle = bsDialog
   Caption = 'Options'
   ClientHeight = 427
@@ -75,7 +74,7 @@ object FormOptions: TFormOptions
         Height = 28
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 0
+        ItemHeight = 20
         Sorted = True
         TabOrder = 0
         OnChange = CmbLanguageChange
@@ -312,41 +311,9 @@ object FormOptions: TFormOptions
       object LbVolumeMax: TLabel
         Left = 5
         Top = 24
-        Width = 197
+        Width = 223
         Height = 20
-        Caption = 'Seuil d'#39'alerte pour le volume :'
-      end
-      object LbVolumeGuild: TLabel
-        Left = 471
-        Top = 1
-        Width = 61
-        Height = 19
-        Alignment = taCenter
-        Anchors = [akTop, akRight]
-        AutoSize = False
-        Caption = 'Guilde'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-      end
-      object LbVolumeRoom: TLabel
-        Left = 403
-        Top = 1
-        Width = 61
-        Height = 19
-        Alignment = taCenter
-        Anchors = [akTop, akRight]
-        AutoSize = False
-        Caption = 'Pi'#232'ce'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
+        Caption = 'Seuil d'#39'alerte pour le volume (%) :'
       end
       object LbSalesCount: TLabel
         Left = 5
@@ -362,25 +329,7 @@ object FormOptions: TFormOptions
         Height = 20
         Caption = 'Nombre d'#39'alertes pour le prochain changement de saison :'
       end
-      object EdVolumeRoom: TSpinEdit
-        Left = 403
-        Top = 21
-        Width = 61
-        Height = 27
-        Anchors = [akTop, akRight]
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        MaxValue = 2000
-        MinValue = 0
-        ParentFont = False
-        TabOrder = 0
-        Value = 1900
-        OnChange = CmbLanguageChange
-      end
-      object EdVolumeGuild: TSpinEdit
+      object EdVolume: TSpinEdit
         Left = 471
         Top = 21
         Width = 61
@@ -391,11 +340,11 @@ object FormOptions: TFormOptions
         Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
-        MaxValue = 10000
-        MinValue = 0
+        MaxValue = 99
+        MinValue = 50
         ParentFont = False
-        TabOrder = 1
-        Value = 9800
+        TabOrder = 0
+        Value = 90
         OnChange = CmbLanguageChange
       end
       object CbSaveAlertFile: TCheckBox
@@ -404,7 +353,7 @@ object FormOptions: TFormOptions
         Width = 461
         Height = 17
         Caption = 'Sauvegarder automatiquement les alertes dans un fichier'
-        TabOrder = 2
+        TabOrder = 1
         OnClick = CmbLanguageChange
       end
       object EdSalesCount: TSpinEdit
@@ -421,7 +370,7 @@ object FormOptions: TFormOptions
         MaxValue = 24
         MinValue = 0
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 2
         Value = 1
         OnChange = CmbLanguageChange
       end
@@ -439,7 +388,7 @@ object FormOptions: TFormOptions
         MaxValue = 24
         MinValue = 0
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
         Value = 1
         OnChange = CmbLanguageChange
       end
@@ -449,7 +398,7 @@ object FormOptions: TFormOptions
         Width = 461
         Height = 17
         Caption = 'Afficher une bulle d'#39'information pour les nouvelles alertes'
-        TabOrder = 5
+        TabOrder = 4
         OnClick = CmbLanguageChange
       end
       object CbIgnoreCata: TCheckBox
@@ -458,7 +407,7 @@ object FormOptions: TFormOptions
         Width = 461
         Height = 17
         Caption = 'Ignorer les alertes sur les cristaux'
-        TabOrder = 6
+        TabOrder = 5
         OnClick = CmbLanguageChange
       end
     end
