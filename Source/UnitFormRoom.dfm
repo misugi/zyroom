@@ -207,6 +207,7 @@ object FormRoom: TFormRoom
         Height = 28
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
+        DropDownCount = 20
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
