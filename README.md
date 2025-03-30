@@ -10,7 +10,7 @@ In July 2009, the development team creates a web API that allows to obtain real-
 In August 2009, Misugi, a character from the French server Aniro, creates the project zyRoom for the contest. The purpose of this software is to offer an application enabling players to manage more easily their items with no need to be online.
 
 ### Features
-View all your inventories while offline (bags, pets, apartment room and guild chests).\
+View all your inventories.\
 Alert system allowing you to monitor:
 * the volume of an apartment room or guild chest
 * the durability of equipment
@@ -25,5 +25,5 @@ To download the lastest version of zyRoom, [click here](https://github.com/misug
 
 ### Installation
 You only need to extract the content of the file in a directory and overwrite the precedent version if necessary.\
-Then, execute the file zyroom.exe to open the software!\
+Then, execute the file __zyroom.exe__ to open the software!\
 The software zyRoom only works under Windows.

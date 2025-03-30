@@ -10,7 +10,7 @@ En juillet 2009, l'équipe de développement créé une API web permettant d'obt
 En août 2009, dans le cadre du concours, c'est la naissance du projet zyRoom réalisé par Misugi personnage joueur du serveur de jeu français Aniro. Le but est de proposer aux joueurs une application leur permettant de gérer plus facilement leurs objets sans devoir se connecter au jeu Ryzom.
 
 ### Fonctionnalités
-Consultation de tous vos inventaires en étant hors ligne (sac, animaux, pièce d'appartement et coffres de guilde).\
+Consultation de tous vos inventaires.\
 Système d'alertes permettant de surveiller :
 * le volume d'une pièce d'appartement ou d'un coffre de guilde
 * la durabilité d'un équipement
@@ -25,5 +25,5 @@ Pour télécharger la dernière version de zyRoom, [cliquez ici](https://github.
 
 ### Installation
 Il suffit juste d'extraire le contenu de l'archive dans un répertoire et écraser si nécessaire la version précédente de zyRoom.\
-Exécutez ensuite le fichier zyroom.exe pour ouvrir l'application !\
+Exécutez ensuite le fichier __zyroom.exe__ pour ouvrir l'application !\
 L'application zyRoom fonctionne uniquement sous Windows.
