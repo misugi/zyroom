@@ -8,3 +8,10 @@ En juillet 2009, l'équipe de développement créé une API web permettant d'obt
 
 ### Le projet zyRoom
 En août 2009, dans le cadre du concours, c'est la naissance du projet zyRoom réalisé par Misugi personnage joueur du serveur de jeu français Aniro. Le but est de proposer aux joueurs une application leur permettant de gérer plus facilement leurs objets sans devoir se connecter au jeu Ryzom. Et aux développeurs tous les outils nécessaires pour personnaliser l'application fonctionnant sous Windows et développé avec [Delphi](https://fr.wikipedia.org/wiki/Delphi_(langage)).
+
+### Téléchargement
+Pour télécharger la dernière version de zyRoom, [cliquez ici](https://github.com/misugi/zyroom/releases).
+
+### Installation
+Il suffit juste d'extraire le contenu de l'archive dans un répertoire et écraser si nécessaire la version précédente de zyRoom. Exécutez ensuite le fichier zyroom.exe pour ouvrir l'application !
+L'application zyRoom fonctionne uniquement sous Windows.
