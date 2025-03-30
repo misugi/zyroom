@@ -25,5 +25,5 @@ To download the lastest version of zyRoom, [click here](https://github.com/misug
 
 ### Installation
 You only need to extract the content of the file in a directory and overwrite the precedent version if necessary.\
-Then, execute the file __zyroom.exe__ to open the software!\
+Then, execute the file "__zyroom.exe__" to open the software!\
 The software zyRoom only works under Windows.

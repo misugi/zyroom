@@ -25,5 +25,5 @@ Pour télécharger la dernière version de zyRoom, [cliquez ici](https://github.
 
 ### Installation
 Il suffit juste d'extraire le contenu de l'archive dans un répertoire et écraser si nécessaire la version précédente de zyRoom.\
-Exécutez ensuite le fichier __zyroom.exe__ pour ouvrir l'application !\
+Exécutez ensuite le fichier "__zyroom.exe__" pour ouvrir l'application !\
 L'application zyRoom fonctionne uniquement sous Windows.
