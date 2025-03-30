@@ -9,6 +9,17 @@ In July 2009, the development team creates a web API that allows to obtain real-
 ### The project zyRoom
 In August 2009, Misugi, a character from the French server Aniro, creates the project zyRoom for the contest. The purpose of this software is to offer an application enabling players to manage more easily their items with no need to be online but also giving developers all the tools necessary to customize the software working under Windows and developed with [Delphi](https://en.wikipedia.org/wiki/Delphi_(software)).
 
+### Features
+View all your inventories outside of the game (bags, pets, apartment room and guild chests).\
+Alert system allowing you to monitor:
+* the volume of an apartment room or guild chest
+* the durability of equipment
+* the quantity of a material
+* the movement of objects in an apartment room or guild chest
+
+Load a log file (chatLog) with message filtering and copying the content in HTML, BBCode, or plain text format.\
+Automatic backup of files located in Ryzom's "save" folder (keybindings, macros, map markers, groups of objects, etc.).
+
 ### Download
 To download the lastest version of zyRoom, [click here](https://github.com/misugi/zyroom/releases).
 
