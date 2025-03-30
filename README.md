@@ -1,21 +1,18 @@
 [![fr](/assets/lang-fr.png)](README.fr.md)
 
-zyRoom project for Ryzom Summer Coding Contest 2009
-Copyright (C) 2009 Misugi
-http://github.com/misugi/zyroom
+### The Saga of Ryzom
+The Saga of Ryzom is a Massively Multiplayer Online Role Play Game developed and edited by the French studio Nevrax, more information on [Wikipedia](https://en.wikipedia.org/wiki/Ryzom).
 
-Developed with Delphi 7 Personal,
-this application is designed for players to view guild rooms and search items.
+### Coding contest
+In July 2009, the development team creates a web API that allows to obtain real-time information. Meanwhile, the team comes up with a coding contest. The aim is to encourage players to develop and make the best free software application under licence GNU AGPLv3 for Ryzom.
 
-zyRoom is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
+### The project zyRoom
+In August 2009, Misugi, a character from the French server Aniro, creates the project zyRoom for the contest. The purpose of this software is to offer an application enabling players to manage more easily their items with no need to be online but also giving developers all the tools necessary to customize the software working under Windows and developed with [Delphi](https://en.wikipedia.org/wiki/Delphi_(software)).
 
-zyRoom is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+### Download
+To download the lastest version of zyRoom, [click here](https://github.com/misugi/zyroom/releases).
 
-You should have received a copy of the GNU Affero General Public License
-along with zyRoom.  If not, see http://www.gnu.org/licenses.
+### Installation
+You only need to extract the content of the file in a directory and overwrite the precedent version if necessary.\
+Then, execute the file zyroom.exe to open the software!\
+The software zyRoom only works under Windows.
