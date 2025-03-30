@@ -18,7 +18,7 @@ Alert system allowing you to monitor:
 * the movement of objects in an apartment room or guild chest
 
 Load a log file (chatLog) with message filtering and copying the content in HTML, BBCode, or plain text format.\
-Automatic backup of files located in Ryzom's "save" folder (keybindings, macros, map markers, groups of objects, etc.).
+Automatic backup of files located in Ryzom's "save" folder (key configuration, macros, map markers, object groups, etc.).
 
 ### Download
 To download the lastest version of zyRoom, [click here](https://github.com/misugi/zyroom/releases).
