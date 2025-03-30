@@ -15,7 +15,8 @@ Système d'alertes permettant de surveiller :
 * le volume d'une pièce d'appartement ou d'un coffre de guilde
 * la durabilité d'un équipement
 * la quantité d'une matière
-* le mouvement des objets dans une pièce d'appartement ou un coffre de guilde\
+* le mouvement des objets dans une pièce d'appartement ou un coffre de guilde
+
 Chargement d'un fichier de log (chatLog) avec filtrage des messages et copie du contenu au format HTML, BBCode ou texte brut.\
 Sauvegarde automatique des fichiers qui se trouvent dans le dossier "save" de Ryzom (configuration des touches, macros, repères sur la carte, groupes d'objets, etc.).
 
