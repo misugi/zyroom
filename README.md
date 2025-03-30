@@ -1,4 +1,4 @@
-[![fr](/assets/lang-fr.png)](README.fr.md)
+[(/assets/lang-fr.png)](README.fr.md)
 
 zyRoom project for Ryzom Summer Coding Contest 2009
 Copyright (C) 2009 Misugi

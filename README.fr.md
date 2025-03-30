@@ -1,4 +1,4 @@
-[![en](/assets/lang-en.png)](README.md)
+[(/assets/lang-en.png)](README.md)
 
 ### The Saga of Ryzom
 The Saga of Ryzom est un jeu de rôle en ligne massivement multijoueurs développé et édité par le studio français Nevrax, plus d'infos sur [Wikipédia](https://fr.wikipedia.org/wiki/Ryzom).
