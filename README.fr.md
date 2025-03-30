@@ -1,7 +1,7 @@
 [![en](/assets/lang-en.png)](README.md)
 
 ### The Saga of Ryzom
-[The Saga of Ryzom](https://fr.wikipedia.org/wiki/Ryzom) est un jeu de rôle en ligne massivement multijoueurs développé et édité par le studio français Nevrax.
+The Saga of Ryzom est un jeu de rôle en ligne massivement multijoueurs développé et édité par le studio français Nevrax, plus d'infos sur [Wikipédia](https://fr.wikipedia.org/wiki/Ryzom).
 
 ### Concours de programmation
 En juillet 2009, l'équipe de développement créé une API web permettant d'obtenir des informations en temps réel sur l'univers de Ryzom. Dans le même temps, l'équipe lance un concours de programmation dont l'objectif est d'encourager les joueurs et développeurs à réaliser une application sous licence libre GNU AGPLv3 pour Ryzom.
@@ -13,5 +13,6 @@ En août 2009, dans le cadre du concours, c'est la naissance du projet zyRoom r�
 Pour télécharger la dernière version de zyRoom, [cliquez ici](https://github.com/misugi/zyroom/releases).
 
 ### Installation
-Il suffit juste d'extraire le contenu de l'archive dans un répertoire et écraser si nécessaire la version précédente de zyRoom. Exécutez ensuite le fichier zyroom.exe pour ouvrir l'application !
+Il suffit juste d'extraire le contenu de l'archive dans un répertoire et écraser si nécessaire la version précédente de zyRoom.\
+Exécutez ensuite le fichier zyroom.exe pour ouvrir l'application !\
 L'application zyRoom fonctionne uniquement sous Windows.
