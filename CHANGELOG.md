@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [6.0.0]
+## [6.0.0] - 2025-04-01
 
 ### Added
 - Zig inventories
