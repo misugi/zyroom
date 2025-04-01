@@ -1436,7 +1436,7 @@ begin
         AItemInfo.ItemEcosys := ieCommon;
         AItemInfo.ItemCategory1 := 0;
         SetLength(AItemInfo.MatSpec1, 1);
-        AItemInfo.MatSpec1[0][0] := 0;
+        AItemInfo.MatSpec1[0][0] := 0; // _MAT_SPEC => All
         
         // mp générique ?
         if Pos('system_mp', wRegExpr.Match[1]) > 0 then begin
@@ -1449,7 +1449,7 @@ begin
 
         AItemInfo.ItemClass := icBasic;
         if wRegExpr.Match[2] <> '' then begin
-          AItemInfo.MatSpec1[0][1] := 2;
+          AItemInfo.MatSpec1[0][1] := 3;
           if Pos('fine', wRegExpr.Match[2]) = 1 then
             AItemInfo.ItemClass := icFine;
           if Pos('choice', wRegExpr.Match[2]) = 1 then
@@ -1462,11 +1462,11 @@ begin
             AItemInfo.ItemClass := icSupreme;
           if Pos('extra', wRegExpr.Match[2]) = 1 then begin
             AItemInfo.ItemClass := icSupreme;
-            AItemInfo.MatSpec1[0][1] := 3;
+            AItemInfo.MatSpec1[0][1] := 5;
           end;
         end
         else begin
-          AItemInfo.MatSpec1[0][1] := 1;
+          AItemInfo.MatSpec1[0][1] := 2;
         end;
 
         // loot/allégorie
