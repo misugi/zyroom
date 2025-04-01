@@ -3,7 +3,7 @@ object FormAlert: TFormAlert
   Top = 282
   Width = 708
   Height = 438
-  Caption = 'Alert'
+  Caption = 'Alerte'
   Color = 12631988
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

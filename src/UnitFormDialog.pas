@@ -9,7 +9,7 @@ uses
 resourcestring
   RS_DIALOG_TITLE_INFORMATION = 'Information';
   RS_DIALOG_TITLE_CONFIRMATION = 'Confirmation';
-  RS_DIALOG_TITLE_WARNING = 'Alerte';
+  RS_DIALOG_TITLE_WARNING = 'Avertissement';
   RS_DIALOG_TITLE_ERROR = 'Erreur';
   RS_DIALOG_BUTTON_YES = 'Oui';
   RS_DIALOG_BUTTON_NO = 'Non';

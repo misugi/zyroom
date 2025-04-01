@@ -214,20 +214,9 @@ object FormRoom: TFormRoom
         Font.Name = 'Segoe UI'
         Font.Style = []
         ItemHeight = 20
-        ItemIndex = 0
         ParentFont = False
         TabOrder = 0
-        Text = 'Type'
         OnChange = TabChestChange
-        Items.Strings = (
-          'Type'
-          'Ecosyst'#232'me'
-          'Classe'
-          'Qualit'#233
-          'Volume'
-          'Quantit'#233
-          'Prix'
-          'Temps')
       end
     end
   end
