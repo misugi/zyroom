@@ -2,7 +2,31 @@
 All notable changes to this project will be documented in this file.
 
 ## [6.0.0]
-Work in progress...
+
+### Added
+- Zig inventories
+- Guild chests
+- Context menu allowing you to copy an item's ID
+- Color for generic raw materials
+- Color for refugee armor
+- Default beige color for armor
+- Characteristics of extra materials
+- Acceptance of "x3" catalysts
+
+### Changed
+- Complete interface review
+- Advanced search to find the Ryzom folder
+- No more automatic updates
+- Default language "French"
+- Update of item volumes
+- Strong API key control
+- Maximum durability is no longer displayed
+- Percentage alert threshold for volume monitoring
+
+### Fixed
+- Compatible with the new "string_client.pack" file format
+- In some cases, reading protections on jewelry did not work
+- Loss of accented characters after filtering on an item's name
 
 ## [5.1.5] - 2021-01-20
 
